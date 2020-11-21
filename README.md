@@ -137,6 +137,7 @@ For more information, see the [GitHub Wiki](https://github.com/CanHub/Android-Im
  - [Adding auto-zoom feature to Android-Image-Cropper](https://theartofdev.com/2016/04/25/adding-auto-zoom-feature-to-android-image-cropper/)
 
 ## License
+Forked from [ArthurHub](https://github.com/ArthurHub/Android-Image-Cropper)
 Originally forked from [edmodo/cropper](https://github.com/edmodo/cropper).
 
 Copyright 2016, Arthur Teplitzki, 2013, Edmodo, Inc.
