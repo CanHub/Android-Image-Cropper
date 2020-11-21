@@ -10,7 +10,7 @@
 // - Sun Tsu,
 // "The Art of War"
 
-package com.theartofdev.edmodo.cropper.sample;
+package com.can_hub.cropper.sample;
 
 import android.app.Activity;
 import android.content.Intent;
