@@ -10,7 +10,7 @@
 // - Sun Tsu,
 // "The Art of War"
 
-package com.theartofdev.edmodo.cropper.sample;
+package com.can_hub.cropper.sample;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -31,8 +31,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.croppersample.R;
-import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageView;
+import com.can_hub.cropper.CropImage;
+import com.can_hub.cropper.CropImageView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -336,6 +336,6 @@ public class MainActivity extends AppCompatActivity {
                     options.autoZoomEnabled ? "Enabled" : "Disabled"));
     ((TextView) findViewById(R.id.drawer_option_toggle_max_zoom))
         .setText(
-            getResources().getString(R.string.drawer_option_toggle_max_zoom, options.maxZoomLevel));
+            getResources().getString(R.string.drawer_option_toggle_max_zoom, Integer.toString(options.maxZoomLevel)));
   }
 }

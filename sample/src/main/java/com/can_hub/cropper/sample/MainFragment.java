@@ -10,7 +10,7 @@
 // - Sun Tsu,
 // "The Art of War"
 
-package com.theartofdev.edmodo.cropper.sample;
+package com.can_hub.cropper.sample;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -26,8 +26,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.croppersample.R;
-import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageView;
+import com.can_hub.cropper.CropImage;
+import com.can_hub.cropper.CropImageView;
 
 /** The fragment that will show the Image Cropping UI by requested preset. */
 public final class MainFragment extends Fragment

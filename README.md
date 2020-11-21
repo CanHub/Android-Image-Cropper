@@ -1,13 +1,13 @@
 Android Image Cropper
 =======
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Android--Image--Cropper-green.svg?style=true)](https://android-arsenal.com/details/1/3487)
-[![Build Status](https://travis-ci.org/CanHub/Android-Image-Cropper.svg?branch=master)](https://travis-ci.org/CanHub/Android-Image-Cropper)
+[![Build Status](https://travis-ci.org/CanHub/Android-Image-Cropper.svg?branch=main)](https://travis-ci.org/CanHub/Android-Image-Cropper)
 [ ![Download](https://api.bintray.com/packages/CanHub/maven/Android-Image-Cropper/images/download.svg) ](https://bintray.com/CanHub/maven/Android-Image-Cropper/_latestVersion)
 
 
 **Powerful** (Zoom, Rotation, Multi-Source), **customizable** (Shape, Limits, Style), **optimized** (Async, Sampling, Matrix) and **simple** image cropping library for Android.
 
-![Crop](https://github.com/CanHub/Android-Image-Cropper/blob/master/art/demo.gif?raw=true)
+![Crop](https://github.com/CanHub/Android-Image-Cropper/blob/main/art/demo.gif?raw=true)
 
 ## Usage
 *For a working implementation, please have a look at the Sample Project*

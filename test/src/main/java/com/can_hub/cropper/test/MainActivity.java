@@ -1,4 +1,4 @@
-package com.theartofdev.edmodo.cropper.test;
+package com.can_hub.cropper.test;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,8 +8,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.test.R;
-import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageView;
+import com.can_hub.cropper.CropImage;
+import com.can_hub.cropper.CropImageView;
 
 public class MainActivity extends AppCompatActivity {
 
