@@ -25,7 +25,7 @@ android {
 
 publishing {
     publications {
-        bar(MavenPublication) {
+        maven(MavenPublication) {
             groupId 'com.canhub.cropper'
             artifactId "Android-Image-Cropper"
             version rootProject.getVersionName
