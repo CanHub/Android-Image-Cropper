@@ -21,6 +21,4 @@ ext {
     compileSdkVersion = 28
     buildToolsVersion = '28.0.3'
     androidXLibraryVersion = '1.0.0'
-
-    getVersionName = '1.0.0'
 }
