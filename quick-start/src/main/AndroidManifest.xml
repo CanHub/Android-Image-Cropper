@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:theme="@style/Base.Theme.AppCompat">
         <activity
-            android:name="com.can_hub.cropper.quick_start.MainActivity"
+            android:name="com.canhub.cropper.quick_start.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -20,6 +20,6 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="com.can_hub.cropper.CropImageActivity"/>
+        <activity android:name="com.canhub.cropper.CropImageActivity"/>
     </application>
 </manifest>

@@ -1,7 +1,16 @@
 apply plugin: 'com.android.library'
-// https://docs.gradle.org/current/userguide/publishing_maven.html
-// http://www.flexlabs.org/2013/06/using-local-aar-android-library-packages-in-gradle-builds
 apply plugin: 'maven-publish'
+
+def githubProperties = new Properties()
+githubProperties.load(new FileInputStream(rootProject.file("github.properties"))) //Set env variable GPR_USER & GPR_API_KEY if not adding a properties file
+
+def getVersionName = { ->
+    return "1.0.0" // Replace with version Name
+}
+
+def getArtifactId = { ->
+    return "sampleAndroidLib" // Replace with library name ID
+}
 
 android {
 
@@ -22,24 +31,35 @@ android {
     }
 }
 
-// This configuration is used to publish the library to a local repo while a being forked and modified.
-// It should really be set up so that the version are all in line, and set to be a SNAPSHOT.
-// The version listed here is a temp hack to allow me to keep working.
-android.libraryVariants
 publishing {
     publications {
-        maven(MavenPublication) {
+        bar(MavenPublication) {
+            groupId 'com.enefce.libraries' // Replace with group ID
+            artifactId getArtificatId()
+            version getVersionName()
+            artifact("$buildDir/outputs/aar/${getArtificatId()}-release.aar")
+        }
+    }
 
-            groupId PUBLISH_GROUP_ID
-            artifactId PUBLISH_ARTIFACT_ID
-            version PUBLISH_VERSION + '-SNAPSHOT'
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            /** Configure path of your package repository on Github
+             ** Replace GITHUB_USERID with your/organisation Github userID
+             ** and REPOSITORY with the repository name on GitHub
+             */
+            url = uri("https://maven.pkg.github.com/GITHUB_USERID/REPOSITORY")
+            credentials {
+                /** Create github.properties in root project folder file with
+                 ** gpr.usr=GITHUB_USER_ID & gpr.key=PERSONAL_ACCESS_TOKEN
+                 ** Set env variable GPR_USER & GPR_API_KEY if not adding a properties file**/
 
-            //artifact bundleRelease
+                username = githubProperties['gpr.usr'] ?: System.getenv("GPR_USER")
+                password = githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
+            }
         }
     }
 }
-
-apply from: 'https://raw.githubusercontent.com/blundell/release-android-library/master/android-release-aar.gradle'
 
 dependencies {
     api "androidx.appcompat:appcompat:$androidXLibraryVersion"

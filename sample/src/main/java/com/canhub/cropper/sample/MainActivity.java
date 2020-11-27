@@ -10,7 +10,7 @@
 // - Sun Tsu,
 // "The Art of War"
 
-package com.can_hub.cropper.sample;
+package com.canhub.cropper.sample;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -31,8 +31,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.croppersample.R;
-import com.can_hub.cropper.CropImage;
-import com.can_hub.cropper.CropImageView;
+import com.canhub.cropper.CropImage;
+import com.canhub.cropper.CropImageView;
 
 public class MainActivity extends AppCompatActivity {
 
