@@ -10,7 +10,7 @@
 // - Sun Tsu,
 // "The Art of War"
 
-package com.can_hub.cropper.quick_start;
+package com.canhub.cropper.quick_start;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,9 +19,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.can_hub.cropper.CropImage;
-import com.can_hub.cropper.CropImageView;
-import com.theartofdev.edmodo.cropper.quick.start.R;
+import com.canhub.cropper.CropImage;
+import com.canhub.cropper.CropImageView;
+import com.canhub.cropper.quick.start.R;
 
 public class MainActivity extends AppCompatActivity {
 

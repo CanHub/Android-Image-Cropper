@@ -10,7 +10,7 @@
 // - Sun Tsu,
 // "The Art of War"
 
-package com.can_hub.cropper.sample;
+package com.canhub.cropper.sample;
 
 enum CropDemoPreset {
   RECT,

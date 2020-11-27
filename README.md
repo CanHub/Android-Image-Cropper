@@ -1,57 +1,79 @@
 Android Image Cropper
 =======
-[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Android--Image--Cropper-green.svg?style=true)](https://android-arsenal.com/details/1/3487)
-[![Build Status](https://travis-ci.org/CanHub/Android-Image-Cropper.svg?branch=main)](https://travis-ci.org/CanHub/Android-Image-Cropper)
-[ ![Download](https://api.bintray.com/packages/CanHub/maven/Android-Image-Cropper/images/download.svg) ](https://bintray.com/CanHub/maven/Android-Image-Cropper/_latestVersion)
-
-
-**Powerful** (Zoom, Rotation, Multi-Source), **customizable** (Shape, Limits, Style), **optimized** (Async, Sampling, Matrix) and **simple** image cropping library for Android.
+**Powerful** (Zoom, Rotation, Multi-Source);
+**Customizable** (Shape, Limits, Style);
+**Optimized** (Async, Sampling, Matrix);
+**Simple** image cropping library for Android.
 
 ![Crop](https://github.com/CanHub/Android-Image-Cropper/blob/main/art/demo.gif?raw=true)
 
-## Usage
-*For a working implementation, please have a look at the Sample Project*
+## Add to your project
 
 [See GitHub Wiki for more info.](https://github.com/CanHub/Android-Image-Cropper/wiki)
 
-1. Include the library
 
-- Add the JitPack repository to your build file. Add it in your root build.gradle at the end of repositories:
+**The library is release with github Packages, if you already have github packages libraris can jump to second step**
+### 1. Generate a Personal Access Token for GitHub
+Reference: [Github Personal Access Token](https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/creating-a-personal-access-token)
+
+- Inside you GitHub account
+- Settings -> Developer Settings -> Personal Access Tokens -> Generate new token
+- Make sure you select the following scopes (“read:packages”) and Generate a token
+![read_package](https://github.com/CanHub/Android-Image-Cropper/blob/main/art/read_package.png?raw=true)
+- After Generating make sure to copy your new personal access token. You cannot see it again! The only option is to regenerate a key or create a new key.
+
+There are a few ways to set credentials as Gradle properties or system environment variables.
+For example, you can simply set GITHUB_USER & GITHUB_PERSONAL_ACCESS_TOKEN in gradle properties under your **home directory**: ~/.gradle/gradle.properties
+**NOT** in the project gradle.properties
+This values should not be public or commited to your repository, your CI can use secrets for it
+
+### 2. Update gradles and implement it
+- On project root `build.gradle`
+
 ```
 allprojects {
     repositories {
-		...
-	    maven { url 'https://jitpack.io' }
-	}
+        // google(), jcenter(), etc...
+        mavenCentral()
+        maven {
+            name = "Android-Image-Cropper"
+            url = uri("https://maven.pkg.github.com/CanHub/Android-Image-Cropper")
+            credentials {
+                username = System.getenv('GITHUB_USER')
+                password = System.getenv('GITHUB_PERSONAL_ACCESS_TOKEN')
+            }
+        }
+    }
 }
-````
+```
 - Add the dependency
 ```
 dependencies {
-    implementation 'com.github.CanHub:Android-Image-Cropper:1.0.0'
+    implementation 'com.canhub.cropper:android-image-cropper:1.0.0'
 }
 ```
 
-Add permissions to manifest
+- Add permissions to manifest
 
  ```
  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
  ```
-Add this line to your Proguard config file
 
+- Add this line to your Proguard config file
 ```
 -keep class androidx.appcompat.widget.** { *; }
 ```
-### Using Activity
 
-2. Add `CropImageActivity` into your AndroidManifest.xml
+## Using Activity
+
+- Add `CropImageActivity` into your AndroidManifest.xml
  ```xml
- <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+ <activity android:name="com.canhub.cropper.CropImageActivity"
    android:theme="@style/Base.Theme.AppCompat"/> <!-- optional (needed if default theme has no action bar) -->
  ```
 
-3. Start `CropImageActivity` using builder pattern from your activity
+- Start `CropImageActivity` using builder pattern from your activity
  ```java
  // start picker to get image for cropping and then use the image in cropping activity
  CropImage.activity()
@@ -86,7 +108,7 @@ Add this line to your Proguard config file
 2. Add `CropImageView` into your activity
  ```xml
  <!-- Image Cropper fill the remaining available height -->
- <com.theartofdev.edmodo.cropper.CropImageView
+ <com.canhub.cropper.CropImageView
    xmlns:custom="http://schemas.android.com/apk/res-auto"
    android:id="@+id/cropImageView"
    android:layout_width="match_parent"
