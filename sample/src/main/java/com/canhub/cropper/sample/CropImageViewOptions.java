@@ -10,11 +10,11 @@
 // - Sun Tsu,
 // "The Art of War"
 
-package com.can_hub.cropper.sample;
+package com.canhub.cropper.sample;
 
 import android.util.Pair;
 
-import com.can_hub.cropper.CropImageView;
+import com.canhub.cropper.CropImageView;
 
 /** The crop image view options that can be changed live. */
 final class CropImageViewOptions {

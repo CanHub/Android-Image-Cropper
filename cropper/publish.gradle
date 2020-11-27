@@ -1,0 +1,52 @@
+apply plugin: 'maven-publish'
+
+def githubProperties = new Properties()
+githubProperties.load(new FileInputStream(rootProject.file("github.properties")))
+
+def LIB_GROUP_ID = 'com.canhub.cropper'
+def LIB_ARTIFACT_ID = 'android-image-cropper'
+def LIB_VERSION = '1.0.0'
+
+task sourceJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier "sources"
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/CanHub/Android-Image-Cropper")
+            credentials {
+                username = githubProperties['gpr.usr'] ?: System.getenv("GPR_USER")
+                password = githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
+            }
+        }
+        maven {
+            name = 'CustomMavenRepo'
+            url = "file://${buildDir}/repo"
+        }
+    }
+
+    publications {
+        cropper(MavenPublication) {
+            groupId LIB_GROUP_ID
+            artifactId LIB_ARTIFACT_ID
+            version LIB_VERSION
+            artifact("$buildDir/outputs/aar/cropper-release.aar")
+            artifact(sourceJar)
+
+            pom.withXml {
+                def dependenciesNode = asNode().appendNode('dependencies')
+
+                //Iterate over the compile dependencies (we don't want the test ones), adding a <dependency> node for each
+                configurations.api.allDependencies.each {
+                    def dependencyNode = dependenciesNode.appendNode('dependency')
+                    dependencyNode.appendNode('groupId', it.group)
+                    dependencyNode.appendNode('artifactId', it.name)
+                    dependencyNode.appendNode('version', it.version)
+                }
+            }
+        }
+    }
+}
