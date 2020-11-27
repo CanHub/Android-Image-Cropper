@@ -21,7 +21,7 @@ import android.widget.Toast;
 
 import com.canhub.cropper.CropImage;
 import com.canhub.cropper.CropImageView;
-import com.theartofdev.edmodo.cropper.quick.start.R;
+import com.canhub.cropper.quick.start.R;
 
 public class MainActivity extends AppCompatActivity {
 
