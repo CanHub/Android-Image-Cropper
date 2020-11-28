@@ -189,13 +189,7 @@ public final class CropImage {
       allIntents.addAll(getCameraIntents(context, packageManager));
     }
 
-    List<Intent> galleryIntents =
-        getGalleryIntents(packageManager, Intent.ACTION_GET_CONTENT, includeDocuments);
-    if (galleryIntents.size() == 0) {
-      // if no intents found for get-content try pick intent action (Huawei P9).
-      galleryIntents = getGalleryIntents(packageManager, Intent.ACTION_PICK, includeDocuments);
-    }
-    allIntents.addAll(galleryIntents);
+    allIntents.add(getGalleryIntent(Intent.ACTION_GET_CONTENT, includeDocuments));
 
     Intent target;
     if (allIntents.isEmpty()) {
@@ -262,35 +256,13 @@ public final class CropImage {
    * Get all Gallery intents for getting image from one of the apps of the device that handle
    * images.
    */
-  public static List<Intent> getGalleryIntents(
-      @NonNull PackageManager packageManager, String action, boolean includeDocuments) {
-    List<Intent> intents = new ArrayList<>();
-    Intent galleryIntent =
-        action == Intent.ACTION_GET_CONTENT
-            ? new Intent(action)
-            : new Intent(action, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-    galleryIntent.setType("image/*");
-    List<ResolveInfo> listGallery = packageManager.queryIntentActivities(galleryIntent, 0);
-    for (ResolveInfo res : listGallery) {
-      Intent intent = new Intent(galleryIntent);
-      intent.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
-      intent.setPackage(res.activityInfo.packageName);
-      intents.add(intent);
-    }
+  public static Intent getGalleryIntent(String action, boolean includeDocuments) {
+    Intent galleryIntent = new Intent();
+    galleryIntent.setAction(action);
+    galleryIntent.setType(includeDocuments ? "*/*" : "image/*");
+    galleryIntent.addCategory(Intent.CATEGORY_OPENABLE);
 
-    // remove documents intent
-    if (!includeDocuments) {
-      for (Intent intent : intents) {
-        if (intent
-            .getComponent()
-            .getClassName()
-            .equals("com.android.documentsui.DocumentsActivity")) {
-          intents.remove(intent);
-          break;
-        }
-      }
-    }
-    return intents;
+    return galleryIntent;
   }
 
   /**
