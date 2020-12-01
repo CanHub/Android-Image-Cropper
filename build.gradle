@@ -19,6 +19,7 @@ allprojects {
 
 ext {
     compileSdkVersion = 30
+    targetSdkVersion = 28
     buildToolsVersion = '29.0.3'
 
     // AndroidX
