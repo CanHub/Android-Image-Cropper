@@ -334,7 +334,7 @@ public final class CropImage {
      */
     public static Uri getCaptureImageOutputUri(@NonNull Context context) {
         Uri outputFileUri = null;
-        File getImage = context.getExternalCacheDir();
+        File getImage = context.getCacheDir();
         if (getImage != null) {
             // We have this because of a HUAWEI path bug when we use getUriForFile
             if (new CommonVersionCheck().isAtLeastQ29()) {
