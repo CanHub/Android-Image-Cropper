@@ -31,6 +31,7 @@ import android.graphics.RectF;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.provider.MediaStore;
@@ -333,20 +334,26 @@ public final class CropImage {
      *                activity/fragment/widget.
      */
     public static Uri getCaptureImageOutputUri(@NonNull Context context) {
-        Uri outputFileUri = null;
-        File getImage = context.getCacheDir();
-        if (getImage != null) {
-            // We have this because of a HUAWEI path bug when we use getUriForFile
-            if (new CommonVersionCheck().isAtLeastQ29()) {
+        Uri outputFileUri;
+        File getImage;
+
+        // We have this because of a HUAWEI path bug when we use getUriForFile
+        if (new CommonVersionCheck().isAtLeastQ29()) {
+            getImage = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+            try {
                 outputFileUri = FileProvider.getUriForFile(
                         context,
                         context.getPackageName() + CommonValues.authority,
-                        new File(getImage.getPath(), "pickImageResult.jpeg")
+                        File.createTempFile("pickImageResult", ".jpeg", getImage)
                 );
-            } else {
+            } catch (Exception e) {
                 outputFileUri = Uri.fromFile(new File(getImage.getPath(), "pickImageResult.jpeg"));
             }
+        } else {
+            getImage = context.getExternalCacheDir();
+            outputFileUri = Uri.fromFile(new File(getImage.getPath(), "pickImageResult.jpeg"));
         }
+
         return outputFileUri;
     }
 
