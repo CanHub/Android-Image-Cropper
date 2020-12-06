@@ -1,3 +1,5 @@
+[Hot to migrate from ArthurHub](https://github.com/CanHub/Android-Image-Cropper/wiki/How-to-migrate-Android-Image-Cropper)
+
 Android Image Cropper
 =======
 **Powerful** (Zoom, Rotation, Multi-Source);

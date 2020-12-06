@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 apply from: file('publish.gradle')
 
 android {
@@ -6,13 +7,13 @@ android {
     buildToolsVersion rootProject.buildToolsVersion
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion rootProject.compileSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
         versionCode 1
         versionName "1.0.0"
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     lintOptions {
         abortOnError false
@@ -20,7 +21,12 @@ android {
 }
 
 dependencies {
-    api "androidx.appcompat:appcompat:$androidXLibraryVersion"
-    implementation "androidx.exifinterface:exifinterface:$androidXLibraryVersion"
+    api "androidx.appcompat:appcompat:$androidXAppCompatVersion"
+    implementation "androidx.exifinterface:exifinterface:$androidXExifVersion"
+    implementation "androidx.core:core-ktx:+"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+repositories {
+    mavenCentral()
 }
 
