@@ -39,7 +39,9 @@ import javax.microedition.khronos.egl.EGLDisplay;
 
 import androidx.core.content.FileProvider;
 import androidx.exifinterface.media.ExifInterface;
-//Uri.fromFile(file) cases to FileProvider.getUriForFile(context, AUTHORITY, file)
+
+import com.canhub.cropper.common.CommonValues;
+import com.canhub.cropper.common.CommonVersionCheck;
 
 /**
  * Utility class that deals with operations with an ImageView.
@@ -409,11 +411,17 @@ final class BitmapUtils {
         try {
             boolean needSave = true;
             if (uri == null) {
-                uri = FileProvider.getUriForFile(
-                        context,
-                        "",
-                        File.createTempFile("aic_state_store_temp", ".jpg", context.getCacheDir())
-                );
+                // We have this because of a HUAWEI path bug when we use getUriForFile
+                if (new CommonVersionCheck().isAtLeastQ29()) {
+                    uri = FileProvider.getUriForFile(
+                            context,
+                            context.getPackageName() + CommonValues.authority,
+                            File.createTempFile("aic_state_store_temp", ".jpg", context.getCacheDir())
+                    );
+                } else {
+                    uri = Uri.fromFile(
+                            File.createTempFile("aic_state_store_temp", ".jpg", context.getCacheDir()));
+                }
 
             } else if (new File(uri.getPath()).exists()) {
                 needSave = false;
