@@ -29,6 +29,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
+import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -310,11 +311,19 @@ public class CropImageActivity extends AppCompatActivity
                                 : mOptions.outputCompressFormat == Bitmap.CompressFormat.PNG ? ".png" : ".webp";
                 // We have this because of a HUAWEI path bug when we use getUriForFile
                 if (new CommonVersionCheck().isAtLeastQ29()) {
-                    outputUri = FileProvider.getUriForFile(
-                            getApplicationContext(),
-                            getApplicationContext().getPackageName() + CommonValues.authority,
-                            File.createTempFile("cropped", ext, getCacheDir())
-                    );
+                    try {
+                        outputUri = FileProvider.getUriForFile(
+                                getApplicationContext(),
+                                getApplicationContext().getPackageName() + CommonValues.authority,
+                                File.createTempFile("cropped", ext, getExternalFilesDir(Environment.DIRECTORY_PICTURES))
+                        );
+                    } catch (Exception e) {
+                        outputUri = FileProvider.getUriForFile(
+                                getApplicationContext(),
+                                getApplicationContext().getPackageName() + CommonValues.authority,
+                                File.createTempFile("cropped", ext, getCacheDir())
+                        );
+                    }
                 } else {
                     outputUri = Uri.fromFile(File.createTempFile("cropped", ext, getCacheDir()));
                 }
