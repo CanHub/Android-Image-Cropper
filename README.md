@@ -1,4 +1,4 @@
-[Hot to migrate from ArthurHub](https://github.com/CanHub/Android-Image-Cropper/wiki/How-to-migrate-Android-Image-Cropper)
+[🚨How to migrate from ArthurHub/Android-Image-Cropper🚨](https://github.com/CanHub/Android-Image-Cropper/wiki/🚨-How-to-migrate-Android-Image-Cropper--🚨)
 
 Android Image Cropper
 =======
