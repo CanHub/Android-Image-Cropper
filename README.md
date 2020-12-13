@@ -51,7 +51,7 @@ allprojects {
 - Add the dependency
 ```
 dependencies {
-    implementation 'com.canhub.cropper:android-image-cropper:1.0.0'
+    implementation 'com.canhub.cropper:android-image-cropper:1.1.0'
 }
 ```
 
