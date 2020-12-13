@@ -1,2 +1,15 @@
-<manifest package="com.canhub.cropper">
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.canhub.cropper">
+    <application>
+        <provider
+            android:name=".CropFileProvider"
+            android:authorities="${applicationId}.cropper.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/library_file_paths" />
+        </provider>
+    </application>
 </manifest>

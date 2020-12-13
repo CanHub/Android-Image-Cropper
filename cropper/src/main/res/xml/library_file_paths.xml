@@ -1,0 +1,4 @@
+<paths>
+    <files-path name="cropper" path="cropper-internal/" />
+    <external-files-path name="my_images" path="/" />
+</paths>
