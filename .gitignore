@@ -37,6 +37,7 @@ local.properties
 .idea/vcs.xml
 .idea/workspace.xml
 .idea/modules.xml
+/.idea/assetWizardSettings.xml
 *.iml
 *.ipr
 *.iws
