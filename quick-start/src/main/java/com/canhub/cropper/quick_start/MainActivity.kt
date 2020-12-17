@@ -1,63 +1,56 @@
-// "Therefore those skilled at the unorthodox
-// are infinite as heaven and earth,
-// inexhaustible as the great rivers.
-// When they come to an end,
-// they begin again,
-// like the days and months;
-// they die and are reborn,
-// like the four seasons."
-//
-// - Sun Tsu,
-// "The Art of War"
+package com.canhub.cropper.quick_start
 
-package com.canhub.cropper.quick_start;
+import android.content.Intent
+import android.os.Bundle
+import android.view.View
+import android.widget.ImageView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.canhub.cropper.CropImage
+import com.canhub.cropper.CropImageView
+import com.canhub.cropper.quick.start.R
+import com.canhub.cropper.quick.start.databinding.ActivityMainBinding
 
-import android.content.Intent;
-import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.Toast;
+class MainActivity : AppCompatActivity() {
 
-import com.canhub.cropper.CropImage;
-import com.canhub.cropper.CropImageView;
-import com.canhub.cropper.quick.start.R;
+    private lateinit var binding: ActivityMainBinding
 
-public class MainActivity extends AppCompatActivity {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
-  }
-
-  /** Start pick image activity with chooser. */
-  public void onSelectImageClick(View view) {
-    CropImage.activity()
-        .setGuidelines(CropImageView.Guidelines.ON)
-        .setActivityTitle("My Crop")
-        .setCropShape(CropImageView.CropShape.OVAL)
-        .setCropMenuCropButtonTitle("Done")
-        .setRequestedSize(400, 400)
-        .setCropMenuCropButtonIcon(R.drawable.ic_launcher)
-        .start(this);
-  }
-
-  @Override
-  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    super.onActivityResult(requestCode, resultCode, data);
-
-    // handle result of CropImageActivity
-    if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-      CropImage.ActivityResult result = CropImage.getActivityResult(data);
-      if (resultCode == RESULT_OK) {
-        ((ImageView) findViewById(R.id.quick_start_cropped_image)).setImageURI(result.getUri());
-        Toast.makeText(
-                this, "Cropping successful, Sample: " + result.getSampleSize(), Toast.LENGTH_LONG)
-            .show();
-      } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-        Toast.makeText(this, "Cropping failed: " + result.getError(), Toast.LENGTH_LONG).show();
-      }
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
     }
-  }
+
+    /** Start pick image activity with chooser.  */
+    fun onSelectImageClick() {
+        CropImage.activity()
+            .setGuidelines(CropImageView.Guidelines.ON)
+            .setActivityTitle("My Crop")
+            .setCropShape(CropImageView.CropShape.OVAL)
+            .setCropMenuCropButtonTitle("Done")
+            .setRequestedSize(400, 400)
+            .setCropMenuCropButtonIcon(R.drawable.ic_launcher)
+            .start(this)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        // handle result of CropImageActivity
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+
+            val result = CropImage.getActivityResult(data)
+            val message = when (resultCode) {
+                RESULT_OK -> {
+                    binding.quickStartCroppedImage.setImageURI(result.uri)
+                    "Cropping successful, Sample: " + result.sampleSize
+                }
+                CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE ->
+                    "Cropping failed: " + result.error
+                else -> result.error.toString()
+            }
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+        }
+    }
 }
