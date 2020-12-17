@@ -1,43 +1,52 @@
-package com.canhub.cropper.test;
+package com.canhub.cropper.test
 
-import android.content.Intent;
-import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.Toast;
+import android.content.Intent
+import android.os.Bundle
+import android.view.View
+import android.widget.ImageView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.canhub.cropper.CropImage
+import com.canhub.cropper.CropImageView
+import com.example.test.R
+import com.example.test.databinding.ActivityMainBinding
 
-import com.example.test.R;
-import com.canhub.cropper.CropImage;
-import com.canhub.cropper.CropImageView;
+class MainActivity : AppCompatActivity() {
 
-public class MainActivity extends AppCompatActivity {
+    private lateinit var binding: ActivityMainBinding
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
-  }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-  /** Start pick image activity with chooser. */
-  public void onSelectImageClick(View view) {
-    CropImage.activity(null).setGuidelines(CropImageView.Guidelines.ON).start(this);
-  }
-
-  @Override
-  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-    // handle result of CropImageActivity
-    if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-      CropImage.ActivityResult result = CropImage.getActivityResult(data);
-      if (resultCode == RESULT_OK) {
-        ((ImageView) findViewById(R.id.quick_start_cropped_image)).setImageURI(result.getUri());
-        Toast.makeText(
-                this, "Cropping successful, Sample: " + result.getSampleSize(), Toast.LENGTH_LONG)
-            .show();
-      } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-        Toast.makeText(this, "Cropping failed: " + result.getError(), Toast.LENGTH_LONG).show();
-      }
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
     }
-  }
+
+    /** Start pick image activity with chooser.  */
+    fun onSelectImageClick() {
+        CropImage
+            .activity(null)
+            .setGuidelines(CropImageView.Guidelines.ON)
+            .start(this)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        // handle result of CropImageActivity
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+
+            val result = CropImage.getActivityResult(data)
+            val message = when (resultCode) {
+                RESULT_OK -> {
+                    binding.quickStartCroppedImage.setImageURI(result.uri)
+                    "Cropping successful, Sample: " + result.sampleSize
+                }
+                CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE ->
+                    "Cropping failed: " + result.error
+                else -> result.error.toString()
+            }
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+        }
+    }
 }
