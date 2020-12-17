@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ### Changed
 - Java to kotlin
+- Cange icons from PNG to vectors
 
 ## [1.1.0] - 13/12/20
 ### Changed

@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="crop_image_activity_title"></string>
-    <string name="crop_image_menu_rotate_left">Girar para a esquerda</string>
-    <string name="crop_image_menu_rotate_right">Girar para a direita</string>
+    <string name="ic_rotate_left_24">Girar para a esquerda</string>
+    <string name="ic_rotate_right_24">Girar para a direita</string>
     <string name="crop_image_menu_crop">Cortar</string>
-    <string name="crop_image_menu_flip">Espelhar</string>
-    <string name="crop_image_menu_flip_horizontally">Espelhar na horizontal</string>
-    <string name="crop_image_menu_flip_vertically">Espelhar na vertifcal</string>
-
+    <string name="ic_flip_24">Espelhar</string>
+    <string name="ic_flip_24_horizontally">Espelhar na horizontal</string>
+    <string name="ic_flip_24_vertically">Espelhar na vertifcal</string>
     <string name="pick_image_intent_chooser_title">Escolher foto a partir de</string>
-
+    <string name="crop_image_activity_no_permissions">Cancelando, permissões negadas mano</string>
 </resources>

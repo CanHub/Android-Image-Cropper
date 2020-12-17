@@ -2,12 +2,12 @@
 <resources>
 
     <string name="crop_image_activity_title"></string>
-    <string name="crop_image_menu_rotate_left">Ruota in senso antiorario</string>
-    <string name="crop_image_menu_rotate_right">Ruota</string>
+    <string name="ic_rotate_left_24">Ruota in senso antiorario</string>
+    <string name="ic_rotate_right_24">Ruota</string>
     <string name="crop_image_menu_crop">Ritaglia</string>
-    <string name="crop_image_menu_flip">Capovolgi</string>
-    <string name="crop_image_menu_flip_horizontally">Capovolgi orizzontalmente</string>
-    <string name="crop_image_menu_flip_vertically">Capovolgi verticalmente</string>
+    <string name="ic_flip_24">Capovolgi</string>
+    <string name="ic_flip_24_horizontally">Capovolgi orizzontalmente</string>
+    <string name="ic_flip_24_vertically">Capovolgi verticalmente</string>
 
     <string name="pick_image_intent_chooser_title">Seleziona origine</string>
 

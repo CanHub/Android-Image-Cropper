@@ -3,28 +3,28 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/crop_image_menu_rotate_left"
-        android:icon="@drawable/crop_image_menu_rotate_left"
-        android:title="@string/crop_image_menu_rotate_left"
+        android:id="@+id/ic_rotate_left_24"
+        android:icon="@drawable/ic_rotate_left_24"
+        android:title="@string/ic_rotate_left_24"
         android:visible="false"
         app:showAsAction="ifRoom"/>
     <item
-        android:id="@+id/crop_image_menu_rotate_right"
-        android:icon="@drawable/crop_image_menu_rotate_right"
-        android:title="@string/crop_image_menu_rotate_right"
+        android:id="@+id/ic_rotate_right_24"
+        android:icon="@drawable/ic_rotate_right_24"
+        android:title="@string/ic_rotate_right_24"
         app:showAsAction="ifRoom"/>
     <item
-        android:id="@+id/crop_image_menu_flip"
-        android:icon="@drawable/crop_image_menu_flip"
-        android:title="@string/crop_image_menu_flip"
+        android:id="@+id/ic_flip_24"
+        android:icon="@drawable/ic_flip_24"
+        android:title="@string/ic_flip_24"
         app:showAsAction="ifRoom">
         <menu>
             <item
-                android:id="@+id/crop_image_menu_flip_horizontally"
-                android:title="@string/crop_image_menu_flip_horizontally"/>
+                android:id="@+id/ic_flip_24_horizontally"
+                android:title="@string/ic_flip_24_horizontally"/>
             <item
-                android:id="@+id/crop_image_menu_flip_vertically"
-                android:title="@string/crop_image_menu_flip_vertically"/>
+                android:id="@+id/ic_flip_24_vertically"
+                android:title="@string/ic_flip_24_vertically"/>
         </menu>
     </item>
     <item

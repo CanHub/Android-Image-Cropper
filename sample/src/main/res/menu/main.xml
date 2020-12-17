@@ -7,7 +7,7 @@
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/main_action_flip"
-        android:icon="@drawable/crop_image_menu_flip"
+        android:icon="@drawable/ic_flip_24"
         android:title="@string/main_action_flip"
         app:showAsAction="ifRoom">
         <menu>

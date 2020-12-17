@@ -2,12 +2,12 @@
 <resources>
 
     <string name="crop_image_activity_title"></string>
-    <string name="crop_image_menu_rotate_left">gegen den Uhrzeigersinn drehen</string>
-    <string name="crop_image_menu_rotate_right">drehen</string>
+    <string name="ic_rotate_left_24">gegen den Uhrzeigersinn drehen</string>
+    <string name="ic_rotate_right_24">drehen</string>
     <string name="crop_image_menu_crop">zuschneiden</string>
-    <string name="crop_image_menu_flip">spiegeln</string>
-    <string name="crop_image_menu_flip_horizontally">horizontal spiegeln</string>
-    <string name="crop_image_menu_flip_vertically">vertikal spiegeln</string>
+    <string name="ic_flip_24">spiegeln</string>
+    <string name="ic_flip_24_horizontally">horizontal spiegeln</string>
+    <string name="ic_flip_24_vertically">vertikal spiegeln</string>
 
     <string name="pick_image_intent_chooser_title">Quelle wählen</string>
 

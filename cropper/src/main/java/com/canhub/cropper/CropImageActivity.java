@@ -127,14 +127,14 @@ public class CropImageActivity extends AppCompatActivity
         getMenuInflater().inflate(R.menu.crop_image_menu, menu);
 
         if (!mOptions.allowRotation) {
-            menu.removeItem(R.id.crop_image_menu_rotate_left);
-            menu.removeItem(R.id.crop_image_menu_rotate_right);
+            menu.removeItem(R.id.ic_rotate_left_24);
+            menu.removeItem(R.id.ic_rotate_right_24);
         } else if (mOptions.allowCounterRotation) {
-            menu.findItem(R.id.crop_image_menu_rotate_left).setVisible(true);
+            menu.findItem(R.id.ic_rotate_left_24).setVisible(true);
         }
 
         if (!mOptions.allowFlipping) {
-            menu.removeItem(R.id.crop_image_menu_flip);
+            menu.removeItem(R.id.ic_flip_24);
         }
 
         if (mOptions.cropMenuCropButtonTitle != null) {
@@ -153,10 +153,10 @@ public class CropImageActivity extends AppCompatActivity
 
         if (mOptions.activityMenuIconColor != 0) {
             updateMenuItemIconColor(
-                    menu, R.id.crop_image_menu_rotate_left, mOptions.activityMenuIconColor);
+                    menu, R.id.ic_rotate_left_24, mOptions.activityMenuIconColor);
             updateMenuItemIconColor(
-                    menu, R.id.crop_image_menu_rotate_right, mOptions.activityMenuIconColor);
-            updateMenuItemIconColor(menu, R.id.crop_image_menu_flip, mOptions.activityMenuIconColor);
+                    menu, R.id.ic_rotate_right_24, mOptions.activityMenuIconColor);
+            updateMenuItemIconColor(menu, R.id.ic_flip_24, mOptions.activityMenuIconColor);
             if (cropIcon != null) {
                 updateMenuItemIconColor(menu, R.id.crop_image_menu_crop, mOptions.activityMenuIconColor);
             }
@@ -170,19 +170,19 @@ public class CropImageActivity extends AppCompatActivity
             cropImage();
             return true;
         }
-        if (item.getItemId() == R.id.crop_image_menu_rotate_left) {
+        if (item.getItemId() == R.id.ic_rotate_left_24) {
             rotateImage(-mOptions.rotationDegrees);
             return true;
         }
-        if (item.getItemId() == R.id.crop_image_menu_rotate_right) {
+        if (item.getItemId() == R.id.ic_rotate_right_24) {
             rotateImage(mOptions.rotationDegrees);
             return true;
         }
-        if (item.getItemId() == R.id.crop_image_menu_flip_horizontally) {
+        if (item.getItemId() == R.id.ic_flip_24_horizontally) {
             mCropImageView.flipImageHorizontally();
             return true;
         }
-        if (item.getItemId() == R.id.crop_image_menu_flip_vertically) {
+        if (item.getItemId() == R.id.ic_flip_24_vertically) {
             mCropImageView.flipImageVertically();
             return true;
         }
