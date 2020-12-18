@@ -20,14 +20,13 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-    }
 
-    /** Start pick image activity with chooser.  */
-    fun onSelectImageClick() {
-        CropImage
-            .activity(null)
-            .setGuidelines(CropImageView.Guidelines.ON)
-            .start(this)
+        binding.cta.setOnClickListener {
+            CropImage
+                .activity(null)
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .start(this)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
