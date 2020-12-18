@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="crop_image_menu_rotate_left">چرخش در جهت عقربه های ساعت</string>
-    <string name="crop_image_menu_rotate_right">چرخش</string>
+    <string name="crop_image_activity_title"></string>
+    <string name="ic_rotate_left_24">چرخش در جهت عقربه های ساعت</string>
+    <string name="ic_rotate_right_24">چرخش</string>
     <string name="crop_image_menu_crop">بریدن (کراپ)</string>
-    <string name="crop_image_menu_flip">آیینه کردن</string>
-    <string name="crop_image_menu_flip_horizontally">آیینه کردن به صورت افقی</string>
-    <string name="crop_image_menu_flip_vertically">آیینه کردن به صورت عمودی</string>
+    <string name="ic_flip_24">آیینه کردن</string>
+    <string name="ic_flip_24_horizontally">آیینه کردن به صورت افقی</string>
+    <string name="ic_flip_24_vertically">آیینه کردن به صورت عمودی</string>
     <string name="pick_image_intent_chooser_title">منبع را انتخاب کنید</string>
     <string name="crop_image_activity_no_permissions">لغو، مجوزهای مورد نیاز ارائه نشده</string>
 </resources>

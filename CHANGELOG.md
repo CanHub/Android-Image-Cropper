@@ -9,14 +9,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - `Fixed` for any bug fixes.
 - `Security` in case of vulnerabilities.
 
+## unreleased
+### Added
+- Ktlint
+
+### Changed
+- Java to kotlin
+- Cange icons from PNG to vectors
 
 ## [1.1.0] - 13/12/20
 ### Changed
 - Update many library versions
 
 ### Fixed
-- Android 10/11 Permissions
-- Android 10/11 Scope Storage
+- Android 10, 11 Permissions
+- Android 10, 11 Scope Storage
 
 ## [1.0.0] - 21/11/20
 - Copy from previous repo [ArthurHub](https://github.com/ArthurHub/Android-Image-Cropper/)

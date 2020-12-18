@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -13,15 +14,15 @@
         android:text="@string/main_activity_desciption"/>
 
     <Button
+        android:id="@+id/buttonCta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="12dp"
-        android:onClick="onSelectImageClick"
         android:text="@string/main_button_select_image"/>
 
     <ImageView
-        android:id="@+id/quick_start_cropped_image"
+        android:id="@+id/quickStartCroppedImage"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"

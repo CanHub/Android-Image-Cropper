@@ -2,12 +2,12 @@
 <resources>
 
     <string name="crop_image_activity_title"></string>
-    <string name="crop_image_menu_rotate_left">반시계 회전</string>
-    <string name="crop_image_menu_rotate_right">회전</string>
+    <string name="ic_rotate_left_24">반시계 회전</string>
+    <string name="ic_rotate_right_24">회전</string>
     <string name="crop_image_menu_crop">자르기</string>
-    <string name="crop_image_menu_flip">반전</string>
-    <string name="crop_image_menu_flip_horizontally">좌우반전</string>
-    <string name="crop_image_menu_flip_vertically">상하반전</string>
+    <string name="ic_flip_24">반전</string>
+    <string name="ic_flip_24_horizontally">좌우반전</string>
+    <string name="ic_flip_24_vertically">상하반전</string>
 
     <string name="pick_image_intent_chooser_title">이미지 선택</string>
 

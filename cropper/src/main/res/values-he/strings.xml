@@ -2,12 +2,12 @@
 <resources>
 
     <string name="crop_image_activity_title"></string>
-    <string name="crop_image_menu_rotate_left">סובב נגד כיוון השעון</string>
-    <string name="crop_image_menu_rotate_right">סובב</string>
+    <string name="ic_rotate_left_24">סובב נגד כיוון השעון</string>
+    <string name="ic_rotate_right_24">סובב</string>
     <string name="crop_image_menu_crop">חתוך</string>
-    <string name="crop_image_menu_flip">הפוך</string>
-    <string name="crop_image_menu_flip_horizontally">הפוך אופקית</string>
-    <string name="crop_image_menu_flip_vertically">הפוך אנכית</string>
+    <string name="ic_flip_24">הפוך</string>
+    <string name="ic_flip_24_horizontally">הפוך אופקית</string>
+    <string name="ic_flip_24_vertically">הפוך אנכית</string>
 
     <string name="pick_image_intent_chooser_title">בחר מקור</string>
 

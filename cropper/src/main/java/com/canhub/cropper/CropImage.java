@@ -448,6 +448,8 @@ public final class CropImage {
      *             Intent)}.
      * @return Crop Image Activity Result object or null if none exists
      */
+    // TODO don't return null
+    @Nullable
     public static ActivityResult getActivityResult(@Nullable Intent data) {
         return data != null ? (ActivityResult) data.getParcelableExtra(CROP_IMAGE_EXTRA_RESULT) : null;
     }

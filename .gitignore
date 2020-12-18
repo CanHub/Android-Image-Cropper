@@ -26,7 +26,18 @@ local.properties
 .settings/
 
 #IntelliJ IDEA
-.idea
+.idea/caches
+.idea/dictionaries
+.idea/libraries
+.idea/modules
+.idea/compiler.xml
+.idea/gradle.xml
+.idea/jarRepositories.xml
+.idea/misc.xml
+.idea/vcs.xml
+.idea/workspace.xml
+.idea/modules.xml
+/.idea/assetWizardSettings.xml
 *.iml
 *.ipr
 *.iws
