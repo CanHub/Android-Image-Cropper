@@ -68,9 +68,9 @@ class CropImageActivity :
                     CropImage.startPickImageActivity(this)
                 }
             } else if (cropImageUri?.let {
-                    CropImage.isReadExternalStoragePermissionsRequired(this, it)
-                } == true
-                && CommonVersionCheck().isAtLeastM23()
+                CropImage.isReadExternalStoragePermissionsRequired(this, it)
+            } == true &&
+                CommonVersionCheck().isAtLeastM23()
             ) {
                 // request permissions and handle the result in onRequestPermissionsResult()
                 requestPermissions(
@@ -172,9 +172,9 @@ class CropImageActivity :
                 // For API >= 23 we need to check specifically that we have permissions to read external
                 // storage.
                 if (cropImageUri?.let {
-                        CropImage.isReadExternalStoragePermissionsRequired(this, it)
-                    } == true
-                    && CommonVersionCheck().isAtLeastM23()
+                    CropImage.isReadExternalStoragePermissionsRequired(this, it)
+                } == true &&
+                    CommonVersionCheck().isAtLeastM23()
                 ) {
                     // request permissions and handle the result in onRequestPermissionsResult()
                     requestPermissions(
@@ -195,9 +195,9 @@ class CropImageActivity :
         grantResults: IntArray
     ) {
         if (requestCode == CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE) {
-            if (cropImageUri != null
-                && grantResults.isNotEmpty()
-                && grantResults[0] == PackageManager.PERMISSION_GRANTED
+            if (cropImageUri != null &&
+                grantResults.isNotEmpty() &&
+                grantResults[0] == PackageManager.PERMISSION_GRANTED
             ) {
                 // required permissions granted, start crop image activity
                 binding.cropImageView.setImageUriAsync(cropImageUri)
@@ -223,7 +223,7 @@ class CropImageActivity :
             if (options.initialRotation > -1) {
                 binding.cropImageView.rotatedDegrees = options.initialRotation
             }
-        } else  setResult(null, error, 1)
+        } else setResult(null, error, 1)
     }
 
     override fun onCropImageComplete(view: CropImageView, result: CropResult) {
@@ -254,7 +254,7 @@ class CropImageActivity :
      */
     private fun rotateImage(degrees: Int) {
         binding.cropImageView.rotateImage(degrees)
-    }// We have this because of a HUAWEI path bug when we use getUriForFile
+    } // We have this because of a HUAWEI path bug when we use getUriForFile
 
     /**
      * Get Android uri to save the cropped image into.<br></br>
@@ -303,7 +303,8 @@ class CropImageActivity :
     private fun setResult(uri: Uri?, error: Exception?, sampleSize: Int) {
         setResult(
             error?.let { CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE } ?: RESULT_OK,
-            getResultIntent(uri, error, sampleSize))
+            getResultIntent(uri, error, sampleSize)
+        )
         finish()
     }
 

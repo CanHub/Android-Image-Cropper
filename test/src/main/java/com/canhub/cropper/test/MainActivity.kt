@@ -2,13 +2,10 @@ package com.canhub.cropper.test
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.canhub.cropper.CropImage
 import com.canhub.cropper.CropImageView
-import com.example.test.R
 import com.example.test.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
