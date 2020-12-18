@@ -20,18 +20,17 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-    }
 
-    /** Start pick image activity with chooser.  */
-    fun onSelectImageClick() {
-        CropImage.activity()
-            .setGuidelines(CropImageView.Guidelines.ON)
-            .setActivityTitle("My Crop")
-            .setCropShape(CropImageView.CropShape.OVAL)
-            .setCropMenuCropButtonTitle("Done")
-            .setRequestedSize(400, 400)
-            .setCropMenuCropButtonIcon(R.drawable.ic_launcher)
-            .start(this)
+        binding.buttonCta.setOnClickListener {
+            CropImage.activity()
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .setActivityTitle("My Crop")
+                .setCropShape(CropImageView.CropShape.OVAL)
+                .setCropMenuCropButtonTitle("Done")
+                .setRequestedSize(400, 400)
+                .setCropMenuCropButtonIcon(R.drawable.ic_launcher)
+                .start(this)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -43,12 +42,12 @@ class MainActivity : AppCompatActivity() {
             val result = CropImage.getActivityResult(data)
             val message = when (resultCode) {
                 RESULT_OK -> {
-                    binding.quickStartCroppedImage.setImageURI(result.uri)
-                    "Cropping successful, Sample: " + result.sampleSize
+                    binding.quickStartCroppedImage.setImageURI(result?.uri)
+                    "Cropping successful, Sample: ${result?.sampleSize}"
                 }
                 CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE ->
-                    "Cropping failed: " + result.error
-                else -> result.error.toString()
+                    "Cropping failed: ${result?.error}"
+                else -> result?.error.toString()
             }
             Toast.makeText(this, message, Toast.LENGTH_LONG).show()
         }
