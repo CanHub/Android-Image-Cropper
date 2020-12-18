@@ -38,12 +38,12 @@ class MainActivity : AppCompatActivity() {
             val result = CropImage.getActivityResult(data)
             val message = when (resultCode) {
                 RESULT_OK -> {
-                    binding.quickStartCroppedImage.setImageURI(result.uri)
-                    "Cropping successful, Sample: " + result.sampleSize
+                    binding.quickStartCroppedImage.setImageURI(result?.uri)
+                    "Cropping successful, Sample: ${result?.sampleSize}"
                 }
                 CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE ->
-                    "Cropping failed: " + result.error
-                else -> result.error.toString()
+                    "Cropping failed: ${result?.error}"
+                else -> result?.error?.toString() ?: "Unknown"
             }
             Toast.makeText(this, message, Toast.LENGTH_LONG).show()
         }
