@@ -216,14 +216,14 @@ class CropImageActivity :
     }
 
     override fun onSetImageUriComplete(view: CropImageView, uri: Uri, error: Exception?) {
-        error?.let {
+        if (error == null) {
             if (options.initialCropWindowRectangle != null) {
                 binding.cropImageView.cropRect = options.initialCropWindowRectangle
             }
             if (options.initialRotation > -1) {
                 binding.cropImageView.rotatedDegrees = options.initialRotation
             }
-        } ?: setResult(null, error, 1)
+        } else  setResult(null, error, 1)
     }
 
     override fun onCropImageComplete(view: CropImageView, result: CropResult) {
