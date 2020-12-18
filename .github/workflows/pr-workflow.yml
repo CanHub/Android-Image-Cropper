@@ -1,0 +1,23 @@
+name: pr_ci
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: Ktlint check for code conventions
+        run: ./gradlew ktlintCheck
+
+      - name: Run unit test in debug build
+        id: testDebug
+        run: ./gradlew testDebugUnitTest
+
+      - name: Assemble to debug
+        run: ./gradlew assembleDebug
