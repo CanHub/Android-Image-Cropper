@@ -30,7 +30,7 @@ Android Image Cropper
 
 ```groovy
   dependencies {
-       implementation 'com.github.Canato:Android-Image-Cropper:${version}'
+       implementation 'com.github.CanHub:Android-Image-Cropper:${version}'
   }
 ```
 
