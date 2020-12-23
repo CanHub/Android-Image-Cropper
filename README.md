@@ -1,4 +1,4 @@
-[![](https://jitpack.io/v/Canato/Android-Image-Cropper.svg)](https://jitpack.io/#Canato/Android-Image-Cropper)
+[![](https://jitpack.io/v/CanHub/Android-Image-Cropper.svg)](https://jitpack.io/#CanHub/Android-Image-Cropper)
 
 [🚨How to migrate from ArthurHub/Android-Image-Cropper🚨](https://github.com/CanHub/Android-Image-Cropper/wiki/🚨-How-to-migrate-Android-Image-Cropper--🚨)
 
