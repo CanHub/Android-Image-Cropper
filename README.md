@@ -1,3 +1,5 @@
+[![](https://jitpack.io/v/Canato/Android-Image-Cropper.svg)](https://jitpack.io/#Canato/Android-Image-Cropper)
+
 [🚨How to migrate from ArthurHub/Android-Image-Cropper🚨](https://github.com/CanHub/Android-Image-Cropper/wiki/🚨-How-to-migrate-Android-Image-Cropper--🚨)
 
 Android Image Cropper
@@ -13,59 +15,38 @@ Android Image Cropper
 
 [See GitHub Wiki for more info.](https://github.com/CanHub/Android-Image-Cropper/wiki)
 
+#### Step 1. Add the JitPack repository to your root build.gradle
 
-**The library is release with github Packages, if you already have github packages libraris can jump to second step**
-### 1. Generate a Personal Access Token for GitHub
-Reference: [Github Personal Access Token](https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/creating-a-personal-access-token)
-
-- Inside you GitHub account
-- Settings -> Developer Settings -> Personal Access Tokens -> Generate new token
-- Make sure you select the following scopes (“read:packages”) and Generate a token
-![read_package](https://github.com/CanHub/Android-Image-Cropper/blob/main/art/read_package.png?raw=true)
-- After Generating make sure to copy your new personal access token. You cannot see it again! The only option is to regenerate a key or create a new key.
-
-There are a few ways to set credentials as Gradle properties or system environment variables.
-For example, you can simply set GITHUB_USER & GITHUB_PERSONAL_ACCESS_TOKEN in gradle properties under your **home directory**: ~/.gradle/gradle.properties
-**NOT** in the project gradle.properties
-This values should not be public or commited to your repository, your CI can use secrets for it
-
-### 2. Update gradles and implement it
-- On project root `build.gradle`
-
-```
-allprojects {
-    repositories {
-        // google(), jcenter(), etc...
-        mavenCentral()
-        maven {
-            name = "Android-Image-Cropper"
-            url = uri("https://maven.pkg.github.com/CanHub/Android-Image-Cropper")
-            credentials {
-                username = System.getenv('GITHUB_USER')
-                password = System.getenv('GITHUB_PERSONAL_ACCESS_TOKEN')
-            }
-        }
-    }
-}
-```
-- Add the dependency
-```
-dependencies {
-    implementation 'com.canhub.cropper:android-image-cropper:1.1.0'
-}
+```groovy
+  allprojects {
+     repositories {
+       ....
+       maven { url 'https://jitpack.io' }
+     }
+  }
 ```
 
-- Add permissions to manifest
+#### Step 2. Add the dependency
+
+```groovy
+  dependencies {
+       implementation 'com.github.Canato:Android-Image-Cropper:${version}'
+  }
+```
+
+#### Step 3. Add permissions to manifest
 
  ```
  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
  ```
 
-- Add this line to your Proguard config file
+ #### Step 4. Add this line to your Proguard config file
+
 ```
 -keep class androidx.appcompat.widget.** { *; }
 ```
+
 
 ## Using Activity
 
