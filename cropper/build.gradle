@@ -1,6 +1,5 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-//apply from: file('publish.gradle')
 apply plugin: 'com.github.dcendents.android-maven'
 
 group='com.github.Canato'
@@ -12,7 +11,7 @@ android {
         minSdkVersion 14
         targetSdkVersion rootProject.targetSdkVersion
         versionCode 1
-        versionName "1.11.0"
+        versionName "1.1.1"
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
