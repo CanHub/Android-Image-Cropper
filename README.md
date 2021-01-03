@@ -33,6 +33,7 @@ Android Image Cropper
        implementation 'com.github.CanHub:Android-Image-Cropper:${version}'
   }
 ```
+[Latest Release Version](https://github.com/CanHub/Android-Image-Cropper/releases)
 
 #### Step 3. Add permissions to manifest
 
