@@ -412,7 +412,7 @@ final class BitmapUtils {
             boolean needSave = true;
             if (uri == null) {
                 // We have this because of a HUAWEI path bug when we use getUriForFile
-                if (new CommonVersionCheck().isAtLeastQ29()) {
+                if (CommonVersionCheck.INSTANCE.isAtLeastQ29()) {
                     uri = FileProvider.getUriForFile(
                             context,
                             context.getPackageName() + CommonValues.authority,

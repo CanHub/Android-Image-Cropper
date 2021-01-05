@@ -338,7 +338,7 @@ public final class CropImage {
         File getImage;
 
         // We have this because of a HUAWEI path bug when we use getUriForFile
-        if (new CommonVersionCheck().isAtLeastQ29()) {
+        if (CommonVersionCheck.INSTANCE.isAtLeastQ29()) {
             getImage = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
             try {
                 outputFileUri = FileProvider.getUriForFile(
