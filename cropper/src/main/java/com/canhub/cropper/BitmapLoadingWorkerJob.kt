@@ -71,7 +71,6 @@ internal class BitmapLoadingWorkerJob internal constructor(
         currentJob?.cancel()
     }
 
-
     // region: Inner class: Result
     /** The result of BitmapLoadingWorkerJob async loading.  */
     companion object class Result {
