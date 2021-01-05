@@ -135,7 +135,7 @@ class BitmapCroppingWorkerJob internal constructor(
                             flipHorizontally,
                             flipVertically
                         )
-                    } else if(bitmap != null) {
+                    } else if (bitmap != null) {
                         bitmapSampled = BitmapUtils.cropBitmapObjectHandleOOM(
                             bitmap,
                             cropPoints,
@@ -161,7 +161,11 @@ class BitmapCroppingWorkerJob internal constructor(
                         )
                     } else {
                         BitmapUtils.writeBitmapToUri(
-                            activity, resizedBitmap, saveUri, saveCompressFormat, saveCompressQuality
+                            activity,
+                            resizedBitmap,
+                            saveUri,
+                            saveCompressFormat,
+                            saveCompressQuality
                         )
                         resizedBitmap?.recycle()
                         onPostExecute(
@@ -192,7 +196,6 @@ class BitmapCroppingWorkerJob internal constructor(
                 result.bitmap.recycle()
             }
         }
-
     }
 
     fun cancel() {
