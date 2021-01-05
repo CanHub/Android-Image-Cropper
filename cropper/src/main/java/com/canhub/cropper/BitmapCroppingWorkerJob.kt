@@ -147,7 +147,7 @@ class BitmapCroppingWorkerJob internal constructor(
                             flipVertically
                         )
                     } else {
-                        onPostExecute(Result(null as Bitmap, 1))
+                        onPostExecute(Result(bitmap = null, 1))
                         return@launch
                     }
                     val resizedBitmap =

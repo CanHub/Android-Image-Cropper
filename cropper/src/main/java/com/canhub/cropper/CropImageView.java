@@ -22,7 +22,6 @@ import android.graphics.Matrix;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
 import androidx.exifinterface.media.ExifInterface;
@@ -171,7 +170,7 @@ public class CropImageView extends FrameLayout {
   private Uri mSaveInstanceStateBitmapUri;
 
   /** Task used to load bitmap async from UI thread */
-  private WeakReference<BitmapLoadingWorkerTask> mBitmapLoadingWorkerTask;
+  private WeakReference<BitmapLoadingWorkerJob> mBitmapLoadingWorkerJob;
 
   /** Task used to crop bitmap async from UI thread */
   private WeakReference<BitmapCroppingWorkerJob> mBitmapCroppingWorkerJob;
@@ -1009,12 +1008,12 @@ public class CropImageView extends FrameLayout {
    */
   public void setImageUriAsync(Uri uri) {
     if (uri != null) {
-      BitmapLoadingWorkerTask currentTask =
-          mBitmapLoadingWorkerTask != null ? mBitmapLoadingWorkerTask.get() : null;
+      BitmapLoadingWorkerJob currentTask =
+          mBitmapLoadingWorkerJob != null ? mBitmapLoadingWorkerJob.get() : null;
       if (currentTask != null) {
         // cancel previous loading (no check if the same URI because camera URI can be the same for
         // different images)
-        currentTask.cancel(true);
+        currentTask.cancel();
       }
 
       // either no existing task is working or we canceled it, need to load new URI
@@ -1022,8 +1021,8 @@ public class CropImageView extends FrameLayout {
       mRestoreCropWindowRect = null;
       mRestoreDegreesRotated = 0;
       mCropOverlayView.setInitialCropWindowRect(null);
-      mBitmapLoadingWorkerTask = new WeakReference<>(new BitmapLoadingWorkerTask(this, uri));
-      mBitmapLoadingWorkerTask.get().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+      mBitmapLoadingWorkerJob = new WeakReference<>(new BitmapLoadingWorkerJob((FragmentActivity)getContext(),this, uri));
+      mBitmapLoadingWorkerJob.get().start();
       setProgressBarVisibility();
     }
   }
@@ -1135,19 +1134,19 @@ public class CropImageView extends FrameLayout {
    *
    * @param result the result of bitmap loading
    */
-  void onSetImageUriAsyncComplete(BitmapLoadingWorkerTask.Result result) {
+  void onSetImageUriAsyncComplete(BitmapLoadingWorkerJob.Result result) {
 
-    mBitmapLoadingWorkerTask = null;
+    mBitmapLoadingWorkerJob = null;
     setProgressBarVisibility();
 
-    if (result.error == null) {
-      mInitialDegreesRotated = result.degreesRotated;
-      setBitmap(result.bitmap, 0, result.uri, result.loadSampleSize, result.degreesRotated);
+    if (result.getError() == null) {
+      mInitialDegreesRotated = result.getDegreesRotated();
+      setBitmap(result.getBitmap(), 0, result.getUri(), result.getLoadSampleSize(), result.getDegreesRotated());
     }
 
     OnSetImageUriCompleteListener listener = mOnSetImageUriCompleteListener;
     if (listener != null) {
-      listener.onSetImageUriComplete(this, result.uri, result.error);
+      listener.onSetImageUriComplete(this, result.getUri(), result.getError());
     }
   }
 
@@ -1347,8 +1346,8 @@ public class CropImageView extends FrameLayout {
       BitmapUtils.mStateBitmap = new Pair<>(key, new WeakReference<>(mBitmap));
       bundle.putString("LOADED_IMAGE_STATE_BITMAP_KEY", key);
     }
-    if (mBitmapLoadingWorkerTask != null) {
-      BitmapLoadingWorkerTask task = mBitmapLoadingWorkerTask.get();
+    if (mBitmapLoadingWorkerJob != null) {
+      BitmapLoadingWorkerJob task = mBitmapLoadingWorkerJob.get();
       if (task != null) {
         bundle.putParcelable("LOADING_IMAGE_URI", task.getUri());
       }
@@ -1382,7 +1381,7 @@ public class CropImageView extends FrameLayout {
       Bundle bundle = (Bundle) state;
 
       // prevent restoring state if already set by outside code
-      if (mBitmapLoadingWorkerTask == null
+      if (mBitmapLoadingWorkerJob == null
           && mLoadedImageUri == null
           && mBitmap == null
           && mImageResource == 0) {
@@ -1796,7 +1795,7 @@ public class CropImageView extends FrameLayout {
   private void setProgressBarVisibility() {
     boolean visible =
         mShowProgressBar
-            && (mBitmap == null && mBitmapLoadingWorkerTask != null
+            && (mBitmap == null && mBitmapLoadingWorkerJob != null
                 || mBitmapCroppingWorkerJob != null);
     mProgressBar.setVisibility(visible ? VISIBLE : INVISIBLE);
   }
