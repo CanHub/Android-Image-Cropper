@@ -227,7 +227,7 @@ final class BitmapUtils {
 
         // crop and rotate the cropped image in one operation
         Matrix matrix = new Matrix();
-        matrix.setRotate(degreesRotated, bitmap.getWidth() / 2, bitmap.getHeight() / 2);
+        matrix.setRotate(degreesRotated, bitmap.getWidth() / 2.0f, bitmap.getHeight() / 2.0f);
         matrix.postScale(flipHorizontally ? -scale : scale, flipVertically ? -scale : scale);
         Bitmap result =
                 Bitmap.createBitmap(bitmap, rect.left, rect.top, rect.width(), rect.height(), matrix, true);

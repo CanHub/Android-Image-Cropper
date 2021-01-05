@@ -43,7 +43,7 @@ import java.util.UUID;
 /** Custom view that provides cropping capabilities to an image. */
 public class CropImageView extends FrameLayout {
 
-  // region: Fields and Consts
+  // region: Fields and Constants
 
   /** Image view widget used to show the image for cropping. */
   private final ImageView mImageView;
@@ -333,9 +333,7 @@ public class CropImageView extends FrameLayout {
 
     mCropOverlayView = v.findViewById(R.id.CropOverlayView);
     mCropOverlayView.setCropWindowChangeListener(
-        new CropOverlayView.CropWindowChangeListener() {
-          @Override
-          public void onCropWindowChanged(boolean inProgress) {
+         inProgress -> {
             handleCropWindowChanged(inProgress, true);
             OnSetCropOverlayReleasedListener listener = mOnCropOverlayReleasedListener;
             if (listener != null && !inProgress) {
@@ -345,8 +343,7 @@ public class CropImageView extends FrameLayout {
             if (movedListener != null && inProgress) {
               movedListener.onCropOverlayMoved(getCropRect());
             }
-          }
-        });
+          });
     mCropOverlayView.setInitialAttributeValues(options);
 
     mProgressBar = v.findViewById(R.id.CropProgressBar);
