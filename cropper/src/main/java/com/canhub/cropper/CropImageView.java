@@ -26,6 +26,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
 import androidx.exifinterface.media.ExifInterface;
+import androidx.fragment.app.FragmentActivity;
+
 import android.util.AttributeSet;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -172,7 +174,7 @@ public class CropImageView extends FrameLayout {
   private WeakReference<BitmapLoadingWorkerTask> mBitmapLoadingWorkerTask;
 
   /** Task used to crop bitmap async from UI thread */
-  private WeakReference<BitmapCroppingWorkerTask> mBitmapCroppingWorkerTask;
+  private WeakReference<BitmapCroppingWorkerJob> mBitmapCroppingWorkerJob;
   // endregion
 
   public CropImageView(Context context) {
@@ -1158,9 +1160,9 @@ public class CropImageView extends FrameLayout {
    *
    * @param result the result of bitmap cropping
    */
-  void onImageCroppingAsyncComplete(BitmapCroppingWorkerTask.Result result) {
+  void onImageCroppingAsyncComplete(BitmapCroppingWorkerJob.Result result) {
 
-    mBitmapCroppingWorkerTask = null;
+    mBitmapCroppingWorkerJob = null;
     setProgressBarVisibility();
 
     OnCropImageCompleteListener listener = mOnCropImageCompleteListener;
@@ -1169,14 +1171,14 @@ public class CropImageView extends FrameLayout {
           new CropResult(
               mBitmap,
               mLoadedImageUri,
-              result.bitmap,
-              result.uri,
-              result.error,
+              result.getBitmap(),
+              result.getUri(),
+              result.getError(),
               getCropPoints(),
               getCropRect(),
               getWholeImageRect(),
               getRotatedDegrees(),
-              result.sampleSize);
+              result.getSampleSize());
       listener.onCropImageComplete(this, cropResult);
     }
   }
@@ -1268,11 +1270,11 @@ public class CropImageView extends FrameLayout {
     if (bitmap != null) {
       mImageView.clearAnimation();
 
-      BitmapCroppingWorkerTask currentTask =
-          mBitmapCroppingWorkerTask != null ? mBitmapCroppingWorkerTask.get() : null;
+      BitmapCroppingWorkerJob currentTask =
+          mBitmapCroppingWorkerJob != null ? mBitmapCroppingWorkerJob.get() : null;
       if (currentTask != null) {
         // cancel previous cropping
-        currentTask.cancel(true);
+        currentTask.cancel();
       }
 
       reqWidth = options != RequestSizeOptions.NONE ? reqWidth : 0;
@@ -1282,9 +1284,10 @@ public class CropImageView extends FrameLayout {
       int orgHeight = bitmap.getHeight() * mLoadedSampleSize;
       if (mLoadedImageUri != null
           && (mLoadedSampleSize > 1 || options == RequestSizeOptions.SAMPLING)) {
-        mBitmapCroppingWorkerTask =
+        mBitmapCroppingWorkerJob =
             new WeakReference<>(
-                new BitmapCroppingWorkerTask(
+                new BitmapCroppingWorkerJob(
+                        (FragmentActivity)getContext(),
                     this,
                     mLoadedImageUri,
                     getCropPoints(),
@@ -1303,9 +1306,10 @@ public class CropImageView extends FrameLayout {
                     saveCompressFormat,
                     saveCompressQuality));
       } else {
-        mBitmapCroppingWorkerTask =
+        mBitmapCroppingWorkerJob =
             new WeakReference<>(
-                new BitmapCroppingWorkerTask(
+                new BitmapCroppingWorkerJob(
+                        (FragmentActivity)getContext(),
                     this,
                     bitmap,
                     getCropPoints(),
@@ -1322,7 +1326,7 @@ public class CropImageView extends FrameLayout {
                     saveCompressFormat,
                     saveCompressQuality));
       }
-      mBitmapCroppingWorkerTask.get().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+      mBitmapCroppingWorkerJob.get().start();
       setProgressBarVisibility();
     }
   }
@@ -1796,7 +1800,7 @@ public class CropImageView extends FrameLayout {
     boolean visible =
         mShowProgressBar
             && (mBitmap == null && mBitmapLoadingWorkerTask != null
-                || mBitmapCroppingWorkerTask != null);
+                || mBitmapCroppingWorkerJob != null);
     mProgressBar.setVisibility(visible ? VISIBLE : INVISIBLE);
   }
 
