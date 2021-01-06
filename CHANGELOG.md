@@ -4,21 +4,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - `Added` for new features.
 - `Changed` for changes in existing functionality.
-- `Deprecated for soon-to-be removed features.
+- `Deprecated` for soon-to-be removed features.
 - `Removed` for now removed features.
 - `Fixed` for any bug fixes.
 - `Security` in case of vulnerabilities.
 
 ## unreleased
 
-## [1.1.1] - 03/01/20
+## [2.0.0] - 06/01/21
+### Changed
+- AsyncTask to Kotlin Coroutines
+
+## [1.1.1] - 03/01/21
 ### Added
 - Ktlint
 - Release using JitPack
 
 ### Changed
 - Java to kotlin
-- Cange icons from PNG to vectors
+- Change icons from PNG to vectors
 
 ## [1.1.0] - 13/12/20
 ### Changed

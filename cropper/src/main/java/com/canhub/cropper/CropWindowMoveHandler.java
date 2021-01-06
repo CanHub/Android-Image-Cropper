@@ -22,7 +22,7 @@ import android.graphics.RectF;
  */
 final class CropWindowMoveHandler {
 
-  // region: Fields and Consts
+  // region: Fields and Constants
 
   /** Matrix used for rectangle rotation handling */
   private static final Matrix MATRIX = new Matrix();
@@ -52,9 +52,7 @@ final class CropWindowMoveHandler {
   // endregion
 
   /**
-   * @param edgeMoveType the type of move this handler is executing
-   * @param horizontalEdge the primary edge associated with this handle; may be null
-   * @param verticalEdge the secondary edge associated with this handle; may be null
+   * @param type the type of move this handler is executing
    * @param cropWindowHandler main crop window handle to get and update the crop window edges
    * @param touchX the location of the initial toch possition to measure move distance
    * @param touchY the location of the initial toch possition to measure move distance
@@ -86,7 +84,6 @@ final class CropWindowMoveHandler {
    * @param viewWidth The bounding image view width used to know the crop overlay is at view edges.
    * @param viewHeight The bounding image view height used to know the crop overlay is at view
    *     edges.
-   * @param parentView the parent View containing the image
    * @param snapMargin the maximum distance (in pixels) at which the crop window should snap to the
    *     image
    * @param fixedAspectRatio is the aspect ration fixed and 'targetAspectRatio' should be used

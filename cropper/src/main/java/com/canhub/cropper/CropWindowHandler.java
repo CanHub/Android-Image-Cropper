@@ -17,7 +17,7 @@ import android.graphics.RectF;
 /** Handler from crop window stuff, moving and knowing possition. */
 final class CropWindowHandler {
 
-  // region: Fields and Consts
+  // region: Fields and Constants
 
   /** The 4 edges of the crop window defining its coordinates and size */
   private final RectF mEdges = new RectF();

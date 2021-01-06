@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '1.4.20'
+    ext.kotlin_version = '1.4.21'
     repositories {
         maven { url "https://plugins.gradle.org/m2/" }
         jcenter()
@@ -30,7 +30,7 @@ allprojects {
 ext {
     compileSdkVersion = 30
     targetSdkVersion = 30
-    buildToolsVersion = '29.0.3'
+    buildToolsVersion = '30.0.2'
 
     // AndroidX
     androidXAppCompatVersion = '1.2.0'

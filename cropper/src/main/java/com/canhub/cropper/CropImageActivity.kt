@@ -5,8 +5,6 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.BlendMode
-import android.graphics.BlendModeColorFilter
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
@@ -18,6 +16,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.graphics.BlendModeColorFilterCompat
+import androidx.core.graphics.BlendModeCompat
 import com.canhub.cropper.CropImageView.CropResult
 import com.canhub.cropper.CropImageView.OnCropImageCompleteListener
 import com.canhub.cropper.CropImageView.OnSetImageUriCompleteListener
@@ -70,7 +70,7 @@ class CropImageActivity :
             } else if (cropImageUri?.let {
                 CropImage.isReadExternalStoragePermissionsRequired(this, it)
             } == true &&
-                CommonVersionCheck().isAtLeastM23()
+                CommonVersionCheck.isAtLeastM23()
             ) {
                 // request permissions and handle the result in onRequestPermissionsResult()
                 requestPermissions(
@@ -174,7 +174,7 @@ class CropImageActivity :
                 if (cropImageUri?.let {
                     CropImage.isReadExternalStoragePermissionsRequired(this, it)
                 } == true &&
-                    CommonVersionCheck().isAtLeastM23()
+                    CommonVersionCheck.isAtLeastM23()
                 ) {
                     // request permissions and handle the result in onRequestPermissionsResult()
                     requestPermissions(
@@ -271,7 +271,7 @@ class CropImageActivity :
                         else -> ".webp"
                     }
                     // We have this because of a HUAWEI path bug when we use getUriForFile
-                    if (CommonVersionCheck().isAtLeastQ29()) {
+                    if (CommonVersionCheck.isAtLeastQ29()) {
                         try {
                             FileProvider.getUriForFile(
                                 applicationContext,
@@ -347,7 +347,7 @@ class CropImageActivity :
                 try {
                     menuItemIcon.apply {
                         mutate()
-                        colorFilter = BlendModeColorFilter(color, BlendMode.SRC_ATOP)
+                        colorFilter = BlendModeColorFilterCompat.createBlendModeColorFilterCompat(color, BlendModeCompat.SRC_ATOP)
                     }
                     menuItem.icon = menuItemIcon
                 } catch (e: Exception) {

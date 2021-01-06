@@ -37,7 +37,7 @@ Android Image Cropper
 
 #### Step 3. Add permissions to manifest
 
- ```
+ ```xml
  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
  ```
@@ -48,6 +48,19 @@ Android Image Cropper
 -keep class androidx.appcompat.widget.** { *; }
 ```
 
+#### Step 5. Set source compatibility version to Java 8
+
+- Go to app level `build.gradle` file
+
+- Add this line inside ```android``` in build.gradle
+	```groovy
+	compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+	```
+	
+- This will set the java version to 8
 
 ## Using Activity
 

@@ -32,7 +32,7 @@ import java.util.Arrays;
 /** A custom View representing the crop window and the shaded background outside the crop window. */
 public class CropOverlayView extends View {
 
-  // region: Fields and Consts
+  // region: Fields and Constants
 
   /** Gesture detector used for multi touch box scaling */
   private ScaleGestureDetector mScaleDetector;
