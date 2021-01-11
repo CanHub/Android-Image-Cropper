@@ -47,3 +47,5 @@ out
 .gradle/
 build/
 
+
+.idea/inspectionProfiles/
