@@ -9,13 +9,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - `Fixed` for any bug fixes.
 - `Security` in case of vulnerabilities.
 
-## unreleased
-### Fixed
-- Uri for camera capture option is now invariant for Android 10 and above
+## [unreleased 2.x.x] -
 
-## [2.0.0] - 06/01/21
+## [2.0.0] - 12/01/21
 ### Changed
-- AsyncTask to Kotlin Coroutines
+- AsyncTask to Kotlin Coroutines [#9](https://github.com/CanHub/Android-Image-Cropper/issues/9)
+
+### Fixed
+- Uri for camera capture option is now invariant for Android 10 and above [#21](https://github.com/CanHub/Android-Image-Cropper/issues/21)
 
 ## [1.1.1] - 03/01/21
 ### Added
