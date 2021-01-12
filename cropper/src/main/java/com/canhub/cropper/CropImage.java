@@ -344,7 +344,7 @@ public final class CropImage {
                 outputFileUri = FileProvider.getUriForFile(
                         context,
                         context.getPackageName() + CommonValues.authority,
-                        File.createTempFile("pickImageResult", ".jpeg", getImage)
+                        new File(getImage.getPath(), "pickImageResult.jpeg")
                 );
             } catch (Exception e) {
                 outputFileUri = Uri.fromFile(new File(getImage.getPath(), "pickImageResult.jpeg"));

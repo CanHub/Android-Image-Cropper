@@ -10,6 +10,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - `Security` in case of vulnerabilities.
 
 ## unreleased
+### Fixed
+- Uri for camera capture option is now invariant for Android 10 and above
 
 ## [2.0.0] - 06/01/21
 ### Changed
