@@ -19,6 +19,10 @@ _very small explanation about what was done_
 _small explanation_
 
 ### Reproduce
+_more detail steps better_
+GIVEN:
+WHEN:
+THEN:
 
 ### How the bug was solved:
 Small explanation
