@@ -39,12 +39,12 @@ open class CropImageActivity :
     /**
      * Persist URI image to crop URI if specific permissions are required
      */
-    private var cropImageUri: Uri? = null
+    var cropImageUri: Uri? = null
 
     /**
      * the options that were set for the crop image
      */
-    private lateinit var options: CropImageOptions
+    lateinit var options: CropImageOptions
     private lateinit var binding: CropImageActivityBinding
 
     public override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,8 +68,8 @@ open class CropImageActivity :
                     CropImage.startPickImageActivity(this)
                 }
             } else if (cropImageUri?.let {
-                CropImage.isReadExternalStoragePermissionsRequired(this, it)
-            } == true &&
+                    CropImage.isReadExternalStoragePermissionsRequired(this, it)
+                } == true &&
                 CommonVersionCheck.isAtLeastM23()
             ) {
                 // request permissions and handle the result in onRequestPermissionsResult()
@@ -172,8 +172,8 @@ open class CropImageActivity :
                 // For API >= 23 we need to check specifically that we have permissions to read external
                 // storage.
                 if (cropImageUri?.let {
-                    CropImage.isReadExternalStoragePermissionsRequired(this, it)
-                } == true &&
+                        CropImage.isReadExternalStoragePermissionsRequired(this, it)
+                    } == true &&
                     CommonVersionCheck.isAtLeastM23()
                 ) {
                     // request permissions and handle the result in onRequestPermissionsResult()
@@ -233,7 +233,7 @@ open class CropImageActivity :
     /**
      * Execute crop image and save the result tou output uri.
      */
-    private fun cropImage() {
+    fun cropImage() {
         if (options.noOutputImage) {
             setResult(null, null, 1)
         } else {
@@ -252,7 +252,7 @@ open class CropImageActivity :
     /**
      * Rotate the image in the crop image view.
      */
-    private fun rotateImage(degrees: Int) {
+    fun rotateImage(degrees: Int) {
         binding.cropImageView.rotateImage(degrees)
     } // We have this because of a HUAWEI path bug when we use getUriForFile
 
@@ -260,7 +260,7 @@ open class CropImageActivity :
      * Get Android uri to save the cropped image into.<br></br>
      * Use the given in options or create a temp file.
      */
-    private val outputUri: Uri?
+    val outputUri: Uri?
         get() {
             var outputUri = options.outputUri
             if (outputUri == null || outputUri == Uri.EMPTY) {
@@ -300,7 +300,7 @@ open class CropImageActivity :
     /**
      * Result with cropped image data or error if failed.
      */
-    private fun setResult(uri: Uri?, error: Exception?, sampleSize: Int) {
+    fun setResult(uri: Uri?, error: Exception?, sampleSize: Int) {
         setResult(
             error?.let { CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE } ?: RESULT_OK,
             getResultIntent(uri, error, sampleSize)
@@ -311,7 +311,7 @@ open class CropImageActivity :
     /**
      * Cancel of cropping activity.
      */
-    private fun setResultCancel() {
+    fun setResultCancel() {
         setResult(RESULT_CANCELED)
         finish()
     }
@@ -319,7 +319,7 @@ open class CropImageActivity :
     /**
      * Get intent instance to be used for the result of this activity.
      */
-    private fun getResultIntent(uri: Uri?, error: Exception?, sampleSize: Int): Intent {
+    fun getResultIntent(uri: Uri?, error: Exception?, sampleSize: Int): Intent {
         val result = CropImage.ActivityResult(
             binding.cropImageView.imageUri,
             uri,
@@ -339,7 +339,7 @@ open class CropImageActivity :
     /**
      * Update the color of a specific menu item to the given color.
      */
-    private fun updateMenuItemIconColor(menu: Menu, itemId: Int, color: Int) {
+    fun updateMenuItemIconColor(menu: Menu, itemId: Int, color: Int) {
         val menuItem = menu.findItem(itemId)
         if (menuItem != null) {
             val menuItemIcon = menuItem.icon
@@ -347,7 +347,10 @@ open class CropImageActivity :
                 try {
                     menuItemIcon.apply {
                         mutate()
-                        colorFilter = BlendModeColorFilterCompat.createBlendModeColorFilterCompat(color, BlendModeCompat.SRC_ATOP)
+                        colorFilter = BlendModeColorFilterCompat.createBlendModeColorFilterCompat(
+                            color,
+                            BlendModeCompat.SRC_ATOP
+                        )
                     }
                     menuItem.icon = menuItemIcon
                 } catch (e: Exception) {
