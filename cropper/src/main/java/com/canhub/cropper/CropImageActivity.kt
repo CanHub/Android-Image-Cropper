@@ -91,13 +91,13 @@ open class CropImageActivity :
         }
     }
 
-    override fun onStart() {
+    public override fun onStart() {
         super.onStart()
         binding.cropImageView.setOnSetImageUriCompleteListener(this)
         binding.cropImageView.setOnCropImageCompleteListener(this)
     }
 
-    override fun onStop() {
+    public override fun onStop() {
         super.onStop()
         binding.cropImageView.setOnSetImageUriCompleteListener(null)
         binding.cropImageView.setOnCropImageCompleteListener(null)
@@ -162,7 +162,7 @@ open class CropImageActivity :
     }
 
     @SuppressLint("NewApi")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         // handle result of pick image chooser
         if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE) {
@@ -233,7 +233,7 @@ open class CropImageActivity :
     /**
      * Execute crop image and save the result tou output uri.
      */
-    fun cropImage() {
+    open fun cropImage() {
         if (options.noOutputImage) {
             setResult(null, null, 1)
         } else {
@@ -252,7 +252,7 @@ open class CropImageActivity :
     /**
      * Rotate the image in the crop image view.
      */
-    fun rotateImage(degrees: Int) {
+    open fun rotateImage(degrees: Int) {
         binding.cropImageView.rotateImage(degrees)
     } // We have this because of a HUAWEI path bug when we use getUriForFile
 
@@ -300,7 +300,7 @@ open class CropImageActivity :
     /**
      * Result with cropped image data or error if failed.
      */
-    fun setResult(uri: Uri?, error: Exception?, sampleSize: Int) {
+    open fun setResult(uri: Uri?, error: Exception?, sampleSize: Int) {
         setResult(
             error?.let { CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE } ?: RESULT_OK,
             getResultIntent(uri, error, sampleSize)
@@ -311,7 +311,7 @@ open class CropImageActivity :
     /**
      * Cancel of cropping activity.
      */
-    fun setResultCancel() {
+    open fun setResultCancel() {
         setResult(RESULT_CANCELED)
         finish()
     }
@@ -319,7 +319,7 @@ open class CropImageActivity :
     /**
      * Get intent instance to be used for the result of this activity.
      */
-    fun getResultIntent(uri: Uri?, error: Exception?, sampleSize: Int): Intent {
+    open fun getResultIntent(uri: Uri?, error: Exception?, sampleSize: Int): Intent {
         val result = CropImage.ActivityResult(
             binding.cropImageView.imageUri,
             uri,
@@ -339,7 +339,7 @@ open class CropImageActivity :
     /**
      * Update the color of a specific menu item to the given color.
      */
-    fun updateMenuItemIconColor(menu: Menu, itemId: Int, color: Int) {
+    open fun updateMenuItemIconColor(menu: Menu, itemId: Int, color: Int) {
         val menuItem = menu.findItem(itemId)
         if (menuItem != null) {
             val menuItemIcon = menuItem.icon
