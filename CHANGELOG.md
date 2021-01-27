@@ -11,6 +11,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [unreleased 2.x.x] -
 
+## [2.0.1] - 27/01/21
+### Fixed
+- Make CropImageActivity open for extensions
+
 ## [2.0.0] - 12/01/21
 ### Changed
 - AsyncTask to Kotlin Coroutines [#9](https://github.com/CanHub/Android-Image-Cropper/issues/9)
