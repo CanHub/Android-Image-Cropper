@@ -31,7 +31,7 @@ import java.io.IOException
  * Built-in activity for image cropping.<br></br>
  * Use [CropImage.activity] to create a builder to start this activity.
  */
-class CropImageActivity :
+open class CropImageActivity :
     AppCompatActivity(),
     OnSetImageUriCompleteListener,
     OnCropImageCompleteListener {
