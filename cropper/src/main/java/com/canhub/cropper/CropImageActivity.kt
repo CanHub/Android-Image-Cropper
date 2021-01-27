@@ -68,8 +68,8 @@ open class CropImageActivity :
                     CropImage.startPickImageActivity(this)
                 }
             } else if (cropImageUri?.let {
-                    CropImage.isReadExternalStoragePermissionsRequired(this, it)
-                } == true &&
+                CropImage.isReadExternalStoragePermissionsRequired(this, it)
+            } == true &&
                 CommonVersionCheck.isAtLeastM23()
             ) {
                 // request permissions and handle the result in onRequestPermissionsResult()
@@ -172,8 +172,8 @@ open class CropImageActivity :
                 // For API >= 23 we need to check specifically that we have permissions to read external
                 // storage.
                 if (cropImageUri?.let {
-                        CropImage.isReadExternalStoragePermissionsRequired(this, it)
-                    } == true &&
+                    CropImage.isReadExternalStoragePermissionsRequired(this, it)
+                } == true &&
                     CommonVersionCheck.isAtLeastM23()
                 ) {
                     // request permissions and handle the result in onRequestPermissionsResult()
