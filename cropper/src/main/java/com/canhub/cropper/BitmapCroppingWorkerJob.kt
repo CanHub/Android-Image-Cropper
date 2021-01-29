@@ -2,6 +2,7 @@ package com.canhub.cropper
 
 import android.graphics.Bitmap
 import android.net.Uri
+import androidx.annotation.Nullable
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
@@ -29,15 +30,16 @@ class BitmapCroppingWorkerJob internal constructor(
     private val flipVertically: Boolean,
     private val options: CropImageView.RequestSizeOptions,
     private val saveUri: Uri?,
-    private val saveCompressFormat: Bitmap.CompressFormat,
+    private val saveCompressFormat: Bitmap.CompressFormat? = Bitmap.CompressFormat.JPEG,
     private val saveCompressQuality: Int
 ) {
+
     private var currentJob: Job? = null
 
     constructor(
         activity: FragmentActivity,
         cropImageView: CropImageView,
-        bitmap: Bitmap,
+        bitmap: Bitmap?,
         cropPoints: FloatArray,
         degreesRotated: Int,
         fixAspectRatio: Boolean,
@@ -48,8 +50,8 @@ class BitmapCroppingWorkerJob internal constructor(
         flipHorizontally: Boolean,
         flipVertically: Boolean,
         options: CropImageView.RequestSizeOptions,
-        saveUri: Uri,
-        saveCompressFormat: Bitmap.CompressFormat,
+        saveUri: Uri?,
+        @Nullable saveCompressFormat: Bitmap.CompressFormat?,
         saveCompressQuality: Int
     ) : this(
         activity,
@@ -69,14 +71,14 @@ class BitmapCroppingWorkerJob internal constructor(
         flipVertically,
         options,
         saveUri,
-        saveCompressFormat,
+        saveCompressFormat ?: Bitmap.CompressFormat.JPEG,
         saveCompressQuality
     )
 
     constructor(
         activity: FragmentActivity,
         cropImageView: CropImageView,
-        uri: Uri,
+        uri: Uri?,
         cropPoints: FloatArray,
         degreesRotated: Int,
         orgWidth: Int,
@@ -89,8 +91,8 @@ class BitmapCroppingWorkerJob internal constructor(
         flipHorizontally: Boolean,
         flipVertically: Boolean,
         options: CropImageView.RequestSizeOptions,
-        saveUri: Uri,
-        saveCompressFormat: Bitmap.CompressFormat,
+        saveUri: Uri?,
+        @Nullable saveCompressFormat: Bitmap.CompressFormat,
         saveCompressQuality: Int
     ) : this(
         activity,
@@ -119,36 +121,40 @@ class BitmapCroppingWorkerJob internal constructor(
             try {
                 if (isActive) {
                     val bitmapSampled: BitmapUtils.BitmapSampled
-                    if (uri != null) {
-                        bitmapSampled = BitmapUtils.cropBitmap(
-                            activity,
-                            uri,
-                            cropPoints,
-                            degreesRotated,
-                            orgWidth,
-                            orgHeight,
-                            fixAspectRatio,
-                            aspectRatioX,
-                            aspectRatioY,
-                            reqWidth,
-                            reqHeight,
-                            flipHorizontally,
-                            flipVertically
-                        )
-                    } else if (bitmap != null) {
-                        bitmapSampled = BitmapUtils.cropBitmapObjectHandleOOM(
-                            bitmap,
-                            cropPoints,
-                            degreesRotated,
-                            fixAspectRatio,
-                            aspectRatioX,
-                            aspectRatioY,
-                            flipHorizontally,
-                            flipVertically
-                        )
-                    } else {
-                        onPostExecute(Result(bitmap = null, 1))
-                        return@launch
+                    when {
+                        uri != null -> {
+                            bitmapSampled = BitmapUtils.cropBitmap(
+                                activity,
+                                uri,
+                                cropPoints,
+                                degreesRotated,
+                                orgWidth,
+                                orgHeight,
+                                fixAspectRatio,
+                                aspectRatioX,
+                                aspectRatioY,
+                                reqWidth,
+                                reqHeight,
+                                flipHorizontally,
+                                flipVertically
+                            )
+                        }
+                        bitmap != null -> {
+                            bitmapSampled = BitmapUtils.cropBitmapObjectHandleOOM(
+                                bitmap,
+                                cropPoints,
+                                degreesRotated,
+                                fixAspectRatio,
+                                aspectRatioX,
+                                aspectRatioY,
+                                flipHorizontally,
+                                flipVertically
+                            )
+                        }
+                        else -> {
+                            onPostExecute(Result(bitmap = null, 1))
+                            return@launch
+                        }
                     }
                     val resizedBitmap =
                         BitmapUtils.resizeBitmap(bitmapSampled.bitmap, reqWidth, reqHeight, options)
@@ -164,7 +170,7 @@ class BitmapCroppingWorkerJob internal constructor(
                             activity,
                             resizedBitmap,
                             saveUri,
-                            saveCompressFormat,
+                            saveCompressFormat ?: Bitmap.CompressFormat.JPEG,
                             saveCompressQuality
                         )
                         resizedBitmap?.recycle()
@@ -203,7 +209,8 @@ class BitmapCroppingWorkerJob internal constructor(
     }
 
     // region: Inner class: Result
-    companion object class Result {
+    companion object
+    class Result {
 
         /** The cropped bitmap  */
         val bitmap: Bitmap?

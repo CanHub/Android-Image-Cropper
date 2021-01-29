@@ -37,6 +37,8 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.egl.EGLContext;
 import javax.microedition.khronos.egl.EGLDisplay;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import androidx.exifinterface.media.ExifInterface;
 
@@ -443,13 +445,17 @@ final class BitmapUtils {
             Context context,
             Bitmap bitmap,
             Uri uri,
-            Bitmap.CompressFormat compressFormat,
+            @NonNull Bitmap.CompressFormat compressFormat,
             int compressQuality)
             throws FileNotFoundException {
         OutputStream outputStream = null;
         try {
             outputStream = context.getContentResolver().openOutputStream(uri);
-            bitmap.compress(compressFormat, compressQuality, outputStream);
+            if(compressFormat == null) {
+                bitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, outputStream);
+            } else {
+                bitmap.compress(compressFormat, compressQuality, outputStream);
+            }
         } finally {
             closeSafe(outputStream);
         }
