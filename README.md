@@ -2,6 +2,11 @@
 
 [🚨How to migrate from ArthurHub/Android-Image-Cropper🚨](https://github.com/CanHub/Android-Image-Cropper/wiki/🚨-How-to-migrate-Android-Image-Cropper--🚨)
 
+Wanna help the project? Amazing!
+- [Good First Issues](https://github.com/CanHub/Android-Image-Cropper/contribute)
+- [Roadmap](https://github.com/CanHub/Android-Image-Cropper/projects/1)
+- We encourage to [Join the team](https://github.com/CanHub/Android-Image-Cropper/discussions/42) and be an active member
+
 Android Image Cropper
 =======
 **Powerful** (Zoom, Rotation, Multi-Source);
