@@ -9,7 +9,6 @@ import android.os.Parcel
 import android.os.Parcelable
 import android.text.TextUtils
 import android.util.TypedValue
-import com.canhub.cropper.CropImageView
 import com.canhub.cropper.CropImageView.CropShape
 import com.canhub.cropper.CropImageView.Guidelines
 import com.canhub.cropper.CropImageView.RequestSizeOptions
@@ -18,7 +17,7 @@ import com.canhub.cropper.CropImageView.RequestSizeOptions
  * All the possible options that can be set to customize crop image.<br></br>
  * Initialized with default values.
  */
-class CropImageOptions : Parcelable {
+open class CropImageOptions : Parcelable {
 
     /** The shape of the cropping window.  */
     @JvmField
@@ -303,55 +302,55 @@ class CropImageOptions : Parcelable {
     }
 
     /** Create object from parcel.  */
-    protected constructor(`in`: Parcel) {
-        cropShape = CropShape.values()[`in`.readInt()]
-        snapRadius = `in`.readFloat()
-        touchRadius = `in`.readFloat()
-        guidelines = Guidelines.values()[`in`.readInt()]
-        scaleType = CropImageView.ScaleType.values()[`in`.readInt()]
-        showCropOverlay = `in`.readByte().toInt() != 0
-        showProgressBar = `in`.readByte().toInt() != 0
-        autoZoomEnabled = `in`.readByte().toInt() != 0
-        multiTouchEnabled = `in`.readByte().toInt() != 0
-        maxZoom = `in`.readInt()
-        initialCropWindowPaddingRatio = `in`.readFloat()
-        fixAspectRatio = `in`.readByte().toInt() != 0
-        aspectRatioX = `in`.readInt()
-        aspectRatioY = `in`.readInt()
-        borderLineThickness = `in`.readFloat()
-        borderLineColor = `in`.readInt()
-        borderCornerThickness = `in`.readFloat()
-        borderCornerOffset = `in`.readFloat()
-        borderCornerLength = `in`.readFloat()
-        borderCornerColor = `in`.readInt()
-        guidelinesThickness = `in`.readFloat()
-        guidelinesColor = `in`.readInt()
-        backgroundColor = `in`.readInt()
-        minCropWindowWidth = `in`.readInt()
-        minCropWindowHeight = `in`.readInt()
-        minCropResultWidth = `in`.readInt()
-        minCropResultHeight = `in`.readInt()
-        maxCropResultWidth = `in`.readInt()
-        maxCropResultHeight = `in`.readInt()
-        activityTitle = TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(`in`)
-        activityMenuIconColor = `in`.readInt()
-        outputUri = `in`.readParcelable(Uri::class.java.classLoader)
-        outputCompressFormat = CompressFormat.valueOf(`in`.readString()!!)
-        outputCompressQuality = `in`.readInt()
-        outputRequestWidth = `in`.readInt()
-        outputRequestHeight = `in`.readInt()
-        outputRequestSizeOptions = RequestSizeOptions.values()[`in`.readInt()]
-        noOutputImage = `in`.readByte().toInt() != 0
-        initialCropWindowRectangle = `in`.readParcelable(Rect::class.java.classLoader)
-        initialRotation = `in`.readInt()
-        allowRotation = `in`.readByte().toInt() != 0
-        allowFlipping = `in`.readByte().toInt() != 0
-        allowCounterRotation = `in`.readByte().toInt() != 0
-        rotationDegrees = `in`.readInt()
-        flipHorizontally = `in`.readByte().toInt() != 0
-        flipVertically = `in`.readByte().toInt() != 0
-        cropMenuCropButtonTitle = TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(`in`)
-        cropMenuCropButtonIcon = `in`.readInt()
+    protected constructor(parcel: Parcel) {
+        cropShape = CropShape.values()[parcel.readInt()]
+        snapRadius = parcel.readFloat()
+        touchRadius = parcel.readFloat()
+        guidelines = Guidelines.values()[parcel.readInt()]
+        scaleType = CropImageView.ScaleType.values()[parcel.readInt()]
+        showCropOverlay = parcel.readByte().toInt() != 0
+        showProgressBar = parcel.readByte().toInt() != 0
+        autoZoomEnabled = parcel.readByte().toInt() != 0
+        multiTouchEnabled = parcel.readByte().toInt() != 0
+        maxZoom = parcel.readInt()
+        initialCropWindowPaddingRatio = parcel.readFloat()
+        fixAspectRatio = parcel.readByte().toInt() != 0
+        aspectRatioX = parcel.readInt()
+        aspectRatioY = parcel.readInt()
+        borderLineThickness = parcel.readFloat()
+        borderLineColor = parcel.readInt()
+        borderCornerThickness = parcel.readFloat()
+        borderCornerOffset = parcel.readFloat()
+        borderCornerLength = parcel.readFloat()
+        borderCornerColor = parcel.readInt()
+        guidelinesThickness = parcel.readFloat()
+        guidelinesColor = parcel.readInt()
+        backgroundColor = parcel.readInt()
+        minCropWindowWidth = parcel.readInt()
+        minCropWindowHeight = parcel.readInt()
+        minCropResultWidth = parcel.readInt()
+        minCropResultHeight = parcel.readInt()
+        maxCropResultWidth = parcel.readInt()
+        maxCropResultHeight = parcel.readInt()
+        activityTitle = TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(parcel)
+        activityMenuIconColor = parcel.readInt()
+        outputUri = parcel.readParcelable(Uri::class.java.classLoader)
+        outputCompressFormat = CompressFormat.valueOf(parcel.readString()!!)
+        outputCompressQuality = parcel.readInt()
+        outputRequestWidth = parcel.readInt()
+        outputRequestHeight = parcel.readInt()
+        outputRequestSizeOptions = RequestSizeOptions.values()[parcel.readInt()]
+        noOutputImage = parcel.readByte().toInt() != 0
+        initialCropWindowRectangle = parcel.readParcelable(Rect::class.java.classLoader)
+        initialRotation = parcel.readInt()
+        allowRotation = parcel.readByte().toInt() != 0
+        allowFlipping = parcel.readByte().toInt() != 0
+        allowCounterRotation = parcel.readByte().toInt() != 0
+        rotationDegrees = parcel.readInt()
+        flipHorizontally = parcel.readByte().toInt() != 0
+        flipVertically = parcel.readByte().toInt() != 0
+        cropMenuCropButtonTitle = TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(parcel)
+        cropMenuCropButtonIcon = parcel.readInt()
     }
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
@@ -435,10 +434,10 @@ class CropImageOptions : Parcelable {
 
     companion object {
 
-        val CREATOR: Parcelable.Creator<CropImageOptions> =
+        val CREATOR: Parcelable.Creator<CropImageOptions?> =
             object : Parcelable.Creator<CropImageOptions?> {
-                override fun createFromParcel(`in`: Parcel): CropImageOptions? {
-                    return CropImageOptions(`in`)
+                override fun createFromParcel(parcel: Parcel): CropImageOptions? {
+                    return CropImageOptions(parcel)
                 }
 
                 override fun newArray(size: Int): Array<CropImageOptions?> {
