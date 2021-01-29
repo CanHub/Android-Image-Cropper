@@ -25,6 +25,3 @@ dependencies {
     implementation "androidx.core:core-ktx:$androidXCoreKtxVersion"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
 }
-repositories {
-    mavenCentral()
-}
