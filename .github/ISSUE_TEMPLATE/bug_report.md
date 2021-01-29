@@ -6,7 +6,8 @@ labels: bug
 assignees: ''
 
 ---
-
+ - Lib Version [e.g. 1.1.0]
+ 
 **Describe the bug**
 A clear and concise description of what the bug is.
 
@@ -26,7 +27,6 @@ If applicable, add screenshots to help explain your problem.
 **Smartphone (please complete the following information):**
  - Device: [e.g. Pixel 3XL]
  - OS: [e.g. iOS8.1]
- - Lib Version [e.g. 1.1.0]
 
 **Additional context**
 Add any other context about the problem here.

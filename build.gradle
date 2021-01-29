@@ -1,15 +1,17 @@
 buildscript {
-    ext.kotlin_version = '1.4.21'
+    apply from: 'versions.gradle'
+
     repositories {
         maven { url "https://plugins.gradle.org/m2/" }
         jcenter()
         google()
     }
+
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.1'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "org.jlleitschuh.gradle:ktlint-gradle:9.4.1"
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
+        classpath "com.android.tools.build:gradle:$androidGradleVersion"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath "org.jlleitschuh.gradle:ktlint-gradle:$ktlintGradleVersion"
+        classpath "com.github.dcendents:android-maven-gradle-plugin:$mavenGradleVersion"
     }
 }
 
@@ -20,19 +22,8 @@ subprojects {
 allprojects {
     repositories {
         jcenter()
-        maven {
-            url "https://maven.google.com"
-        }
+        mavenCentral()
+        maven { url "https://maven.google.com" }
         maven { url "https://jitpack.io" }
     }
-}
-
-ext {
-    compileSdkVersion = 30
-    targetSdkVersion = 30
-    buildToolsVersion = '30.0.2'
-
-    // AndroidX
-    androidXAppCompatVersion = '1.2.0'
-    androidXExifVersion = '1.3.2'
 }

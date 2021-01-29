@@ -1,7 +1,7 @@
 ---
 name: Feature request
 about: Suggest an idea for this project
-title: ''
+title: '[Feat] - '
 labels: enhancement
 assignees: ''
 
@@ -18,3 +18,5 @@ A clear and concise description of any alternative solutions or features you've 
 
 **Additional context**
 Add any other context or screenshots about the feature request here.
+
+_Obs if you have some code for it, feel free to assign yourself open the PR after this issue_
