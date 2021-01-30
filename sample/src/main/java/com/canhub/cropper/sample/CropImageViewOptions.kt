@@ -1,45 +1,46 @@
-// "Therefore those skilled at the unorthodox
-// are infinite as heaven and earth,
-// inexhaustible as the great rivers.
-// When they come to an end,
-// they begin again,
-// like the days and months;
-// they die and are reborn,
-// like the four seasons."
-//
-// - Sun Tsu,
-// "The Art of War"
+package com.canhub.cropper.sample
 
-package com.canhub.cropper.sample;
+import android.util.Pair
+import com.canhub.cropper.CropImageView
+import com.canhub.cropper.CropImageView.CropShape
+import com.canhub.cropper.CropImageView.Guidelines
 
-import android.util.Pair;
+/** The crop image view options that can be changed live.  */
+class CropImageViewOptions {
 
-import com.canhub.cropper.CropImageView;
+    @JvmField
+    var scaleType = CropImageView.ScaleType.CENTER_INSIDE
 
-/** The crop image view options that can be changed live. */
-final class CropImageViewOptions {
+    @JvmField
+    var cropShape = CropShape.RECTANGLE
 
-  public CropImageView.ScaleType scaleType = CropImageView.ScaleType.CENTER_INSIDE;
+    @JvmField
+    var guidelines = Guidelines.ON_TOUCH
 
-  public CropImageView.CropShape cropShape = CropImageView.CropShape.RECTANGLE;
+    @JvmField
+    var aspectRatio = Pair(1, 1)
 
-  public CropImageView.Guidelines guidelines = CropImageView.Guidelines.ON_TOUCH;
+    @JvmField
+    var autoZoomEnabled = false
 
-  public Pair<Integer, Integer> aspectRatio = new Pair<>(1, 1);
+    @JvmField
+    var maxZoomLevel = 0
 
-  public boolean autoZoomEnabled;
+    @JvmField
+    var fixAspectRatio = false
 
-  public int maxZoomLevel;
+    @JvmField
+    var multitouch = false
 
-  public boolean fixAspectRatio;
+    @JvmField
+    var showCropOverlay = false
 
-  public boolean multitouch;
+    @JvmField
+    var showProgressBar = false
 
-  public boolean showCropOverlay;
+    @JvmField
+    var flipHorizontally = false
 
-  public boolean showProgressBar;
-
-  public boolean flipHorizontally;
-
-  public boolean flipVertically;
+    @JvmField
+    var flipVertically = false
 }
