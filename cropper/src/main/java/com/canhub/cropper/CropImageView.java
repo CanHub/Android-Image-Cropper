@@ -24,6 +24,9 @@ import android.graphics.RectF;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.exifinterface.media.ExifInterface;
 import androidx.fragment.app.FragmentActivity;
 
@@ -838,7 +841,7 @@ public class CropImageView extends FrameLayout {
     if (mOnCropImageCompleteListener == null) {
       throw new IllegalArgumentException("mOnCropImageCompleteListener is not set");
     }
-    startCropWorkerTask(reqWidth, reqHeight, options, null, null, 0);
+    startCropWorkerTask(reqWidth, reqHeight, options, null, Bitmap.CompressFormat.JPEG, 0);
   }
 
   /**
@@ -1259,8 +1262,8 @@ public class CropImageView extends FrameLayout {
       int reqWidth,
       int reqHeight,
       RequestSizeOptions options,
-      Uri saveUri,
-      Bitmap.CompressFormat saveCompressFormat,
+      @NonNull Uri saveUri,
+      @NonNull Bitmap.CompressFormat saveCompressFormat,
       int saveCompressQuality) {
     Bitmap bitmap = mBitmap;
     if (bitmap != null) {

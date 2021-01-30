@@ -9,7 +9,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - `Fixed` for any bug fixes.
 - `Security` in case of vulnerabilities.
 
-## [unreleased 2.x.x] -
+## [unreleased 2.1.0] -
+### Changed
+- from Java to Kotlin [CropImageOptions](https://github.com/CanHub/Android-Image-Cropper/issues/40)
+
+### Fixed
+- Null CompressFormat [#44](https://github.com/CanHub/Android-Image-Cropper/issues/44)
 
 ## [2.0.3] - 27/01/21
 Versions `2.0.1` and `2.0.2` are similar, issues with jitpack.

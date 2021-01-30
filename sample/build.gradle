@@ -3,10 +3,9 @@ apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
-    buildToolsVersion rootProject.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion 14
+        minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
         versionCode 1
         versionName '1.0'
@@ -18,14 +17,14 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    kotlinOptions {
+        freeCompilerArgs = ["-Xinline-classes"]
+    }
 }
 
 dependencies {
     api project(':cropper')
     api "androidx.appcompat:appcompat:$androidXAppCompatVersion"
-    implementation "androidx.core:core-ktx:+"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-}
-repositories {
-    mavenCentral()
+    implementation "androidx.core:core-ktx:$androidXCoreKtxVersion"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
 }
