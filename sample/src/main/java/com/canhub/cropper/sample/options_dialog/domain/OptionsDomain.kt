@@ -12,7 +12,7 @@ internal data class OptionsDomain(
     val scaleType: CropImageView.ScaleType,
     val cropShape: CropImageView.CropShape,
     val guidelines: CropImageView.Guidelines,
-    val ratio: @RawValue Pair<Int, Int>,
+    val ratio: @RawValue Pair<Int, Int>?,
     val maxZoomLvl: Int,
     val autoZoom: Boolean,
     val fixAspectRatio: Boolean,

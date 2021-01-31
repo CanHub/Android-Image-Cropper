@@ -9,6 +9,7 @@ import com.canhub.cropper.sample.options_dialog.domain.OptionsDomain
 internal class OptionsPresenter : OptionsContract.Presenter {
 
     private var view: OptionsContract.View? = null
+    private var options = defaultOptions()
 
     override fun bind(view: OptionsContract.View) {
         this.view = view
@@ -19,63 +20,79 @@ internal class OptionsPresenter : OptionsContract.Presenter {
     }
 
     override fun onViewCreated(options: OptionsDomain?) {
-
-        options?.let { view?.updateOptions(it) }
+        options?.let { this.options = options }
+        view?.updateOptions(this.options)
     }
 
-    override fun onApplyClicked() {
-        TODO("Not yet implemented")
+    override fun onDismiss() {
+        view?.closeWithResult(options)
     }
 
     override fun onActivityTypeSelect(activityType: OptionsActivityEnum) {
-        TODO("Not yet implemented")
+        options = options.copy(activityType = activityType)
     }
 
     override fun onScaleTypeSelect(scaleType: CropImageView.ScaleType) {
-        TODO("Not yet implemented")
+        options = options.copy(scaleType = scaleType)
     }
 
     override fun onCropShapeSelect(cropShape: CropImageView.CropShape) {
-        TODO("Not yet implemented")
+        options = options.copy(cropShape = cropShape)
     }
 
     override fun onGuidelinesSelect(guidelines: CropImageView.Guidelines) {
-        TODO("Not yet implemented")
+        options = options.copy(guidelines = guidelines)
     }
 
-    override fun onRatioSelect(ratio: Pair<Int, Int>) {
-        TODO("Not yet implemented")
+    override fun onRatioSelect(ratio: Pair<Int, Int>?) {
+        options = options.copy(ratio = ratio)
     }
 
     override fun onAutoZoomSelect(enable: Boolean) {
-        TODO("Not yet implemented")
+        options = options.copy(autoZoom = enable)
     }
 
     override fun onMaxZoomLvlSelect(maxZoom: Int) {
-        TODO("Not yet implemented")
+        options = options.copy(maxZoomLvl = maxZoom)
     }
 
     override fun onAspectRatioSelect(isFix: Boolean) {
-        TODO("Not yet implemented")
+        options = options.copy(fixAspectRatio = isFix)
     }
 
     override fun onMultiTouchSelect(enable: Boolean) {
-        TODO("Not yet implemented")
+        options = options.copy(multiTouch = enable)
     }
 
     override fun onCropOverlaySelect(show: Boolean) {
-        TODO("Not yet implemented")
+        options = options.copy(showCropOverlay = show)
     }
 
     override fun onProgressBarSelect(show: Boolean) {
-        TODO("Not yet implemented")
+        options = options.copy(showProgressBar = show)
     }
 
     override fun onFlipHorizontalSelect(enable: Boolean) {
-        TODO("Not yet implemented")
+        options = options.copy(flipHorizontal = enable)
     }
 
     override fun onFlipVerticallySelect(enable: Boolean) {
-        TODO("Not yet implemented")
+        options = options.copy(flipVertically = enable)
     }
+
+    private fun defaultOptions() = OptionsDomain(
+        OptionsActivityEnum.DEFAULT,
+        CropImageView.ScaleType.CENTER,
+        CropImageView.CropShape.RECTANGLE,
+        CropImageView.Guidelines.ON,
+        Pair(1, 1),
+        maxZoomLvl = 2,
+        autoZoom = true,
+        fixAspectRatio = true,
+        multiTouch = true,
+        showCropOverlay = true,
+        showProgressBar = true,
+        flipHorizontal = true,
+        flipVertically = true
+    )
 }

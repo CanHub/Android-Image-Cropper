@@ -10,25 +10,21 @@ internal interface OptionsContract {
     interface View {
 
         fun updateOptions(options: OptionsDomain)
-
-        fun close()
+        fun closeWithResult(options: OptionsDomain)
     }
 
     interface Presenter {
 
         fun bind(view: View)
         fun unbind()
-
         fun onViewCreated(options: OptionsDomain?)
-
-        fun onApplyClicked()
+        fun onDismiss()
 
         fun onActivityTypeSelect(activityType: OptionsActivityEnum)
-
         fun onScaleTypeSelect(scaleType: ScaleType)
         fun onCropShapeSelect(cropShape: CropShape)
         fun onGuidelinesSelect(guidelines: Guidelines)
-        fun onRatioSelect(ratio: Pair<Int, Int>)
+        fun onRatioSelect(ratio: Pair<Int, Int>?)
         fun onAutoZoomSelect(enable: Boolean)
         fun onMaxZoomLvlSelect(maxZoom: Int)
         fun onAspectRatioSelect(isFix: Boolean)

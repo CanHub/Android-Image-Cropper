@@ -125,7 +125,7 @@ class MainActivity : AppCompatActivity(), OptionsDialogBottomSheet.Listener {
         }
     }
 
-    override fun onOptionsApplySelected() {
+    override fun onOptionsApplySelected(options: OptionsDomain) {
         // todo canato
     }
 
