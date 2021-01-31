@@ -1,11 +1,12 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
 
     defaultConfig {
-        minSdkVersion rootProject.minSdkVersion
+        minSdkVersion 24
         targetSdkVersion rootProject.targetSdkVersion
         versionCode 1
         versionName '1.0'
@@ -20,6 +21,9 @@ android {
     kotlinOptions {
         freeCompilerArgs = ["-Xinline-classes"]
     }
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -27,4 +31,5 @@ dependencies {
     api "androidx.appcompat:appcompat:$androidXAppCompatVersion"
     implementation "androidx.core:core-ktx:$androidXCoreKtxVersion"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
+    implementation "com.google.android.material:material:$materialVersion"
 }

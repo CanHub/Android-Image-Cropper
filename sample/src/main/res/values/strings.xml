@@ -33,4 +33,38 @@
     <string name="drawer_option_toggle_show_overlay">Show Overlay: %1s</string>
     <string name="drawer_option_toggle_show_progress_bar">Show Progress Bar: %1s</string>
 
+
+    <string name="options_dialog_title">Options</string>
+    <string name="options_default">Default</string>
+    <string name="options_custom">Custom</string>
+    <string name="fit_center">Fit Center</string>
+    <string name="center">Center</string>
+    <string name="center_crop">Center Crop</string>
+    <string name="center_inside">Center Inside</string>
+    <string name="rectangle">Rectangle</string>
+    <string name="oval">Oval</string>
+    <string name="off">Off</string>
+    <string name="on_touch">On Touch</string>
+    <string name="on">ON</string>
+    <string name="ration_16_9">16,9</string>
+    <string name="ratio_4_3">4,3</string>
+    <string name="ratio_1_1">1,1</string>
+    <string name="free">Free</string>
+    <string name="activity_type">Activity Type</string>
+    <string name="ratio">Ratio</string>
+    <string name="guidelines">Guidelines</string>
+    <string name="crop_shape">Crop Shape</string>
+    <string name="scale_type">Scale Type</string>
+    <string name="max_zoom_level">Max Zoom Level</string>
+    <string name="zoom_2">2</string>
+    <string name="zoom_4">4</string>
+    <string name="zoom_8">8</string>
+    <string name="auto_zoom">Auto Zoom</string>
+    <string name="fix_aspect_ratio">Fix Aspect Ratio</string>
+    <string name="multi_touch">Multi Touch</string>
+    <string name="show_crop_overlay">Show Crop Overlay</string>
+    <string name="show_progress_bar">Show Progress Bar</string>
+    <string name="flip_horizontal">Flip Horizontal</string>
+    <string name="flip_vertical">Flip Vertical</string>
+
 </resources>

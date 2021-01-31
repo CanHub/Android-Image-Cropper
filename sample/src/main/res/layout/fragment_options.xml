@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_bottom_sheet_rounded"
+    android:orientation="vertical">
+
+   <LinearLayout
+       android:id="@+id/optionsHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_bottom_sheet_rounded"
+        android:stateListAnimator="@animator/toolbar_elevation"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="@dimen/keyline_x11"
+            android:layout_height="@dimen/keyline_x2"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/keyline_x4"
+            android:background="@drawable/bg_draggable_view"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/keyline_x4"
+            android:layout_marginBottom="@dimen/keyline_x4"
+            android:gravity="center"
+            android:text="@string/options_dialog_title"
+            android:textColor="@color/black" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/optionsItemsScroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:nestedScrollingEnabled="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/keyline_x8">
+
+            <include
+                android:id="@+id/activityType"
+                layout="@layout/chip_activity_type" />
+
+            <include
+                android:id="@+id/scaleType"
+                layout="@layout/chip_scale_type" />
+
+            <include
+                android:id="@+id/cropShape"
+                layout="@layout/chip_crop_shape" />
+
+            <include
+                android:id="@+id/guidelines"
+                layout="@layout/chip_guidelines" />
+
+            <include
+                android:id="@+id/ratio"
+                layout="@layout/chip_ratio" />
+
+            <include
+                android:id="@+id/maxZoom"
+                layout="@layout/chip_max_zoom" />
+
+            <include
+                android:id="@+id/autoZoom"
+                layout="@layout/switch_auto_zoom" />
+
+            <include
+                android:id="@+id/cropOverlay"
+                layout="@layout/switch_crop_overlay" />
+
+            <include
+                android:id="@+id/fixAspectRatio"
+                layout="@layout/switch_fix_aspect_ratio" />
+
+            <include
+                android:id="@+id/flipHorizontal"
+                layout="@layout/switch_flip_horizontal" />
+
+            <include
+                android:id="@+id/flipVertical"
+                layout="@layout/switch_flip_vertical" />
+
+            <include
+                android:id="@+id/multiTouch"
+                layout="@layout/switch_multi_touch" />
+
+            <include
+                android:id="@+id/progressBar"
+                layout="@layout/switch_progress_bar" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

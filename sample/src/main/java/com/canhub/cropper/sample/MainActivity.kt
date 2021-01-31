@@ -17,9 +17,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import com.canhub.cropper.CropImage
 import com.canhub.cropper.CropImageView
+import com.canhub.cropper.sample.options_dialog.app.OptionsDialogBottomSheet
+import com.canhub.cropper.sample.options_dialog.domain.OptionsActivityEnum
+import com.canhub.cropper.sample.options_dialog.domain.OptionsDomain
 import com.example.croppersample.R
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), OptionsDialogBottomSheet.Listener {
 
     var mDrawerLayout: DrawerLayout? = null
     private var mDrawerToggle: ActionBarDrawerToggle? = null
@@ -99,7 +102,11 @@ class MainActivity : AppCompatActivity() {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 CropImage.startPickImageActivity(this)
             } else {
-                Toast.makeText(this, "Cancelling, required permissions are not granted", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    this,
+                    "Cancelling, required permissions are not granted",
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
         if (requestCode == CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE) {
@@ -109,22 +116,47 @@ class MainActivity : AppCompatActivity() {
             ) {
                 mCurrentFragment!!.setImageUri(mCropImageUri)
             } else {
-                Toast.makeText(this, "Cancelling, required permissions are not granted", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    this,
+                    "Cancelling, required permissions are not granted",
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
+    }
+
+    override fun onOptionsApplySelected() {
+        // todo canato
     }
 
     fun onDrawerOptionClicked(view: View) {
         when (view.id) {
             R.id.drawer_option_load -> {
-                if (CropImage.isExplicitCameraPermissionRequired(this)) {
-                    requestPermissions(
-                        arrayOf(Manifest.permission.CAMERA),
-                        CropImage.CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE
-                    )
-                } else CropImage.startPickImageActivity(this)
-
-                mDrawerLayout!!.closeDrawers()
+//                if (CropImage.isExplicitCameraPermissionRequired(this)) {
+//                    requestPermissions(
+//                        arrayOf(Manifest.permission.CAMERA),
+//                        CropImage.CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE
+//                    )
+//                } else CropImage.startPickImageActivity(this)
+//
+//                mDrawerLayout!!.closeDrawers()
+                // todo canato fix this
+                val options = OptionsDomain(
+                    OptionsActivityEnum.DEFAULT,
+                    CropImageView.ScaleType.CENTER,
+                    CropImageView.CropShape.RECTANGLE,
+                    CropImageView.Guidelines.ON,
+                    Pair(1, 1),
+                    autoZoom = true,
+                    maxZoomLvl = 2,
+                    fixAspectRatio = true,
+                    multiTouch = true,
+                    showCropOverlay = true,
+                    showProgressBar = true,
+                    flipHorizontal = true,
+                    flipVertically = true
+                )
+                OptionsDialogBottomSheet.show(supportFragmentManager, options, this)
             }
             R.id.drawer_option_oval -> {
                 setMainFragmentByPreset(CropDemoPreset.CIRCULAR)
