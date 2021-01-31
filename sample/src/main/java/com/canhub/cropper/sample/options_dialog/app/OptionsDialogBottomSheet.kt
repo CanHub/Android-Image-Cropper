@@ -7,6 +7,7 @@ import android.util.Pair
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import com.canhub.cropper.CropImageView
 import com.canhub.cropper.sample.options_dialog.domain.OptionsActivityEnum
@@ -180,10 +181,13 @@ internal class OptionsDialogBottomSheet : BottomSheetDialogFragment(), OptionsCo
     }
 
     override fun updateOptions(options: OptionsDomain) {
-        when (options.activityType) {
-            OptionsActivityEnum.DEFAULT -> binding.activityType.chipDefault.isChecked = true
-            OptionsActivityEnum.CUSTOM -> binding.activityType.chipCustom.isChecked = true
-        }
+
+        // todo #46
+        binding.activityType.chipDefault.isChecked = true
+//        when (options.activityType) {
+//            OptionsActivityEnum.DEFAULT -> binding.activityType.chipDefault.isChecked = true
+//            OptionsActivityEnum.CUSTOM -> binding.activityType.chipCustom.isChecked = true
+//        }
 
         when (options.scaleType) {
             CropImageView.ScaleType.CENTER -> binding.scaleType.chipCenter.isChecked = true
@@ -228,5 +232,10 @@ internal class OptionsDialogBottomSheet : BottomSheetDialogFragment(), OptionsCo
 
     override fun closeWithResult(options: OptionsDomain) {
         listener.onOptionsApplySelected(options)
+    }
+
+    override fun activityCustomNotImplementedMessage() {
+        binding.activityType.chipDefault.isChecked = true
+        Toast.makeText(context, "Not implemented yet, check Issue #46", Toast.LENGTH_LONG).show()
     }
 }

@@ -11,6 +11,7 @@ internal interface OptionsContract {
 
         fun updateOptions(options: OptionsDomain)
         fun closeWithResult(options: OptionsDomain)
+        fun activityCustomNotImplementedMessage()
     }
 
     interface Presenter {

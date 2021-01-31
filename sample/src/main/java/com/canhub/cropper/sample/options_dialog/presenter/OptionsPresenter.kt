@@ -29,7 +29,9 @@ internal class OptionsPresenter : OptionsContract.Presenter {
     }
 
     override fun onActivityTypeSelect(activityType: OptionsActivityEnum) {
-        options = options.copy(activityType = activityType)
+        // todo #46
+        if (activityType == OptionsActivityEnum.CUSTOM) view?.activityCustomNotImplementedMessage()
+        // options = options.copy(activityType = activityType)
     }
 
     override fun onScaleTypeSelect(scaleType: CropImageView.ScaleType) {

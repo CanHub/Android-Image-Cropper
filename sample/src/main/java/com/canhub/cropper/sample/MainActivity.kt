@@ -22,7 +22,7 @@ import com.canhub.cropper.sample.options_dialog.domain.OptionsActivityEnum
 import com.canhub.cropper.sample.options_dialog.domain.OptionsDomain
 import com.example.croppersample.R
 
-class MainActivity : AppCompatActivity(), OptionsDialogBottomSheet.Listener {
+internal class MainActivity : AppCompatActivity(), OptionsDialogBottomSheet.Listener {
 
     var mDrawerLayout: DrawerLayout? = null
     private var mDrawerToggle: ActionBarDrawerToggle? = null
