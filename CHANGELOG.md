@@ -11,7 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [unreleased 2.1.0] -
 ### Changed
-- from Java to Kotlin [CropImageOptions](https://github.com/CanHub/Android-Image-Cropper/issues/40)
+- From Java to Kotlin: [CropImageOptions](https://github.com/CanHub/Android-Image-Cropper/issues/40), [CropWindowHandler](https://github.com/CanHub/Android-Image-Cropper/issues/37)
 
 ### Fixed
 - Null CompressFormat [#44](https://github.com/CanHub/Android-Image-Cropper/issues/44)
