@@ -20,7 +20,7 @@ import android.graphics.RectF;
  * Handler to update crop window edges by the move type - Horizontal, Vertical, Corner or Center.
  * <br>
  */
-final class CropWindowMoveHandler {
+public final class CropWindowMoveHandler {
 
   // region: Fields and Constants
 
