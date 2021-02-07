@@ -1,6 +1,5 @@
 package com.canhub.cropper.sample.options_dialog.domain
 
-import android.util.Pair
 import com.canhub.cropper.CropImageView.ScaleType
 import com.canhub.cropper.CropImageView.CropShape
 import com.canhub.cropper.CropImageView.Guidelines
@@ -28,7 +27,6 @@ internal interface OptionsContract {
         fun onRatioSelect(ratio: Pair<Int, Int>?)
         fun onAutoZoomSelect(enable: Boolean)
         fun onMaxZoomLvlSelect(maxZoom: Int)
-        fun onAspectRatioSelect(isFix: Boolean)
         fun onMultiTouchSelect(enable: Boolean)
         fun onCropOverlaySelect(show: Boolean)
         fun onProgressBarSelect(show: Boolean)

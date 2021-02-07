@@ -1,6 +1,5 @@
 package com.canhub.cropper.sample.options_dialog.presenter
 
-import android.util.Pair
 import com.canhub.cropper.CropImageView
 import com.canhub.cropper.sample.options_dialog.domain.OptionsActivityEnum
 import com.canhub.cropper.sample.options_dialog.domain.OptionsContract
@@ -58,10 +57,6 @@ internal class OptionsPresenter : OptionsContract.Presenter {
         options = options.copy(maxZoomLvl = maxZoom)
     }
 
-    override fun onAspectRatioSelect(isFix: Boolean) {
-        options = options.copy(fixAspectRatio = isFix)
-    }
-
     override fun onMultiTouchSelect(enable: Boolean) {
         options = options.copy(multiTouch = enable)
     }
@@ -84,17 +79,16 @@ internal class OptionsPresenter : OptionsContract.Presenter {
 
     private fun defaultOptions() = OptionsDomain(
         OptionsActivityEnum.DEFAULT,
-        CropImageView.ScaleType.CENTER,
+        CropImageView.ScaleType.FIT_CENTER,
         CropImageView.CropShape.RECTANGLE,
         CropImageView.Guidelines.ON,
         Pair(1, 1),
         maxZoomLvl = 2,
         autoZoom = true,
-        fixAspectRatio = true,
         multiTouch = true,
         showCropOverlay = true,
         showProgressBar = true,
-        flipHorizontal = true,
-        flipVertically = true
+        flipHorizontal = false,
+        flipVertically = false
     )
 }

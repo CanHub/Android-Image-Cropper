@@ -3,7 +3,6 @@ package com.canhub.cropper.sample.options_dialog.app
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Pair
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +18,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 internal class OptionsDialogBottomSheet : BottomSheetDialogFragment(), OptionsContract.View {
 
     interface Listener {
-
         fun onOptionsApplySelected(options: OptionsDomain)
     }
 
@@ -27,7 +25,7 @@ internal class OptionsDialogBottomSheet : BottomSheetDialogFragment(), OptionsCo
 
         fun show(
             fragmentManager: FragmentManager,
-            options: OptionsDomain,
+            options: OptionsDomain?,
             listener: Listener
         ) {
             this.listener = listener
@@ -132,11 +130,11 @@ internal class OptionsDialogBottomSheet : BottomSheetDialogFragment(), OptionsCo
         }
 
         binding.ratio.chipFourThree.setOnClickListener {
-            presenter.onRatioSelect(Pair(4, 3))
+            presenter.onRatioSelect(Pair(16, 9))
         }
 
         binding.ratio.chipSixteenNine.setOnClickListener {
-            presenter.onRatioSelect(Pair(16, 9))
+            presenter.onRatioSelect(Pair(9, 16))
         }
 
         binding.maxZoom.chipTwo.setOnClickListener {
@@ -159,10 +157,6 @@ internal class OptionsDialogBottomSheet : BottomSheetDialogFragment(), OptionsCo
             presenter.onCropOverlaySelect(isChecked)
         }
 
-        binding.fixAspectRatio.toggle.setOnCheckedChangeListener { _, isChecked ->
-            presenter.onAspectRatioSelect(isChecked)
-        }
-
         binding.flipHorizontal.toggle.setOnCheckedChangeListener { _, isChecked ->
             presenter.onFlipHorizontalSelect(isChecked)
         }
@@ -181,14 +175,12 @@ internal class OptionsDialogBottomSheet : BottomSheetDialogFragment(), OptionsCo
     }
 
     override fun updateOptions(options: OptionsDomain) {
-
         // todo #46
         binding.activityType.chipDefault.isChecked = true
 //        when (options.activityType) {
 //            OptionsActivityEnum.DEFAULT -> binding.activityType.chipDefault.isChecked = true
 //            OptionsActivityEnum.CUSTOM -> binding.activityType.chipCustom.isChecked = true
 //        }
-
         when (options.scaleType) {
             CropImageView.ScaleType.CENTER -> binding.scaleType.chipCenter.isChecked = true
             CropImageView.ScaleType.FIT_CENTER -> binding.scaleType.chipFitCenter.isChecked = true
@@ -222,7 +214,6 @@ internal class OptionsDialogBottomSheet : BottomSheetDialogFragment(), OptionsCo
         }
 
         binding.autoZoom.toggle.isChecked = options.autoZoom
-        binding.fixAspectRatio.toggle.isChecked = options.fixAspectRatio
         binding.multiTouch.toggle.isChecked = options.multiTouch
         binding.cropOverlay.toggle.isChecked = options.showCropOverlay
         binding.progressBar.toggle.isChecked = options.showProgressBar
@@ -232,6 +223,11 @@ internal class OptionsDialogBottomSheet : BottomSheetDialogFragment(), OptionsCo
 
     override fun closeWithResult(options: OptionsDomain) {
         listener.onOptionsApplySelected(options)
+    }
+
+    override fun onDestroy() {
+        presenter.unbind()
+        super.onDestroy()
     }
 
     override fun activityCustomNotImplementedMessage() {

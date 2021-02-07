@@ -66,5 +66,6 @@
     <string name="show_progress_bar">Show Progress Bar</string>
     <string name="flip_horizontal">Flip Horizontal</string>
     <string name="flip_vertical">Flip Vertical</string>
+    <string name="reset">Reset Crop Rect</string>
 
 </resources>

@@ -1,7 +1,6 @@
 package com.canhub.cropper.sample.options_dialog.domain
 
 import android.os.Parcelable
-import android.util.Pair
 import com.canhub.cropper.CropImageView
 import kotlinx.android.parcel.Parcelize
 import kotlinx.android.parcel.RawValue
@@ -15,7 +14,6 @@ internal data class OptionsDomain(
     val ratio: @RawValue Pair<Int, Int>?,
     val maxZoomLvl: Int,
     val autoZoom: Boolean,
-    val fixAspectRatio: Boolean,
     val multiTouch: Boolean,
     val showCropOverlay: Boolean,
     val showProgressBar: Boolean,

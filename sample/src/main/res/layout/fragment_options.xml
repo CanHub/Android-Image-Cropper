@@ -78,10 +78,6 @@
                 layout="@layout/switch_crop_overlay" />
 
             <include
-                android:id="@+id/fixAspectRatio"
-                layout="@layout/switch_fix_aspect_ratio" />
-
-            <include
                 android:id="@+id/flipHorizontal"
                 layout="@layout/switch_flip_horizontal" />
 
