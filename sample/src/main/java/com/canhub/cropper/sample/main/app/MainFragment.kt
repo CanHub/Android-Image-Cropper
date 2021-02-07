@@ -72,20 +72,28 @@ internal class MainFragment :
             OptionsDialogBottomSheet.show(childFragmentManager, options, this)
         }
 
-        binding.searchImage.setOnClickListener {
-            context?.let { ctx ->
-                if (CropImage.isExplicitCameraPermissionRequired(ctx)) {
-                    requestPermissions(
-                        arrayOf(Manifest.permission.CAMERA),
-                        CropImage.CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE
-                    )
-                } else activity?.let { CropImage.startPickImageActivity(it) }
-            }
-        }
+        // TODO Issue #20
+//        binding.searchImage.setOnClickListener {
+//            context?.let { ctx ->
+//                if (CropImage.isExplicitCameraPermissionRequired(ctx)) {
+//                    requestPermissions(
+//                        arrayOf(Manifest.permission.CAMERA),
+//                        CropImage.CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE
+//                    )
+//                } else activity?.let { CropImage.startPickImageActivity(it) }
+//            }
+//        }
 
         binding.reset.setOnClickListener {
             binding.cropImageView.apply {
                 resetCropRect()
+                options = options?.copy(
+                    scaleType = CropImageView.ScaleType.FIT_CENTER,
+                    flipHorizontal = false,
+                    flipVertically = false,
+                    autoZoom = true,
+                    maxZoomLvl = 2
+                )
                 imageResource = R.drawable.cat
             }
         }

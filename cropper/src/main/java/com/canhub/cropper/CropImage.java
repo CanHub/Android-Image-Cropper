@@ -153,6 +153,7 @@ public final class CropImage {
      *
      * @param activity the activity to be used to start activity from
      */
+    // TODO Issue #20
     public static void startPickImageActivity(@NonNull Activity activity) {
         activity.startActivityForResult(
                 getPickImageChooserIntent(activity), PICK_IMAGE_CHOOSER_REQUEST_CODE);
@@ -199,7 +200,7 @@ public final class CropImage {
             @NonNull Context context,
             CharSequence title,
             boolean includeDocuments,
-            boolean includeCamera) {
+            boolean includeCamera) { // todo canato
 
         List<Intent> allIntents = new ArrayList<>();
         PackageManager packageManager = context.getPackageManager();
@@ -224,7 +225,7 @@ public final class CropImage {
 
         // Add all other intents
         chooserIntent.putExtra(
-                Intent.EXTRA_INITIAL_INTENTS, allIntents.toArray(new Parcelable[allIntents.size()]));
+                Intent.EXTRA_INITIAL_INTENTS, allIntents.toArray(new Parcelable[0]));
 
         return chooserIntent;
     }
