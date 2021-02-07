@@ -14,23 +14,24 @@ import com.example.croppersample.databinding.ActivityCropResultBinding
 class CropResultActivity : Activity() {
 
     companion object {
-
-        fun start(fragment: Fragment, imgBitmap: Bitmap?, uri: Uri?, sampleSize: Int) {
+        fun start(fragment: Fragment, imageBitmap: Bitmap, uri: Uri?, sampleSize: Int) {
             val intent = Intent(fragment.context, CropResultActivity::class.java)
                 .putExtra(SAMPLE_SIZE, sampleSize)
                 .putExtra(URI, uri)
-                .putExtra(IMG_BITMAP, imgBitmap)
+
+            image = imageBitmap
 
             fragment.startActivity(intent)
         }
 
-        const val SAMPLE_SIZE = "SAMPLE_SIZE"
+        // This is used, because bitmap is huge and cannot be passed in Intent without throw and exceptiont
+        var image: Bitmap? = null
+
+        private const val SAMPLE_SIZE = "SAMPLE_SIZE"
         private const val URI = "URI"
-        private const val IMG_BITMAP = "IMG_BITMAP"
     }
 
     private lateinit var binding: ActivityCropResultBinding
-    private var image: Bitmap? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,8 +40,6 @@ class CropResultActivity : Activity() {
         setContentView(binding.root)
 
         binding.resultImageView.setBackgroundResource(R.drawable.backdrop)
-
-        image = intent.getParcelableExtra(IMG_BITMAP)
 
         image?.let {
             binding.resultImageView.setImageBitmap(it)
