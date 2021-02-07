@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_selected="true">
+        <objectAnimator
+            android:duration="200"
+            android:propertyName="elevation"
+            android:valueTo="@dimen/elevation_top_app_bar_scrolled"
+            android:valueType="floatType" />
+    </item>
+
+    <item>
+        <objectAnimator
+            android:duration="200"
+            android:propertyName="elevation"
+            android:valueTo="@dimen/elevation_top_app_bar_resting"
+            android:valueType="floatType" />
+    </item>
+
+</selector>

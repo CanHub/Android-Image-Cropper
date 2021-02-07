@@ -25,6 +25,23 @@
         <item name="android:clickable">true</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:background">?android:attr/selectableItemBackground</item>
-
     </style>
+
+    <style name="BottomSheetDialogTheme" parent="@style/Theme.Design.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:background">@drawable/bg_bottom_sheet_rounded</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
+    <style name="OptionChip" parent="@style/Widget.MaterialComponents.Chip.Choice">
+        <item name="chipBackgroundColor">@color/chip_bg_states</item>
+        <item name="checkedIconVisible">true</item>
+        <item name="android:textColor">@color/chip_text_states</item>
+    </style>
+
+    <style name="OptionSwitch">
+        <item name="trackTint">@color/switch_track_selector</item>
+        <item name="thumbTint">@color/switch_thumb_selector</item>
+    </style>
+
 </resources>
