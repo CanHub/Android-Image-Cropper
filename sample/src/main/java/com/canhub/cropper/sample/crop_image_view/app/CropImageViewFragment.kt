@@ -1,4 +1,4 @@
-package com.canhub.cropper.sample.main.app
+package com.canhub.cropper.sample.crop_image_view.app
 
 import android.Manifest
 import android.content.Intent
@@ -22,27 +22,27 @@ import com.canhub.cropper.CropImageView.CropResult
 import com.canhub.cropper.CropImageView.OnCropImageCompleteListener
 import com.canhub.cropper.CropImageView.OnSetImageUriCompleteListener
 import com.canhub.cropper.sample.CropResultActivity
-import com.canhub.cropper.sample.main.domain.MainContract
-import com.canhub.cropper.sample.main.presenter.MainPresenter
+import com.canhub.cropper.sample.crop_image_view.domain.CropImageViewContract
+import com.canhub.cropper.sample.crop_image_view.presenter.CropImageViewPresenter
 import com.canhub.cropper.sample.options_dialog.app.OptionsDialogBottomSheet
 import com.canhub.cropper.sample.options_dialog.domain.OptionsDomain
 import com.example.croppersample.R
 import com.example.croppersample.databinding.FragmentMainBinding
 
-internal class MainFragment :
+internal class CropImageViewFragment :
     Fragment(),
-    MainContract.View,
+    CropImageViewContract.View,
     OptionsDialogBottomSheet.Listener,
     OnSetImageUriCompleteListener,
     OnCropImageCompleteListener {
 
     companion object {
 
-        fun newInstance() = MainFragment()
+        fun newInstance() = CropImageViewFragment()
     }
 
     private lateinit var binding: FragmentMainBinding
-    private val presenter = MainPresenter()
+    private val presenter = CropImageViewPresenter()
     private var options: OptionsDomain? = null
     private var cropImageUri: Uri? = null
 

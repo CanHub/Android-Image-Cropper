@@ -7,7 +7,6 @@ import kotlinx.android.parcel.RawValue
 
 @Parcelize
 internal data class OptionsDomain(
-    val activityType: OptionsActivityEnum,
     val scaleType: CropImageView.ScaleType,
     val cropShape: CropImageView.CropShape,
     val guidelines: CropImageView.Guidelines,
@@ -20,7 +19,3 @@ internal data class OptionsDomain(
     val flipHorizontal: Boolean,
     val flipVertically: Boolean,
 ) : Parcelable
-
-internal enum class OptionsActivityEnum {
-    DEFAULT, CUSTOM
-}

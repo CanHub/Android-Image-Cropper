@@ -1,7 +1,6 @@
 package com.canhub.cropper.sample.options_dialog.presenter
 
 import com.canhub.cropper.CropImageView
-import com.canhub.cropper.sample.options_dialog.domain.OptionsActivityEnum
 import com.canhub.cropper.sample.options_dialog.domain.OptionsContract
 import com.canhub.cropper.sample.options_dialog.domain.OptionsDomain
 
@@ -25,12 +24,6 @@ internal class OptionsPresenter : OptionsContract.Presenter {
 
     override fun onDismiss() {
         view?.closeWithResult(options)
-    }
-
-    override fun onActivityTypeSelect(activityType: OptionsActivityEnum) {
-        // todo #46
-        if (activityType == OptionsActivityEnum.CUSTOM) view?.activityCustomNotImplementedMessage()
-        // options = options.copy(activityType = activityType)
     }
 
     override fun onScaleTypeSelect(scaleType: CropImageView.ScaleType) {
@@ -78,7 +71,6 @@ internal class OptionsPresenter : OptionsContract.Presenter {
     }
 
     private fun defaultOptions() = OptionsDomain(
-        OptionsActivityEnum.DEFAULT,
         CropImageView.ScaleType.FIT_CENTER,
         CropImageView.CropShape.RECTANGLE,
         CropImageView.Guidelines.ON,

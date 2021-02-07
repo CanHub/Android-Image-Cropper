@@ -46,10 +46,6 @@
             android:paddingBottom="@dimen/keyline_x8">
 
             <include
-                android:id="@+id/activityType"
-                layout="@layout/chip_activity_type" />
-
-            <include
                 android:id="@+id/scaleType"
                 layout="@layout/chip_scale_type" />
 

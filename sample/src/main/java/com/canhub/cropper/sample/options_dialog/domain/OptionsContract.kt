@@ -10,7 +10,6 @@ internal interface OptionsContract {
 
         fun updateOptions(options: OptionsDomain)
         fun closeWithResult(options: OptionsDomain)
-        fun activityCustomNotImplementedMessage()
     }
 
     interface Presenter {
@@ -20,7 +19,6 @@ internal interface OptionsContract {
         fun onViewCreated(options: OptionsDomain?)
         fun onDismiss()
 
-        fun onActivityTypeSelect(activityType: OptionsActivityEnum)
         fun onScaleTypeSelect(scaleType: ScaleType)
         fun onCropShapeSelect(cropShape: CropShape)
         fun onGuidelinesSelect(guidelines: Guidelines)

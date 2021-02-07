@@ -1,15 +1,14 @@
-package com.canhub.cropper.sample.main.presenter
+package com.canhub.cropper.sample.crop_image_view.presenter
 
 import com.canhub.cropper.CropImageView
-import com.canhub.cropper.sample.main.domain.MainContract
-import com.canhub.cropper.sample.options_dialog.domain.OptionsActivityEnum
+import com.canhub.cropper.sample.crop_image_view.domain.CropImageViewContract
 import com.canhub.cropper.sample.options_dialog.domain.OptionsDomain
 
-internal class MainPresenter : MainContract.Presenter {
+internal class CropImageViewPresenter : CropImageViewContract.Presenter {
 
-    private var view: MainContract.View? = null
+    private var view: CropImageViewContract.View? = null
 
-    override fun bind(view: MainContract.View) {
+    override fun bind(view: CropImageViewContract.View) {
         this.view = view
     }
 
@@ -22,7 +21,6 @@ internal class MainPresenter : MainContract.Presenter {
     }
 
     private fun getOptions(): OptionsDomain = OptionsDomain(
-        OptionsActivityEnum.DEFAULT,
         CropImageView.ScaleType.FIT_CENTER,
         CropImageView.CropShape.RECTANGLE,
         CropImageView.Guidelines.ON,

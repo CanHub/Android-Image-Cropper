@@ -6,10 +6,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import com.canhub.cropper.CropImageView
-import com.canhub.cropper.sample.options_dialog.domain.OptionsActivityEnum
 import com.canhub.cropper.sample.options_dialog.domain.OptionsContract
 import com.canhub.cropper.sample.options_dialog.domain.OptionsDomain
 import com.example.croppersample.databinding.FragmentOptionsBinding
@@ -18,6 +16,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 internal class OptionsDialogBottomSheet : BottomSheetDialogFragment(), OptionsContract.View {
 
     interface Listener {
+
         fun onOptionsApplySelected(options: OptionsDomain)
     }
 
@@ -75,14 +74,6 @@ internal class OptionsDialogBottomSheet : BottomSheetDialogFragment(), OptionsCo
         binding.optionsItemsScroll.setOnScrollChangeListener { _, _, _, _, _ ->
             binding.optionsHeader.isSelected =
                 binding.optionsItemsScroll.canScrollVertically(DIRECTION_UPWARDS)
-        }
-
-        binding.activityType.chipDefault.setOnClickListener {
-            presenter.onActivityTypeSelect(OptionsActivityEnum.DEFAULT)
-        }
-
-        binding.activityType.chipCustom.setOnClickListener {
-            presenter.onActivityTypeSelect(OptionsActivityEnum.CUSTOM)
         }
 
         binding.scaleType.chipCenter.setOnClickListener {
@@ -175,12 +166,6 @@ internal class OptionsDialogBottomSheet : BottomSheetDialogFragment(), OptionsCo
     }
 
     override fun updateOptions(options: OptionsDomain) {
-        // todo #46
-        binding.activityType.chipDefault.isChecked = true
-//        when (options.activityType) {
-//            OptionsActivityEnum.DEFAULT -> binding.activityType.chipDefault.isChecked = true
-//            OptionsActivityEnum.CUSTOM -> binding.activityType.chipCustom.isChecked = true
-//        }
         when (options.scaleType) {
             CropImageView.ScaleType.CENTER -> binding.scaleType.chipCenter.isChecked = true
             CropImageView.ScaleType.FIT_CENTER -> binding.scaleType.chipFitCenter.isChecked = true
@@ -228,10 +213,5 @@ internal class OptionsDialogBottomSheet : BottomSheetDialogFragment(), OptionsCo
     override fun onDestroy() {
         presenter.unbind()
         super.onDestroy()
-    }
-
-    override fun activityCustomNotImplementedMessage() {
-        binding.activityType.chipDefault.isChecked = true
-        Toast.makeText(context, "Not implemented yet, check Issue #46", Toast.LENGTH_LONG).show()
     }
 }
