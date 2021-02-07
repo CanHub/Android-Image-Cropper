@@ -251,7 +251,7 @@ class CropWindowHandler {
              L C C C C R
             BL B B B B BR
         */
-        
+
         val cellLength = mEdges.width() / 6
         val leftCenter = mEdges.left + cellLength
         val rightCenter = mEdges.left + 5 * cellLength
