@@ -433,7 +433,7 @@ open class CropImageOptions : Parcelable {
     }
 
     companion object {
-
+        @JvmField
         val CREATOR: Parcelable.Creator<CropImageOptions?> =
             object : Parcelable.Creator<CropImageOptions?> {
                 override fun createFromParcel(parcel: Parcel): CropImageOptions? {
