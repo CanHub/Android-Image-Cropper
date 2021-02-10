@@ -7,10 +7,6 @@
             <category android:name="android.intent.category.OPENABLE"/>
         </intent>
         <intent>
-            <action android:name="android.intent.action.PICK" />
-            <category android:name="android.intent.category.OPENABLE"/>
-        </intent>
-        <intent>
             <action android:name="android.media.action.IMAGE_CAPTURE" />
         </intent>
     </queries>
