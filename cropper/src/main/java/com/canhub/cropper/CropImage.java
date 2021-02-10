@@ -210,13 +210,7 @@ public final class CropImage {
             allIntents.addAll(getCameraIntents(context, packageManager));
         }
 
-        List<Intent> galleryIntents =
-                getGalleryIntents(packageManager, Intent.ACTION_GET_CONTENT, includeDocuments);
-        if (galleryIntents.size() == 0) {
-            // if no intents found for get-content try pick intent action (Huawei P9).
-            galleryIntents = getGalleryIntents(packageManager, Intent.ACTION_PICK, includeDocuments);
-        }
-        allIntents.addAll(galleryIntents);
+        allIntents.addAll(getGalleryIntents(packageManager, Intent.ACTION_GET_CONTENT, includeDocuments));
 
         Intent target;
         if (allIntents.isEmpty()) {
@@ -278,6 +272,11 @@ public final class CropImage {
             allIntents.add(intent);
         }
 
+        // Just in case queryIntentActivities returns emptyList
+        if (allIntents.isEmpty()) {
+            allIntents.add(captureIntent);
+        }
+
         return allIntents;
     }
 
@@ -289,11 +288,10 @@ public final class CropImage {
     public static List<Intent> getGalleryIntents(
             @NonNull PackageManager packageManager, String action, boolean includeDocuments) {
         List<Intent> intents = new ArrayList<>();
-        Intent galleryIntent =
-                action == Intent.ACTION_GET_CONTENT
-                        ? new Intent(action)
-                        : new Intent(action, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        galleryIntent.setType("image/*");
+        Intent galleryIntent = new Intent(action);
+        galleryIntent.setType(includeDocuments ? "*/*" : "image/*");
+        galleryIntent.addCategory(Intent.CATEGORY_OPENABLE);
+
         List<ResolveInfo> listGallery = packageManager.queryIntentActivities(galleryIntent, 0);
         for (ResolveInfo res : listGallery) {
             Intent intent = new Intent(galleryIntent);
@@ -314,6 +312,12 @@ public final class CropImage {
                 }
             }
         }
+
+        // Just in case queryIntentActivities returns emptyList
+        if (intents.isEmpty()) {
+            intents.add(galleryIntent);
+        }
+
         return intents;
     }
 
