@@ -79,7 +79,7 @@ internal class CropImageViewFragment :
                         arrayOf(Manifest.permission.CAMERA),
                         CropImage.CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE
                     )
-                } else activity?.let { CropImage.startPickImageActivity(it) }
+                } else context?.let { context -> CropImage.startPickImageActivity(context, this) }
             }
         }
 
@@ -156,9 +156,12 @@ internal class CropImageViewFragment :
         binding.cropImageView.setOnCropImageCompleteListener(null)
     }
 
-    override fun onSetImageUriComplete(view: CropImageView, uri: Uri, error: Exception) {
-        Log.e("AIC", "Failed to load image by URI", error)
-        Toast.makeText(activity, "Image load failed: " + error.message, Toast.LENGTH_LONG).show()
+    override fun onSetImageUriComplete(view: CropImageView, uri: Uri, error: Exception?) {
+        if (error != null) {
+            Log.e("AIC", "Failed to load image by URI", error)
+            Toast.makeText(activity, "Image load failed: " + error.message, Toast.LENGTH_LONG)
+                .show()
+        }
     }
 
     override fun onCropImageComplete(view: CropImageView, result: CropResult) {
