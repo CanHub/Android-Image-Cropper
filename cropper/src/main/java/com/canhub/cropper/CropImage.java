@@ -36,11 +36,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.provider.MediaStore;
 
-import java.io.File;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -50,6 +45,12 @@ import androidx.fragment.app.Fragment;
 
 import com.canhub.cropper.common.CommonValues;
 import com.canhub.cropper.common.CommonVersionCheck;
+
+import java.io.File;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Helper to simplify crop image work like starting pick-image acitvity and handling camera/gallery
@@ -153,7 +154,6 @@ public final class CropImage {
      *
      * @param activity the activity to be used to start activity from
      */
-    // TODO Issue #20
     public static void startPickImageActivity(@NonNull Activity activity) {
         activity.startActivityForResult(
                 getPickImageChooserIntent(activity), PICK_IMAGE_CHOOSER_REQUEST_CODE);
@@ -210,18 +210,10 @@ public final class CropImage {
             allIntents.addAll(getCameraIntents(context, packageManager));
         }
 
-        allIntents.add(getGalleryIntent(Intent.ACTION_GET_CONTENT, includeDocuments));
-
-        Intent target;
-        if (allIntents.isEmpty()) {
-            target = new Intent();
-        } else {
-            target = allIntents.get(allIntents.size() - 1);
-            allIntents.remove(allIntents.size() - 1);
-        }
+        allIntents.addAll(getGalleryIntents(packageManager, Intent.ACTION_GET_CONTENT, includeDocuments));
 
         // Create a chooser from the main  intent
-        Intent chooserIntent = Intent.createChooser(target, title);
+        Intent chooserIntent = Intent.createChooser(allIntents.remove(allIntents.size()-1), title);
 
         // Add all other intents
         chooserIntent.putExtra(
@@ -272,20 +264,54 @@ public final class CropImage {
             allIntents.add(intent);
         }
 
+        // Just in case queryIntentActivities returns emptyList
+        if (allIntents.isEmpty()) {
+            allIntents.add(captureIntent);
+        }
+
         return allIntents;
     }
+
 
     /**
      * Get all Gallery intents for getting image from one of the apps of the device that handle
      * images.
      */
-    public static Intent getGalleryIntent(String action, boolean includeDocuments) {
-        Intent galleryIntent = new Intent();
-        galleryIntent.setAction(action);
+    public static List<Intent> getGalleryIntents(
+            @NonNull PackageManager packageManager, String action, boolean includeDocuments) {
+        List<Intent> intents = new ArrayList<>();
+        Intent galleryIntent = new Intent(action);
         galleryIntent.setType(includeDocuments ? "*/*" : "image/*");
         galleryIntent.addCategory(Intent.CATEGORY_OPENABLE);
 
-        return galleryIntent;
+        List<ResolveInfo> listGallery = packageManager.queryIntentActivities(galleryIntent, 0);
+        if (CommonVersionCheck.INSTANCE.isAtLeastQ29() && listGallery.size() > 2) {
+            // Workaround for the bug that only 2 items are shown in Android Q
+            // // https://issuetracker.google.com/issues/134367295
+            // Trying to pick best match items
+            Collections.sort(listGallery, (o1, o2) -> {
+                final String packageName = o1.activityInfo.packageName;
+                if (packageName.contains("photo")) return -1;
+                if (packageName.contains("gallery")) return -1;
+                if (packageName.contains("album")) return -1;
+                if (packageName.contains("media")) return -1;
+                return 0;
+            });
+            listGallery = listGallery.subList(0, 2);
+        }
+        for (ResolveInfo res : listGallery) {
+            Intent intent = new Intent(galleryIntent);
+            intent.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
+            intent.setPackage(res.activityInfo.packageName);
+            intents.add(intent);
+        }
+
+        // Just in case queryIntentActivities returns emptyList
+        if (intents.isEmpty()) {
+            intents.add(galleryIntent);
+        }
+
+        return intents;
     }
 
     /**

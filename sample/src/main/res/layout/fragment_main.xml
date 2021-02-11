@@ -45,17 +45,16 @@
         app:pressedTranslationZ="@dimen/elevation_fab_pressed"
         tools:ignore="ContentDescription" />
 
-<!--  Todo Issue #20  -->
-<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--        android:id="@+id/searchImage"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_margin="@dimen/keyline_x4"-->
-<!--        android:elevation="@dimen/elevation_fab_resting_or_snackbar"-->
-<!--        android:src="@drawable/ic_mage_search_24"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:pressedTranslationZ="@dimen/elevation_fab_pressed"-->
-<!--        tools:ignore="ContentDescription" />-->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/searchImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/keyline_x4"
+        android:elevation="@dimen/elevation_fab_resting_or_snackbar"
+        android:src="@drawable/ic_mage_search_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:pressedTranslationZ="@dimen/elevation_fab_pressed"
+        tools:ignore="ContentDescription" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

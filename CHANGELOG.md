@@ -15,6 +15,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ### Fixed
 - Null CompressFormat [#44](https://github.com/CanHub/Android-Image-Cropper/issues/44)
+- [Galley option not showing](https://github.com/CanHub/Android-Image-Cropper/issues/20)
+- [Camera option not showing](https://github.com/CanHub/Android-Image-Cropper/issues/52)
 
 ## [2.0.3] - 27/01/21
 Versions `2.0.1` and `2.0.2` are similar, issues with jitpack.
