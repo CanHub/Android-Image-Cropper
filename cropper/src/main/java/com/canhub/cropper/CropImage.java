@@ -154,7 +154,6 @@ public final class CropImage {
      *
      * @param activity the activity to be used to start activity from
      */
-    // TODO Issue #20
     public static void startPickImageActivity(@NonNull Activity activity) {
         activity.startActivityForResult(
                 getPickImageChooserIntent(activity), PICK_IMAGE_CHOOSER_REQUEST_CODE);
@@ -286,7 +285,7 @@ public final class CropImage {
         galleryIntent.addCategory(Intent.CATEGORY_OPENABLE);
 
         List<ResolveInfo> listGallery = packageManager.queryIntentActivities(galleryIntent, 0);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && listGallery.size() > 2) {
+        if (CommonVersionCheck.INSTANCE.isAtLeastQ29() && listGallery.size() > 2) {
             // Workaround for the bug that only 2 items are shown in Android Q
             // // https://issuetracker.google.com/issues/134367295
             // Trying to pick best match items

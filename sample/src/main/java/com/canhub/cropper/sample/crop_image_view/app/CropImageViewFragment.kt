@@ -72,17 +72,16 @@ internal class CropImageViewFragment :
             OptionsDialogBottomSheet.show(childFragmentManager, options, this)
         }
 
-        // TODO Issue #20
-//        binding.searchImage.setOnClickListener {
-//            context?.let { ctx ->
-//                if (CropImage.isExplicitCameraPermissionRequired(ctx)) {
-//                    requestPermissions(
-//                        arrayOf(Manifest.permission.CAMERA),
-//                        CropImage.CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE
-//                    )
-//                } else activity?.let { CropImage.startPickImageActivity(it) }
-//            }
-//        }
+        binding.searchImage.setOnClickListener {
+            context?.let { ctx ->
+                if (CropImage.isExplicitCameraPermissionRequired(ctx)) {
+                    requestPermissions(
+                        arrayOf(Manifest.permission.CAMERA),
+                        CropImage.CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE
+                    )
+                } else activity?.let { CropImage.startPickImageActivity(it) }
+            }
+        }
 
         binding.reset.setOnClickListener {
             binding.cropImageView.apply {
