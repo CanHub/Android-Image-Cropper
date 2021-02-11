@@ -36,11 +36,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.provider.MediaStore;
 
-import java.io.File;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -50,6 +45,12 @@ import androidx.fragment.app.Fragment;
 
 import com.canhub.cropper.common.CommonValues;
 import com.canhub.cropper.common.CommonVersionCheck;
+
+import java.io.File;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Helper to simplify crop image work like starting pick-image acitvity and handling camera/gallery
@@ -212,16 +213,8 @@ public final class CropImage {
 
         allIntents.addAll(getGalleryIntents(packageManager, Intent.ACTION_GET_CONTENT, includeDocuments));
 
-        Intent target;
-        if (allIntents.isEmpty()) {
-            target = new Intent();
-        } else {
-            target = allIntents.get(allIntents.size() - 1);
-            allIntents.remove(allIntents.size() - 1);
-        }
-
         // Create a chooser from the main  intent
-        Intent chooserIntent = Intent.createChooser(target, title);
+        Intent chooserIntent = Intent.createChooser(allIntents.remove(allIntents.size()-1), title);
 
         // Add all other intents
         chooserIntent.putExtra(
@@ -293,24 +286,25 @@ public final class CropImage {
         galleryIntent.addCategory(Intent.CATEGORY_OPENABLE);
 
         List<ResolveInfo> listGallery = packageManager.queryIntentActivities(galleryIntent, 0);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && listGallery.size() > 2) {
+            // Workaround for the bug that only 2 items are shown in Android Q
+            // // https://issuetracker.google.com/issues/134367295
+            // Trying to pick best match items
+            Collections.sort(listGallery, (o1, o2) -> {
+                final String packageName = o1.activityInfo.packageName;
+                if (packageName.contains("photo")) return -1;
+                if (packageName.contains("gallery")) return -1;
+                if (packageName.contains("album")) return -1;
+                if (packageName.contains("media")) return -1;
+                return 0;
+            });
+            listGallery = listGallery.subList(0, 2);
+        }
         for (ResolveInfo res : listGallery) {
             Intent intent = new Intent(galleryIntent);
             intent.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
             intent.setPackage(res.activityInfo.packageName);
             intents.add(intent);
-        }
-
-        // remove documents intent
-        if (!includeDocuments) {
-            for (Intent intent : intents) {
-                if (intent
-                        .getComponent()
-                        .getClassName()
-                        .equals("com.android.documentsui.DocumentsActivity")) {
-                    intents.remove(intent);
-                    break;
-                }
-            }
         }
 
         // Just in case queryIntentActivities returns emptyList
