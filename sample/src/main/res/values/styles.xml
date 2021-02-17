@@ -44,4 +44,9 @@
         <item name="thumbTint">@color/switch_thumb_selector</item>
     </style>
 
+    <style name="Sample.Button" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/purpleSolid</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
 </resources>

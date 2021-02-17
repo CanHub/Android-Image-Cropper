@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/purpleDark">
+    android:background="@color/black">
 
     <com.canhub.cropper.CropImageView
         android:id="@+id/cropImageView"
@@ -14,7 +14,7 @@
         android:layout_marginTop="@dimen/keyline_x2"
         android:layout_marginEnd="@dimen/keyline_x2"
         android:layout_marginBottom="@dimen/keyline_x2"
-        android:background="@color/purpleVariant"
+        android:background="@drawable/bg_purple_gradient"
         android:elevation="@dimen/elevation_card_resting"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,6 +22,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+        style="@style/Sample.Button"
         android:id="@+id/reset"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
