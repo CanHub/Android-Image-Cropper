@@ -36,8 +36,7 @@ internal class MainActivity : AppCompatActivity() {
     }
 
     private fun hideButtons(binding: ActivityMainBinding) {
-        binding.sampleCropImageView.visibility = View.GONE
-        binding.sampleCropImage.visibility = View.GONE
-        binding.sampleCustomActivity.visibility = View.GONE
+        binding.image.visibility = View.GONE
+        binding.buttons.visibility = View.GONE
     }
 }
