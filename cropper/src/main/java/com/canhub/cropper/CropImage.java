@@ -199,8 +199,8 @@ public final class CropImage {
     public static Intent getPickImageChooserIntent(
             @NonNull Context context,
             CharSequence title,
-            boolean includeDocuments,
-            boolean includeCamera) { // todo canato
+            boolean includeDocuments, // todo, remove this. Should always be false for image to crop.
+            boolean includeCamera) {
 
         List<Intent> allIntents = new ArrayList<>();
         PackageManager packageManager = context.getPackageManager();

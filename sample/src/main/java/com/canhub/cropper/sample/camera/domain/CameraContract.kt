@@ -8,7 +8,7 @@ internal interface CameraContract {
 
     interface View {
         fun startCropImage(option: CameraEnumDomain)
-        fun finishWithCancelResult(message: String)
+        fun showErrorMessage(message: String)
         fun dispatchTakePictureIntent()
         fun cameraPermissionLaunch()
         fun showDialog()

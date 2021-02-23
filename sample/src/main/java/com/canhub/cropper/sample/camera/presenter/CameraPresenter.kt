@@ -44,9 +44,10 @@ internal class CameraPresenter : CameraContract.Presenter {
 
     override fun onCreate(activity: FragmentActivity?, context: Context?) {
         if (activity == null || context == null) {
-            view?.finishWithCancelResult("onCreate activity and/or context are null")
+            view?.showErrorMessage("onCreate activity and/or context are null")
             return
         }
+        this.context = context
 
         request = ActivityCompat.shouldShowRequestPermissionRationale(
             activity as Activity,
@@ -65,7 +66,7 @@ internal class CameraPresenter : CameraContract.Presenter {
                 hasSystemFeature && selfPermission -> dispatchTakePictureIntent()
                 hasSystemFeature && minVersion && request -> showDialog()
                 hasSystemFeature -> cameraPermissionLaunch()
-                else -> finishWithCancelResult("onCreate no case apply")
+                else -> showErrorMessage("onCreate no case apply")
             }
         }
     }
@@ -87,7 +88,7 @@ internal class CameraPresenter : CameraContract.Presenter {
     }
 
     override fun onCancel() {
-        view?.finishWithCancelResult("onCancel")
+        view?.showErrorMessage("onCancel")
     }
 
     override fun onActivityResult(resultCode: Int, requestCode: Int, data: Intent?) {
@@ -96,7 +97,7 @@ internal class CameraPresenter : CameraContract.Presenter {
                 CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
                     CropImage.getActivityResult(data)?.uri?.let {
                         view?.handleCropImageResult(it.toString().replace("file:", ""))
-                    } ?: view?.finishWithCancelResult("CropImage getActivityResult return null")
+                    } ?: view?.showErrorMessage("CropImage getActivityResult return null")
                 }
                 CameraFragment.CUSTOM_REQUEST_CODE -> {
                     context?.let {
@@ -104,9 +105,17 @@ internal class CameraPresenter : CameraContract.Presenter {
                         view?.handleCropImageResult(uri.toString().replace("file:", ""))
                     }
                 }
+                CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE -> {
+                    context?.let { ctx ->
+                        val uri = CropImage.getPickImageResultUri(ctx, data)
+
+                        if (uri != null) view?.handleCropImageResult(uri.toString())
+                        else view?.showErrorMessage("Pick Image, null URI")
+                    }
+                }
                 CODE_PHOTO_CAMERA -> view?.startCropImage(CameraEnumDomain.START_WITH_URI)
-                else -> view?.finishWithCancelResult("requestCode = $requestCode")
+                else -> view?.showErrorMessage("requestCode = $requestCode")
             }
-        } else view?.finishWithCancelResult("resultCode = $resultCode")
+        } else view?.showErrorMessage("resultCode = $resultCode")
     }
 }

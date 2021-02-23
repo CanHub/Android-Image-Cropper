@@ -108,7 +108,7 @@ internal class CameraFragment :
     }
 
     private fun startCameraWithoutUri() {
-        activity?.let { activity ->
+        context?.let { ctx ->
             CropImage.activity()
                 .setScaleType(CropImageView.ScaleType.CENTER)
                 .setCropShape(CropImageView.CropShape.OVAL)
@@ -151,12 +151,12 @@ internal class CameraFragment :
                 .setAllowRotation(false)
                 .setNoOutputImage(false)
                 .setFixAspectRatio(true)
-                .start(activity)
+                .start(ctx, this)
         }
     }
 
     private fun startCameraWithUri() {
-        activity?.let { activity ->
+        context?.let { ctx ->
             CropImage.activity(photoUri)
                 .setScaleType(CropImageView.ScaleType.FIT_CENTER)
                 .setCropShape(CropImageView.CropShape.RECTANGLE)
@@ -199,11 +199,11 @@ internal class CameraFragment :
                 .setAllowRotation(true)
                 .setNoOutputImage(false)
                 .setFixAspectRatio(false)
-                .start(activity)
+                .start(ctx, this)
         }
     }
 
-    override fun finishWithCancelResult(message: String) {
+    override fun showErrorMessage(message: String) {
         Log.e("Camera Error:", message)
         Toast.makeText(activity, "Crop failed: $message", Toast.LENGTH_SHORT).show()
     }
