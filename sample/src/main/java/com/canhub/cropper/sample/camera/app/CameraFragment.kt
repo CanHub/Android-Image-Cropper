@@ -87,7 +87,7 @@ internal class CameraFragment :
     }
 
     override fun startCropImage(option: CameraEnumDomain) {
-        when(option) {
+        when (option) {
             CameraEnumDomain.START_WITH_URI -> startCameraWithUri()
             CameraEnumDomain.START_WITHOUT_URI -> startCameraWithoutUri()
             CameraEnumDomain.START_PICK_IMG -> startPickImage()

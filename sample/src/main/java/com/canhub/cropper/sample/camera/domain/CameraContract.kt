@@ -28,5 +28,4 @@ internal interface CameraContract {
         fun startPickImageActivityClicked()
         fun startActivityForResultClicked()
     }
-
 }
