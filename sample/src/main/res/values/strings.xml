@@ -70,5 +70,15 @@
     <string name="sample_using_cropimageview">Sample using CropImageView</string>
     <string name="sample_of_customactivity">Sample of CustomActivity</string>
     <string name="sample_calling_cropimage">Sample calling CropImage</string>
+    <string name="take_picture">Take Picture</string>
+    <string name="crop_settings">Crop Settings</string>
+    <string name="ok">ok</string>
+    <string name="cancel">cancel</string>
+    <string name="missing_camera_permission_title">Camera Permission Need</string>
+    <string name="missing_camera_permission_body">We need camera permission to take image and crop it</string>
+    <string name="startWithUri_text">Outside camera and start(uri)</string>
+    <string name="startWithoutUri_text">Library camera, start(), custom option</string>
+    <string name="startPickImageActivity_text">Library show pick option, startPickImageActivity</string>
+    <string name="startActivityForResult_text">Custom selector title, include documents, custom requestCode</string>
 
 </resources>
