@@ -1195,6 +1195,8 @@ public class CropImageView extends FrameLayout {
       mImageView.clearAnimation();
 
       clearImageInt();
+      mRestoreCropWindowRect = null;
+      mRestoreDegreesRotated = 0;
 
       mBitmap = bitmap;
       mImageView.setImageBitmap(mBitmap);
@@ -1527,6 +1529,7 @@ public class CropImageView extends FrameLayout {
           if (mRestoreDegreesRotated != mInitialDegreesRotated) {
             mDegreesRotated = mRestoreDegreesRotated;
             applyImageMatrix(r - l, b - t, true, false);
+            mRestoreDegreesRotated = 0;
           }
           mImageMatrix.mapRect(mRestoreCropWindowRect);
           mCropOverlayView.setCropWindowRect(mRestoreCropWindowRect);
