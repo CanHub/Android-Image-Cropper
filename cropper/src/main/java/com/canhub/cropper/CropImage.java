@@ -994,9 +994,6 @@ public final class CropImage {
             return this;
         }
     }
-    // endregion
-
-    // region: Inner class: ActivityResult
 
     /**
      * Result data of Crop Image Activity.

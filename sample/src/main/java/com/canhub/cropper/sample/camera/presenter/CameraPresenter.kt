@@ -95,6 +95,7 @@ internal class CameraPresenter : CameraContract.Presenter {
         if (resultCode == RESULT_OK) {
             when (requestCode) {
                 CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
+                    val bitmap = context?.let { CropImage.getActivityResult(data)?.getBitmap(it) }
                     CropImage.getActivityResult(data)?.uri?.let {
                         view?.handleCropImageResult(it.toString().replace("file:", ""))
                     } ?: view?.showErrorMessage("CropImage getActivityResult return null")
