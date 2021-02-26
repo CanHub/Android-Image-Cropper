@@ -14,6 +14,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Added
 - CropImage.getActivityResult(data).getBitmap(context) [#49](https://github.com/CanHub/Android-Image-Cropper/issues/49)
 
+### Fixed
+- CropImageView incorrectly restored on rotation [#68](https://github.com/CanHub/Android-Image-Cropper/issues/68)
+
 ## [2.1.0] - 11/02/21
 ### Changed
 - From Java to Kotlin: [CropImageOptions](https://github.com/CanHub/Android-Image-Cropper/issues/40), [CropWindowHandler](https://github.com/CanHub/Android-Image-Cropper/issues/37)
