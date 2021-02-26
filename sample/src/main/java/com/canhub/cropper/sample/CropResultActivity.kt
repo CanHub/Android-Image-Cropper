@@ -14,7 +14,7 @@ import com.example.croppersample.databinding.ActivityCropResultBinding
 class CropResultActivity : Activity() {
 
     companion object {
-        fun start(fragment: Fragment, imageBitmap: Bitmap, uri: Uri?, sampleSize: Int) {
+        fun start(fragment: Fragment, imageBitmap: Bitmap?, uri: Uri?, sampleSize: Int?) {
             val intent = Intent(fragment.context, CropResultActivity::class.java)
                 .putExtra(SAMPLE_SIZE, sampleSize)
                 .putExtra(URI, uri)

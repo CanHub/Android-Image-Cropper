@@ -27,7 +27,7 @@ import com.canhub.cropper.sample.crop_image_view.presenter.CropImageViewPresente
 import com.canhub.cropper.sample.options_dialog.app.OptionsDialogBottomSheet
 import com.canhub.cropper.sample.options_dialog.domain.OptionsDomain
 import com.example.croppersample.R
-import com.example.croppersample.databinding.FragmentMainBinding
+import com.example.croppersample.databinding.FragmentCropImageViewBinding
 
 internal class CropImageViewFragment :
     Fragment(),
@@ -41,7 +41,7 @@ internal class CropImageViewFragment :
         fun newInstance() = CropImageViewFragment()
     }
 
-    private lateinit var binding: FragmentMainBinding
+    private lateinit var binding: FragmentCropImageViewBinding
     private val presenter = CropImageViewPresenter()
     private var options: OptionsDomain? = null
     private var cropImageUri: Uri? = null
@@ -52,7 +52,7 @@ internal class CropImageViewFragment :
         savedInstanceState: Bundle?
     ): View {
         setHasOptionsMenu(true)
-        binding = FragmentMainBinding.inflate(layoutInflater, container, false)
+        binding = FragmentCropImageViewBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 

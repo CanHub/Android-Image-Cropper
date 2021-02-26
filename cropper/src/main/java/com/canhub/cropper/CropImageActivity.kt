@@ -207,12 +207,11 @@ open class CropImageActivity :
                     .show()
                 setResultCancel()
             }
-        }
-        if (requestCode == CropImage.CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE) {
+        } else if (requestCode == CropImage.CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE) {
             // Irrespective of whether camera permission was given or not, we show the picker
             // The picker will not add the camera intent if permission is not available
             CropImage.startPickImageActivity(this)
-        }
+        } else super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
     override fun onSetImageUriComplete(view: CropImageView, uri: Uri, error: Exception?) {

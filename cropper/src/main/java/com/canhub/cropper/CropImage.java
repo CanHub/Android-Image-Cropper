@@ -199,8 +199,8 @@ public final class CropImage {
     public static Intent getPickImageChooserIntent(
             @NonNull Context context,
             CharSequence title,
-            boolean includeDocuments,
-            boolean includeCamera) { // todo canato
+            boolean includeDocuments, // todo, remove this. Should always be false for image to crop.
+            boolean includeCamera) {
 
         List<Intent> allIntents = new ArrayList<>();
         PackageManager packageManager = context.getPackageManager();
@@ -232,6 +232,7 @@ public final class CropImage {
      *                      activity/fragment/widget.
      * @param outputFileUri the Uri where the picture will be placed.
      */
+    //todo this need be public?
     public static Intent getCameraIntent(@NonNull Context context, Uri outputFileUri) {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (outputFileUri == null) {
@@ -244,6 +245,7 @@ public final class CropImage {
     /**
      * Get all Camera intents for capturing image using device camera apps.
      */
+    //todo this need be public?
     public static List<Intent> getCameraIntents(
             @NonNull Context context, @NonNull PackageManager packageManager) {
 
@@ -277,6 +279,7 @@ public final class CropImage {
      * Get all Gallery intents for getting image from one of the apps of the device that handle
      * images.
      */
+    //todo this need be public?
     public static List<Intent> getGalleryIntents(
             @NonNull PackageManager packageManager, String action, boolean includeDocuments) {
         List<Intent> intents = new ArrayList<>();
@@ -322,6 +325,8 @@ public final class CropImage {
      * href="http://stackoverflow.com/questions/32789027/android-m-camera-intent-permission-bug">StackOverflow
      * question</a>.
      */
+    // todo, if true, return error saying permission is needed.
+    // on settings give option to library asked permission (default true)
     public static boolean isExplicitCameraPermissionRequired(@NonNull Context context) {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
                 && hasPermissionInManifest(context, "android.permission.CAMERA")
@@ -341,9 +346,9 @@ public final class CropImage {
         try {
             PackageInfo packageInfo =
                     context.getPackageManager().getPackageInfo(packageName, PackageManager.GET_PERMISSIONS);
-            final String[] declaredPermisisons = packageInfo.requestedPermissions;
-            if (declaredPermisisons != null && declaredPermisisons.length > 0) {
-                for (String p : declaredPermisisons) {
+            final String[] declaredPermissions = packageInfo.requestedPermissions;
+            if (declaredPermissions != null && declaredPermissions.length > 0) {
+                for (String p : declaredPermissions) {
                     if (p.equalsIgnoreCase(permissionName)) {
                         return true;
                     }

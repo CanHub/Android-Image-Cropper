@@ -19,7 +19,7 @@ ext {
     materialVersion = '1.3.0-rc01'
 
     // AndroidX
-    androidXAppCompatVersion = '1.2.0'
+    androidXAppCompatVersion = '1.3.0-beta01'
     androidXExifVersion = '1.3.2'
     androidXCoreKtxVersion = '1.3.2'
     androidXLifeCycleVersion = '2.2.0'
