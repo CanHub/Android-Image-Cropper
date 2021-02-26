@@ -1022,8 +1022,6 @@ public class CropImageView extends FrameLayout {
 
       // either no existing task is working or we canceled it, need to load new URI
       clearImageInt();
-      mRestoreCropWindowRect = null;
-      mRestoreDegreesRotated = 0;
       mCropOverlayView.setInitialCropWindowRect(null);
       mBitmapLoadingWorkerJob = new WeakReference<>(new BitmapLoadingWorkerJob((FragmentActivity)getContext(),this, uri));
       mBitmapLoadingWorkerJob.get().start();
@@ -1195,8 +1193,6 @@ public class CropImageView extends FrameLayout {
       mImageView.clearAnimation();
 
       clearImageInt();
-      mRestoreCropWindowRect = null;
-      mRestoreDegreesRotated = 0;
 
       mBitmap = bitmap;
       mImageView.setImageBitmap(mBitmap);
@@ -1238,6 +1234,8 @@ public class CropImageView extends FrameLayout {
     mZoomOffsetY = 0;
     mImageMatrix.reset();
     mSaveInstanceStateBitmapUri = null;
+    mRestoreCropWindowRect = null;
+    mRestoreDegreesRotated = 0;
 
     mImageView.setImageBitmap(null);
 
