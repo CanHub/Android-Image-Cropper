@@ -450,7 +450,7 @@ public final class CropImage {
     /**
      * Create {@link ActivityBuilder} instance to open image picker for cropping and then start {@link
      * CropImageActivity} to crop the selected image.<br>
-     * Result will be received in {@link Activity#onActivityResult(int, int, Intent)} and can be
+     * Result will be received in onActivityResult(int, int, Intent) and can be
      * retrieved using {@link #getActivityResult(Intent)}.
      *
      * @return builder for Crop Image Activity
@@ -462,7 +462,7 @@ public final class CropImage {
     /**
      * Create {@link ActivityBuilder} instance to start {@link CropImageActivity} to crop the given
      * image.<br>
-     * Result will be received in {@link Activity#onActivityResult(int, int, Intent)} and can be
+     * Result will be received in onActivityResult(int, int, Intent) and can be
      * retrieved using {@link #getActivityResult(Intent)}.
      *
      * @param uri the image Android uri source to crop or null to start a picker
@@ -476,8 +476,7 @@ public final class CropImage {
      * Get {@link CropImageActivity} result data object for crop image activity started using {@link
      * #activity(Uri)}.
      *
-     * @param data result data intent as received in {@link Activity#onActivityResult(int, int,
-     *             Intent)}.
+     * @param data result data intent as received in onActivityResult(int, int, Intent).
      * @return Crop Image Activity Result object or null if none exists
      */
     // TODO don't return null
@@ -1070,5 +1069,4 @@ public final class CropImage {
             return 0;
         }
     }
-    // endregion
 }
