@@ -30,6 +30,7 @@ import androidx.annotation.Nullable;
 import androidx.exifinterface.media.ExifInterface;
 import androidx.fragment.app.FragmentActivity;
 
+import android.provider.MediaStore;
 import android.util.AttributeSet;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -2091,9 +2092,28 @@ public class CropImageView extends FrameLayout {
     /**
      * The cropped image bitmap result.<br>
      * Null if save cropped image was executed, no output requested or failure.
+     * Null if uri used to load image or activity result is used.
      */
     public Bitmap getBitmap() {
       return mBitmap;
+    }
+
+    /**
+     * The cropped image bitmap result.<br>
+     * Null if save cropped image was executed, no output requested or failure.
+     *
+     * @param context used to retrieve the bitmap in case you need from activity result
+     */
+    public Bitmap getBitmap(@NonNull Context context) {
+      if (mBitmap != null) {
+        return mBitmap;
+      } else {
+        try {
+          return MediaStore.Images.Media.getBitmap(context.getContentResolver(), mUri);
+        } catch (Exception e) {
+          return null;
+        }
+      }
     }
 
     /**
