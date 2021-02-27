@@ -9,8 +9,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - `Fixed` for any bug fixes.
 - `Security` in case of vulnerabilities.
 
-## [unreleased 2.1.1] -
+## [unreleased x.x.x] -
 
+## [2.1.1] - 27/02/21
 ### Added
 - CropImage.getActivityResult(data).getBitmap(context) [#49](https://github.com/CanHub/Android-Image-Cropper/issues/49)
 
