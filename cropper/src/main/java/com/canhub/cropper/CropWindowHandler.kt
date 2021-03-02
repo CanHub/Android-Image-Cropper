@@ -13,7 +13,10 @@
 package com.canhub.cropper
 
 import android.graphics.RectF
-import com.canhub.cropper.CropImageView.CropShape.*
+import com.canhub.cropper.CropImageView.CropShape.OVAL
+import com.canhub.cropper.CropImageView.CropShape.RECTANGLE
+import com.canhub.cropper.CropImageView.CropShape.RECTANGLE_HORIZONTAL_ONLY
+import com.canhub.cropper.CropImageView.CropShape.RECTANGLE_VERTICAL_ONLY
 import kotlin.math.abs
 
 /** Handler from crop window stuff, moving and knowing position. */
