@@ -43,6 +43,8 @@
     <string name="center_inside">Center Inside</string>
     <string name="rectangle">Rectangle</string>
     <string name="oval">Oval</string>
+    <string name="rectangleVerticalOnly">Rectangle - vertical only</string>
+    <string name="rectangleHorizontalOnly">Rectangle - horizontal only</string>
     <string name="off">Off</string>
     <string name="on_touch">On Touch</string>
     <string name="on">ON</string>

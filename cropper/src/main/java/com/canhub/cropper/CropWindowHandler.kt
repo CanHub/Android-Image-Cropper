@@ -13,6 +13,7 @@
 package com.canhub.cropper
 
 import android.graphics.RectF
+import com.canhub.cropper.CropImageView.CropShape.*
 import kotlin.math.abs
 
 /** Handler from crop window stuff, moving and knowing position. */
@@ -168,11 +169,13 @@ class CropWindowHandler {
         targetRadius: Float,
         cropShape: CropImageView.CropShape,
     ): CropWindowMoveHandler? {
-        val type: CropWindowMoveHandler.Type? = if (cropShape == CropImageView.CropShape.OVAL) {
-            getOvalPressedMoveType(x, y)
-        } else {
-            getRectanglePressedMoveType(x, y, targetRadius)
+        val type: CropWindowMoveHandler.Type? = when (cropShape) {
+            RECTANGLE -> getRectanglePressedMoveType(x, y, targetRadius)
+            OVAL -> getOvalPressedMoveType(x, y)
+            RECTANGLE_VERTICAL_ONLY -> getRectangleVerticalOnlyPressedMoveType(x, y, targetRadius)
+            RECTANGLE_HORIZONTAL_ONLY -> getRectangleHorizontalOnlyPressedMoveType(x, y, targetRadius)
         }
+
         return if (type != null) CropWindowMoveHandler(type, this, x, y) else null
     }
 
@@ -280,6 +283,70 @@ class CropWindowHandler {
                     else -> CropWindowMoveHandler.Type.BOTTOM_RIGHT
                 }
             }
+        }
+    }
+
+    /**
+     * Determines which, if any, of the handles are pressed given the touch coordinates, the bounding
+     * box, and the touch radius.
+     *
+     * @param x the x-coordinate of the touch point
+     * @param y the y-coordinate of the touch point
+     * @param targetRadius the target radius in pixels
+     * @return the Handle that was pressed; null if no Handle was pressed
+     */
+    private fun getRectangleVerticalOnlyPressedMoveType(
+        x: Float,
+        y: Float,
+        targetRadius: Float
+    ): CropWindowMoveHandler.Type? {
+
+        // Note: top and bottom handles take precedence, then center.
+        // Note also that we ignore the focusCenter() function - if the user wants to drag the
+        // window they can drag from the left and right sides.
+        return when {
+            isInHorizontalTargetZone(x, y, mEdges.left, mEdges.right, mEdges.top, targetRadius) -> {
+                CropWindowMoveHandler.Type.TOP
+            }
+            isInHorizontalTargetZone(x, y, mEdges.left, mEdges.right, mEdges.bottom, targetRadius) -> {
+                CropWindowMoveHandler.Type.BOTTOM
+            }
+            isInCenterTargetZone(x, y, mEdges.left, mEdges.top, mEdges.right, mEdges.bottom) -> {
+                CropWindowMoveHandler.Type.CENTER
+            }
+            else -> null
+        }
+    }
+
+    /**
+     * Determines which, if any, of the handles are pressed given the touch coordinates, the bounding
+     * box, and the touch radius.
+     *
+     * @param x the x-coordinate of the touch point
+     * @param y the y-coordinate of the touch point
+     * @param targetRadius the target radius in pixels
+     * @return the Handle that was pressed; null if no Handle was pressed
+     */
+    private fun getRectangleHorizontalOnlyPressedMoveType(
+        x: Float,
+        y: Float,
+        targetRadius: Float
+    ): CropWindowMoveHandler.Type? {
+
+        // Note: left and right handles take precedence, then center.
+        // Note also that we ignore the focusCenter() function - if the user wants to drag the
+        // window they can drag from the top and bottom sides.
+        return when {
+            isInVerticalTargetZone(x, y, mEdges.left, mEdges.top, mEdges.bottom, targetRadius) -> {
+                CropWindowMoveHandler.Type.LEFT
+            }
+            isInVerticalTargetZone(x, y, mEdges.right, mEdges.top, mEdges.bottom, targetRadius) -> {
+                CropWindowMoveHandler.Type.RIGHT
+            }
+            isInCenterTargetZone(x, y, mEdges.left, mEdges.top, mEdges.right, mEdges.bottom) -> {
+                CropWindowMoveHandler.Type.CENTER
+            }
+            else -> null
         }
     }
 

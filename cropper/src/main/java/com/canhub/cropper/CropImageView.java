@@ -1832,7 +1832,9 @@ public class CropImageView extends FrameLayout {
    */
   public enum CropShape {
     RECTANGLE,
-    OVAL
+    OVAL,
+    RECTANGLE_VERTICAL_ONLY,
+    RECTANGLE_HORIZONTAL_ONLY
   }
   // endregion
 
