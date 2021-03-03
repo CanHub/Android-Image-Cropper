@@ -253,7 +253,7 @@ open class CropImageActivity :
      */
     open fun rotateImage(degrees: Int) {
         binding.cropImageView.rotateImage(degrees)
-    } // We have this because of a HUAWEI path bug when we use getUriForFile
+    }
 
     /**
      * Get Android uri to save the cropped image into.<br></br>

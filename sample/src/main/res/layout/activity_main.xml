@@ -10,7 +10,7 @@
         android:id="@+id/image"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:src="@drawable/canhub_logo_white"
+        android:src="@drawable/canhub_logo_purple"
         app:layout_constraintBottom_toTopOf="@id/midGuideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
