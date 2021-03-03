@@ -17,8 +17,9 @@ internal class ExtendPresenter : ExtendContract.Presenter {
     }
 
     override fun onRotateClick() {
-        counter++
-        view?.rotate(counter)
+        counter += 90
+        view?.rotate(90)
+        if (counter == 360) counter = 0
         view?.updateRotationCounter(counter.toString())
     }
 }

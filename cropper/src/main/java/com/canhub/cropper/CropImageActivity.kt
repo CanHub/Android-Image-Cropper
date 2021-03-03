@@ -67,8 +67,8 @@ open class CropImageActivity :
                 } else {
                     CropImage.startPickImageActivity(this)
                 }
-            } else if (cropImageUri?.let {
-                CropImage.isReadExternalStoragePermissionsRequired(this, it)
+            } else if (
+                cropImageUri?.let { CropImage.isReadExternalStoragePermissionsRequired(this, it)
             } == true &&
                 CommonVersionCheck.isAtLeastM23()
             ) {

@@ -1,5 +1,6 @@
 package com.canhub.cropper.sample.extend_activity.app
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
@@ -8,7 +9,9 @@ import android.util.Log
 import android.view.Menu
 import android.view.View
 import androidx.core.app.ActivityCompat
+import com.canhub.cropper.CropImage
 import com.canhub.cropper.CropImageActivity
+import com.canhub.cropper.common.CommonVersionCheck
 import com.canhub.cropper.sample.extend_activity.domain.ExtendContract
 import com.canhub.cropper.sample.extend_activity.presenter.ExtendPresenter
 import com.example.croppersample.R
@@ -58,11 +61,19 @@ internal class ExtendActivity : CropImageActivity(), ExtendContract.View {
     }
 
     override fun rotate(counter: Int) {
-        rotateImage(counter) // CropImageActivity.rotateImage(int)
+        binding.cropImageView.rotateImage(counter)
     }
 
     override fun updateRotationCounter(counter: String) {
         binding.rotateText.text = getString(R.string.rotation_value, counter)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE && resultCode == RESULT_OK) {
+            binding.cropImageView.setImageUriAsync(cropImageUri)
+        }
     }
 
     // Override this to add more information into the intent
@@ -72,8 +83,19 @@ internal class ExtendActivity : CropImageActivity(), ExtendContract.View {
     }
 
     override fun setResult(uri: Uri?, error: Exception?, sampleSize: Int) {
-        Log.i("extend", "override this if you want to change the behaviour, like don't finish the activity")
-        super.setResult(uri, error, sampleSize)
+        val result = CropImage.ActivityResult(
+            binding.cropImageView.imageUri,
+            uri,
+            error,
+            binding.cropImageView.cropPoints,
+            binding.cropImageView.cropRect,
+            binding.cropImageView.rotatedDegrees,
+            binding.cropImageView.wholeImageRect,
+            sampleSize
+        )
+
+        Log.i("extend", "${result.uri} ${error?.message}")
+        binding.cropImageView.setImageUriAsync(result.uri)
     }
 
     override fun setResultCancel() {
