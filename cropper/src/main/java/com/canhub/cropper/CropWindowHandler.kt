@@ -18,6 +18,7 @@ import com.canhub.cropper.CropImageView.CropShape.RECTANGLE
 import com.canhub.cropper.CropImageView.CropShape.RECTANGLE_HORIZONTAL_ONLY
 import com.canhub.cropper.CropImageView.CropShape.RECTANGLE_VERTICAL_ONLY
 import kotlin.math.abs
+import kotlin.math.max
 
 /** Handler from crop window stuff, moving and knowing position. */
 class CropWindowHandler {
@@ -199,38 +200,41 @@ class CropWindowHandler {
         targetRadius: Float
     ): CropWindowMoveHandler.Type? {
 
-        if (!isInBounds(x, y, mEdges)) return null
-
         // Note: corner-handles take precedence, then side-handles, then center.
         return when {
-            isCloseToHandle(x, y, mEdges.left, mEdges.top, targetRadius) -> {
+            isInCornerTargetZone(x, y, mEdges.left, mEdges.top, targetRadius) -> {
                 CropWindowMoveHandler.Type.TOP_LEFT
             }
-            isCloseToHandle(x, y, mEdges.right, mEdges.top, targetRadius) -> {
+            isInCornerTargetZone(x, y, mEdges.right, mEdges.top, targetRadius) -> {
                 CropWindowMoveHandler.Type.TOP_RIGHT
             }
-            isCloseToHandle(x, y, mEdges.left, mEdges.bottom, targetRadius) -> {
+            isInCornerTargetZone(x, y, mEdges.left, mEdges.bottom, targetRadius) -> {
                 CropWindowMoveHandler.Type.BOTTOM_LEFT
             }
-            isCloseToHandle(x, y, mEdges.right, mEdges.bottom, targetRadius) -> {
+            isInCornerTargetZone(x, y, mEdges.right, mEdges.bottom, targetRadius) -> {
                 CropWindowMoveHandler.Type.BOTTOM_RIGHT
             }
-            focusCenter() -> {
+            isInCenterTargetZone(x, y, mEdges.left, mEdges.top, mEdges.right, mEdges.bottom) &&
+                focusCenter() -> {
                 CropWindowMoveHandler.Type.CENTER
             }
-            isCloseToHandleInY(y, mEdges.top, targetRadius) -> {
+            isInHorizontalTargetZone(x, y, mEdges.left, mEdges.right, mEdges.top, targetRadius) -> {
                 CropWindowMoveHandler.Type.TOP
             }
-            isCloseToHandleInY(y, mEdges.bottom, targetRadius) -> {
+            isInHorizontalTargetZone(x, y, mEdges.left, mEdges.right, mEdges.bottom, targetRadius) -> {
                 CropWindowMoveHandler.Type.BOTTOM
             }
-            isCloseToHandleInX(x, mEdges.left, targetRadius) -> {
+            isInVerticalTargetZone(x, y, mEdges.left, mEdges.top, mEdges.bottom, targetRadius) -> {
                 CropWindowMoveHandler.Type.LEFT
             }
-            isCloseToHandleInX(x, mEdges.right, targetRadius) -> {
+            isInVerticalTargetZone(x, y, mEdges.right, mEdges.top, mEdges.bottom, targetRadius) -> {
                 CropWindowMoveHandler.Type.RIGHT
             }
-            else -> CropWindowMoveHandler.Type.CENTER
+            isInCenterTargetZone(x, y, mEdges.left, mEdges.top, mEdges.right, mEdges.bottom) &&
+                !focusCenter() -> {
+                CropWindowMoveHandler.Type.CENTER
+            }
+            else -> null
         }
     }
 
@@ -301,19 +305,20 @@ class CropWindowHandler {
         targetRadius: Float
     ): CropWindowMoveHandler.Type? {
 
-        if (!isInBounds(x, y, mEdges)) return null
-
         // Note: top and bottom handles take precedence, then center.
         // Note also that we ignore the focusCenter() function - if the user wants to drag the
         // window they can drag from the left and right sides.
         return when {
-            isCloseToHandle(x, y, mEdges.centerX(), mEdges.top, targetRadius) -> {
+            distance(x, y, mEdges.centerX(), mEdges.top) <= targetRadius -> {
                 CropWindowMoveHandler.Type.TOP
             }
-            isCloseToHandle(x, y, mEdges.centerX(), mEdges.bottom, targetRadius) -> {
+            distance(x, y, mEdges.centerX(), mEdges.bottom) <= targetRadius -> {
                 CropWindowMoveHandler.Type.BOTTOM
             }
-            else -> CropWindowMoveHandler.Type.CENTER
+            isInCenterTargetZone(x, y, mEdges.left, mEdges.top, mEdges.right, mEdges.bottom) -> {
+                CropWindowMoveHandler.Type.CENTER
+            }
+            else -> null
         }
     }
 
@@ -332,84 +337,116 @@ class CropWindowHandler {
         targetRadius: Float
     ): CropWindowMoveHandler.Type? {
 
-        if (!isInBounds(x, y, mEdges)) return null
-
         // Note: left and right handles take precedence, then center.
         // Note also that we ignore the focusCenter() function - if the user wants to drag the
         // window they can drag from the top and bottom sides.
         return when {
-            isCloseToHandle(x, y, mEdges.left, mEdges.centerY(), targetRadius) -> {
+            distance(x, y, mEdges.left, mEdges.centerY()) <= targetRadius -> {
                 CropWindowMoveHandler.Type.LEFT
             }
-            isCloseToHandle(x, y, mEdges.right, mEdges.centerY(), targetRadius) -> {
+            distance(x, y, mEdges.right, mEdges.centerY()) <= targetRadius -> {
                 CropWindowMoveHandler.Type.RIGHT
             }
-            else -> CropWindowMoveHandler.Type.CENTER
+            isInCenterTargetZone(x, y, mEdges.left, mEdges.top, mEdges.right, mEdges.bottom) -> {
+                CropWindowMoveHandler.Type.CENTER
+            }
+            else -> null
         }
     }
 
     /**
-     * Determines if the specified coordinate is within the given radius of the handle.
-     * Note: we actually use the absolute value norm rather than the Euclidean norm.
+     * Determines if the specified coordinate is in the target touch zone for a corner handle.
      *
      * @param x the x-coordinate of the touch point
      * @param y the y-coordinate of the touch point
      * @param handleX the x-coordinate of the corner handle
      * @param handleY the y-coordinate of the corner handle
      * @param targetRadius the target radius in pixels
-     * @return true if the touch point is close enough; false otherwise
+     * @return true if the touch point is in the target touch zone; false otherwise
      */
-    private fun isCloseToHandle(
+    private fun isInCornerTargetZone(
         x: Float,
         y: Float,
         handleX: Float,
         handleY: Float,
         targetRadius: Float,
-    ) = abs(x - handleX) <= targetRadius && abs(y - handleY) <= targetRadius
+    ) = distance(x, y, handleX, handleY) <= targetRadius
 
     /**
-     * Determines if the specified coordinate is within the given radius of the handle in the
-     * vertical dimension only.
+     * Get the distance between two points in the maximum norm.
      *
-     * @param y the y-coordinate of the touch point
-     * @param handleY the y-coordinate of the horizontal bar handle
-     * @param targetRadius the target radius in pixels
-     * @return true if the touch point is close enough; false otherwise
+     * @param x1 the x-coordinate of the first point
+     * @param y1 the y-coordinate of the first point
+     * @param x2 the x-coordinate of the second point
+     * @param y2 the y-coordinate of the second point
+     * @return the distance between these points
      */
-    private fun isCloseToHandleInY(
-        y: Float,
-        handleY: Float,
-        targetRadius: Float,
-    ) = abs(y - handleY) <= targetRadius
+    private fun distance(
+        x1: Float,
+        y1: Float,
+        x2: Float,
+        y2: Float
+    ) = max(abs(x1 - x2), abs(y1 - y2))
 
     /**
-     * Determines if the specified coordinate is within the given radius of the handle in the
-     * horizontal dimension only.
+     * Determines if the specified coordinate is in the target touch zone for a horizontal bar handle.
      *
      * @param x the x-coordinate of the touch point
-     * @param handleX the x-coordinate of the vertical bar handle
+     * @param y the y-coordinate of the touch point
+     * @param handleXStart the left x-coordinate of the horizontal bar handle
+     * @param handleXEnd the right x-coordinate of the horizontal bar handle
+     * @param handleY the y-coordinate of the horizontal bar handle
      * @param targetRadius the target radius in pixels
-     * @return true if the touch point is close enough; false otherwise
+     * @return true if the touch point is in the target touch zone; false otherwise
      */
-    private fun isCloseToHandleInX(
+    private fun isInHorizontalTargetZone(
         x: Float,
-        handleX: Float,
+        y: Float,
+        handleXStart: Float,
+        handleXEnd: Float,
+        handleY: Float,
         targetRadius: Float,
-    ) = abs(x - handleX) <= targetRadius
+    ) = x > handleXStart && x < handleXEnd && abs(y - handleY) <= targetRadius
+
+    /**
+     * Determines if the specified coordinate is in the target touch zone for a vertical bar handle.
+     *
+     * @param x the x-coordinate of the touch point
+     * @param y the y-coordinate of the touch point
+     * @param handleX the x-coordinate of the vertical bar handle
+     * @param handleYStart the top y-coordinate of the vertical bar handle
+     * @param handleYEnd the bottom y-coordinate of the vertical bar handle
+     * @param targetRadius the target radius in pixels
+     * @return true if the touch point is in the target touch zone; false otherwise
+     */
+    private fun isInVerticalTargetZone(
+        x: Float,
+        y: Float,
+        handleX: Float,
+        handleYStart: Float,
+        handleYEnd: Float,
+        targetRadius: Float,
+    ) = abs(x - handleX) <= targetRadius && y > handleYStart && y < handleYEnd
 
     /**
      * Determines if the specified coordinate falls anywhere inside the given bounds.
      *
      * @param x the x-coordinate of the touch point
      * @param y the y-coordinate of the touch point
-     * @param bounds the bounds
+     * @param left the x-coordinate of the left bound
+     * @param top the y-coordinate of the top bound
+     * @param right the x-coordinate of the right bound
+     * @param bottom the y-coordinate of the bottom bound
      * @return true if the touch point is inside the bounding rectangle; false otherwise
      */
-    private fun isInBounds(
+    private fun isInCenterTargetZone(
         x: Float,
         y: Float,
-        bounds: RectF,
-    ) = x > bounds.left && x < bounds.right && y > bounds.top && y < bounds.bottom
+        left: Float,
+        top: Float,
+        right: Float,
+        bottom: Float,
+    ) = x > left && x < right && y > top && y < bottom
 
     /**
      * Determines if the cropper should focus on the center handle or the side handles. If it is a
