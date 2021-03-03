@@ -479,7 +479,5 @@ class CropWindowHandler {
      * show_guidelines limit
      */
     private fun focusCenter() = !showGuidelines()
-
-
     // endregion
 }
