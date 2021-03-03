@@ -21,6 +21,9 @@
 
         <activity android:name="com.canhub.cropper.sample.CropResultActivity" />
         <activity android:name="com.canhub.cropper.CropImageActivity" />
+        <activity
+            android:name="com.canhub.cropper.sample.extend_activity.app.ExtendActivity"
+            android:theme="@style/Theme.SampleNoActionBar" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

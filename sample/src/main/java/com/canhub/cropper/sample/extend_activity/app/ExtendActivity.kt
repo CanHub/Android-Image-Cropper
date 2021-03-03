@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import android.view.View
 import androidx.core.app.ActivityCompat
 import com.canhub.cropper.CropImageActivity
 import com.canhub.cropper.sample.extend_activity.domain.ExtendContract
@@ -46,7 +47,7 @@ internal class ExtendActivity : CropImageActivity(), ExtendContract.View {
         }
     }
 
-    override fun setContentView(layoutResID: Int) {
+    override fun setContentView(view: View) {
         // Override this to use your custom layout
         super.setContentView(binding.root)
     }
