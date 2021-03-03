@@ -14,6 +14,7 @@ internal data class OptionsDomain(
     val maxZoomLvl: Int,
     val autoZoom: Boolean,
     val multiTouch: Boolean,
+    val translation: Boolean,
     val showCropOverlay: Boolean,
     val showProgressBar: Boolean,
     val flipHorizontal: Boolean,

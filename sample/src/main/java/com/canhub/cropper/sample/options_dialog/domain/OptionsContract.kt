@@ -26,6 +26,7 @@ internal interface OptionsContract {
         fun onAutoZoomSelect(enable: Boolean)
         fun onMaxZoomLvlSelect(maxZoom: Int)
         fun onMultiTouchSelect(enable: Boolean)
+        fun onTranslationSelect(enable: Boolean)
         fun onCropOverlaySelect(show: Boolean)
         fun onProgressBarSelect(show: Boolean)
         fun onFlipHorizontalSelect(enable: Boolean)

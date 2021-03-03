@@ -677,6 +677,15 @@ public final class CropImage {
         }
 
         /**
+         * if the crop window can be translated (moved without resizing).<br>
+         * default: true
+         */
+        public ActivityBuilder setTranslateEnabled(boolean translateEnabled) {
+            mOptions.translateEnabled = translateEnabled;
+            return this;
+        }
+
+        /**
          * The max zoom allowed during cropping.<br>
          * <i>Default: 4</i>
          */

@@ -412,6 +412,14 @@ public class CropImageView extends FrameLayout {
     }
   }
 
+  /** Set translation of the crop window (i.e. moving without resizing) to enabled/disabled. */
+  public void setTranslationEnabled(boolean translationEnabled) {
+    if (mCropOverlayView.setTranslationEnabled(translationEnabled)) {
+      handleCropWindowChanged(false, false);
+      mCropOverlayView.invalidate();
+    }
+  }
+
   /** The max zoom allowed during cropping. */
   public int getMaxZoom() {
     return mMaxZoom;

@@ -21,6 +21,7 @@
         <attr name="cropAutoZoomEnabled" format="boolean"/>
         <attr name="cropMaxZoom" format="integer"/>
         <attr name="cropMultiTouchEnabled" format="boolean"/>
+        <attr name="cropTranslateEnabled" format="boolean"/>
         <attr name="cropFixAspectRatio" format="boolean"/>
         <attr name="cropAspectRatioX" format="integer"/>
         <attr name="cropAspectRatioY" format="integer"/>
