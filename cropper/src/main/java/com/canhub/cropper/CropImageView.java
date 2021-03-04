@@ -31,6 +31,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import android.provider.MediaStore;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -694,7 +695,7 @@ public class CropImageView extends FrameLayout {
   /**
    * Gets the 4 points of crop window's position relative to the source Bitmap (not the image
    * displayed in the CropImageView) using the original image rotation.<br>
-   * Note: the 4 points may not be a rectangle if the image was rotates to NOT stright angle (!=
+   * Note: the 4 points may not be a rectangle if the image was rotates to NOT straight angle (!=
    * 90/180/270).
    *
    * @return 4 points (x0,y0,x1,y1,x2,y2,x3,y3) of cropped area boundaries
@@ -1195,6 +1196,7 @@ public class CropImageView extends FrameLayout {
               getWholeImageRect(),
               getRotatedDegrees(),
               result.getSampleSize());
+
       listener.onCropImageComplete(this, cropResult);
     }
   }

@@ -84,5 +84,8 @@
     <string name="startWithoutUri_text">Library camera, start(), custom option</string>
     <string name="startPickImageActivity_text">Library show pick option, startPickImageActivity</string>
     <string name="startActivityForResult_text">Custom selector title, include documents, custom requestCode</string>
+    <string name="save">Save</string>
+    <string name="extend_body">This is a sample code using the library. The sample here is for extend CropImageActivity, to be about to custom build your personal view around it. For that we need to use CropImageView.</string>
+    <string name="rotation_value">Click to change rotation: %1$s</string>
 
 </resources>

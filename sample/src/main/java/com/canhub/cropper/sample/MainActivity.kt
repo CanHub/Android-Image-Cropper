@@ -2,10 +2,10 @@ package com.canhub.cropper.sample
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.canhub.cropper.sample.camera.app.CameraFragment
 import com.canhub.cropper.sample.crop_image_view.app.CropImageViewFragment
+import com.canhub.cropper.sample.extend_activity.app.ExtendActivity
 import com.example.croppersample.R
 import com.example.croppersample.databinding.ActivityMainBinding
 
@@ -26,8 +26,7 @@ internal class MainActivity : AppCompatActivity() {
         }
 
         binding.sampleCustomActivity.setOnClickListener {
-            Toast.makeText(this, "Not implemented yet", Toast.LENGTH_LONG).show()
-            // hideButtons(binding)
+            ExtendActivity.start(this)
         }
 
         binding.sampleCropImage.setOnClickListener {

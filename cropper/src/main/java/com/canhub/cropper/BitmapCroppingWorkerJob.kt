@@ -54,25 +54,25 @@ class BitmapCroppingWorkerJob internal constructor(
         @Nullable saveCompressFormat: Bitmap.CompressFormat?,
         saveCompressQuality: Int
     ) : this(
-        activity,
-        WeakReference(cropImageView),
-        null,
-        bitmap,
-        cropPoints,
-        degreesRotated,
-        0,
-        0,
-        fixAspectRatio,
-        aspectRatioX,
-        aspectRatioY,
-        reqWidth,
-        reqHeight,
-        flipHorizontally,
-        flipVertically,
-        options,
-        saveUri,
-        saveCompressFormat ?: Bitmap.CompressFormat.JPEG,
-        saveCompressQuality
+        activity = activity,
+        cropImageViewReference = WeakReference(cropImageView),
+        uri = null,
+        bitmap = bitmap,
+        cropPoints = cropPoints,
+        degreesRotated = degreesRotated,
+        orgWidth = 0,
+        orgHeight = 0,
+        fixAspectRatio = fixAspectRatio,
+        aspectRatioX = aspectRatioX,
+        aspectRatioY = aspectRatioY,
+        reqWidth = reqWidth,
+        reqHeight = reqHeight,
+        flipHorizontally = flipHorizontally,
+        flipVertically = flipVertically,
+        options = options,
+        saveUri = saveUri,
+        saveCompressFormat = saveCompressFormat ?: Bitmap.CompressFormat.JPEG,
+        saveCompressQuality = saveCompressQuality
     )
 
     constructor(
@@ -95,25 +95,25 @@ class BitmapCroppingWorkerJob internal constructor(
         @Nullable saveCompressFormat: Bitmap.CompressFormat,
         saveCompressQuality: Int
     ) : this(
-        activity,
-        WeakReference(cropImageView),
-        uri,
-        null,
-        cropPoints,
-        degreesRotated,
-        orgWidth,
-        orgHeight,
-        fixAspectRatio,
-        aspectRatioX,
-        aspectRatioY,
-        reqWidth,
-        reqHeight,
-        flipHorizontally,
-        flipVertically,
-        options,
-        saveUri,
-        saveCompressFormat,
-        saveCompressQuality
+        activity = activity,
+        cropImageViewReference = WeakReference(cropImageView),
+        uri = uri,
+        bitmap = null,
+        cropPoints = cropPoints,
+        degreesRotated = degreesRotated,
+        orgWidth = orgWidth,
+        orgHeight = orgHeight,
+        fixAspectRatio = fixAspectRatio,
+        aspectRatioX = aspectRatioX,
+        aspectRatioY = aspectRatioY,
+        reqWidth = reqWidth,
+        reqHeight = reqHeight,
+        flipHorizontally = flipHorizontally,
+        flipVertically = flipVertically,
+        options = options,
+        saveUri = saveUri,
+        saveCompressFormat = saveCompressFormat,
+        saveCompressQuality = saveCompressQuality
     )
 
     fun start() {
@@ -158,6 +158,7 @@ class BitmapCroppingWorkerJob internal constructor(
                     }
                     val resizedBitmap =
                         BitmapUtils.resizeBitmap(bitmapSampled.bitmap, reqWidth, reqHeight, options)
+
                     if (saveUri == null) {
                         onPostExecute(
                             Result(

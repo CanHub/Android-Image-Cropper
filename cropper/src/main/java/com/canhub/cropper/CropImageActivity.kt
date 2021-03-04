@@ -15,15 +15,14 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
 import androidx.core.graphics.BlendModeColorFilterCompat
 import androidx.core.graphics.BlendModeCompat
 import com.canhub.cropper.CropImageView.CropResult
 import com.canhub.cropper.CropImageView.OnCropImageCompleteListener
 import com.canhub.cropper.CropImageView.OnSetImageUriCompleteListener
-import com.canhub.cropper.common.CommonValues
 import com.canhub.cropper.common.CommonVersionCheck
 import com.canhub.cropper.databinding.CropImageActivityBinding
+import com.canhub.cropper.utils.getUriForFile
 import java.io.File
 import java.io.IOException
 
@@ -45,6 +44,9 @@ open class CropImageActivity :
      * the options that were set for the crop image
      */
     lateinit var options: CropImageOptions
+
+    /** The crop image view library widget used in the activity */
+    private var cropImageView: CropImageView? = null
     private lateinit var binding: CropImageActivityBinding
 
     public override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,6 +54,7 @@ open class CropImageActivity :
 
         binding = CropImageActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setCropImageView(binding.cropImageView)
         val bundle = intent.getBundleExtra(CropImage.CROP_IMAGE_EXTRA_BUNDLE)
         cropImageUri = bundle?.getParcelable(CropImage.CROP_IMAGE_EXTRA_SOURCE)
         options = bundle?.getParcelable(CropImage.CROP_IMAGE_EXTRA_OPTIONS) ?: CropImageOptions()
@@ -67,11 +70,13 @@ open class CropImageActivity :
                 } else {
                     CropImage.startPickImageActivity(this)
                 }
-            } else if (cropImageUri?.let {
-                CropImage.isReadExternalStoragePermissionsRequired(this, it)
-            } == true &&
+            } else if (
+                cropImageUri?.let {
+                    CropImage.isReadExternalStoragePermissionsRequired(this, it)
+                } == true &&
                 CommonVersionCheck.isAtLeastM23()
             ) {
+
                 // request permissions and handle the result in onRequestPermissionsResult()
                 requestPermissions(
                     arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
@@ -79,7 +84,7 @@ open class CropImageActivity :
                 )
             } else {
                 // no permissions required or already granted, can start crop image activity
-                binding.cropImageView.setImageUriAsync(cropImageUri)
+                cropImageView?.setImageUriAsync(cropImageUri)
             }
         }
 
@@ -93,14 +98,14 @@ open class CropImageActivity :
 
     public override fun onStart() {
         super.onStart()
-        binding.cropImageView.setOnSetImageUriCompleteListener(this)
-        binding.cropImageView.setOnCropImageCompleteListener(this)
+        cropImageView?.setOnSetImageUriCompleteListener(this)
+        cropImageView?.setOnCropImageCompleteListener(this)
     }
 
     public override fun onStop() {
         super.onStop()
-        binding.cropImageView.setOnSetImageUriCompleteListener(null)
-        binding.cropImageView.setOnCropImageCompleteListener(null)
+        cropImageView?.setOnSetImageUriCompleteListener(null)
+        cropImageView?.setOnCropImageCompleteListener(null)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -148,8 +153,8 @@ open class CropImageActivity :
             R.id.crop_image_menu_crop -> cropImage()
             R.id.ic_rotate_left_24 -> rotateImage(-options.rotationDegrees)
             R.id.ic_rotate_right_24 -> rotateImage(options.rotationDegrees)
-            R.id.ic_flip_24_horizontally -> binding.cropImageView.flipImageHorizontally()
-            R.id.ic_flip_24_vertically -> binding.cropImageView.flipImageVertically()
+            R.id.ic_flip_24_horizontally -> cropImageView?.flipImageHorizontally()
+            R.id.ic_flip_24_vertically -> cropImageView?.flipImageVertically()
             android.R.id.home -> setResultCancel()
             else -> return super.onOptionsItemSelected(item)
         }
@@ -183,7 +188,7 @@ open class CropImageActivity :
                     )
                 } else {
                     // no permissions required or already grunted, can start crop image activity
-                    binding.cropImageView.setImageUriAsync(cropImageUri)
+                    cropImageView?.setImageUriAsync(cropImageUri)
                 }
             }
         }
@@ -200,7 +205,7 @@ open class CropImageActivity :
                 grantResults[0] == PackageManager.PERMISSION_GRANTED
             ) {
                 // required permissions granted, start crop image activity
-                binding.cropImageView.setImageUriAsync(cropImageUri)
+                cropImageView?.setImageUriAsync(cropImageUri)
             } else {
                 Toast
                     .makeText(this, R.string.crop_image_activity_no_permissions, Toast.LENGTH_LONG)
@@ -217,10 +222,10 @@ open class CropImageActivity :
     override fun onSetImageUriComplete(view: CropImageView, uri: Uri, error: Exception?) {
         if (error == null) {
             if (options.initialCropWindowRectangle != null) {
-                binding.cropImageView.cropRect = options.initialCropWindowRectangle
+                cropImageView?.cropRect = options.initialCropWindowRectangle
             }
             if (options.initialRotation > -1) {
-                binding.cropImageView.rotatedDegrees = options.initialRotation
+                cropImageView?.rotatedDegrees = options.initialRotation
             }
         } else setResult(null, error, 1)
     }
@@ -237,7 +242,7 @@ open class CropImageActivity :
             setResult(null, null, 1)
         } else {
             val outputUri = outputUri
-            binding.cropImageView.saveCroppedImageAsync(
+            cropImageView?.saveCroppedImageAsync(
                 outputUri,
                 options.outputCompressFormat,
                 options.outputCompressQuality,
@@ -249,11 +254,18 @@ open class CropImageActivity :
     }
 
     /**
+     * When extending this activity, please set your own ImageCropView
+     */
+    open fun setCropImageView(cropImageView: CropImageView) {
+        this.cropImageView = cropImageView
+    }
+
+    /**
      * Rotate the image in the crop image view.
      */
     open fun rotateImage(degrees: Int) {
-        binding.cropImageView.rotateImage(degrees)
-    } // We have this because of a HUAWEI path bug when we use getUriForFile
+        cropImageView?.rotateImage(degrees)
+    }
 
     /**
      * Get Android uri to save the cropped image into.<br></br>
@@ -272,21 +284,16 @@ open class CropImageActivity :
                     // We have this because of a HUAWEI path bug when we use getUriForFile
                     if (CommonVersionCheck.isAtLeastQ29()) {
                         try {
-                            FileProvider.getUriForFile(
-                                applicationContext,
-                                applicationContext.packageName + CommonValues.authority,
-                                File.createTempFile(
-                                    "cropped",
-                                    ext,
-                                    getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-                                )
+                            val file = File.createTempFile(
+                                "cropped",
+                                ext,
+                                getExternalFilesDir(Environment.DIRECTORY_PICTURES)
                             )
+                            getUriForFile(applicationContext, file)
                         } catch (e: Exception) {
-                            FileProvider.getUriForFile(
-                                applicationContext,
-                                applicationContext.packageName + CommonValues.authority,
-                                File.createTempFile("cropped", ext, cacheDir)
-                            )
+                            Log.e("CropImageActivity", "${e.message}")
+                            val file = File.createTempFile("cropped", ext, cacheDir)
+                            getUriForFile(applicationContext, file)
                         }
                     } else Uri.fromFile(File.createTempFile("cropped", ext, cacheDir))
                 } catch (e: IOException) {
@@ -320,13 +327,13 @@ open class CropImageActivity :
      */
     open fun getResultIntent(uri: Uri?, error: Exception?, sampleSize: Int): Intent {
         val result = CropImage.ActivityResult(
-            binding.cropImageView.imageUri,
+            cropImageView?.imageUri,
             uri,
             error,
-            binding.cropImageView.cropPoints,
-            binding.cropImageView.cropRect,
-            binding.cropImageView.rotatedDegrees,
-            binding.cropImageView.wholeImageRect,
+            cropImageView?.cropPoints,
+            cropImageView?.cropRect,
+            cropImageView?.rotatedDegrees ?: 0,
+            cropImageView?.wholeImageRect,
             sampleSize
         )
         val intent = Intent()

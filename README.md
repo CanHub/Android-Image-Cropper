@@ -69,12 +69,24 @@ Android Image Cropper
 
 ## Using Activity
 
+### Extend to make a custom activity
+If you want to extend the `CropImageActivity` please be aware you will need to setup your `CropImageView`
+You can check a sample code in this project `com.canhub.cropper.sample.extend_activity.app.ExtendActivity`
+
 - Add `CropImageActivity` into your AndroidManifest.xml
  ```xml
  <activity android:name="com.canhub.cropper.CropImageActivity"
    android:theme="@style/Base.Theme.AppCompat"/> <!-- optional (needed if default theme has no action bar) -->
  ```
+- Setup your `CropImageView` after call `super.onCreate(savedInstanceState)`
+ ```java
+ override fun onCreate(savedInstanceState: Bundle?) {
+  super.onCreate(savedInstanceState)
+  setCropImageView(binding.cropImageView)
+ }
+ ```
 
+### Start the default Activity
 - Start `CropImageActivity` using builder pattern from your activity
  ```java
  // start picker to get image for cropping and then use the image in cropping activity
@@ -91,7 +103,7 @@ Android Image Cropper
    .start(getContext(), this);
  ```
 
-4. Override `onActivityResult` method in your activity to get crop result
+- Override `onActivityResult` method in your activity to get crop result
  ```java
  @Override
  public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -106,7 +118,7 @@ Android Image Cropper
  }
  ```
 
-### Using View
+## Using View
 2. Add `CropImageView` into your activity
  ```xml
  <!-- Image Cropper fill the remaining available height -->
