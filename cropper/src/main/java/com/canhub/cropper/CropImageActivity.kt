@@ -15,13 +15,11 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
 import androidx.core.graphics.BlendModeColorFilterCompat
 import androidx.core.graphics.BlendModeCompat
 import com.canhub.cropper.CropImageView.CropResult
 import com.canhub.cropper.CropImageView.OnCropImageCompleteListener
 import com.canhub.cropper.CropImageView.OnSetImageUriCompleteListener
-import com.canhub.cropper.common.CommonValues
 import com.canhub.cropper.common.CommonVersionCheck
 import com.canhub.cropper.databinding.CropImageActivityBinding
 import com.canhub.cropper.utils.getUriForFile
@@ -49,7 +47,6 @@ open class CropImageActivity :
 
     /** The crop image view library widget used in the activity */
     private var cropImageView: CropImageView? = null
-
     private lateinit var binding: CropImageActivityBinding
 
     public override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,7 +55,6 @@ open class CropImageActivity :
         binding = CropImageActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setCropImageView(binding.cropImageView)
-
         val bundle = intent.getBundleExtra(CropImage.CROP_IMAGE_EXTRA_BUNDLE)
         cropImageUri = bundle?.getParcelable(CropImage.CROP_IMAGE_EXTRA_SOURCE)
         options = bundle?.getParcelable(CropImage.CROP_IMAGE_EXTRA_OPTIONS) ?: CropImageOptions()
@@ -75,10 +71,12 @@ open class CropImageActivity :
                     CropImage.startPickImageActivity(this)
                 }
             } else if (
-                cropImageUri?.let { CropImage.isReadExternalStoragePermissionsRequired(this, it)
-            } == true &&
+                cropImageUri?.let {
+                    CropImage.isReadExternalStoragePermissionsRequired(this, it)
+                } == true &&
                 CommonVersionCheck.isAtLeastM23()
             ) {
+
                 // request permissions and handle the result in onRequestPermissionsResult()
                 requestPermissions(
                     arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
@@ -244,7 +242,6 @@ open class CropImageActivity :
             setResult(null, null, 1)
         } else {
             val outputUri = outputUri
-            Log.i("cropImage", "$outputUri")
             cropImageView?.saveCroppedImageAsync(
                 outputUri,
                 options.outputCompressFormat,
@@ -287,7 +284,11 @@ open class CropImageActivity :
                     // We have this because of a HUAWEI path bug when we use getUriForFile
                     if (CommonVersionCheck.isAtLeastQ29()) {
                         try {
-                            val file = File.createTempFile("cropped", ext, getExternalFilesDir(Environment.DIRECTORY_PICTURES))
+                            val file = File.createTempFile(
+                                "cropped",
+                                ext,
+                                getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+                            )
                             getUriForFile(applicationContext, file)
                         } catch (e: Exception) {
                             Log.e("CropImageActivity", "${e.message}")

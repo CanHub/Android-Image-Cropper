@@ -28,13 +28,11 @@ import java.nio.file.Paths
  * the cache from time to time,
  */
 internal fun getUriForFile(context: Context, file: File): Uri {
-
     val authority = context.packageName + CommonValues.authority
     try {
         Log.i("CropLibGetUri", "Try get URI for scope storage - content://")
         return FileProvider.getUriForFile(context, authority, file)
     } catch (e: Exception) {
-
         try {
             Log.e("CropLibGetUri", "${e.message}")
             Log.w(
@@ -50,7 +48,10 @@ internal fun getUriForFile(context: Context, file: File): Uri {
                 input = FileInputStream(file)
                 output = FileOutputStream(cacheLocation) // appending output stream
                 input.copyTo(output)
-                Log.i("CropLibGetUri", "Completed Android N+ file copy. Attempting to return the cached file")
+                Log.i(
+                    "CropLibGetUri",
+                    "Completed Android N+ file copy. Attempting to return the cached file"
+                )
                 return FileProvider.getUriForFile(context, authority, cacheLocation)
             } catch (e: Exception) {
                 Log.e("CropLibGetUri", "${e.message}")
@@ -76,7 +77,10 @@ internal fun getUriForFile(context: Context, file: File): Uri {
                 val cacheDir = context.externalCacheDir
                 cacheDir?.let {
                     try {
-                        Log.i("CropLibGetUri", "Use External storage, do not work for OS 29 and above")
+                        Log.i(
+                            "CropLibGetUri",
+                            "Use External storage, do not work for OS 29 and above"
+                        )
                         return Uri.fromFile(File(cacheDir.path, file.absolutePath))
                     } catch (e: Exception) {
                         Log.e("CropLibGetUri", "${e.message}")
@@ -89,4 +93,3 @@ internal fun getUriForFile(context: Context, file: File): Uri {
         }
     }
 }
-

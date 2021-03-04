@@ -1304,7 +1304,6 @@ public class CropImageView extends FrameLayout {
       int orgHeight = bitmap.getHeight() * mLoadedSampleSize;
       if (mLoadedImageUri != null
           && (mLoadedSampleSize > 1 || options == RequestSizeOptions.SAMPLING)) {
-        Log.i("startCropWorkerTask", "If Positive");
         mBitmapCroppingWorkerJob =
             new WeakReference<>(
                 new BitmapCroppingWorkerJob(
@@ -1327,7 +1326,6 @@ public class CropImageView extends FrameLayout {
                     saveCompressFormat,
                     saveCompressQuality));
       } else {
-        Log.i("startCropWorkerTask", "Else");
         mBitmapCroppingWorkerJob =
             new WeakReference<>(
                 new BitmapCroppingWorkerJob(

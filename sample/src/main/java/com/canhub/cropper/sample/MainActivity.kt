@@ -2,7 +2,6 @@ package com.canhub.cropper.sample
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.canhub.cropper.sample.camera.app.CameraFragment
 import com.canhub.cropper.sample.crop_image_view.app.CropImageViewFragment

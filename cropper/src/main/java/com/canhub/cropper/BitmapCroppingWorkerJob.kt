@@ -2,7 +2,6 @@ package com.canhub.cropper
 
 import android.graphics.Bitmap
 import android.net.Uri
-import android.util.Log
 import androidx.annotation.Nullable
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
