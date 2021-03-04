@@ -677,6 +677,15 @@ public final class CropImage {
         }
 
         /**
+         * if the crop window can be moved by dragging the center.<br>
+         * default: true
+         */
+        public ActivityBuilder setCenterMoveEnabled(boolean centerMoveEnabled) {
+            mOptions.centerMoveEnabled = centerMoveEnabled;
+            return this;
+        }
+
+        /**
          * The max zoom allowed during cropping.<br>
          * <i>Default: 4</i>
          */

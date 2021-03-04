@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ## [unreleased x.x.x] -
 ### Added
 - Vertical-only and horizontal-only cropping modes [#76]((https://github.com/CanHub/Android-Image-Cropper/pull/76))
+- Option to disable movement of the crop window by dragging the center [#79](https://github.com/CanHub/Android-Image-Cropper/pull/79)
 
 ### Fixed
 -  Turkish Translations [#72](https://github.com/CanHub/Android-Image-Cropper/pull/72)

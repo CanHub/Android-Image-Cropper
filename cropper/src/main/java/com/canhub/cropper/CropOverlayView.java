@@ -40,6 +40,9 @@ public class CropOverlayView extends View {
   /** Boolean to see if multi touch is enabled for the crop rectangle */
   private boolean mMultiTouchEnabled;
 
+  /** Boolean to see if movement via dragging center is enabled for the crop rectangle */
+  private boolean mCenterMoveEnabled = true;
+
   /** Handler from crop window stuff, moving and knowing possition. */
   private final CropWindowHandler mCropWindowHandler = new CropWindowHandler();
 
@@ -330,6 +333,15 @@ public class CropOverlayView extends View {
     return false;
   }
 
+  /** Set movement of the crop window by dragging the center to enabled/disabled. */
+  public boolean setCenterMoveEnabled(boolean centerMoveEnabled) {
+    if (mCenterMoveEnabled != centerMoveEnabled) {
+      mCenterMoveEnabled = centerMoveEnabled;
+      return true;
+    }
+    return false;
+  }
+
   /**
    * the min size the resulting cropping image is allowed to be, affects the cropping window limits
    * (in pixels).<br>
@@ -401,6 +413,8 @@ public class CropOverlayView extends View {
     setAspectRatioY(options.aspectRatioY);
 
     setMultiTouchEnabled(options.multiTouchEnabled);
+
+    setCenterMoveEnabled(options.centerMoveEnabled);
 
     mTouchRadius = options.touchRadius;
 
@@ -918,7 +932,8 @@ public class CropOverlayView extends View {
    * if press is far from crop window then no move handler is returned (null).
    */
   private void onActionDown(float x, float y) {
-    mMoveHandler = mCropWindowHandler.getMoveHandler(x, y, mTouchRadius, mCropShape);
+    mMoveHandler = mCropWindowHandler
+            .getMoveHandler(x, y, mTouchRadius, mCropShape, mCenterMoveEnabled);
     if (mMoveHandler != null) {
       invalidate();
     }

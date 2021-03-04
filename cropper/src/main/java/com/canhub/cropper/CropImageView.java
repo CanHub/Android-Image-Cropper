@@ -26,7 +26,6 @@ import android.os.Bundle;
 import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.exifinterface.media.ExifInterface;
 import androidx.fragment.app.FragmentActivity;
 
@@ -217,6 +216,9 @@ public class CropImageView extends FrameLayout {
           options.multiTouchEnabled =
               ta.getBoolean(
                   R.styleable.CropImageView_cropMultiTouchEnabled, options.multiTouchEnabled);
+          options.centerMoveEnabled =
+              ta.getBoolean(
+                  R.styleable.CropImageView_cropCenterMoveEnabled, options.centerMoveEnabled);
           options.maxZoom = ta.getInteger(R.styleable.CropImageView_cropMaxZoom, options.maxZoom);
           options.cropShape =
               CropShape.values()[
@@ -407,6 +409,14 @@ public class CropImageView extends FrameLayout {
   /** Set multi touch functionality to enabled/disabled. */
   public void setMultiTouchEnabled(boolean multiTouchEnabled) {
     if (mCropOverlayView.setMultiTouchEnabled(multiTouchEnabled)) {
+      handleCropWindowChanged(false, false);
+      mCropOverlayView.invalidate();
+    }
+  }
+
+  /** Set moving of the crop window by dragging the center to enabled/disabled. */
+  public void setCenterMoveEnabled(boolean centerMoveEnabled) {
+    if (mCropOverlayView.setCenterMoveEnabled(centerMoveEnabled)) {
       handleCropWindowChanged(false, false);
       mCropOverlayView.invalidate();
     }
