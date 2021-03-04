@@ -11,6 +11,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [unreleased x.x.x] -
 
+## [2.2.1] - 04/03/21
+### Added
+- Sample code extending Activity [#46](https://github.com/CanHub/Android-Image-Cropper/issues/46)
+
+### Fixed
+- Bug when crop using Custom Activity (extend) [43](https://github.com/CanHub/Android-Image-Cropper/issues/43)
 
 ## [2.2.0] - 04/03/21
 ### Added

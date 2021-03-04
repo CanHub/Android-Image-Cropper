@@ -257,7 +257,7 @@ open class CropImageActivity :
     }
 
     /**
-     * When extending this activity, please set your own ImageCropeView
+     * When extending this activity, please set your own ImageCropView
      */
     open fun setCropImageView(cropImageView: CropImageView) {
         this.cropImageView = cropImageView
