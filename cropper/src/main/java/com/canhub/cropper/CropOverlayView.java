@@ -414,6 +414,8 @@ public class CropOverlayView extends View {
 
     setMultiTouchEnabled(options.multiTouchEnabled);
 
+    setCenterMoveEnabled(options.centerMoveEnabled);
+
     mTouchRadius = options.touchRadius;
 
     mInitialCropWindowPaddingRatio = options.initialCropWindowPaddingRatio;

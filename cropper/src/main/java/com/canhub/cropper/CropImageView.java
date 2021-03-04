@@ -216,6 +216,9 @@ public class CropImageView extends FrameLayout {
           options.multiTouchEnabled =
               ta.getBoolean(
                   R.styleable.CropImageView_cropMultiTouchEnabled, options.multiTouchEnabled);
+          options.centerMoveEnabled =
+              ta.getBoolean(
+                  R.styleable.CropImageView_cropCenterMoveEnabled, options.centerMoveEnabled);
           options.maxZoom = ta.getInteger(R.styleable.CropImageView_cropMaxZoom, options.maxZoom);
           options.cropShape =
               CropShape.values()[
