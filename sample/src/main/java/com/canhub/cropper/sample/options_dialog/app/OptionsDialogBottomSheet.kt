@@ -100,6 +100,14 @@ internal class OptionsDialogBottomSheet : BottomSheetDialogFragment(), OptionsCo
             presenter.onCropShapeSelect(CropImageView.CropShape.OVAL)
         }
 
+        binding.cropShape.chipRectangleVerticalOnly.setOnClickListener {
+            presenter.onCropShapeSelect(CropImageView.CropShape.RECTANGLE_VERTICAL_ONLY)
+        }
+
+        binding.cropShape.chipRectangleHorizontalOnly.setOnClickListener {
+            presenter.onCropShapeSelect(CropImageView.CropShape.RECTANGLE_HORIZONTAL_ONLY)
+        }
+
         binding.guidelines.chipOff.setOnClickListener {
             presenter.onGuidelinesSelect(CropImageView.Guidelines.OFF)
         }
@@ -177,6 +185,8 @@ internal class OptionsDialogBottomSheet : BottomSheetDialogFragment(), OptionsCo
         when (options.cropShape) {
             CropImageView.CropShape.RECTANGLE -> binding.cropShape.chipRectangle.isChecked = true
             CropImageView.CropShape.OVAL -> binding.cropShape.chipOval.isChecked = true
+            CropImageView.CropShape.RECTANGLE_VERTICAL_ONLY -> binding.cropShape.chipRectangleVerticalOnly.isChecked = true
+            CropImageView.CropShape.RECTANGLE_HORIZONTAL_ONLY -> binding.cropShape.chipRectangleHorizontalOnly.isChecked = true
         }
 
         when (options.guidelines) {

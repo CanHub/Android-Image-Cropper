@@ -13,7 +13,12 @@
 package com.canhub.cropper
 
 import android.graphics.RectF
+import com.canhub.cropper.CropImageView.CropShape.OVAL
+import com.canhub.cropper.CropImageView.CropShape.RECTANGLE
+import com.canhub.cropper.CropImageView.CropShape.RECTANGLE_HORIZONTAL_ONLY
+import com.canhub.cropper.CropImageView.CropShape.RECTANGLE_VERTICAL_ONLY
 import kotlin.math.abs
+import kotlin.math.max
 
 /** Handler from crop window stuff, moving and knowing position. */
 class CropWindowHandler {
@@ -168,11 +173,13 @@ class CropWindowHandler {
         targetRadius: Float,
         cropShape: CropImageView.CropShape,
     ): CropWindowMoveHandler? {
-        val type: CropWindowMoveHandler.Type? = if (cropShape == CropImageView.CropShape.OVAL) {
-            getOvalPressedMoveType(x, y)
-        } else {
-            getRectanglePressedMoveType(x, y, targetRadius)
+        val type: CropWindowMoveHandler.Type? = when (cropShape) {
+            RECTANGLE -> getRectanglePressedMoveType(x, y, targetRadius)
+            OVAL -> getOvalPressedMoveType(x, y)
+            RECTANGLE_VERTICAL_ONLY -> getRectangleVerticalOnlyPressedMoveType(x, y, targetRadius)
+            RECTANGLE_HORIZONTAL_ONLY -> getRectangleHorizontalOnlyPressedMoveType(x, y, targetRadius)
         }
+
         return if (type != null) CropWindowMoveHandler(type, this, x, y) else null
     }
 
@@ -284,6 +291,70 @@ class CropWindowHandler {
     }
 
     /**
+     * Determines which, if any, of the handles are pressed given the touch coordinates, the bounding
+     * box, and the touch radius.
+     *
+     * @param x the x-coordinate of the touch point
+     * @param y the y-coordinate of the touch point
+     * @param targetRadius the target radius in pixels
+     * @return the Handle that was pressed; null if no Handle was pressed
+     */
+    private fun getRectangleVerticalOnlyPressedMoveType(
+        x: Float,
+        y: Float,
+        targetRadius: Float
+    ): CropWindowMoveHandler.Type? {
+
+        // Note: top and bottom handles take precedence, then center.
+        // Note also that we ignore the focusCenter() function - if the user wants to drag the
+        // window they can drag from the left and right sides.
+        return when {
+            distance(x, y, mEdges.centerX(), mEdges.top) <= targetRadius -> {
+                CropWindowMoveHandler.Type.TOP
+            }
+            distance(x, y, mEdges.centerX(), mEdges.bottom) <= targetRadius -> {
+                CropWindowMoveHandler.Type.BOTTOM
+            }
+            isInCenterTargetZone(x, y, mEdges.left, mEdges.top, mEdges.right, mEdges.bottom) -> {
+                CropWindowMoveHandler.Type.CENTER
+            }
+            else -> null
+        }
+    }
+
+    /**
+     * Determines which, if any, of the handles are pressed given the touch coordinates, the bounding
+     * box, and the touch radius.
+     *
+     * @param x the x-coordinate of the touch point
+     * @param y the y-coordinate of the touch point
+     * @param targetRadius the target radius in pixels
+     * @return the Handle that was pressed; null if no Handle was pressed
+     */
+    private fun getRectangleHorizontalOnlyPressedMoveType(
+        x: Float,
+        y: Float,
+        targetRadius: Float
+    ): CropWindowMoveHandler.Type? {
+
+        // Note: left and right handles take precedence, then center.
+        // Note also that we ignore the focusCenter() function - if the user wants to drag the
+        // window they can drag from the top and bottom sides.
+        return when {
+            distance(x, y, mEdges.left, mEdges.centerY()) <= targetRadius -> {
+                CropWindowMoveHandler.Type.LEFT
+            }
+            distance(x, y, mEdges.right, mEdges.centerY()) <= targetRadius -> {
+                CropWindowMoveHandler.Type.RIGHT
+            }
+            isInCenterTargetZone(x, y, mEdges.left, mEdges.top, mEdges.right, mEdges.bottom) -> {
+                CropWindowMoveHandler.Type.CENTER
+            }
+            else -> null
+        }
+    }
+
+    /**
      * Determines if the specified coordinate is in the target touch zone for a corner handle.
      *
      * @param x the x-coordinate of the touch point
@@ -299,7 +370,23 @@ class CropWindowHandler {
         handleX: Float,
         handleY: Float,
         targetRadius: Float,
-    ) = abs(x - handleX) <= targetRadius && abs(y - handleY) <= targetRadius
+    ) = distance(x, y, handleX, handleY) <= targetRadius
+
+    /**
+     * Get the distance between two points in the maximum norm.
+     *
+     * @param x1 the x-coordinate of the first point
+     * @param y1 the y-coordinate of the first point
+     * @param x2 the x-coordinate of the second point
+     * @param y2 the y-coordinate of the second point
+     * @return the distance between these points
+     */
+    private fun distance(
+        x1: Float,
+        y1: Float,
+        x2: Float,
+        y2: Float
+    ) = max(abs(x1 - x2), abs(y1 - y2))
 
     /**
      * Determines if the specified coordinate is in the target touch zone for a horizontal bar handle.

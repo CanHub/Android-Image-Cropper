@@ -147,9 +147,10 @@ Android Image Cropper
 - More..
 
 ## Customizations
-- Cropping window shape: Rectangular or Oval (cube/circle by fixing aspect ratio).
+- Cropping window shape: Rectangular, Oval (square/circle by fixing aspect ratio), as well as
+ rectangular modes which only allow vertical or horizontal cropping.
 - Cropping window aspect ratio: Free, 1:1, 4:3, 16:9 or Custom.
-- Guidelines appearance: Off / Always On / Show on Toch.
+- Guidelines appearance: Off / Always On / Show on Touch.
 - Cropping window Border line, border corner and guidelines thickness and color.
 - Cropping background color.
 

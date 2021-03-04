@@ -377,6 +377,14 @@ public class CropImageView extends FrameLayout {
   /**
    * The shape of the cropping area - rectangle/circular.<br>
    * To set square/circle crop shape set aspect ratio to 1:1.
+   *
+   * When setting RECTANGLE_VERTICAL_ONLY or RECTANGLE_HORIZONTAL_ONLY you may also want to
+   * use a free aspect ratio (to allow the crop window to change in the desired dimension
+   * whilst staying the same in the other dimension) and have the crop window start covering the
+   * entirety of the image (so that the crop window has no space to move in the other dimension).
+   * These can be done with
+   * {@link CropImageView#setFixedAspectRatio(boolean)} } (with argument `false`) and
+   * {@link CropImageView#setCropRect(Rect)} } (with argument `cropImageView.getWholeImageRect()`).
    */
   public void setCropShape(CropShape cropShape) {
     mCropOverlayView.setCropShape(cropShape);
@@ -1832,7 +1840,9 @@ public class CropImageView extends FrameLayout {
    */
   public enum CropShape {
     RECTANGLE,
-    OVAL
+    OVAL,
+    RECTANGLE_VERTICAL_ONLY,
+    RECTANGLE_HORIZONTAL_ONLY
   }
   // endregion
 
