@@ -73,9 +73,9 @@ open class CropImageOptions : Parcelable {
     @JvmField
     var multiTouchEnabled: Boolean
 
-    /** if the the crop window can be translated (moved without resizing); default: true  */
+    /** if the the crop window can be moved by dragging the center; default: true  */
     @JvmField
-    var translateEnabled: Boolean
+    var centerMoveEnabled: Boolean
 
     /** The max zoom allowed during cropping.  */
     @JvmField
@@ -263,7 +263,7 @@ open class CropImageOptions : Parcelable {
         showProgressBar = true
         autoZoomEnabled = true
         multiTouchEnabled = false
-        translateEnabled = true
+        centerMoveEnabled = true
         maxZoom = 4
         initialCropWindowPaddingRatio = 0.1f
         fixAspectRatio = false
@@ -317,7 +317,7 @@ open class CropImageOptions : Parcelable {
         showProgressBar = parcel.readByte().toInt() != 0
         autoZoomEnabled = parcel.readByte().toInt() != 0
         multiTouchEnabled = parcel.readByte().toInt() != 0
-        translateEnabled = parcel.readByte().toInt() != 0
+        centerMoveEnabled = parcel.readByte().toInt() != 0
         maxZoom = parcel.readInt()
         initialCropWindowPaddingRatio = parcel.readFloat()
         fixAspectRatio = parcel.readByte().toInt() != 0
@@ -369,7 +369,7 @@ open class CropImageOptions : Parcelable {
         dest.writeByte((if (showProgressBar) 1 else 0).toByte())
         dest.writeByte((if (autoZoomEnabled) 1 else 0).toByte())
         dest.writeByte((if (multiTouchEnabled) 1 else 0).toByte())
-        dest.writeByte((if (translateEnabled) 1 else 0).toByte())
+        dest.writeByte((if (centerMoveEnabled) 1 else 0).toByte())
         dest.writeInt(maxZoom)
         dest.writeFloat(initialCropWindowPaddingRatio)
         dest.writeByte((if (fixAspectRatio) 1 else 0).toByte())

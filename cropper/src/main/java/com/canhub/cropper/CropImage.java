@@ -677,11 +677,11 @@ public final class CropImage {
         }
 
         /**
-         * if the crop window can be translated (moved without resizing).<br>
+         * if the crop window can be moved by dragging the center.<br>
          * default: true
          */
-        public ActivityBuilder setTranslateEnabled(boolean translateEnabled) {
-            mOptions.translateEnabled = translateEnabled;
+        public ActivityBuilder setCenterMoveEnabled(boolean centerMoveEnabled) {
+            mOptions.centerMoveEnabled = centerMoveEnabled;
             return this;
         }
 

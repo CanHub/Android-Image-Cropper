@@ -111,7 +111,7 @@ internal class CropImageViewFragment :
                 setAspectRatio(options.ratio.first, options.ratio.second)
             }
             setMultiTouchEnabled(options.multiTouch)
-            setTranslationEnabled(options.translation)
+            setCenterMoveEnabled(options.centerMove)
             isShowCropOverlay = options.showCropOverlay
             isShowProgressBar = options.showProgressBar
             isAutoZoomEnabled = options.autoZoom

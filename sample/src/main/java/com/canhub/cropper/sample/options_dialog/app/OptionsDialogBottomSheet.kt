@@ -168,8 +168,8 @@ internal class OptionsDialogBottomSheet : BottomSheetDialogFragment(), OptionsCo
             presenter.onMultiTouchSelect(isChecked)
         }
 
-        binding.translationEnabled.toggle.setOnCheckedChangeListener { _, isChecked ->
-            presenter.onTranslationSelect(isChecked)
+        binding.centerMoveEnabled.toggle.setOnCheckedChangeListener { _, isChecked ->
+            presenter.onCenterMoveSelect(isChecked)
         }
 
         binding.progressBar.toggle.setOnCheckedChangeListener { _, isChecked ->
@@ -214,7 +214,7 @@ internal class OptionsDialogBottomSheet : BottomSheetDialogFragment(), OptionsCo
 
         binding.autoZoom.toggle.isChecked = options.autoZoom
         binding.multiTouch.toggle.isChecked = options.multiTouch
-        binding.translationEnabled.toggle.isChecked = options.translation
+        binding.centerMoveEnabled.toggle.isChecked = options.centerMove
         binding.cropOverlay.toggle.isChecked = options.showCropOverlay
         binding.progressBar.toggle.isChecked = options.showProgressBar
         binding.flipHorizontal.toggle.isChecked = options.flipHorizontal

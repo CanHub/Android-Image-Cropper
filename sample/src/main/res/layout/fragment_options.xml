@@ -86,8 +86,8 @@
                 layout="@layout/switch_multi_touch" />
 
             <include
-                android:id="@+id/translationEnabled"
-                layout="@layout/switch_translation" />
+                android:id="@+id/centerMoveEnabled"
+                layout="@layout/switch_center_move" />
 
             <include
                 android:id="@+id/progressBar"

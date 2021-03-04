@@ -160,14 +160,13 @@ class CropWindowHandler {
 
     /**
      * Determines which, if any, of the handles are pressed given the touch coordinates, the bounding
-     * box, the touch radius, the crop shape and whether translation (i.e. non-resizing movement) of
-     * the crop window is enabled.
+     * box, the touch radius, the crop shape and whether movement of the crop window is enabled.
      *
      * @param x the x-coordinate of the touch point
      * @param y the y-coordinate of the touch point
      * @param targetRadius the target radius in pixels
      * @param cropShape the shape of the crop window
-     * @param isTranslateEnabled whether translation of the crop window is enabled
+     * @param isCenterMoveEnabled whether movement of the crop window by dragging center is enabled
      * @return the Handle that was pressed; null if no Handle was pressed
      */
     fun getMoveHandler(
@@ -175,13 +174,13 @@ class CropWindowHandler {
         y: Float,
         targetRadius: Float,
         cropShape: CropImageView.CropShape,
-        isTranslateEnabled: Boolean
+        isCenterMoveEnabled: Boolean
     ): CropWindowMoveHandler? {
         val type: CropWindowMoveHandler.Type? = when (cropShape) {
-            RECTANGLE -> getRectanglePressedMoveType(x, y, targetRadius, isTranslateEnabled)
-            OVAL -> getOvalPressedMoveType(x, y, isTranslateEnabled)
-            RECTANGLE_VERTICAL_ONLY -> getRectangleVerticalOnlyPressedMoveType(x, y, targetRadius, isTranslateEnabled)
-            RECTANGLE_HORIZONTAL_ONLY -> getRectangleHorizontalOnlyPressedMoveType(x, y, targetRadius, isTranslateEnabled)
+            RECTANGLE -> getRectanglePressedMoveType(x, y, targetRadius, isCenterMoveEnabled)
+            OVAL -> getOvalPressedMoveType(x, y, isCenterMoveEnabled)
+            RECTANGLE_VERTICAL_ONLY -> getRectangleVerticalOnlyPressedMoveType(x, y, targetRadius, isCenterMoveEnabled)
+            RECTANGLE_HORIZONTAL_ONLY -> getRectangleHorizontalOnlyPressedMoveType(x, y, targetRadius, isCenterMoveEnabled)
         }
 
         return if (type != null) CropWindowMoveHandler(type, this, x, y) else null
@@ -196,14 +195,14 @@ class CropWindowHandler {
      * @param x the x-coordinate of the touch point
      * @param y the y-coordinate of the touch point
      * @param targetRadius the target radius in pixels
-     * @param isTranslateEnabled whether translation of the crop window is enabled
+     * @param isCenterMoveEnabled whether movement of the crop window by dragging center is enabled
      * @return the Handle that was pressed; null if no Handle was pressed
      */
     private fun getRectanglePressedMoveType(
         x: Float,
         y: Float,
         targetRadius: Float,
-        isTranslateEnabled: Boolean
+        isCenterMoveEnabled: Boolean
     ): CropWindowMoveHandler.Type? {
 
         // Note: corner-handles take precedence, then side-handles, then center.
@@ -220,7 +219,7 @@ class CropWindowHandler {
             isInCornerTargetZone(x, y, mEdges.right, mEdges.bottom, targetRadius) -> {
                 CropWindowMoveHandler.Type.BOTTOM_RIGHT
             }
-            isTranslateEnabled &&
+            isCenterMoveEnabled &&
                 isInCenterTargetZone(x, y, mEdges.left, mEdges.top, mEdges.right, mEdges.bottom) &&
                 focusCenter() -> {
                 CropWindowMoveHandler.Type.CENTER
@@ -237,7 +236,7 @@ class CropWindowHandler {
             isInVerticalTargetZone(x, y, mEdges.right, mEdges.top, mEdges.bottom, targetRadius) -> {
                 CropWindowMoveHandler.Type.RIGHT
             }
-            isTranslateEnabled &&
+            isCenterMoveEnabled &&
                 isInCenterTargetZone(x, y, mEdges.left, mEdges.top, mEdges.right, mEdges.bottom) &&
                 !focusCenter() -> {
                 CropWindowMoveHandler.Type.CENTER
@@ -252,13 +251,13 @@ class CropWindowHandler {
      *
      * @param x the x-coordinate of the touch point
      * @param y the y-coordinate of the touch point
-     * @param isTranslateEnabled whether translation of the crop window is enabled
+     * @param isCenterMoveEnabled whether movement of the crop window by dragging center is enabled
      * @return the Handle that was pressed; null if no Handle was pressed
      */
     private fun getOvalPressedMoveType(
         x: Float,
         y: Float,
-        isTranslateEnabled: Boolean
+        isCenterMoveEnabled: Boolean
     ): CropWindowMoveHandler.Type? {
         /*
             Use a 6x6 grid system divided into 9 "handles", with the center the biggest region. While
@@ -289,7 +288,7 @@ class CropWindowHandler {
             x < rightCenter -> {
                 when {
                     y < topCenter -> CropWindowMoveHandler.Type.TOP
-                    y < bottomCenter -> if (isTranslateEnabled) {
+                    y < bottomCenter -> if (isCenterMoveEnabled) {
                         CropWindowMoveHandler.Type.CENTER
                     } else null
                     else -> CropWindowMoveHandler.Type.BOTTOM
@@ -312,14 +311,14 @@ class CropWindowHandler {
      * @param x the x-coordinate of the touch point
      * @param y the y-coordinate of the touch point
      * @param targetRadius the target radius in pixels
-     * @param isTranslateEnabled whether translation of the crop window is enabled
+     * @param isCenterMoveEnabled whether movement of the crop window by dragging center is enabled
      * @return the Handle that was pressed; null if no Handle was pressed
      */
     private fun getRectangleVerticalOnlyPressedMoveType(
         x: Float,
         y: Float,
         targetRadius: Float,
-        isTranslateEnabled: Boolean
+        isCenterMoveEnabled: Boolean
     ): CropWindowMoveHandler.Type? {
 
         // Note: top and bottom handles take precedence, then center.
@@ -332,7 +331,7 @@ class CropWindowHandler {
             distance(x, y, mEdges.centerX(), mEdges.bottom) <= targetRadius -> {
                 CropWindowMoveHandler.Type.BOTTOM
             }
-            isTranslateEnabled &&
+            isCenterMoveEnabled &&
                 isInCenterTargetZone(x, y, mEdges.left, mEdges.top, mEdges.right, mEdges.bottom) -> {
                 CropWindowMoveHandler.Type.CENTER
             }
@@ -347,14 +346,14 @@ class CropWindowHandler {
      * @param x the x-coordinate of the touch point
      * @param y the y-coordinate of the touch point
      * @param targetRadius the target radius in pixels
-     * @param isTranslateEnabled whether translation of the crop window is enabled
+     * @param isCenterMoveEnabled whether movement of the crop window by dragging center is enabled
      * @return the Handle that was pressed; null if no Handle was pressed
      */
     private fun getRectangleHorizontalOnlyPressedMoveType(
         x: Float,
         y: Float,
         targetRadius: Float,
-        isTranslateEnabled: Boolean
+        isCenterMoveEnabled: Boolean
     ): CropWindowMoveHandler.Type? {
 
         // Note: left and right handles take precedence, then center.
@@ -367,7 +366,7 @@ class CropWindowHandler {
             distance(x, y, mEdges.right, mEdges.centerY()) <= targetRadius -> {
                 CropWindowMoveHandler.Type.RIGHT
             }
-            isTranslateEnabled &&
+            isCenterMoveEnabled &&
                 isInCenterTargetZone(x, y, mEdges.left, mEdges.top, mEdges.right, mEdges.bottom) -> {
                 CropWindowMoveHandler.Type.CENTER
             }

@@ -54,8 +54,8 @@ internal class OptionsPresenter : OptionsContract.Presenter {
         options = options.copy(multiTouch = enable)
     }
 
-    override fun onTranslationSelect(enable: Boolean) {
-        options = options.copy(translation = enable)
+    override fun onCenterMoveSelect(enable: Boolean) {
+        options = options.copy(centerMove = enable)
     }
 
     override fun onCropOverlaySelect(show: Boolean) {
@@ -82,7 +82,7 @@ internal class OptionsPresenter : OptionsContract.Presenter {
         maxZoomLvl = 2,
         autoZoom = true,
         multiTouch = true,
-        translation = true,
+        centerMove = true,
         showCropOverlay = true,
         showProgressBar = true,
         flipHorizontal = false,

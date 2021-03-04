@@ -26,7 +26,6 @@ import android.os.Bundle;
 import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.exifinterface.media.ExifInterface;
 import androidx.fragment.app.FragmentActivity;
 
@@ -412,9 +411,9 @@ public class CropImageView extends FrameLayout {
     }
   }
 
-  /** Set translation of the crop window (i.e. moving without resizing) to enabled/disabled. */
-  public void setTranslationEnabled(boolean translationEnabled) {
-    if (mCropOverlayView.setTranslationEnabled(translationEnabled)) {
+  /** Set moving of the crop window by dragging the center to enabled/disabled. */
+  public void setCenterMoveEnabled(boolean centerMoveEnabled) {
+    if (mCropOverlayView.setCenterMoveEnabled(centerMoveEnabled)) {
       handleCropWindowChanged(false, false);
       mCropOverlayView.invalidate();
     }

@@ -30,7 +30,7 @@
     <string name="drawer_option_set_initial_crop_rect">Set initial crop rectangle</string>
     <string name="drawer_option_reset_crop_rect">Reset crop rectangle to initial</string>
     <string name="drawer_option_toggle_multitouch">Multitouch: %1s</string>
-    <string name="drawer_option_toggle_translation">Translation enabled: %1s</string>
+    <string name="drawer_option_toggle_center_move">Center move enabled: %1s</string>
     <string name="drawer_option_toggle_show_overlay">Show Overlay: %1s</string>
     <string name="drawer_option_toggle_show_progress_bar">Show Progress Bar: %1s</string>
 
@@ -65,7 +65,7 @@
     <string name="auto_zoom">Auto Zoom</string>
     <string name="fix_aspect_ratio">Fix Aspect Ratio</string>
     <string name="multi_touch">Multi Touch</string>
-    <string name="translation">Enable translation</string>
+    <string name="center_move">Enable movement by dragging center</string>
     <string name="show_crop_overlay">Show Crop Overlay</string>
     <string name="show_progress_bar">Show Progress Bar</string>
     <string name="flip_horizontal">Flip Horizontal</string>

@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/keyline_x2"
-        android:text="@string/translation"
+        android:text="@string/center_move"
         android:textColor="@color/black" />
 
 </LinearLayout>

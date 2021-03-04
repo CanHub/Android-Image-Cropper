@@ -40,8 +40,8 @@ public class CropOverlayView extends View {
   /** Boolean to see if multi touch is enabled for the crop rectangle */
   private boolean mMultiTouchEnabled;
 
-  /** Boolean to see if translation is enabled for the crop rectangle */
-  private boolean mTranslationEnabled = true;
+  /** Boolean to see if movement via dragging center is enabled for the crop rectangle */
+  private boolean mCenterMoveEnabled = true;
 
   /** Handler from crop window stuff, moving and knowing possition. */
   private final CropWindowHandler mCropWindowHandler = new CropWindowHandler();
@@ -333,10 +333,10 @@ public class CropOverlayView extends View {
     return false;
   }
 
-  /** Set translation of the crop window (i.e. moving without resizing) to enabled/disabled. */
-  public boolean setTranslationEnabled(boolean translationEnabled) {
-    if (mTranslationEnabled != translationEnabled) {
-      mTranslationEnabled = translationEnabled;
+  /** Set movement of the crop window by dragging the center to enabled/disabled. */
+  public boolean setCenterMoveEnabled(boolean centerMoveEnabled) {
+    if (mCenterMoveEnabled != centerMoveEnabled) {
+      mCenterMoveEnabled = centerMoveEnabled;
       return true;
     }
     return false;
@@ -931,7 +931,7 @@ public class CropOverlayView extends View {
    */
   private void onActionDown(float x, float y) {
     mMoveHandler = mCropWindowHandler
-            .getMoveHandler(x, y, mTouchRadius, mCropShape, mTranslationEnabled);
+            .getMoveHandler(x, y, mTouchRadius, mCropShape, mCenterMoveEnabled);
     if (mMoveHandler != null) {
       invalidate();
     }

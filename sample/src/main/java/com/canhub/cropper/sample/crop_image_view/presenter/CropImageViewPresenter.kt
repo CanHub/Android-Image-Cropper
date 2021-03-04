@@ -28,7 +28,7 @@ internal class CropImageViewPresenter : CropImageViewContract.Presenter {
         autoZoom = true,
         maxZoomLvl = 2,
         multiTouch = true,
-        translation = true,
+        centerMove = true,
         showCropOverlay = true,
         showProgressBar = true,
         flipHorizontal = false,
