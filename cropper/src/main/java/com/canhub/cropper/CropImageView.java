@@ -721,7 +721,6 @@ public class CropImageView extends FrameLayout {
     mImageInverseMatrix.mapPoints(points);
 
     for (int i = 0; i < points.length; i++) {
-      Log.i("CanatoXXXXX", "Before " + points[i]);
       points[i] *= mLoadedSampleSize;
     }
 
@@ -1163,11 +1162,6 @@ public class CropImageView extends FrameLayout {
 
     if (result.getError() == null) {
       mInitialDegreesRotated = result.getDegreesRotated();
-      if (result.getUri() != null) {
-        Log.i("CanatoXXX", "onSetImageUriAsyncComplete " + result.getUri().toString());
-      } else {
-        Log.i("CanatoXXX", "onSetImageUriAsyncComplete null");
-      }
       setBitmap(result.getBitmap(), 0, result.getUri(), result.getLoadSampleSize(), result.getDegreesRotated());
     }
 
@@ -1184,11 +1178,6 @@ public class CropImageView extends FrameLayout {
    * @param result the result of bitmap cropping
    */
   void onImageCroppingAsyncComplete(BitmapCroppingWorkerJob.Result result) {
-    if(result.getUri() == null) {
-      Log.i("CanatoXXX", "null");
-    } else  {
-      Log.i("CanatoXXX", result.getUri().toString());
-    }
 
     mBitmapCroppingWorkerJob = null;
     setProgressBarVisibility();
@@ -1207,12 +1196,6 @@ public class CropImageView extends FrameLayout {
               getWholeImageRect(),
               getRotatedDegrees(),
               result.getSampleSize());
-
-      if(cropResult.getUri() == null) {
-        Log.i("CanatoXXX", "null");
-      } else  {
-        Log.i("CanatoXXX", cropResult.getUri().toString());
-      }
 
       listener.onCropImageComplete(this, cropResult);
     }
@@ -1439,11 +1422,6 @@ public class CropImageView extends FrameLayout {
                     : null;
             BitmapUtils.mStateBitmap = null;
             if (stateBitmap != null && !stateBitmap.isRecycled()) {
-              if (uri != null) {
-                Log.i("CanatoXXX", "onRestoreInstanceState " + uri.toString());
-              } else {
-                Log.i("CanatoXXX", "onRestoreInstanceState null");
-              }
               setBitmap(stateBitmap, 0, uri, bundle.getInt("LOADED_SAMPLE_SIZE"), 0);
             }
           }

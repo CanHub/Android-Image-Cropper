@@ -120,13 +120,10 @@ class BitmapCroppingWorkerJob internal constructor(
     fun start() {
         currentJob = activity.lifecycleScope.launch(Dispatchers.Default) {
             try {
-                Log.i("Canatoxxx", "start")
                 if (isActive) {
-                    Log.i("Canatoxxx", "isActive")
                     val bitmapSampled: BitmapUtils.BitmapSampled
                     when {
                         uri != null -> {
-                            Log.i("Canatoxxx", "a $uri")
                             bitmapSampled = BitmapUtils.cropBitmap(
                                 activity,
                                 uri,
@@ -144,7 +141,6 @@ class BitmapCroppingWorkerJob internal constructor(
                             )
                         }
                         bitmap != null -> {
-                            Log.i("Canatoxxx", "b")
                             bitmapSampled = BitmapUtils.cropBitmapObjectHandleOOM(
                                 bitmap,
                                 cropPoints,
@@ -157,7 +153,6 @@ class BitmapCroppingWorkerJob internal constructor(
                             )
                         }
                         else -> {
-                            Log.i("Canatoxxx", "1")
                             onPostExecute(Result(bitmap = null, 1))
                             return@launch
                         }
@@ -165,10 +160,7 @@ class BitmapCroppingWorkerJob internal constructor(
                     val resizedBitmap =
                         BitmapUtils.resizeBitmap(bitmapSampled.bitmap, reqWidth, reqHeight, options)
 
-                    Log.i("Canatoxxx", "resizedBitmap $resizedBitmap")
-
                     if (saveUri == null) {
-                        Log.i("Canatoxxx", "2")
                         onPostExecute(
                             Result(
                                 resizedBitmap,
@@ -184,7 +176,6 @@ class BitmapCroppingWorkerJob internal constructor(
                             saveCompressQuality
                         )
                         resizedBitmap?.recycle()
-                        Log.i("Canatoxxx", "3")
                         onPostExecute(
                             Result(
                                 saveUri,
@@ -194,7 +185,6 @@ class BitmapCroppingWorkerJob internal constructor(
                     }
                 }
             } catch (e: Exception) {
-                Log.i("Canatoxxx", "4 ${e.message}")
                 onPostExecute(Result(e, saveUri != null))
             }
         }

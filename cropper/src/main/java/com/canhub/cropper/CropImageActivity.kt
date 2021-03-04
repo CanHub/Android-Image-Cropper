@@ -46,6 +46,10 @@ open class CropImageActivity :
      * the options that were set for the crop image
      */
     lateinit var options: CropImageOptions
+
+    /** The crop image view library widget used in the activity */
+    private var cropImageView: CropImageView? = null
+
     private lateinit var binding: CropImageActivityBinding
 
     public override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,6 +57,8 @@ open class CropImageActivity :
 
         binding = CropImageActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setCropImageView(binding.cropImageView)
+
         val bundle = intent.getBundleExtra(CropImage.CROP_IMAGE_EXTRA_BUNDLE)
         cropImageUri = bundle?.getParcelable(CropImage.CROP_IMAGE_EXTRA_SOURCE)
         options = bundle?.getParcelable(CropImage.CROP_IMAGE_EXTRA_OPTIONS) ?: CropImageOptions()
@@ -80,7 +86,7 @@ open class CropImageActivity :
                 )
             } else {
                 // no permissions required or already granted, can start crop image activity
-                binding.cropImageView.setImageUriAsync(cropImageUri)
+                cropImageView?.setImageUriAsync(cropImageUri)
             }
         }
 
@@ -94,14 +100,14 @@ open class CropImageActivity :
 
     public override fun onStart() {
         super.onStart()
-        binding.cropImageView.setOnSetImageUriCompleteListener(this)
-        binding.cropImageView.setOnCropImageCompleteListener(this)
+        cropImageView?.setOnSetImageUriCompleteListener(this)
+        cropImageView?.setOnCropImageCompleteListener(this)
     }
 
     public override fun onStop() {
         super.onStop()
-        binding.cropImageView.setOnSetImageUriCompleteListener(null)
-        binding.cropImageView.setOnCropImageCompleteListener(null)
+        cropImageView?.setOnSetImageUriCompleteListener(null)
+        cropImageView?.setOnCropImageCompleteListener(null)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -149,8 +155,8 @@ open class CropImageActivity :
             R.id.crop_image_menu_crop -> cropImage()
             R.id.ic_rotate_left_24 -> rotateImage(-options.rotationDegrees)
             R.id.ic_rotate_right_24 -> rotateImage(options.rotationDegrees)
-            R.id.ic_flip_24_horizontally -> binding.cropImageView.flipImageHorizontally()
-            R.id.ic_flip_24_vertically -> binding.cropImageView.flipImageVertically()
+            R.id.ic_flip_24_horizontally -> cropImageView?.flipImageHorizontally()
+            R.id.ic_flip_24_vertically -> cropImageView?.flipImageVertically()
             android.R.id.home -> setResultCancel()
             else -> return super.onOptionsItemSelected(item)
         }
@@ -184,7 +190,7 @@ open class CropImageActivity :
                     )
                 } else {
                     // no permissions required or already grunted, can start crop image activity
-                    binding.cropImageView.setImageUriAsync(cropImageUri)
+                    cropImageView?.setImageUriAsync(cropImageUri)
                 }
             }
         }
@@ -201,7 +207,7 @@ open class CropImageActivity :
                 grantResults[0] == PackageManager.PERMISSION_GRANTED
             ) {
                 // required permissions granted, start crop image activity
-                binding.cropImageView.setImageUriAsync(cropImageUri)
+                cropImageView?.setImageUriAsync(cropImageUri)
             } else {
                 Toast
                     .makeText(this, R.string.crop_image_activity_no_permissions, Toast.LENGTH_LONG)
@@ -218,10 +224,10 @@ open class CropImageActivity :
     override fun onSetImageUriComplete(view: CropImageView, uri: Uri, error: Exception?) {
         if (error == null) {
             if (options.initialCropWindowRectangle != null) {
-                binding.cropImageView.cropRect = options.initialCropWindowRectangle
+                cropImageView?.cropRect = options.initialCropWindowRectangle
             }
             if (options.initialRotation > -1) {
-                binding.cropImageView.rotatedDegrees = options.initialRotation
+                cropImageView?.rotatedDegrees = options.initialRotation
             }
         } else setResult(null, error, 1)
     }
@@ -239,7 +245,7 @@ open class CropImageActivity :
         } else {
             val outputUri = outputUri
             Log.i("cropImage", "$outputUri")
-            binding.cropImageView.saveCroppedImageAsync(
+            cropImageView?.saveCroppedImageAsync(
                 outputUri,
                 options.outputCompressFormat,
                 options.outputCompressQuality,
@@ -251,10 +257,17 @@ open class CropImageActivity :
     }
 
     /**
+     * When extending this activity, please set your own ImageCropeView
+     */
+    open fun setCropImageView(cropImageView: CropImageView) {
+        this.cropImageView = cropImageView
+    }
+
+    /**
      * Rotate the image in the crop image view.
      */
     open fun rotateImage(degrees: Int) {
-        binding.cropImageView.rotateImage(degrees)
+        cropImageView?.rotateImage(degrees)
     }
 
     /**
@@ -313,13 +326,13 @@ open class CropImageActivity :
      */
     open fun getResultIntent(uri: Uri?, error: Exception?, sampleSize: Int): Intent {
         val result = CropImage.ActivityResult(
-            binding.cropImageView.imageUri,
+            cropImageView?.imageUri,
             uri,
             error,
-            binding.cropImageView.cropPoints,
-            binding.cropImageView.cropRect,
-            binding.cropImageView.rotatedDegrees,
-            binding.cropImageView.wholeImageRect,
+            cropImageView?.cropPoints,
+            cropImageView?.cropRect,
+            cropImageView?.rotatedDegrees ?: 0,
+            cropImageView?.wholeImageRect,
             sampleSize
         )
         val intent = Intent()

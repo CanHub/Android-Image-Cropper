@@ -14,6 +14,7 @@ import com.canhub.cropper.sample.extend_activity.domain.ExtendContract
 import com.canhub.cropper.sample.extend_activity.presenter.ExtendPresenter
 import com.example.croppersample.R
 import com.example.croppersample.databinding.ExtendedActivityBinding
+import kotlinx.android.synthetic.main.extended_activity.view.*
 
 internal class ExtendActivity : CropImageActivity(), ExtendContract.View {
 
@@ -46,6 +47,8 @@ internal class ExtendActivity : CropImageActivity(), ExtendContract.View {
         binding.rotateText.setOnClickListener {
             presenter.onRotateClick()
         }
+
+        setCropImageView(binding.cropImageView)
     }
 
     override fun setContentView(view: View) {
@@ -81,7 +84,6 @@ internal class ExtendActivity : CropImageActivity(), ExtendContract.View {
     }
 
     override fun setResult(uri: Uri?, error: Exception?, sampleSize: Int) {
-        Log.i("setResult", "$uri")
         val result = CropImage.ActivityResult(
             binding.cropImageView.imageUri,
             uri,
@@ -93,9 +95,7 @@ internal class ExtendActivity : CropImageActivity(), ExtendContract.View {
             sampleSize
         )
 
-        Log.i("extend", "${result.uri} ${error?.message}")
-        Log.i("extend outputUri", "$outputUri")
-        binding.cropImageView.setImageUriAsync(outputUri)
+        binding.cropImageView.setImageUriAsync(result.uri)
     }
 
     override fun setResultCancel() {

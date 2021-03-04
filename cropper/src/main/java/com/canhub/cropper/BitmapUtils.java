@@ -216,10 +216,8 @@ final class BitmapUtils {
             boolean flipHorizontally,
             boolean flipVertically) {
 
-        Log.i("CanatoXXXX", "cropBitmapObjectWithScale");
         // get the rectangle in original image that contains the required cropped area (larger for non
         // rectangular crop)
-        Log.i("CanatoXXXX", "bitmap.getWidth() " + bitmap.getWidth() + " bitmap.getHeight() " + bitmap.getHeight() + " aspectRatioX " + aspectRatioX + " aspectRatioY " + aspectRatioY );
         Rect rect =
                 getRectFromPoints(
                         points,
@@ -229,24 +227,18 @@ final class BitmapUtils {
                         aspectRatioX,
                         aspectRatioY);
 
-        Log.i("CanatoXXXX", "01");
         // crop and rotate the cropped image in one operation
         Matrix matrix = new Matrix();
         matrix.setRotate(degreesRotated, bitmap.getWidth() / 2.0f, bitmap.getHeight() / 2.0f);
-        Log.i("CanatoXXXX", "01.1");
         matrix.postScale(flipHorizontally ? -scale : scale, flipVertically ? -scale : scale);
-        Log.i("CanatoXXXX", "01.2");
-        Log.i("CanatoXXXX", "rect.left " + rect.left + " rect.top " + rect.top + " rect.width() " + rect.width() + " rect.height() " + rect.height() );
         Bitmap result =
                 Bitmap.createBitmap(bitmap, rect.left, rect.top, rect.width(), rect.height(), matrix, true);
 
-        Log.i("CanatoXXXX", "02");
         if (result == bitmap) {
             // corner case when all bitmap is selected, no worth optimizing for it
             result = bitmap.copy(bitmap.getConfig(), false);
         }
 
-        Log.i("CanatoXXXX", "03");
         // rotating by 0, 90, 180 or 270 degrees doesn't require extra cropping
         if (degreesRotated % 90 != 0) {
 
@@ -257,7 +249,6 @@ final class BitmapUtils {
                             result, points, rect, degreesRotated, fixAspectRatio, aspectRatioX, aspectRatioY);
         }
 
-        Log.i("CanatoXXXX", "04");
         return result;
     }
 
@@ -534,9 +525,6 @@ final class BitmapUtils {
             boolean flipVertically,
             int sampleMulti) {
 
-
-        Log.i("Canatoxxx", "cropBitmap");
-
         // get the rectangle in original image that contains the required cropped area (larger for non
         // rectangular crop)
         Rect rect =
@@ -555,11 +543,9 @@ final class BitmapUtils {
             result = bitmapSampled.bitmap;
             sampleSize = bitmapSampled.sampleSize;
         } catch (Exception ignored) {
-            Log.i("Canatoxxx", ignored.getMessage());
         }
 
         if (result != null) {
-            Log.i("Canatoxxx", "result != null");
             try {
                 // rotate the decoded region by the required amount
                 result = rotateAndFlipBitmapInt(result, degreesRotated, flipHorizontally, flipVertically);
@@ -581,7 +567,6 @@ final class BitmapUtils {
             }
             return new BitmapSampled(result, sampleSize);
         } else {
-            Log.i("Canatoxxx", "result == null");
             // failed to decode region, may be skia issue, try full decode and then crop
             return cropBitmap(
                     context,
@@ -621,28 +606,22 @@ final class BitmapUtils {
         Bitmap result = null;
         int sampleSize;
         try {
-            Log.i("CanatoXXX", "cropBitmap");
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize =
                     sampleSize =
                             sampleMulti
                                     * calculateInSampleSizeByReqestedSize(rect.width(), rect.height(), width, height);
 
-
-            Log.i("CanatoXXX", "sampleSize " + sampleSize + " rectWidth " + rect.width() + " RectHeight " + rect.height() + " width " + width + " height " + height);
             Bitmap fullBitmap = decodeImage(context.getContentResolver(), loadedImageUri, options);
             if (fullBitmap != null) {
-                Log.i("CanatoXXX", "fullBitmap != null");
                 try {
                     // adjust crop points by the sampling because the image is smaller
                     float[] points2 = new float[points.length];
                     System.arraycopy(points, 0, points2, 0, points.length);
                     for (int i = 0; i < points2.length; i++) {
                         points2[i] = points2[i] / options.inSampleSize;
-                        Log.i("CanatoXXXX", i + " ===> " + points2[i]);
                     }
 
-                    Log.i("CanatoXXX", "points2 OK");
                     result =
                             cropBitmapObjectWithScale(
                                     fullBitmap,
@@ -655,26 +634,20 @@ final class BitmapUtils {
                                     flipHorizontally,
                                     flipVertically);
                 } finally {
-                    Log.i("CanatoXXX", "finally");
                     if (result != fullBitmap) {
                         fullBitmap.recycle();
                     }
                 }
-            } else {
-                Log.i("CanatoXXX", "fullBitmap == null");
             }
         } catch (OutOfMemoryError e) {
-            Log.i("CanatoXXX", "OEO " + e.getMessage());
             if (result != null) {
                 result.recycle();
             }
             throw e;
         } catch (Exception e) {
-            Log.i("CanatoXXX", "OE " + e.getMessage());
             throw new RuntimeException(
                     "BFailed to load sampled bitmap: " + loadedImageUri + "\r\n" + e.getMessage(), e);
         }
-        Log.i("CanatoXXX", "return");
         return new BitmapSampled(result, sampleSize);
     }
 
