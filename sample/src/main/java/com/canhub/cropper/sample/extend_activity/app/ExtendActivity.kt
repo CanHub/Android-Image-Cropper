@@ -1,6 +1,5 @@
 package com.canhub.cropper.sample.extend_activity.app
 
-import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
@@ -11,7 +10,6 @@ import android.view.View
 import androidx.core.app.ActivityCompat
 import com.canhub.cropper.CropImage
 import com.canhub.cropper.CropImageActivity
-import com.canhub.cropper.common.CommonVersionCheck
 import com.canhub.cropper.sample.extend_activity.domain.ExtendContract
 import com.canhub.cropper.sample.extend_activity.presenter.ExtendPresenter
 import com.example.croppersample.R
@@ -83,6 +81,7 @@ internal class ExtendActivity : CropImageActivity(), ExtendContract.View {
     }
 
     override fun setResult(uri: Uri?, error: Exception?, sampleSize: Int) {
+        Log.i("setResult", "$uri")
         val result = CropImage.ActivityResult(
             binding.cropImageView.imageUri,
             uri,
@@ -95,7 +94,8 @@ internal class ExtendActivity : CropImageActivity(), ExtendContract.View {
         )
 
         Log.i("extend", "${result.uri} ${error?.message}")
-        binding.cropImageView.setImageUriAsync(result.uri)
+        Log.i("extend outputUri", "$outputUri")
+        binding.cropImageView.setImageUriAsync(outputUri)
     }
 
     override fun setResultCancel() {

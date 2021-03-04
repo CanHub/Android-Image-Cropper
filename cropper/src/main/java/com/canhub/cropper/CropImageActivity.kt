@@ -24,6 +24,7 @@ import com.canhub.cropper.CropImageView.OnSetImageUriCompleteListener
 import com.canhub.cropper.common.CommonValues
 import com.canhub.cropper.common.CommonVersionCheck
 import com.canhub.cropper.databinding.CropImageActivityBinding
+import com.canhub.cropper.utils.getUriForFile
 import java.io.File
 import java.io.IOException
 
@@ -237,6 +238,7 @@ open class CropImageActivity :
             setResult(null, null, 1)
         } else {
             val outputUri = outputUri
+            Log.i("cropImage", "$outputUri")
             binding.cropImageView.saveCroppedImageAsync(
                 outputUri,
                 options.outputCompressFormat,
@@ -272,21 +274,12 @@ open class CropImageActivity :
                     // We have this because of a HUAWEI path bug when we use getUriForFile
                     if (CommonVersionCheck.isAtLeastQ29()) {
                         try {
-                            FileProvider.getUriForFile(
-                                applicationContext,
-                                applicationContext.packageName + CommonValues.authority,
-                                File.createTempFile(
-                                    "cropped",
-                                    ext,
-                                    getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-                                )
-                            )
+                            val file = File.createTempFile("cropped", ext, getExternalFilesDir(Environment.DIRECTORY_PICTURES))
+                            getUriForFile(applicationContext, file)
                         } catch (e: Exception) {
-                            FileProvider.getUriForFile(
-                                applicationContext,
-                                applicationContext.packageName + CommonValues.authority,
-                                File.createTempFile("cropped", ext, cacheDir)
-                            )
+                            Log.e("CropImageActivity", "${e.message}")
+                            val file = File.createTempFile("cropped", ext, cacheDir)
+                            getUriForFile(applicationContext, file)
                         }
                     } else Uri.fromFile(File.createTempFile("cropped", ext, cacheDir))
                 } catch (e: IOException) {

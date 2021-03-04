@@ -32,6 +32,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import android.provider.MediaStore;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -676,7 +677,7 @@ public class CropImageView extends FrameLayout {
   /**
    * Gets the 4 points of crop window's position relative to the source Bitmap (not the image
    * displayed in the CropImageView) using the original image rotation.<br>
-   * Note: the 4 points may not be a rectangle if the image was rotates to NOT stright angle (!=
+   * Note: the 4 points may not be a rectangle if the image was rotates to NOT straight angle (!=
    * 90/180/270).
    *
    * @return 4 points (x0,y0,x1,y1,x2,y2,x3,y3) of cropped area boundaries
@@ -702,6 +703,7 @@ public class CropImageView extends FrameLayout {
     mImageInverseMatrix.mapPoints(points);
 
     for (int i = 0; i < points.length; i++) {
+      Log.i("CanatoXXXXX", "Before " + points[i]);
       points[i] *= mLoadedSampleSize;
     }
 
@@ -1143,6 +1145,11 @@ public class CropImageView extends FrameLayout {
 
     if (result.getError() == null) {
       mInitialDegreesRotated = result.getDegreesRotated();
+      if (result.getUri() != null) {
+        Log.i("CanatoXXX", "onSetImageUriAsyncComplete " + result.getUri().toString());
+      } else {
+        Log.i("CanatoXXX", "onSetImageUriAsyncComplete null");
+      }
       setBitmap(result.getBitmap(), 0, result.getUri(), result.getLoadSampleSize(), result.getDegreesRotated());
     }
 
@@ -1159,6 +1166,11 @@ public class CropImageView extends FrameLayout {
    * @param result the result of bitmap cropping
    */
   void onImageCroppingAsyncComplete(BitmapCroppingWorkerJob.Result result) {
+    if(result.getUri() == null) {
+      Log.i("CanatoXXX", "null");
+    } else  {
+      Log.i("CanatoXXX", result.getUri().toString());
+    }
 
     mBitmapCroppingWorkerJob = null;
     setProgressBarVisibility();
@@ -1177,6 +1189,13 @@ public class CropImageView extends FrameLayout {
               getWholeImageRect(),
               getRotatedDegrees(),
               result.getSampleSize());
+
+      if(cropResult.getUri() == null) {
+        Log.i("CanatoXXX", "null");
+      } else  {
+        Log.i("CanatoXXX", cropResult.getUri().toString());
+      }
+
       listener.onCropImageComplete(this, cropResult);
     }
   }
@@ -1284,6 +1303,7 @@ public class CropImageView extends FrameLayout {
       int orgHeight = bitmap.getHeight() * mLoadedSampleSize;
       if (mLoadedImageUri != null
           && (mLoadedSampleSize > 1 || options == RequestSizeOptions.SAMPLING)) {
+        Log.i("startCropWorkerTask", "If Positive");
         mBitmapCroppingWorkerJob =
             new WeakReference<>(
                 new BitmapCroppingWorkerJob(
@@ -1306,6 +1326,7 @@ public class CropImageView extends FrameLayout {
                     saveCompressFormat,
                     saveCompressQuality));
       } else {
+        Log.i("startCropWorkerTask", "Else");
         mBitmapCroppingWorkerJob =
             new WeakReference<>(
                 new BitmapCroppingWorkerJob(
@@ -1400,6 +1421,11 @@ public class CropImageView extends FrameLayout {
                     : null;
             BitmapUtils.mStateBitmap = null;
             if (stateBitmap != null && !stateBitmap.isRecycled()) {
+              if (uri != null) {
+                Log.i("CanatoXXX", "onRestoreInstanceState " + uri.toString());
+              } else {
+                Log.i("CanatoXXX", "onRestoreInstanceState null");
+              }
               setBitmap(stateBitmap, 0, uri, bundle.getInt("LOADED_SAMPLE_SIZE"), 0);
             }
           }

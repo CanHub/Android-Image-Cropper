@@ -2,6 +2,7 @@ package com.canhub.cropper
 
 import android.graphics.Bitmap
 import android.net.Uri
+import android.util.Log
 import androidx.annotation.Nullable
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
@@ -54,25 +55,25 @@ class BitmapCroppingWorkerJob internal constructor(
         @Nullable saveCompressFormat: Bitmap.CompressFormat?,
         saveCompressQuality: Int
     ) : this(
-        activity,
-        WeakReference(cropImageView),
-        null,
-        bitmap,
-        cropPoints,
-        degreesRotated,
-        0,
-        0,
-        fixAspectRatio,
-        aspectRatioX,
-        aspectRatioY,
-        reqWidth,
-        reqHeight,
-        flipHorizontally,
-        flipVertically,
-        options,
-        saveUri,
-        saveCompressFormat ?: Bitmap.CompressFormat.JPEG,
-        saveCompressQuality
+        activity = activity,
+        cropImageViewReference = WeakReference(cropImageView),
+        uri = null,
+        bitmap = bitmap,
+        cropPoints = cropPoints,
+        degreesRotated = degreesRotated,
+        orgWidth = 0,
+        orgHeight = 0,
+        fixAspectRatio = fixAspectRatio,
+        aspectRatioX = aspectRatioX,
+        aspectRatioY = aspectRatioY,
+        reqWidth = reqWidth,
+        reqHeight = reqHeight,
+        flipHorizontally = flipHorizontally,
+        flipVertically = flipVertically,
+        options = options,
+        saveUri = saveUri,
+        saveCompressFormat = saveCompressFormat ?: Bitmap.CompressFormat.JPEG,
+        saveCompressQuality = saveCompressQuality
     )
 
     constructor(
@@ -95,34 +96,37 @@ class BitmapCroppingWorkerJob internal constructor(
         @Nullable saveCompressFormat: Bitmap.CompressFormat,
         saveCompressQuality: Int
     ) : this(
-        activity,
-        WeakReference(cropImageView),
-        uri,
-        null,
-        cropPoints,
-        degreesRotated,
-        orgWidth,
-        orgHeight,
-        fixAspectRatio,
-        aspectRatioX,
-        aspectRatioY,
-        reqWidth,
-        reqHeight,
-        flipHorizontally,
-        flipVertically,
-        options,
-        saveUri,
-        saveCompressFormat,
-        saveCompressQuality
+        activity = activity,
+        cropImageViewReference = WeakReference(cropImageView),
+        uri = uri,
+        bitmap = null,
+        cropPoints = cropPoints,
+        degreesRotated = degreesRotated,
+        orgWidth = orgWidth,
+        orgHeight = orgHeight,
+        fixAspectRatio = fixAspectRatio,
+        aspectRatioX = aspectRatioX,
+        aspectRatioY = aspectRatioY,
+        reqWidth = reqWidth,
+        reqHeight = reqHeight,
+        flipHorizontally = flipHorizontally,
+        flipVertically = flipVertically,
+        options = options,
+        saveUri = saveUri,
+        saveCompressFormat = saveCompressFormat,
+        saveCompressQuality = saveCompressQuality
     )
 
     fun start() {
         currentJob = activity.lifecycleScope.launch(Dispatchers.Default) {
             try {
+                Log.i("Canatoxxx", "start")
                 if (isActive) {
+                    Log.i("Canatoxxx", "isActive")
                     val bitmapSampled: BitmapUtils.BitmapSampled
                     when {
                         uri != null -> {
+                            Log.i("Canatoxxx", "a $uri")
                             bitmapSampled = BitmapUtils.cropBitmap(
                                 activity,
                                 uri,
@@ -140,6 +144,7 @@ class BitmapCroppingWorkerJob internal constructor(
                             )
                         }
                         bitmap != null -> {
+                            Log.i("Canatoxxx", "b")
                             bitmapSampled = BitmapUtils.cropBitmapObjectHandleOOM(
                                 bitmap,
                                 cropPoints,
@@ -152,13 +157,18 @@ class BitmapCroppingWorkerJob internal constructor(
                             )
                         }
                         else -> {
+                            Log.i("Canatoxxx", "1")
                             onPostExecute(Result(bitmap = null, 1))
                             return@launch
                         }
                     }
                     val resizedBitmap =
                         BitmapUtils.resizeBitmap(bitmapSampled.bitmap, reqWidth, reqHeight, options)
+
+                    Log.i("Canatoxxx", "resizedBitmap $resizedBitmap")
+
                     if (saveUri == null) {
+                        Log.i("Canatoxxx", "2")
                         onPostExecute(
                             Result(
                                 resizedBitmap,
@@ -174,6 +184,7 @@ class BitmapCroppingWorkerJob internal constructor(
                             saveCompressQuality
                         )
                         resizedBitmap?.recycle()
+                        Log.i("Canatoxxx", "3")
                         onPostExecute(
                             Result(
                                 saveUri,
@@ -183,6 +194,7 @@ class BitmapCroppingWorkerJob internal constructor(
                     }
                 }
             } catch (e: Exception) {
+                Log.i("Canatoxxx", "4 ${e.message}")
                 onPostExecute(Result(e, saveUri != null))
             }
         }

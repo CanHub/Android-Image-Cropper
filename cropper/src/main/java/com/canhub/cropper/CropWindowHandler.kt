@@ -143,7 +143,9 @@ class CropWindowHandler {
     }
 
     /** Set the left/top/right/bottom coordinates of the crop window.  */
-    fun setRect(rect: RectF) { mEdges.set(rect) }
+    fun setRect(rect: RectF) {
+        mEdges.set(rect)
+    }
 
     /**
      * Indicates whether the crop window is small enough that the guidelines should be shown. Public
