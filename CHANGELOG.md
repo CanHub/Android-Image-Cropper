@@ -10,6 +10,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - `Security` in case of vulnerabilities.
 
 ## [unreleased x.x.x] -
+
+
+## [2.2.0] - 04/03/21
 ### Added
 - Vertical-only and horizontal-only cropping modes [#76]((https://github.com/CanHub/Android-Image-Cropper/pull/76))
 - Option to disable movement of the crop window by dragging the center [#79](https://github.com/CanHub/Android-Image-Cropper/pull/79)
