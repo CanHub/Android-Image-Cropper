@@ -594,6 +594,14 @@ public final class CropImage {
          * The shape of the cropping window.<br>
          * To set square/circle crop shape set aspect ratio to 1:1.<br>
          * <i>Default: RECTANGLE</i>
+         *
+         * When setting RECTANGLE_VERTICAL_ONLY or RECTANGLE_HORIZONTAL_ONLY you may also want to
+         * use a free aspect ratio (to allow the crop window to change in the desired dimension
+         * whilst staying the same in the other dimension) and have the initial crop window cover
+         * the entire image (so that the crop window has no space to move in the other dimension).
+         * These can be done with
+         * {@link ActivityBuilder#setFixAspectRatio(boolean)} } (with argument `false`) and
+         * {@link ActivityBuilder#setInitialCropWindowPaddingRatio(float) } (with argument `0f).
          */
         public ActivityBuilder setCropShape(@NonNull CropImageView.CropShape cropShape) {
             mOptions.cropShape = cropShape;
@@ -665,6 +673,15 @@ public final class CropImage {
          */
         public ActivityBuilder setMultiTouchEnabled(boolean multiTouchEnabled) {
             mOptions.multiTouchEnabled = multiTouchEnabled;
+            return this;
+        }
+
+        /**
+         * if the crop window can be moved by dragging the center.<br>
+         * default: true
+         */
+        public ActivityBuilder setCenterMoveEnabled(boolean centerMoveEnabled) {
+            mOptions.centerMoveEnabled = centerMoveEnabled;
             return this;
         }
 

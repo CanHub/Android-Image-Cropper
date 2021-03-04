@@ -40,6 +40,9 @@ public class CropOverlayView extends View {
   /** Boolean to see if multi touch is enabled for the crop rectangle */
   private boolean mMultiTouchEnabled;
 
+  /** Boolean to see if movement via dragging center is enabled for the crop rectangle */
+  private boolean mCenterMoveEnabled = true;
+
   /** Handler from crop window stuff, moving and knowing possition. */
   private final CropWindowHandler mCropWindowHandler = new CropWindowHandler();
 
@@ -204,7 +207,7 @@ public class CropOverlayView extends View {
   public void setCropShape(CropImageView.CropShape cropShape) {
     if (mCropShape != cropShape) {
       mCropShape = cropShape;
-        if (Build.VERSION.SDK_INT <= 17) {
+      if (Build.VERSION.SDK_INT <= 17) {
         if (mCropShape == CropImageView.CropShape.OVAL) {
           mOriginalLayerType = getLayerType();
           if (mOriginalLayerType != View.LAYER_TYPE_SOFTWARE) {
@@ -330,6 +333,15 @@ public class CropOverlayView extends View {
     return false;
   }
 
+  /** Set movement of the crop window by dragging the center to enabled/disabled. */
+  public boolean setCenterMoveEnabled(boolean centerMoveEnabled) {
+    if (mCenterMoveEnabled != centerMoveEnabled) {
+      mCenterMoveEnabled = centerMoveEnabled;
+      return true;
+    }
+    return false;
+  }
+
   /**
    * the min size the resulting cropping image is allowed to be, affects the cropping window limits
    * (in pixels).<br>
@@ -401,6 +413,8 @@ public class CropOverlayView extends View {
     setAspectRatioY(options.aspectRatioY);
 
     setMultiTouchEnabled(options.multiTouchEnabled);
+
+    setCenterMoveEnabled(options.centerMoveEnabled);
 
     mTouchRadius = options.touchRadius;
 
@@ -603,51 +617,60 @@ public class CropOverlayView extends View {
     float right = Math.min(BitmapUtils.getRectRight(mBoundsPoints), getWidth());
     float bottom = Math.min(BitmapUtils.getRectBottom(mBoundsPoints), getHeight());
 
-    if (mCropShape == CropImageView.CropShape.RECTANGLE) {
-      if (!isNonStraightAngleRotated() || Build.VERSION.SDK_INT <= 17) {
-        canvas.drawRect(left, top, right, rect.top, mBackgroundPaint);
-        canvas.drawRect(left, rect.bottom, right, bottom, mBackgroundPaint);
-        canvas.drawRect(left, rect.top, rect.left, rect.bottom, mBackgroundPaint);
-        canvas.drawRect(rect.right, rect.top, right, rect.bottom, mBackgroundPaint);
-      } else {
-        mPath.reset();
-        mPath.moveTo(mBoundsPoints[0], mBoundsPoints[1]);
-        mPath.lineTo(mBoundsPoints[2], mBoundsPoints[3]);
-        mPath.lineTo(mBoundsPoints[4], mBoundsPoints[5]);
-        mPath.lineTo(mBoundsPoints[6], mBoundsPoints[7]);
-        mPath.close();
+    switch (mCropShape) {
+      case RECTANGLE:
+      case RECTANGLE_VERTICAL_ONLY:
+      case RECTANGLE_HORIZONTAL_ONLY:
+        if (!isNonStraightAngleRotated() || Build.VERSION.SDK_INT <= 17) {
+          canvas.drawRect(left, top, right, rect.top, mBackgroundPaint);
+          canvas.drawRect(left, rect.bottom, right, bottom, mBackgroundPaint);
+          canvas.drawRect(left, rect.top, rect.left, rect.bottom, mBackgroundPaint);
+          canvas.drawRect(rect.right, rect.top, right, rect.bottom, mBackgroundPaint);
+        } else {
+          mPath.reset();
+          mPath.moveTo(mBoundsPoints[0], mBoundsPoints[1]);
+          mPath.lineTo(mBoundsPoints[2], mBoundsPoints[3]);
+          mPath.lineTo(mBoundsPoints[4], mBoundsPoints[5]);
+          mPath.lineTo(mBoundsPoints[6], mBoundsPoints[7]);
+          mPath.close();
 
+          canvas.save();
+          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            canvas.clipOutPath(mPath);
+          } else {
+            canvas.clipPath(mPath, Region.Op.INTERSECT);
+          }
+          canvas.clipRect(rect, Region.Op.XOR);
+          canvas.drawRect(left, top, right, bottom, mBackgroundPaint);
+          canvas.restore();
+        }
+        break;
+
+      case OVAL:
+        mPath.reset();
+        if (Build.VERSION.SDK_INT <= 17) {
+          mDrawRect.set(rect.left + 2, rect.top + 2, rect.right - 2, rect.bottom - 2);
+        } else {
+          mDrawRect.set(rect.left, rect.top, rect.right, rect.bottom);
+        }
+        mPath.addOval(mDrawRect, Path.Direction.CW);
         canvas.save();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
           canvas.clipOutPath(mPath);
         } else {
-          canvas.clipPath(mPath, Region.Op.INTERSECT);
+          canvas.clipPath(mPath, Region.Op.XOR);
         }
-        canvas.clipRect(rect, Region.Op.XOR);
         canvas.drawRect(left, top, right, bottom, mBackgroundPaint);
         canvas.restore();
-      }
-    } else {
-      mPath.reset();
-        if (Build.VERSION.SDK_INT <= 17 && mCropShape == CropImageView.CropShape.OVAL) {
-        mDrawRect.set(rect.left + 2, rect.top + 2, rect.right - 2, rect.bottom - 2);
-      } else {
-        mDrawRect.set(rect.left, rect.top, rect.right, rect.bottom);
-      }
-      mPath.addOval(mDrawRect, Path.Direction.CW);
-      canvas.save();
-      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        canvas.clipOutPath(mPath);
-      } else {
-        canvas.clipPath(mPath, Region.Op.XOR);
-      }
-      canvas.drawRect(left, top, right, bottom, mBackgroundPaint);
-      canvas.restore();
+        break;
+
+      default:
+        throw new IllegalStateException("Unrecognized crop shape");
     }
   }
 
   /**
-   * Draw 2 veritcal and 2 horizontal guidelines inside the cropping area to split it into 9 equal
+   * Draw 2 vertical and 2 horizontal guidelines inside the cropping area to split it into 9 equal
    * parts.
    */
   private void drawGuidelines(Canvas canvas) {
@@ -659,37 +682,46 @@ public class CropOverlayView extends View {
       float oneThirdCropWidth = rect.width() / 3;
       float oneThirdCropHeight = rect.height() / 3;
 
-      if (mCropShape == CropImageView.CropShape.OVAL) {
+      float x1, x2, y1, y2;
 
-        float w = rect.width() / 2 - sw;
-        float h = rect.height() / 2 - sw;
+      switch (mCropShape) {
+        case OVAL:
+          float w = rect.width() / 2 - sw;
+          float h = rect.height() / 2 - sw;
 
-        // Draw vertical guidelines.
-        float x1 = rect.left + oneThirdCropWidth;
-        float x2 = rect.right - oneThirdCropWidth;
-        float yv = (float) (h * Math.sin(Math.acos((w - oneThirdCropWidth) / w)));
-        canvas.drawLine(x1, rect.top + h - yv, x1, rect.bottom - h + yv, mGuidelinePaint);
-        canvas.drawLine(x2, rect.top + h - yv, x2, rect.bottom - h + yv, mGuidelinePaint);
+          // Draw vertical guidelines.
+          x1 = rect.left + oneThirdCropWidth;
+          x2 = rect.right - oneThirdCropWidth;
+          float yv = (float) (h * Math.sin(Math.acos((w - oneThirdCropWidth) / w)));
+          canvas.drawLine(x1, rect.top + h - yv, x1, rect.bottom - h + yv, mGuidelinePaint);
+          canvas.drawLine(x2, rect.top + h - yv, x2, rect.bottom - h + yv, mGuidelinePaint);
 
-        // Draw horizontal guidelines.
-        float y1 = rect.top + oneThirdCropHeight;
-        float y2 = rect.bottom - oneThirdCropHeight;
-        float xv = (float) (w * Math.cos(Math.asin((h - oneThirdCropHeight) / h)));
-        canvas.drawLine(rect.left + w - xv, y1, rect.right - w + xv, y1, mGuidelinePaint);
-        canvas.drawLine(rect.left + w - xv, y2, rect.right - w + xv, y2, mGuidelinePaint);
-      } else {
+          // Draw horizontal guidelines.
+          y1 = rect.top + oneThirdCropHeight;
+          y2 = rect.bottom - oneThirdCropHeight;
+          float xv = (float) (w * Math.cos(Math.asin((h - oneThirdCropHeight) / h)));
+          canvas.drawLine(rect.left + w - xv, y1, rect.right - w + xv, y1, mGuidelinePaint);
+          canvas.drawLine(rect.left + w - xv, y2, rect.right - w + xv, y2, mGuidelinePaint);
+          break;
 
-        // Draw vertical guidelines.
-        float x1 = rect.left + oneThirdCropWidth;
-        float x2 = rect.right - oneThirdCropWidth;
-        canvas.drawLine(x1, rect.top, x1, rect.bottom, mGuidelinePaint);
-        canvas.drawLine(x2, rect.top, x2, rect.bottom, mGuidelinePaint);
+        case RECTANGLE:
+        case RECTANGLE_VERTICAL_ONLY:
+        case RECTANGLE_HORIZONTAL_ONLY:
+          // Draw vertical guidelines.
+          x1 = rect.left + oneThirdCropWidth;
+          x2 = rect.right - oneThirdCropWidth;
+          canvas.drawLine(x1, rect.top, x1, rect.bottom, mGuidelinePaint);
+          canvas.drawLine(x2, rect.top, x2, rect.bottom, mGuidelinePaint);
 
-        // Draw horizontal guidelines.
-        float y1 = rect.top + oneThirdCropHeight;
-        float y2 = rect.bottom - oneThirdCropHeight;
-        canvas.drawLine(rect.left, y1, rect.right, y1, mGuidelinePaint);
-        canvas.drawLine(rect.left, y2, rect.right, y2, mGuidelinePaint);
+          // Draw horizontal guidelines.
+          y1 = rect.top + oneThirdCropHeight;
+          y2 = rect.bottom - oneThirdCropHeight;
+          canvas.drawLine(rect.left, y1, rect.right, y1, mGuidelinePaint);
+          canvas.drawLine(rect.left, y2, rect.right, y2, mGuidelinePaint);
+          break;
+
+        default:
+          throw new IllegalStateException("Unrecognized crop shape");
       }
     }
   }
@@ -701,12 +733,19 @@ public class CropOverlayView extends View {
       RectF rect = mCropWindowHandler.getRect();
       rect.inset(w / 2, w / 2);
 
-      if (mCropShape == CropImageView.CropShape.RECTANGLE) {
-        // Draw rectangle crop window border.
-        canvas.drawRect(rect, mBorderPaint);
-      } else {
-        // Draw circular crop window border
-        canvas.drawOval(rect, mBorderPaint);
+      switch (mCropShape) {
+        case RECTANGLE:
+        case RECTANGLE_VERTICAL_ONLY:
+        case RECTANGLE_HORIZONTAL_ONLY:
+          // Draw rectangle crop window border.
+          canvas.drawRect(rect, mBorderPaint);
+          break;
+        case OVAL:
+          // Draw circular crop window border
+          canvas.drawOval(rect, mBorderPaint);
+          break;
+        default:
+          throw new IllegalStateException("Unrecognized crop shape");
       }
     }
   }
@@ -717,73 +756,124 @@ public class CropOverlayView extends View {
 
       float lineWidth = mBorderPaint != null ? mBorderPaint.getStrokeWidth() : 0;
       float cornerWidth = mBorderCornerPaint.getStrokeWidth();
+      float cornerOffset = (cornerWidth - lineWidth) / 2;
+      float cornerExtension = cornerWidth / 2 + cornerOffset;
 
-      // for rectangle crop shape we allow the corners to be offset from the borders
-      float w =
-          cornerWidth / 2
-              + (mCropShape == CropImageView.CropShape.RECTANGLE ? mBorderCornerOffset : 0);
+      float w;
+      switch (mCropShape) {
+        case RECTANGLE:
+        case RECTANGLE_VERTICAL_ONLY:
+        case RECTANGLE_HORIZONTAL_ONLY:
+          // for rectangle crop shape we allow the corners to be offset from the borders
+          w = cornerWidth / 2 + mBorderCornerOffset;
+          break;
+        case OVAL:
+          w = cornerWidth / 2;
+          break;
+        default:
+          throw new IllegalStateException("Unrecognized crop shape");
+      }
 
       RectF rect = mCropWindowHandler.getRect();
       rect.inset(w, w);
 
-      float cornerOffset = (cornerWidth - lineWidth) / 2;
-      float cornerExtension = cornerWidth / 2 + cornerOffset;
+      switch (mCropShape) {
+        case RECTANGLE:
+        case OVAL:
+          // Top left
+          canvas.drawLine(
+                  rect.left - cornerOffset,
+                  rect.top - cornerExtension,
+                  rect.left - cornerOffset,
+                  rect.top + mBorderCornerLength,
+                  mBorderCornerPaint);
+          canvas.drawLine(
+                  rect.left - cornerExtension,
+                  rect.top - cornerOffset,
+                  rect.left + mBorderCornerLength,
+                  rect.top - cornerOffset,
+                  mBorderCornerPaint);
 
-      // Top left
-      canvas.drawLine(
-          rect.left - cornerOffset,
-          rect.top - cornerExtension,
-          rect.left - cornerOffset,
-          rect.top + mBorderCornerLength,
-          mBorderCornerPaint);
-      canvas.drawLine(
-          rect.left - cornerExtension,
-          rect.top - cornerOffset,
-          rect.left + mBorderCornerLength,
-          rect.top - cornerOffset,
-          mBorderCornerPaint);
+          // Top right
+          canvas.drawLine(
+                  rect.right + cornerOffset,
+                  rect.top - cornerExtension,
+                  rect.right + cornerOffset,
+                  rect.top + mBorderCornerLength,
+                  mBorderCornerPaint);
+          canvas.drawLine(
+                  rect.right + cornerExtension,
+                  rect.top - cornerOffset,
+                  rect.right - mBorderCornerLength,
+                  rect.top - cornerOffset,
+                  mBorderCornerPaint);
 
-      // Top right
-      canvas.drawLine(
-          rect.right + cornerOffset,
-          rect.top - cornerExtension,
-          rect.right + cornerOffset,
-          rect.top + mBorderCornerLength,
-          mBorderCornerPaint);
-      canvas.drawLine(
-          rect.right + cornerExtension,
-          rect.top - cornerOffset,
-          rect.right - mBorderCornerLength,
-          rect.top - cornerOffset,
-          mBorderCornerPaint);
+          // Bottom left
+          canvas.drawLine(
+                  rect.left - cornerOffset,
+                  rect.bottom + cornerExtension,
+                  rect.left - cornerOffset,
+                  rect.bottom - mBorderCornerLength,
+                  mBorderCornerPaint);
+          canvas.drawLine(
+                  rect.left - cornerExtension,
+                  rect.bottom + cornerOffset,
+                  rect.left + mBorderCornerLength,
+                  rect.bottom + cornerOffset,
+                  mBorderCornerPaint);
 
-      // Bottom left
-      canvas.drawLine(
-          rect.left - cornerOffset,
-          rect.bottom + cornerExtension,
-          rect.left - cornerOffset,
-          rect.bottom - mBorderCornerLength,
-          mBorderCornerPaint);
-      canvas.drawLine(
-          rect.left - cornerExtension,
-          rect.bottom + cornerOffset,
-          rect.left + mBorderCornerLength,
-          rect.bottom + cornerOffset,
-          mBorderCornerPaint);
+          // Bottom right
+          canvas.drawLine(
+                  rect.right + cornerOffset,
+                  rect.bottom + cornerExtension,
+                  rect.right + cornerOffset,
+                  rect.bottom - mBorderCornerLength,
+                  mBorderCornerPaint);
+          canvas.drawLine(
+                  rect.right + cornerExtension,
+                  rect.bottom + cornerOffset,
+                  rect.right - mBorderCornerLength,
+                  rect.bottom + cornerOffset,
+                  mBorderCornerPaint);
+          break;
 
-      // Bottom left
-      canvas.drawLine(
-          rect.right + cornerOffset,
-          rect.bottom + cornerExtension,
-          rect.right + cornerOffset,
-          rect.bottom - mBorderCornerLength,
-          mBorderCornerPaint);
-      canvas.drawLine(
-          rect.right + cornerExtension,
-          rect.bottom + cornerOffset,
-          rect.right - mBorderCornerLength,
-          rect.bottom + cornerOffset,
-          mBorderCornerPaint);
+        case RECTANGLE_VERTICAL_ONLY:
+          // For the vertical variant, the user can only resize the crop window up and down, so the
+          // "corners" are in the center of the top and bottom edges of the crop window.
+          canvas.drawLine(
+                  rect.centerX() - mBorderCornerLength,
+                  rect.top - cornerOffset,
+                  rect.centerX() + mBorderCornerLength,
+                  rect.top - cornerOffset,
+                  mBorderCornerPaint);
+          canvas.drawLine(
+                  rect.centerX() - mBorderCornerLength,
+                  rect.bottom + cornerOffset,
+                  rect.centerX() + mBorderCornerLength,
+                  rect.bottom + cornerOffset,
+                  mBorderCornerPaint);
+          break;
+
+        case RECTANGLE_HORIZONTAL_ONLY:
+          // For the horizontal variant, the user can only resize the crop window left and right, so
+          // the "corners" are in the center of the left and right edges of the crop window.
+          canvas.drawLine(
+                  rect.left - cornerOffset,
+                  rect.centerY() - mBorderCornerLength,
+                  rect.left - cornerOffset,
+                  rect.centerY() + mBorderCornerLength,
+                  mBorderCornerPaint);
+          canvas.drawLine(
+                  rect.right + cornerOffset,
+                  rect.centerY() - mBorderCornerLength,
+                  rect.right + cornerOffset,
+                  rect.centerY() + mBorderCornerLength,
+                  mBorderCornerPaint);
+          break;
+
+        default:
+          throw new IllegalStateException("Unrecognized crop shape");
+      }
     }
   }
 
@@ -842,7 +932,8 @@ public class CropOverlayView extends View {
    * if press is far from crop window then no move handler is returned (null).
    */
   private void onActionDown(float x, float y) {
-    mMoveHandler = mCropWindowHandler.getMoveHandler(x, y, mTouchRadius, mCropShape);
+    mMoveHandler = mCropWindowHandler
+            .getMoveHandler(x, y, mTouchRadius, mCropShape, mCenterMoveEnabled);
     if (mMoveHandler != null) {
       invalidate();
     }

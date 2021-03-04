@@ -86,6 +86,10 @@
                 layout="@layout/switch_multi_touch" />
 
             <include
+                android:id="@+id/centerMoveEnabled"
+                layout="@layout/switch_center_move" />
+
+            <include
                 android:id="@+id/progressBar"
                 layout="@layout/switch_progress_bar" />
         </LinearLayout>

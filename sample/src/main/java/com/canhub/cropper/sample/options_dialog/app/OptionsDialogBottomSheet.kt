@@ -100,6 +100,14 @@ internal class OptionsDialogBottomSheet : BottomSheetDialogFragment(), OptionsCo
             presenter.onCropShapeSelect(CropImageView.CropShape.OVAL)
         }
 
+        binding.cropShape.chipRectangleVerticalOnly.setOnClickListener {
+            presenter.onCropShapeSelect(CropImageView.CropShape.RECTANGLE_VERTICAL_ONLY)
+        }
+
+        binding.cropShape.chipRectangleHorizontalOnly.setOnClickListener {
+            presenter.onCropShapeSelect(CropImageView.CropShape.RECTANGLE_HORIZONTAL_ONLY)
+        }
+
         binding.guidelines.chipOff.setOnClickListener {
             presenter.onGuidelinesSelect(CropImageView.Guidelines.OFF)
         }
@@ -160,6 +168,10 @@ internal class OptionsDialogBottomSheet : BottomSheetDialogFragment(), OptionsCo
             presenter.onMultiTouchSelect(isChecked)
         }
 
+        binding.centerMoveEnabled.toggle.setOnCheckedChangeListener { _, isChecked ->
+            presenter.onCenterMoveSelect(isChecked)
+        }
+
         binding.progressBar.toggle.setOnCheckedChangeListener { _, isChecked ->
             presenter.onProgressBarSelect(isChecked)
         }
@@ -177,6 +189,8 @@ internal class OptionsDialogBottomSheet : BottomSheetDialogFragment(), OptionsCo
         when (options.cropShape) {
             CropImageView.CropShape.RECTANGLE -> binding.cropShape.chipRectangle.isChecked = true
             CropImageView.CropShape.OVAL -> binding.cropShape.chipOval.isChecked = true
+            CropImageView.CropShape.RECTANGLE_VERTICAL_ONLY -> binding.cropShape.chipRectangleVerticalOnly.isChecked = true
+            CropImageView.CropShape.RECTANGLE_HORIZONTAL_ONLY -> binding.cropShape.chipRectangleHorizontalOnly.isChecked = true
         }
 
         when (options.guidelines) {
@@ -200,6 +214,7 @@ internal class OptionsDialogBottomSheet : BottomSheetDialogFragment(), OptionsCo
 
         binding.autoZoom.toggle.isChecked = options.autoZoom
         binding.multiTouch.toggle.isChecked = options.multiTouch
+        binding.centerMoveEnabled.toggle.isChecked = options.centerMove
         binding.cropOverlay.toggle.isChecked = options.showCropOverlay
         binding.progressBar.toggle.isChecked = options.showProgressBar
         binding.flipHorizontal.toggle.isChecked = options.flipHorizontal
