@@ -201,7 +201,7 @@ class CropWindowMoveHandler(
             mTouchOffset.y -= dy / 2
         }
         rect.offset(dx, dy)
-        snapEdgesToBounds(rect, bounds, snapRadius)
+        snapEdgesToBounds(edges = rect, bounds = bounds, margin = snapRadius)
     }
 
     /**
