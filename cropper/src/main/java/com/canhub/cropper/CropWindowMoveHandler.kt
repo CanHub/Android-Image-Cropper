@@ -31,9 +31,6 @@ class CropWindowMoveHandler(
             (right - left) / (bottom - top)
     }
 
-    init {
-        calculateTouchOffset(cropWindowHandler.getRect(), touchX, touchY)
-    }
 
     /** Minimum width in pixels that the crop window can get.  */
     private val mMinCropWidth: Float = cropWindowHandler.getMinCropWidth()
@@ -53,7 +50,11 @@ class CropWindowMoveHandler(
      * in activating a handle. However, we want to maintain these offset values while the handle is
      * being dragged so that the handle doesn't jump.
      */
-    private val mTouchOffset = PointF()
+    private val mTouchOffset = PointF(0f, 0f)
+
+    init {
+        calculateTouchOffset(cropWindowHandler.getRect(), touchX, touchY)
+    }
 
     /**
      * Updates the crop window by change in the toch location.<br></br>
