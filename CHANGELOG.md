@@ -10,6 +10,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - `Security` in case of vulnerabilities.
 
 ## [unreleased x.x.x] -
+
+## [2.2.2] - 19/03/21
 ### Changed
 - CropWindowMoveHandler to kotlin [#36](https://github.com/CanHub/Android-Image-Cropper/issues/36)
 
