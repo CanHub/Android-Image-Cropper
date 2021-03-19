@@ -40,11 +40,14 @@ Android Image Cropper
 ```
 [Latest Release Version](https://github.com/CanHub/Android-Image-Cropper/releases)
 
-#### Step 3. Add permissions to manifest
+#### Step 3. Add permissions to manifest 
+
+Only need if you run on devices under OS10 (SDK 29)
 
  ```xml
  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
- <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+ <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+                 android:maxSdkVersion="28" />
  ```
 
  #### Step 4. Add this line to your Proguard config file
