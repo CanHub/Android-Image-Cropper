@@ -31,7 +31,6 @@ class CropWindowMoveHandler(
             (right - left) / (bottom - top)
     }
 
-
     /** Minimum width in pixels that the crop window can get.  */
     private val mMinCropWidth: Float = cropWindowHandler.getMinCropWidth()
 
