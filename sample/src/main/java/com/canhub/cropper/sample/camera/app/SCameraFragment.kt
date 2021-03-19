@@ -22,8 +22,8 @@ import androidx.fragment.app.Fragment
 import com.canhub.cropper.CropImage
 import com.canhub.cropper.CropImageView
 import com.canhub.cropper.sample.SCropResultActivity
-import com.canhub.cropper.sample.camera.domain.SCameraContract
 import com.canhub.cropper.sample.camera.domain.CameraEnumDomain
+import com.canhub.cropper.sample.camera.domain.SCameraContract
 import com.canhub.cropper.sample.camera.presenter.SCameraPresenter
 import com.example.croppersample.R
 import com.example.croppersample.databinding.FragmentCameraBinding

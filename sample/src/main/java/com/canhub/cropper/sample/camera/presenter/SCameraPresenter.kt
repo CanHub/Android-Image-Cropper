@@ -12,8 +12,8 @@ import androidx.fragment.app.FragmentActivity
 import com.canhub.cropper.CropImage
 import com.canhub.cropper.sample.camera.app.SCameraFragment
 import com.canhub.cropper.sample.camera.app.SCameraFragment.Companion.CODE_PHOTO_CAMERA
-import com.canhub.cropper.sample.camera.domain.SCameraContract
 import com.canhub.cropper.sample.camera.domain.CameraEnumDomain
+import com.canhub.cropper.sample.camera.domain.SCameraContract
 
 internal class SCameraPresenter : SCameraContract.Presenter {
 
