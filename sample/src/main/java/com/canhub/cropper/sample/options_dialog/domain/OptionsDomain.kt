@@ -2,8 +2,8 @@ package com.canhub.cropper.sample.options_dialog.domain
 
 import android.os.Parcelable
 import com.canhub.cropper.CropImageView
-import kotlinx.android.parcel.Parcelize
-import kotlinx.android.parcel.RawValue
+import kotlinx.parcelize.Parcelize
+import kotlinx.parcelize.RawValue
 
 @Parcelize
 internal data class OptionsDomain(

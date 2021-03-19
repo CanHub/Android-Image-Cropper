@@ -8,7 +8,7 @@ ext {
 
     // Gradle's
     androidGradleVersion = '4.1.2'
-    ktlintGradleVersion = '9.4.1'
+    ktlintGradleVersion = '10.0.0'
     mavenGradleVersion = '2.1'
 
     // JetBrains

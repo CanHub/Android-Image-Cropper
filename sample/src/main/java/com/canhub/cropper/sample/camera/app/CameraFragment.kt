@@ -27,7 +27,6 @@ import com.canhub.cropper.sample.camera.domain.CameraEnumDomain
 import com.canhub.cropper.sample.camera.presenter.CameraPresenter
 import com.example.croppersample.R
 import com.example.croppersample.databinding.FragmentCameraBinding
-import kotlinx.android.synthetic.main.fragment_camera.*
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date

@@ -40,6 +40,10 @@ class CropResultActivity : Activity() {
         setContentView(binding.root)
 
         binding.resultImageView.setBackgroundResource(R.drawable.backdrop)
+        binding.resultImageView.setOnClickListener {
+            releaseBitmap()
+            finish()
+        }
 
         image?.let {
             binding.resultImageView.setImageBitmap(it)
@@ -61,11 +65,6 @@ class CropResultActivity : Activity() {
     override fun onBackPressed() {
         releaseBitmap()
         super.onBackPressed()
-    }
-
-    fun onImageViewClicked() {
-        releaseBitmap()
-        finish()
     }
 
     private fun releaseBitmap() {
