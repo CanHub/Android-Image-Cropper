@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.fragment.app.FragmentActivity
 
-internal interface CameraContract {
+internal interface SCameraContract {
 
     interface View {
         fun startCropImage(option: CameraEnumDomain)

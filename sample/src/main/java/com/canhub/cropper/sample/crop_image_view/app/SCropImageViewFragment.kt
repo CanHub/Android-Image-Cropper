@@ -21,29 +21,29 @@ import com.canhub.cropper.CropImageView
 import com.canhub.cropper.CropImageView.CropResult
 import com.canhub.cropper.CropImageView.OnCropImageCompleteListener
 import com.canhub.cropper.CropImageView.OnSetImageUriCompleteListener
-import com.canhub.cropper.sample.CropResultActivity
-import com.canhub.cropper.sample.crop_image_view.domain.CropImageViewContract
-import com.canhub.cropper.sample.crop_image_view.presenter.CropImageViewPresenter
-import com.canhub.cropper.sample.options_dialog.app.OptionsDialogBottomSheet
-import com.canhub.cropper.sample.options_dialog.domain.OptionsDomain
+import com.canhub.cropper.sample.SCropResultActivity
+import com.canhub.cropper.sample.crop_image_view.domain.SCropImageViewContract
+import com.canhub.cropper.sample.crop_image_view.presenter.SCropImageViewPresenter
+import com.canhub.cropper.sample.options_dialog.app.SOptionsDialogBottomSheet
+import com.canhub.cropper.sample.options_dialog.domain.SOptionsDomain
 import com.example.croppersample.R
 import com.example.croppersample.databinding.FragmentCropImageViewBinding
 
-internal class CropImageViewFragment :
+internal class SCropImageViewFragment :
     Fragment(),
-    CropImageViewContract.View,
-    OptionsDialogBottomSheet.Listener,
+    SCropImageViewContract.View,
+    SOptionsDialogBottomSheet.Listener,
     OnSetImageUriCompleteListener,
     OnCropImageCompleteListener {
 
     companion object {
 
-        fun newInstance() = CropImageViewFragment()
+        fun newInstance() = SCropImageViewFragment()
     }
 
     private lateinit var binding: FragmentCropImageViewBinding
-    private val presenter = CropImageViewPresenter()
-    private var options: OptionsDomain? = null
+    private val presenter = SCropImageViewPresenter()
+    private var options: SOptionsDomain? = null
     private var cropImageUri: Uri? = null
 
     override fun onCreateView(
@@ -69,7 +69,7 @@ internal class CropImageViewFragment :
         }
 
         binding.settings.setOnClickListener {
-            OptionsDialogBottomSheet.show(childFragmentManager, options, this)
+            SOptionsDialogBottomSheet.show(childFragmentManager, options, this)
         }
 
         binding.searchImage.setOnClickListener {
@@ -98,7 +98,7 @@ internal class CropImageViewFragment :
         }
     }
 
-    override fun onOptionsApplySelected(options: OptionsDomain) {
+    override fun onOptionsApplySelected(options: SOptionsDomain) {
         this.options = options
 
         binding.cropImageView.apply {
@@ -230,7 +230,7 @@ internal class CropImageViewFragment :
                     CropImage.toOvalBitmap(result.bitmap)
                 else result.bitmap
 
-            CropResultActivity.start(this, imageBitmap, result.uri, result.sampleSize)
+            SCropResultActivity.start(this, imageBitmap, result.uri, result.sampleSize)
         } else {
             Log.e("AIC", "Failed to crop image", result?.error)
             Toast
@@ -239,7 +239,7 @@ internal class CropImageViewFragment :
         }
     }
 
-    override fun setOptions(options: OptionsDomain) {
+    override fun setOptions(options: SOptionsDomain) {
         binding.cropImageView.cropRect = Rect(100, 300, 500, 1200)
         onOptionsApplySelected(options)
     }

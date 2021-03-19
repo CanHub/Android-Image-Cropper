@@ -6,7 +6,7 @@ import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.RawValue
 
 @Parcelize
-internal data class OptionsDomain(
+internal data class SOptionsDomain(
     val scaleType: CropImageView.ScaleType,
     val cropShape: CropImageView.CropShape,
     val guidelines: CropImageView.Guidelines,

@@ -21,10 +21,10 @@ import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import com.canhub.cropper.CropImage
 import com.canhub.cropper.CropImageView
-import com.canhub.cropper.sample.CropResultActivity
-import com.canhub.cropper.sample.camera.domain.CameraContract
+import com.canhub.cropper.sample.SCropResultActivity
+import com.canhub.cropper.sample.camera.domain.SCameraContract
 import com.canhub.cropper.sample.camera.domain.CameraEnumDomain
-import com.canhub.cropper.sample.camera.presenter.CameraPresenter
+import com.canhub.cropper.sample.camera.presenter.SCameraPresenter
 import com.example.croppersample.R
 import com.example.croppersample.databinding.FragmentCameraBinding
 import java.io.File
@@ -32,13 +32,13 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-internal class CameraFragment :
+internal class SCameraFragment :
     Fragment(),
-    CameraContract.View {
+    SCameraContract.View {
 
     companion object {
 
-        fun newInstance() = CameraFragment()
+        fun newInstance() = SCameraFragment()
 
         const val CODE_PHOTO_CAMERA = 811917
         const val DATE_FORMAT = "yyyyMMdd_HHmmss"
@@ -50,7 +50,7 @@ internal class CameraFragment :
     }
 
     private lateinit var binding: FragmentCameraBinding
-    private val presenter: CameraContract.Presenter = CameraPresenter()
+    private val presenter: SCameraContract.Presenter = SCameraPresenter()
     private var photoUri: Uri? = null
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -238,7 +238,7 @@ internal class CameraFragment :
     }
 
     override fun handleCropImageResult(uri: String) {
-        CropResultActivity.start(this, null, Uri.parse(uri), null)
+        SCropResultActivity.start(this, null, Uri.parse(uri), null)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

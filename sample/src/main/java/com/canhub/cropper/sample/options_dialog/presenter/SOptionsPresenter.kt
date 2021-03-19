@@ -1,15 +1,15 @@
 package com.canhub.cropper.sample.options_dialog.presenter
 
 import com.canhub.cropper.CropImageView
-import com.canhub.cropper.sample.options_dialog.domain.OptionsContract
-import com.canhub.cropper.sample.options_dialog.domain.OptionsDomain
+import com.canhub.cropper.sample.options_dialog.domain.SOptionsContract
+import com.canhub.cropper.sample.options_dialog.domain.SOptionsDomain
 
-internal class OptionsPresenter : OptionsContract.Presenter {
+internal class SOptionsPresenter : SOptionsContract.Presenter {
 
-    private var view: OptionsContract.View? = null
+    private var view: SOptionsContract.View? = null
     private var options = defaultOptions()
 
-    override fun bind(view: OptionsContract.View) {
+    override fun bind(view: SOptionsContract.View) {
         this.view = view
     }
 
@@ -17,7 +17,7 @@ internal class OptionsPresenter : OptionsContract.Presenter {
         view = null
     }
 
-    override fun onViewCreated(options: OptionsDomain?) {
+    override fun onViewCreated(options: SOptionsDomain?) {
         options?.let { this.options = options }
         view?.updateOptions(this.options)
     }
@@ -74,7 +74,7 @@ internal class OptionsPresenter : OptionsContract.Presenter {
         options = options.copy(flipVertically = enable)
     }
 
-    private fun defaultOptions() = OptionsDomain(
+    private fun defaultOptions() = SOptionsDomain(
         CropImageView.ScaleType.FIT_CENTER,
         CropImageView.CropShape.RECTANGLE,
         CropImageView.Guidelines.ON,

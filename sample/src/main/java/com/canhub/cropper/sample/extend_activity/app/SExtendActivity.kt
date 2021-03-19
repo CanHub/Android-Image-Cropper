@@ -10,26 +10,26 @@ import android.view.View
 import androidx.core.app.ActivityCompat
 import com.canhub.cropper.CropImage
 import com.canhub.cropper.CropImageActivity
-import com.canhub.cropper.sample.extend_activity.domain.ExtendContract
-import com.canhub.cropper.sample.extend_activity.presenter.ExtendPresenter
+import com.canhub.cropper.sample.extend_activity.domain.SExtendContract
+import com.canhub.cropper.sample.extend_activity.presenter.SExtendPresenter
 import com.example.croppersample.R
 import com.example.croppersample.databinding.ExtendedActivityBinding
 
-internal class ExtendActivity : CropImageActivity(), ExtendContract.View {
+internal class SExtendActivity : CropImageActivity(), SExtendContract.View {
 
     companion object {
 
         fun start(activity: Activity) {
             ActivityCompat.startActivity(
                 activity,
-                Intent(activity, ExtendActivity::class.java),
+                Intent(activity, SExtendActivity::class.java),
                 null
             )
         }
     }
 
     private lateinit var binding: ExtendedActivityBinding
-    private val presenter: ExtendContract.Presenter = ExtendPresenter()
+    private val presenter: SExtendContract.Presenter = SExtendPresenter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ExtendedActivityBinding.inflate(layoutInflater)

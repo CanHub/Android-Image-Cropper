@@ -1,12 +1,12 @@
 package com.canhub.cropper.sample.crop_image_view.domain
 
-import com.canhub.cropper.sample.options_dialog.domain.OptionsDomain
+import com.canhub.cropper.sample.options_dialog.domain.SOptionsDomain
 
-internal interface CropImageViewContract {
+internal interface SCropImageViewContract {
 
     interface View {
 
-        fun setOptions(options: OptionsDomain)
+        fun setOptions(options: SOptionsDomain)
     }
 
     interface Presenter {
