@@ -10,21 +10,21 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import com.canhub.cropper.CropImage
-import com.canhub.cropper.sample.camera.app.CameraFragment
-import com.canhub.cropper.sample.camera.app.CameraFragment.Companion.CODE_PHOTO_CAMERA
-import com.canhub.cropper.sample.camera.domain.CameraContract
+import com.canhub.cropper.sample.camera.app.SCameraFragment
+import com.canhub.cropper.sample.camera.app.SCameraFragment.Companion.CODE_PHOTO_CAMERA
 import com.canhub.cropper.sample.camera.domain.CameraEnumDomain
+import com.canhub.cropper.sample.camera.domain.SCameraContract
 
-internal class CameraPresenter : CameraContract.Presenter {
+internal class SCameraPresenter : SCameraContract.Presenter {
 
-    private var view: CameraContract.View? = null
+    private var view: SCameraContract.View? = null
     private val minVersion = com.canhub.cropper.common.CommonVersionCheck.isAtLeastM23()
     private var request = false
     private var hasSystemFeature = false
     private var selfPermission = false
     private var context: Context? = null
 
-    override fun bind(view: CameraContract.View) {
+    override fun bind(view: SCameraContract.View) {
         this.view = view
     }
 
@@ -100,7 +100,7 @@ internal class CameraPresenter : CameraContract.Presenter {
                         view?.handleCropImageResult(it.toString().replace("file:", ""))
                     } ?: view?.showErrorMessage("CropImage getActivityResult return null")
                 }
-                CameraFragment.CUSTOM_REQUEST_CODE -> {
+                SCameraFragment.CUSTOM_REQUEST_CODE -> {
                     context?.let {
                         val uri = CropImage.getPickImageResultUri(it, data)
                         view?.handleCropImageResult(uri.toString().replace("file:", ""))

@@ -28,7 +28,7 @@ android {
 
 dependencies {
     api project(':cropper')
-    api "androidx.appcompat:appcompat:$androidXAppCompatVersion"
+    api "androidx.appcompat:appcompat:$androidXAppCompatVersionSample"
     implementation "androidx.core:core-ktx:$androidXCoreKtxVersion"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
     implementation "com.google.android.material:material:$materialVersion"

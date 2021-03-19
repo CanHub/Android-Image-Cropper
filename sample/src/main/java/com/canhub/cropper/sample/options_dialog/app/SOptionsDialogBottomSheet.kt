@@ -8,27 +8,27 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import com.canhub.cropper.CropImageView
-import com.canhub.cropper.sample.options_dialog.domain.OptionsContract
-import com.canhub.cropper.sample.options_dialog.domain.OptionsDomain
+import com.canhub.cropper.sample.options_dialog.domain.SOptionsContract
+import com.canhub.cropper.sample.options_dialog.domain.SOptionsDomain
 import com.example.croppersample.databinding.FragmentOptionsBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-internal class OptionsDialogBottomSheet : BottomSheetDialogFragment(), OptionsContract.View {
+internal class SOptionsDialogBottomSheet : BottomSheetDialogFragment(), SOptionsContract.View {
 
     interface Listener {
 
-        fun onOptionsApplySelected(options: OptionsDomain)
+        fun onOptionsApplySelected(options: SOptionsDomain)
     }
 
     companion object {
 
         fun show(
             fragmentManager: FragmentManager,
-            options: OptionsDomain?,
+            options: SOptionsDomain?,
             listener: Listener
         ) {
             this.listener = listener
-            OptionsDialogBottomSheet().apply {
+            SOptionsDialogBottomSheet().apply {
                 arguments = Bundle().apply { putParcelable(OPTIONS_KEY, options) }
                 show(fragmentManager, null)
             }
@@ -39,12 +39,12 @@ internal class OptionsDialogBottomSheet : BottomSheetDialogFragment(), OptionsCo
         private const val OPTIONS_KEY = "OPTIONS_KEY"
     }
 
-    private lateinit var presenter: OptionsContract.Presenter
+    private lateinit var presenter: SOptionsContract.Presenter
     private lateinit var binding: FragmentOptionsBinding
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        val serviceLocator = OptionsServiceLocator(context)
+        val serviceLocator = SOptionsServiceLocator(context)
         presenter = serviceLocator.getPresenter()
     }
 
@@ -66,7 +66,7 @@ internal class OptionsDialogBottomSheet : BottomSheetDialogFragment(), OptionsCo
         super.onViewCreated(view, savedInstanceState)
 
         presenter.bind(this)
-        val options = arguments?.getParcelable<OptionsDomain>(OPTIONS_KEY)
+        val options = arguments?.getParcelable<SOptionsDomain>(OPTIONS_KEY)
 
         presenter.onViewCreated(options)
 
@@ -177,7 +177,7 @@ internal class OptionsDialogBottomSheet : BottomSheetDialogFragment(), OptionsCo
         }
     }
 
-    override fun updateOptions(options: OptionsDomain) {
+    override fun updateOptions(options: SOptionsDomain) {
         when (options.scaleType) {
             CropImageView.ScaleType.CENTER -> binding.scaleType.chipCenter.isChecked = true
             CropImageView.ScaleType.FIT_CENTER -> binding.scaleType.chipFitCenter.isChecked = true
@@ -221,7 +221,7 @@ internal class OptionsDialogBottomSheet : BottomSheetDialogFragment(), OptionsCo
         binding.flipVertical.toggle.isChecked = options.flipVertically
     }
 
-    override fun closeWithResult(options: OptionsDomain) {
+    override fun closeWithResult(options: SOptionsDomain) {
         listener.onOptionsApplySelected(options)
     }
 

@@ -10,8 +10,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - `Security` in case of vulnerabilities.
 
 ## [unreleased x.x.x] -
+
+## [2.2.2] - 19/03/21
 ### Changed
 - CropWindowMoveHandler to kotlin [#36](https://github.com/CanHub/Android-Image-Cropper/issues/36)
+
+### Fixed
+- Split appCompat version [#85](https://github.com/CanHub/Android-Image-Cropper/issues/85)
+
+### Update
+- Kotlin Version from `1.4.21` to `1.4.30`
+- lifecycle-runtime-ktx Version from `2.2.0` to `2.3.0`
 
 ## [2.2.1] - 04/03/21
 ### Added

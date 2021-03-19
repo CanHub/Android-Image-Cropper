@@ -1,6 +1,6 @@
 package com.canhub.cropper.sample.extend_activity.domain
 
-internal interface ExtendContract {
+internal interface SExtendContract {
 
     interface View {
 

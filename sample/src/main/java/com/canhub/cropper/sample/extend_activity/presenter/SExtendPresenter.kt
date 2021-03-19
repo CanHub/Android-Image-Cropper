@@ -1,13 +1,13 @@
 package com.canhub.cropper.sample.extend_activity.presenter
 
-import com.canhub.cropper.sample.extend_activity.domain.ExtendContract
+import com.canhub.cropper.sample.extend_activity.domain.SExtendContract
 
-internal class ExtendPresenter : ExtendContract.Presenter {
+internal class SExtendPresenter : SExtendContract.Presenter {
 
-    private var view: ExtendContract.View? = null
+    private var view: SExtendContract.View? = null
     private var counter = 0
 
-    override fun bindView(view: ExtendContract.View) {
+    override fun bindView(view: SExtendContract.View) {
         this.view = view
         this.view?.updateRotationCounter(counter.toString())
     }
