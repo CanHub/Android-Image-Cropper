@@ -165,7 +165,9 @@ class CropOverlayView
     /** Set the left/top/right/bottom coordinates of the crop window.  */
     var cropWindowRect: RectF
         get() = mCropWindowHandler.getRect()
-        set(rect) { mCropWindowHandler.setRect(rect) }
+        set(rect) {
+            mCropWindowHandler.setRect(rect)
+        }
 
     /** Fix the current crop window rectangle if it is outside of cropping image or view bounds.  */
     fun fixCurrentCropWindowRect() {
@@ -184,7 +186,6 @@ class CropOverlayView
      */
     fun setBounds(boundsPoints: FloatArray?, viewWidth: Int, viewHeight: Int) {
         if (boundsPoints == null || !Arrays.equals(mBoundsPoints, boundsPoints)) {
-
             if (boundsPoints == null) Arrays.fill(mBoundsPoints, 0f)
             else System.arraycopy(boundsPoints, 0, mBoundsPoints, 0, boundsPoints.size)
 
@@ -212,9 +213,11 @@ class CropOverlayView
                 if (this.cropShape == CropShape.OVAL) {
                     mOriginalLayerType = layerType
 
-                    if (mOriginalLayerType != LAYER_TYPE_SOFTWARE) setLayerType(LAYER_TYPE_SOFTWARE, null)
+                    if (mOriginalLayerType != LAYER_TYPE_SOFTWARE) setLayerType(
+                        LAYER_TYPE_SOFTWARE,
+                        null
+                    )
                     else mOriginalLayerType = null
-
                 } else if (mOriginalLayerType != null) {
                     // return hardware acceleration back
                     setLayerType(mOriginalLayerType!!, null)
@@ -337,7 +340,10 @@ class CropOverlayView
      * limits appropriately.
      */
     fun setCropWindowLimits(
-        maxWidth: Float, maxHeight: Float, scaleFactorWidth: Float, scaleFactorHeight: Float
+        maxWidth: Float,
+        maxHeight: Float,
+        scaleFactorWidth: Float,
+        scaleFactorHeight: Float
     ) {
         mCropWindowHandler
             .setCropWindowLimits(maxWidth, maxHeight, scaleFactorWidth, scaleFactorHeight)
@@ -464,7 +470,6 @@ class CropOverlayView
 
     /** Fix the given rect to fit into bitmap rect and follow min, max and aspect ratio rules.  */
     private fun fixCropWindowRectByRules(rect: RectF) {
-
         if (rect.width() < mCropWindowHandler.getMinCropWidth()) {
             val adj = (mCropWindowHandler.getMinCropWidth() - rect.width()) / 2
             rect.left -= adj
@@ -522,7 +527,9 @@ class CropOverlayView
         if (mCropWindowHandler.showGuidelines()) {
             // Determines whether guidelines should be drawn or not
             if (guidelines == Guidelines.ON) drawGuidelines(canvas)
-            else if (guidelines == Guidelines.ON_TOUCH && mMoveHandler != null) drawGuidelines(canvas)
+            else if (guidelines == Guidelines.ON_TOUCH && mMoveHandler != null) drawGuidelines(
+                canvas
+            )
         }
         drawBorders(canvas)
         drawCorners(canvas)
@@ -539,7 +546,6 @@ class CropOverlayView
             CropShape.RECTANGLE,
             CropShape.RECTANGLE_VERTICAL_ONLY,
             CropShape.RECTANGLE_HORIZONTAL_ONLY ->
-
                 if (!isNonStraightAngleRotated || !CommonVersionCheck.isAtLeastJ18()) {
                     canvas.drawRect(left, top, right, rect.top, mBackgroundPaint!!)
                     canvas.drawRect(left, rect.bottom, right, bottom, mBackgroundPaint!!)
@@ -602,22 +608,44 @@ class CropOverlayView
                     // Draw vertical guidelines.
                     x1 = rect.left + oneThirdCropWidth
                     x2 = rect.right - oneThirdCropWidth
-
                     val yv = (h * sin(acos(((w - oneThirdCropWidth) / w).toDouble()))).toFloat()
 
                     canvas
-                        .drawLine(x1, rect.top + h - yv, x1, rect.bottom - h + yv, mGuidelinePaint!!)
+                        .drawLine(
+                            x1,
+                            rect.top + h - yv,
+                            x1,
+                            rect.bottom - h + yv,
+                            mGuidelinePaint!!
+                        )
                     canvas
-                        .drawLine(x2, rect.top + h - yv, x2, rect.bottom - h + yv, mGuidelinePaint!!)
+                        .drawLine(
+                            x2,
+                            rect.top + h - yv,
+                            x2,
+                            rect.bottom - h + yv,
+                            mGuidelinePaint!!
+                        )
                     // Draw horizontal guidelines.
                     y1 = rect.top + oneThirdCropHeight
                     y2 = rect.bottom - oneThirdCropHeight
-
                     val xv = (w * cos(asin(((h - oneThirdCropHeight) / h).toDouble()))).toFloat()
                     canvas
-                        .drawLine(rect.left + w - xv, y1, rect.right - w + xv, y1, mGuidelinePaint!!)
+                        .drawLine(
+                            rect.left + w - xv,
+                            y1,
+                            rect.right - w + xv,
+                            y1,
+                            mGuidelinePaint!!
+                        )
                     canvas
-                        .drawLine(rect.left + w - xv, y2, rect.right - w + xv, y2, mGuidelinePaint!!)
+                        .drawLine(
+                            rect.left + w - xv,
+                            y2,
+                            rect.right - w + xv,
+                            y2,
+                            mGuidelinePaint!!
+                        )
                 }
                 CropShape.RECTANGLE,
                 CropShape.RECTANGLE_VERTICAL_ONLY,
