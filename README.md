@@ -22,7 +22,7 @@ Android Image Cropper
 
 #### Step 1. Add the JitPack repository to your root build.gradle
 
-```groovy
+```gradle
   allprojects {
      repositories {
        ....
@@ -33,7 +33,7 @@ Android Image Cropper
 
 #### Step 2. Add the dependency
 
-```groovy
+```gradle
   dependencies {
        implementation 'com.github.CanHub:Android-Image-Cropper:${version}'
   }
@@ -61,7 +61,7 @@ Only need if you run on devices under OS10 (SDK 29)
 - Go to app level `build.gradle` file
 
 - Add this line inside ```android``` in build.gradle
-	```groovy
+	```gradle
 	compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
