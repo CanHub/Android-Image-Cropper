@@ -15,7 +15,10 @@ import kotlin.math.min
  */
 class CropWindowMoveHandler(
     /** The type of crop window move that is handled.  */
-    private val type: Type, cropWindowHandler: CropWindowHandler, touchX: Float, touchY: Float
+    private val type: Type,
+    cropWindowHandler: CropWindowHandler,
+    touchX: Float,
+    touchY: Float
 ) {
 
     /** The type of crop window move that is handled.  */
@@ -363,126 +366,106 @@ class CropWindowMoveHandler(
         aspectRatio: Float
     ) {
         when (type) {
-            Type.TOP_LEFT -> if (calculateAspectRatio(
-                    x,
-                    y,
-                    rect.right,
-                    rect.bottom
-                ) < aspectRatio
-            ) {
-                adjustTop(
-                    rect = rect,
-                    top = y,
-                    bounds = bounds,
-                    snapMargin = snapMargin,
-                    aspectRatio = aspectRatio,
-                    leftMoves = true,
-                    rightMoves = false
-                )
-                adjustLeftByAspectRatio(rect = rect, aspectRatio = aspectRatio)
-            } else {
-                adjustLeft(
-                    rect = rect,
-                    left = x,
-                    bounds = bounds,
-                    snapMargin = snapMargin,
-                    aspectRatio = aspectRatio,
-                    topMoves = true,
-                    bottomMoves = false
-                )
-                adjustTopByAspectRatio(rect = rect, aspectRatio = aspectRatio)
-            }
-            Type.TOP_RIGHT -> if (calculateAspectRatio(
-                    left = rect.left,
-                    top = y,
-                    right = x,
-                    bottom = rect.bottom
-                ) < aspectRatio
-            ) {
-                adjustTop(
-                    rect = rect,
-                    top = y,
-                    bounds = bounds,
-                    snapMargin = snapMargin,
-                    aspectRatio = aspectRatio,
-                    leftMoves = false,
-                    rightMoves = true
-                )
-                adjustRightByAspectRatio(rect = rect, aspectRatio = aspectRatio)
-            } else {
-                adjustRight(
-                    rect = rect,
-                    right = x,
-                    bounds = bounds,
-                    viewWidth = viewWidth,
-                    snapMargin = snapMargin,
-                    aspectRatio = aspectRatio,
-                    topMoves = true,
-                    bottomMoves = false
-                )
-                adjustTopByAspectRatio(rect = rect, aspectRatio = aspectRatio)
-            }
-            Type.BOTTOM_LEFT -> if (calculateAspectRatio(
-                    left = x,
-                    top = rect.top,
-                    right = rect.right,
-                    bottom = y
-                ) < aspectRatio
-            ) {
-                adjustBottom(
-                    rect = rect,
-                    bottom = y,
-                    bounds = bounds,
-                    viewHeight = viewHeight,
-                    snapMargin = snapMargin,
-                    aspectRatio = aspectRatio,
-                    leftMoves = true,
-                    rightMoves = false
-                )
-                adjustLeftByAspectRatio(rect = rect, aspectRatio = aspectRatio)
-            } else {
-                adjustLeft(
-                    rect = rect,
-                    left = x,
-                    bounds = bounds,
-                    snapMargin = snapMargin,
-                    aspectRatio = aspectRatio,
-                    topMoves = false,
-                    bottomMoves = true
-                )
-                adjustBottomByAspectRatio(rect = rect, aspectRatio = aspectRatio)
-            }
-            Type.BOTTOM_RIGHT -> if (calculateAspectRatio(
-                    left = rect.left,
-                    top = rect.top,
-                    right = x,
-                    bottom = y
-                ) < aspectRatio
-            ) {
-                adjustBottom(
-                    rect = rect,
-                    bottom = y,
-                    bounds = bounds,
-                    viewHeight = viewHeight,
-                    snapMargin = snapMargin,
-                    aspectRatio = aspectRatio,
-                    leftMoves = false,
-                    rightMoves = true
-                )
-                adjustRightByAspectRatio(rect = rect, aspectRatio = aspectRatio)
-            } else {
-                adjustRight(
-                    rect = rect,
-                    right = x,
-                    bounds = bounds,
-                    viewWidth = viewWidth,
-                    snapMargin = snapMargin,
-                    aspectRatio = aspectRatio,
-                    topMoves = false,
-                    bottomMoves = true
-                )
-                adjustBottomByAspectRatio(rect = rect, aspectRatio = aspectRatio)
-            }
+            Type.TOP_LEFT ->
+                if (calculateAspectRatio(x, y, rect.right, rect.bottom) < aspectRatio) {
+                    adjustTop(
+                        rect = rect,
+                        top = y,
+                        bounds = bounds,
+                        snapMargin = snapMargin,
+                        aspectRatio = aspectRatio,
+                        leftMoves = true,
+                        rightMoves = false
+                    )
+                    adjustLeftByAspectRatio(rect = rect, aspectRatio = aspectRatio)
+                } else {
+                    adjustLeft(
+                        rect = rect,
+                        left = x,
+                        bounds = bounds,
+                        snapMargin = snapMargin,
+                        aspectRatio = aspectRatio,
+                        topMoves = true,
+                        bottomMoves = false
+                    )
+                    adjustTopByAspectRatio(rect = rect, aspectRatio = aspectRatio)
+                }
+            Type.TOP_RIGHT ->
+                if (calculateAspectRatio(left = rect.left, top = y, right = x, bottom = rect.bottom) < aspectRatio) {
+                    adjustTop(
+                        rect = rect,
+                        top = y,
+                        bounds = bounds,
+                        snapMargin = snapMargin,
+                        aspectRatio = aspectRatio,
+                        leftMoves = false,
+                        rightMoves = true
+                    )
+                    adjustRightByAspectRatio(rect = rect, aspectRatio = aspectRatio)
+                } else {
+                    adjustRight(
+                        rect = rect,
+                        right = x,
+                        bounds = bounds,
+                        viewWidth = viewWidth,
+                        snapMargin = snapMargin,
+                        aspectRatio = aspectRatio,
+                        topMoves = true,
+                        bottomMoves = false
+                    )
+                    adjustTopByAspectRatio(rect = rect, aspectRatio = aspectRatio)
+                }
+            Type.BOTTOM_LEFT ->
+                if (calculateAspectRatio(left = x, top = rect.top, right = rect.right, bottom = y) < aspectRatio) {
+                    adjustBottom(
+                        rect = rect,
+                        bottom = y,
+                        bounds = bounds,
+                        viewHeight = viewHeight,
+                        snapMargin = snapMargin,
+                        aspectRatio = aspectRatio,
+                        leftMoves = true,
+                        rightMoves = false
+                    )
+                    adjustLeftByAspectRatio(rect = rect, aspectRatio = aspectRatio)
+                } else {
+                    adjustLeft(
+                        rect = rect,
+                        left = x,
+                        bounds = bounds,
+                        snapMargin = snapMargin,
+                        aspectRatio = aspectRatio,
+                        topMoves = false,
+                        bottomMoves = true
+                    )
+                    adjustBottomByAspectRatio(rect = rect, aspectRatio = aspectRatio)
+                }
+            Type.BOTTOM_RIGHT ->
+                if (calculateAspectRatio(left = rect.left, top = rect.top, right = x, bottom = y) < aspectRatio) {
+                    adjustBottom(
+                        rect = rect,
+                        bottom = y,
+                        bounds = bounds,
+                        viewHeight = viewHeight,
+                        snapMargin = snapMargin,
+                        aspectRatio = aspectRatio,
+                        leftMoves = false,
+                        rightMoves = true
+                    )
+                    adjustRightByAspectRatio(rect = rect, aspectRatio = aspectRatio)
+                } else {
+                    adjustRight(
+                        rect = rect,
+                        right = x,
+                        bounds = bounds,
+                        viewWidth = viewWidth,
+                        snapMargin = snapMargin,
+                        aspectRatio = aspectRatio,
+                        topMoves = false,
+                        bottomMoves = true
+                    )
+                    adjustBottomByAspectRatio(rect = rect, aspectRatio = aspectRatio)
+                }
             Type.LEFT -> {
                 adjustLeft(
                     rect = rect,
