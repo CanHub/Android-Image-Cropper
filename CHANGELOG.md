@@ -10,6 +10,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - `Security` in case of vulnerabilities.
 
 ## [unreleased x.x.x] -
+### Changed
+- CropOverlayView to kotlin [#38](https://github.com/CanHub/Android-Image-Cropper/issues/38)
 
 ## [2.2.2] - 19/03/21
 ### Changed
