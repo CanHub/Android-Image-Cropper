@@ -391,7 +391,13 @@ class CropWindowMoveHandler(
                     adjustTopByAspectRatio(rect = rect, aspectRatio = aspectRatio)
                 }
             Type.TOP_RIGHT ->
-                if (calculateAspectRatio(left = rect.left, top = y, right = x, bottom = rect.bottom) < aspectRatio) {
+                if (calculateAspectRatio(
+                        left = rect.left,
+                        top = y,
+                        right = x,
+                        bottom = rect.bottom
+                    ) < aspectRatio
+                ) {
                     adjustTop(
                         rect = rect,
                         top = y,
@@ -416,7 +422,13 @@ class CropWindowMoveHandler(
                     adjustTopByAspectRatio(rect = rect, aspectRatio = aspectRatio)
                 }
             Type.BOTTOM_LEFT ->
-                if (calculateAspectRatio(left = x, top = rect.top, right = rect.right, bottom = y) < aspectRatio) {
+                if (calculateAspectRatio(
+                        left = x,
+                        top = rect.top,
+                        right = rect.right,
+                        bottom = y
+                    ) < aspectRatio
+                ) {
                     adjustBottom(
                         rect = rect,
                         bottom = y,
@@ -441,7 +453,13 @@ class CropWindowMoveHandler(
                     adjustBottomByAspectRatio(rect = rect, aspectRatio = aspectRatio)
                 }
             Type.BOTTOM_RIGHT ->
-                if (calculateAspectRatio(left = rect.left, top = rect.top, right = x, bottom = y) < aspectRatio) {
+                if (calculateAspectRatio(
+                        left = rect.left,
+                        top = rect.top,
+                        right = x,
+                        bottom = y
+                    ) < aspectRatio
+                ) {
                     adjustBottom(
                         rect = rect,
                         bottom = y,
