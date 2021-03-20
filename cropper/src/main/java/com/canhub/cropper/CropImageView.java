@@ -34,8 +34,6 @@ import java.util.UUID;
 /** Custom view that provides cropping capabilities to an image. */
 public class CropImageView extends FrameLayout {
 
-  // region: Fields and Constants
-
   /** Image view widget used to show the image for cropping. */
   private final ImageView mImageView;
 
@@ -166,7 +164,6 @@ public class CropImageView extends FrameLayout {
 
   /** Task used to crop bitmap async from UI thread */
   private WeakReference<BitmapCroppingWorkerJob> mBitmapCroppingWorkerJob;
-  // endregion
 
   public CropImageView(Context context) {
     this(context, null);
@@ -1135,8 +1132,6 @@ public class CropImageView extends FrameLayout {
     applyImageMatrix(getWidth(), getHeight(), true, false);
   }
 
-  // region: Private methods
-
   /**
    * On complete of the async bitmap loading by {@link #setImageUriAsync(Uri)} set the result to the
    * widget if still relevant and call listener if set.
@@ -1830,9 +1825,6 @@ public class CropImageView extends FrameLayout {
     // set the bitmap rectangle and update the crop window after scale factor is set
     mCropOverlayView.setBounds(clear ? null : mImagePoints, getWidth(), getHeight());
   }
-  // endregion
-
-  // region: Inner class: CropShape
 
   /**
    * The possible cropping area shape.<br>
@@ -1844,9 +1836,6 @@ public class CropImageView extends FrameLayout {
     RECTANGLE_VERTICAL_ONLY,
     RECTANGLE_HORIZONTAL_ONLY
   }
-  // endregion
-
-  // region: Inner class: ScaleType
 
   /**
    * Options for scaling the bounds of cropping image to the bounds of Crop Image View.<br>
@@ -1886,9 +1875,6 @@ public class CropImageView extends FrameLayout {
      */
     CENTER_INSIDE
   }
-  // endregion
-
-  // region: Inner class: Guidelines
 
   /** The possible guidelines showing types. */
   public enum Guidelines {
@@ -1901,9 +1887,6 @@ public class CropImageView extends FrameLayout {
     /** Always show */
     ON
   }
-  // endregion
-
-  // region: Inner class: RequestSizeOptions
 
   /** Possible options for handling requested width/height for cropping. */
   public enum RequestSizeOptions {
@@ -1944,9 +1927,6 @@ public class CropImageView extends FrameLayout {
      */
     RESIZE_EXACT
   }
-  // endregion
-
-  // region: Inner class: OnSetImageUriCompleteListener
 
   /** Interface definition for a callback to be invoked when the crop overlay is released. */
   public interface OnSetCropOverlayReleasedListener {
@@ -1990,9 +1970,6 @@ public class CropImageView extends FrameLayout {
      */
     void onSetImageUriComplete(CropImageView view, Uri uri, Exception error);
   }
-  // endregion
-
-  // region: Inner class: OnGetCroppedImageCompleteListener
 
   /** Interface definition for a callback to be invoked when image async crop is complete. */
   public interface OnCropImageCompleteListener {
@@ -2007,9 +1984,6 @@ public class CropImageView extends FrameLayout {
      */
     void onCropImageComplete(CropImageView view, CropResult result);
   }
-  // endregion
-
-  // region: Inner class: ActivityResult
 
   /** Result data of crop image. */
   public static class CropResult {
@@ -2165,5 +2139,5 @@ public class CropImageView extends FrameLayout {
       return mSampleSize;
     }
   }
-  // endregion
+
 }
