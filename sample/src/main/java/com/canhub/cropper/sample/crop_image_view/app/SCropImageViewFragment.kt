@@ -227,7 +227,7 @@ internal class SCropImageViewFragment :
         if (result != null && result.error == null) {
             val imageBitmap =
                 if (binding.cropImageView.cropShape == CropImageView.CropShape.OVAL)
-                    CropImage.toOvalBitmap(result.bitmap)
+                    result.bitmap?.let { CropImage.toOvalBitmap(it) }
                 else result.bitmap
 
             SCropResultActivity.start(this, imageBitmap, result.uri, result.sampleSize)
