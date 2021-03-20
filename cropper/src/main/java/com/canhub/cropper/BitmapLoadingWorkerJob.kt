@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.lang.ref.WeakReference
 
-internal class BitmapLoadingWorkerJob internal constructor(
+class BitmapLoadingWorkerJob internal constructor(
     private val activity: FragmentActivity,
     cropImageView: CropImageView,
     val uri: Uri
