@@ -38,7 +38,7 @@ class CropOverlayView
             Paint().apply {
                 this.color = color
             }
-¡
+
         /** Creates the Paint object for given thickness and color, if thickness < 0 return null.  */
         private fun getNewPaintOrNull(thickness: Float, color: Int): Paint? =
             if (thickness > 0) {

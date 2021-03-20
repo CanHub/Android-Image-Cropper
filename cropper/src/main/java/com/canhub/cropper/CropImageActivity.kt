@@ -76,7 +76,6 @@ open class CropImageActivity :
                 } == true &&
                 CommonVersionCheck.isAtLeastM23()
             ) {
-
                 // request permissions and handle the result in onRequestPermissionsResult()
                 requestPermissions(
                     arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
@@ -89,9 +88,7 @@ open class CropImageActivity :
         }
 
         supportActionBar?.let {
-            title = if (options.activityTitle != null && options.activityTitle.isNotEmpty())
-                options.activityTitle
-            else resources.getString(R.string.crop_image_activity_title)
+            title = if (options.activityTitle.isNotEmpty()) options.activityTitle else resources.getString(R.string.crop_image_activity_title)
             it.setDisplayHomeAsUpEnabled(true)
         }
     }
@@ -177,8 +174,8 @@ open class CropImageActivity :
                 // For API >= 23 we need to check specifically that we have permissions to read external
                 // storage.
                 if (cropImageUri?.let {
-                    CropImage.isReadExternalStoragePermissionsRequired(this, it)
-                } == true &&
+                        CropImage.isReadExternalStoragePermissionsRequired(this, it)
+                    } == true &&
                     CommonVersionCheck.isAtLeastM23()
                 ) {
                     // request permissions and handle the result in onRequestPermissionsResult()
@@ -221,12 +218,11 @@ open class CropImageActivity :
 
     override fun onSetImageUriComplete(view: CropImageView, uri: Uri, error: Exception?) {
         if (error == null) {
-            if (options.initialCropWindowRectangle != null) {
+            if (options.initialCropWindowRectangle != null)
                 cropImageView?.cropRect = options.initialCropWindowRectangle
-            }
-            if (options.initialRotation > -1) {
+
+            if (options.initialRotation > -1)
                 cropImageView?.rotatedDegrees = options.initialRotation
-            }
         } else setResult(null, error, 1)
     }
 
@@ -238,19 +234,15 @@ open class CropImageActivity :
      * Execute crop image and save the result tou output uri.
      */
     open fun cropImage() {
-        if (options.noOutputImage) {
-            setResult(null, null, 1)
-        } else {
-            val outputUri = outputUri
-            cropImageView?.saveCroppedImageAsync(
-                outputUri,
-                options.outputCompressFormat,
-                options.outputCompressQuality,
-                options.outputRequestWidth,
-                options.outputRequestHeight,
-                options.outputRequestSizeOptions
-            )
-        }
+        if (options.noOutputImage) setResult(null, null, 1)
+        else cropImageView?.saveCroppedImageAsync(
+            outputUri,
+            options.outputCompressFormat,
+            options.outputCompressQuality,
+            options.outputRequestWidth,
+            options.outputRequestHeight,
+            options.outputRequestSizeOptions
+        )
     }
 
     /**
