@@ -179,7 +179,7 @@ object CropImage {
     fun getPickImageChooserIntent(
         context: Context,
         title: CharSequence?,
-        includeDocuments: Boolean,  // todo, remove this. Should always be false for image to crop.
+        includeDocuments: Boolean, // todo, remove this. Should always be false for image to crop.
         includeCamera: Boolean,
     ): Intent {
         val allIntents: MutableList<Intent> = ArrayList()
@@ -214,7 +214,7 @@ object CropImage {
      * activity/fragment/widget.
      * @param outputFileUri the Uri where the picture will be placed.
      */
-    //todo this need be public?
+    // todo this need be public?
     fun getCameraIntent(
         context: Context,
         outputFileUri: Uri?,
@@ -231,7 +231,7 @@ object CropImage {
     /**
      * Get all Camera intents for capturing image using device camera apps.
      */
-    //todo this need be public?
+    // todo this need be public?
     fun getCameraIntents(
         context: Context,
         packageManager: PackageManager,
@@ -257,7 +257,7 @@ object CropImage {
      * Get all Gallery intents for getting image from one of the apps of the device that handle
      * images.
      */
-    //todo this need be public?
+    // todo this need be public?
     fun getGalleryIntents(
         packageManager: PackageManager,
         action: String?,
