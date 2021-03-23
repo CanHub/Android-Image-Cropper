@@ -46,6 +46,7 @@ import java.util.Collections
  * the stupid-ass Android camera result URI that may differ from version to version and from device
  * to device.
  */
+@Suppress("unused", "MemberVisibilityCanBePrivate")
 object CropImage {
     /**
      * The key used to pass crop image source URI to [CropImageActivity].
@@ -108,7 +109,7 @@ object CropImage {
         paint.isAntiAlias = true
         canvas.drawARGB(0, 0, 0, 0)
         paint.color = color
-        val rect = RectF(0, 0, width.toFloat(), height.toFloat())
+        val rect = RectF(0f, 0f, width.toFloat(), height.toFloat())
         canvas.drawOval(rect, paint)
         paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
         canvas.drawBitmap(bitmap, 0f, 0f, paint)
@@ -154,7 +155,10 @@ object CropImage {
      */
     fun getPickImageChooserIntent(context: Context): Intent {
         return getPickImageChooserIntent(
-            context, context.getString(R.string.pick_image_intent_chooser_title), false, true
+            context = context,
+            title = context.getString(R.string.pick_image_intent_chooser_title),
+            includeDocuments = false,
+            includeCamera = true
         )
     }
 
@@ -209,12 +213,12 @@ object CropImage {
      */
     //todo this need be public?
     fun getCameraIntent(context: Context, outputFileUri: Uri?): Intent {
-        var outputFileUri = outputFileUri
+        var newOutputFileUri = outputFileUri
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        if (outputFileUri == null) {
-            outputFileUri = getCaptureImageOutputUri(context)
+        if (newOutputFileUri == null) {
+            newOutputFileUri = getCaptureImageOutputUri(context)
         }
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri)
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, newOutputFileUri)
         return intent
     }
 
@@ -234,9 +238,7 @@ object CropImage {
             val intent = Intent(captureIntent)
             intent.component = ComponentName(res.activityInfo.packageName, res.activityInfo.name)
             intent.setPackage(res.activityInfo.packageName)
-            if (outputFileUri != null) {
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri)
-            }
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri)
             allIntents.add(intent)
         }
         // Just in case queryIntentActivities returns emptyList
@@ -263,12 +265,12 @@ object CropImage {
             // Workaround for the bug that only 2 items are shown in Android Q
             // // https://issuetracker.google.com/issues/134367295
             // Trying to pick best match items
-            Collections.sort(listGallery) { o1: ResolveInfo, o2: ResolveInfo? ->
+            listGallery.sortWith { o1: ResolveInfo, _: ResolveInfo? ->
                 val packageName = o1.activityInfo.packageName
-                if (packageName.contains("photo")) return@sort -1
-                if (packageName.contains("gallery")) return@sort -1
-                if (packageName.contains("album")) return@sort -1
-                if (packageName.contains("media")) return@sort -1
+                if (packageName.contains("photo")) return@sortWith -1
+                if (packageName.contains("gallery")) return@sortWith -1
+                if (packageName.contains("album")) return@sortWith -1
+                if (packageName.contains("media")) return@sortWith -1
                 0
             }
             listGallery = listGallery.subList(0, 2)
@@ -318,7 +320,7 @@ object CropImage {
             val packageInfo =
                 context.packageManager.getPackageInfo(packageName, PackageManager.GET_PERMISSIONS)
             val declaredPermissions = packageInfo.requestedPermissions
-            if (declaredPermissions != null && declaredPermissions.size > 0) {
+            if (declaredPermissions != null && declaredPermissions.isNotEmpty()) {
                 for (p in declaredPermissions) {
                     if (p.equals(permissionName, ignoreCase = true)) {
                         return true
@@ -463,7 +465,7 @@ object CropImage {
         /**
          * Options for image crop UX
          */
-        private val mOptions: CropImageOptions
+        private val mOptions: CropImageOptions = CropImageOptions()
 
         /**
          * Get [CropImageActivity] intent to start the activity.
@@ -987,16 +989,12 @@ object CropImage {
             mOptions.cropMenuCropButtonIcon = drawableResource
             return this
         }
-
-        init {
-            mOptions = CropImageOptions()
-        }
     }
 
     /**
      * Result data of Crop Image Activity.
      */
-    class ActivityResult : CropResult, Parcelable {
+    open class ActivityResult : CropResult, Parcelable {
 
         constructor(
             originalUri: Uri?,
@@ -1046,13 +1044,12 @@ object CropImage {
             dest.writeInt(sampleSize)
         }
 
-        override fun describeContents(): Int {
-            return 0
-        }
+        override fun describeContents(): Int = 0
 
         companion object {
 
-            val CREATOR: Parcelable.Creator<ActivityResult> =
+            @JvmField
+            val CREATOR: Parcelable.Creator<ActivityResult?> =
                 object : Parcelable.Creator<ActivityResult?> {
                     override fun createFromParcel(`in`: Parcel): ActivityResult? {
                         return ActivityResult(`in`)
