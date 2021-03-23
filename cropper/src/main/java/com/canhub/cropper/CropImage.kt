@@ -1,11 +1,13 @@
 package com.canhub.cropper
 
 import android.Manifest
+import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.app.Activity
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.content.pm.ResolveInfo
 import android.graphics.Bitmap
 import android.graphics.Bitmap.CompressFormat
@@ -31,10 +33,10 @@ import com.canhub.cropper.CropImageView.CropShape
 import com.canhub.cropper.CropImageView.Guidelines
 import com.canhub.cropper.CropImageView.RequestSizeOptions
 import com.canhub.cropper.common.CommonValues
+import com.canhub.cropper.common.CommonVersionCheck
 import com.canhub.cropper.common.CommonVersionCheck.isAtLeastQ29
 import java.io.File
 import java.util.ArrayList
-import java.util.Collections
 
 /**
  * Helper to simplify crop image work like starting pick-image acitvity and handling camera/gallery
@@ -48,6 +50,7 @@ import java.util.Collections
  */
 @Suppress("unused", "MemberVisibilityCanBePrivate")
 object CropImage {
+
     /**
      * The key used to pass crop image source URI to [CropImageActivity].
      */
@@ -119,7 +122,7 @@ object CropImage {
 
     /**
      * Start an activity to get image for cropping using chooser intent that will have all the
-     * available applications for the device like camera (MyCamera), galery (Photos), store apps
+     * available applications for the device like camera (MyCamera), gallery (Photos), store apps
      * (Dropbox), etc.<br></br>
      * Use "pick_image_intent_chooser_title" string resource to override pick chooser title.
      *
@@ -177,7 +180,7 @@ object CropImage {
         context: Context,
         title: CharSequence?,
         includeDocuments: Boolean,  // todo, remove this. Should always be false for image to crop.
-        includeCamera: Boolean
+        includeCamera: Boolean,
     ): Intent {
         val allIntents: MutableList<Intent> = ArrayList()
         val packageManager = context.packageManager
@@ -212,7 +215,10 @@ object CropImage {
      * @param outputFileUri the Uri where the picture will be placed.
      */
     //todo this need be public?
-    fun getCameraIntent(context: Context, outputFileUri: Uri?): Intent {
+    fun getCameraIntent(
+        context: Context,
+        outputFileUri: Uri?,
+    ): Intent {
         var newOutputFileUri = outputFileUri
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if (newOutputFileUri == null) {
@@ -227,7 +233,8 @@ object CropImage {
      */
     //todo this need be public?
     fun getCameraIntents(
-        context: Context, packageManager: PackageManager
+        context: Context,
+        packageManager: PackageManager,
     ): List<Intent> {
         val allIntents: MutableList<Intent> = ArrayList()
         // Determine Uri of camera image to  save.
@@ -242,9 +249,7 @@ object CropImage {
             allIntents.add(intent)
         }
         // Just in case queryIntentActivities returns emptyList
-        if (allIntents.isEmpty()) {
-            allIntents.add(captureIntent)
-        }
+        if (allIntents.isEmpty()) allIntents.add(captureIntent)
         return allIntents
     }
 
@@ -254,7 +259,9 @@ object CropImage {
      */
     //todo this need be public?
     fun getGalleryIntents(
-        packageManager: PackageManager, action: String?, includeDocuments: Boolean
+        packageManager: PackageManager,
+        action: String?,
+        includeDocuments: Boolean,
     ): List<Intent> {
         val intents: MutableList<Intent> = ArrayList()
         val galleryIntent = Intent(action)
@@ -297,14 +304,11 @@ object CropImage {
      */
     // todo, if true, return error saying permission is needed.
     // on settings give option to library asked permission (default true)
-    fun isExplicitCameraPermissionRequired(context: Context): Boolean {
-        return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && hasPermissionInManifest(
-            context,
-            "android.permission.CAMERA"
+    fun isExplicitCameraPermissionRequired(context: Context): Boolean = (
+        CommonVersionCheck.isAtLeastM23() &&
+            hasPermissionInManifest(context, "android.permission.CAMERA") &&
+            (context.checkSelfPermission(Manifest.permission.CAMERA) != PERMISSION_GRANTED)
         )
-            && (context.checkSelfPermission(Manifest.permission.CAMERA)
-            != PackageManager.PERMISSION_GRANTED))
-    }
 
     /**
      * Check if the app requests a specific permission in the manifest.
@@ -313,7 +317,8 @@ object CropImage {
      * @return true - the permission in requested in manifest, false - not.
      */
     fun hasPermissionInManifest(
-        context: Context, permissionName: String
+        context: Context,
+        permissionName: String,
     ): Boolean {
         val packageName = context.packageName
         try {
@@ -322,9 +327,7 @@ object CropImage {
             val declaredPermissions = packageInfo.requestedPermissions
             if (declaredPermissions != null && declaredPermissions.isNotEmpty()) {
                 for (p in declaredPermissions) {
-                    if (p.equals(permissionName, ignoreCase = true)) {
-                        return true
-                    }
+                    if (p.equals(permissionName, ignoreCase = true)) return true
                 }
             }
         } catch (e: PackageManager.NameNotFoundException) {
@@ -390,13 +393,12 @@ object CropImage {
      * they are granted
      */
     fun isReadExternalStoragePermissionsRequired(
-        context: Context, uri: Uri
-    ): Boolean {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && (context.checkSelfPermission(
-            Manifest.permission.READ_EXTERNAL_STORAGE
-        )
-            != PackageManager.PERMISSION_GRANTED) && isUriRequiresPermissions(context, uri)
-    }
+        context: Context,
+        uri: Uri,
+    ): Boolean =
+        CommonVersionCheck.isAtLeastM23() &&
+            (context.checkSelfPermission(READ_EXTERNAL_STORAGE) != PERMISSION_GRANTED) &&
+            isUriRequiresPermissions(context, uri)
 
     /**
      * Test if we can open the given Android URI to test if permission required error is thrown.<br></br>
@@ -448,20 +450,15 @@ object CropImage {
      * @return Crop Image Activity Result object or null if none exists
      */
     // TODO don't return null
-    fun getActivityResult(data: Intent?): ActivityResult? {
-        return if (data != null) data.getParcelableExtra<Parcelable>(CROP_IMAGE_EXTRA_RESULT) as ActivityResult? else null
-    }
+    fun getActivityResult(data: Intent?): ActivityResult? =
+        data?.getParcelableExtra<Parcelable>(CROP_IMAGE_EXTRA_RESULT) as? ActivityResult?
 
     /**
      * Builder used for creating Image Crop Activity by user request.
+     *
+     * @param mSource The image to crop source Android uri.
      */
-    class ActivityBuilder(
-        /**
-         * The image to crop source Android uri.
-         */
-        private val mSource: Uri?
-    ) {
-
+    class ActivityBuilder(private val mSource: Uri?) {
         /**
          * Options for image crop UX
          */
@@ -536,7 +533,9 @@ object CropImage {
          * @param fragment fragment to receive result
          */
         fun start(
-            context: Context, fragment: Fragment, cls: Class<*>?
+            context: Context,
+            fragment: Fragment,
+            cls: Class<*>?,
         ) {
             fragment.startActivityForResult(
                 getIntent(context, cls),
@@ -551,7 +550,9 @@ object CropImage {
          */
         @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
         fun start(
-            context: Context, fragment: android.app.Fragment, cls: Class<*>?
+            context: Context,
+            fragment: android.app.Fragment,
+            cls: Class<*>?,
         ) {
             fragment.startActivityForResult(
                 getIntent(context, cls),
@@ -879,7 +880,9 @@ object CropImage {
          * *Default: 0, 0 - not set, will not resize*
          */
         fun setRequestedSize(
-            reqWidth: Int, reqHeight: Int, options: RequestSizeOptions?
+            reqWidth: Int,
+            reqHeight: Int,
+            options: RequestSizeOptions?,
         ): ActivityBuilder {
             mOptions.outputRequestWidth = reqWidth
             mOptions.outputRequestHeight = reqHeight
@@ -1006,32 +1009,30 @@ object CropImage {
             wholeImageRect: Rect?,
             sampleSize: Int
         ) : super(
-            null,
-            originalUri,
-            null,
-            uri,
-            error,
-            cropPoints!!,
-            cropRect,
-            wholeImageRect,
-            rotation,
-            sampleSize
-        ) {
-        }
+            originalBitmap = null,
+            originalUri = originalUri,
+            bitmap = null,
+            uri = uri,
+            error = error,
+            cropPoints = cropPoints!!,
+            cropRect = cropRect,
+            wholeImageRect = wholeImageRect,
+            rotation = rotation,
+            sampleSize = sampleSize
+        )
 
         protected constructor(`in`: Parcel) : super(
-            null,
-            `in`.readParcelable<Parcelable>(Uri::class.java.classLoader) as Uri?,
-            null,
-            `in`.readParcelable<Parcelable>(Uri::class.java.classLoader) as Uri?,
-            `in`.readSerializable() as Exception?,
-            `in`.createFloatArray()!!,
-            `in`.readParcelable<Parcelable>(Rect::class.java.classLoader) as Rect?,
-            `in`.readParcelable<Parcelable>(Rect::class.java.classLoader) as Rect?,
-            `in`.readInt(),
-            `in`.readInt()
-        ) {
-        }
+            originalBitmap = null,
+            originalUri = `in`.readParcelable<Parcelable>(Uri::class.java.classLoader) as Uri?,
+            bitmap = null,
+            uri = `in`.readParcelable<Parcelable>(Uri::class.java.classLoader) as Uri?,
+            error = `in`.readSerializable() as Exception?,
+            cropPoints = `in`.createFloatArray()!!,
+            cropRect = `in`.readParcelable<Parcelable>(Rect::class.java.classLoader) as Rect?,
+            wholeImageRect = `in`.readParcelable<Parcelable>(Rect::class.java.classLoader) as Rect?,
+            rotation = `in`.readInt(),
+            sampleSize = `in`.readInt()
+        )
 
         override fun writeToParcel(dest: Parcel, flags: Int) {
             dest.writeParcelable(originalUri, flags)
@@ -1051,13 +1052,10 @@ object CropImage {
             @JvmField
             val CREATOR: Parcelable.Creator<ActivityResult?> =
                 object : Parcelable.Creator<ActivityResult?> {
-                    override fun createFromParcel(`in`: Parcel): ActivityResult? {
-                        return ActivityResult(`in`)
-                    }
+                    override fun createFromParcel(`in`: Parcel): ActivityResult =
+                        ActivityResult(`in`)
 
-                    override fun newArray(size: Int): Array<ActivityResult?> {
-                        return arrayOfNulls(size)
-                    }
+                    override fun newArray(size: Int): Array<ActivityResult?> = arrayOfNulls(size)
                 }
         }
     }
