@@ -1090,7 +1090,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
                     val key = state.getString("LOADED_IMAGE_STATE_BITMAP_KEY")
                     if (key != null) {
                         val stateBitmap =
-                            if (BitmapUtils.mStateBitmap != null && BitmapUtils.mStateBitmap.first == key) BitmapUtils.mStateBitmap.second.get() else null
+                            if (BitmapUtils.mStateBitmap != null && BitmapUtils.mStateBitmap!!.first == key) BitmapUtils.mStateBitmap!!.second.get() else null
                         BitmapUtils.mStateBitmap = null
                         if (stateBitmap != null && !stateBitmap.isRecycled) {
                             setBitmap(stateBitmap, 0, uri, state.getInt("LOADED_SAMPLE_SIZE"), 0)
