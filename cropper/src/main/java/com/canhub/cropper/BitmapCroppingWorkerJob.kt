@@ -157,7 +157,7 @@ class BitmapCroppingWorkerJob internal constructor(
                         }
                     }
                     val resizedBitmap =
-                        BitmapUtils.resizeBitmap(bitmapSampled.bitmap!!, reqWidth, reqHeight, options)
+                        BitmapUtils.resizeBitmap(bitmapSampled.bitmap, reqWidth, reqHeight, options)
 
                     if (saveUri == null) {
                         onPostExecute(
@@ -174,7 +174,7 @@ class BitmapCroppingWorkerJob internal constructor(
                             saveCompressFormat ?: Bitmap.CompressFormat.JPEG,
                             saveCompressQuality
                         )
-                        resizedBitmap?.recycle()
+                        resizedBitmap.recycle()
                         onPostExecute(
                             Result(
                                 saveUri,
