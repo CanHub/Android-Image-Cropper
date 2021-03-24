@@ -27,7 +27,12 @@ import java.lang.ref.WeakReference
 import javax.microedition.khronos.egl.EGL10
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.egl.EGLContext
-import kotlin.math.*
+import kotlin.math.abs
+import kotlin.math.cos
+import kotlin.math.max
+import kotlin.math.min
+import kotlin.math.roundToInt
+import kotlin.math.sin
 
 /**
  * Utility class that deals with operations with an ImageView.
@@ -86,10 +91,12 @@ internal object BitmapUtils {
      * New bitmap is created and the old one is recycled.
      */
     fun rotateBitmapByExif(bitmap: Bitmap?, exif: ExifInterface): RotateBitmapResult {
-        val degrees: Int = when (exif.getAttributeInt(
-            ExifInterface.TAG_ORIENTATION,
-            ExifInterface.ORIENTATION_NORMAL
-        )) {
+        val degrees: Int = when (
+            exif.getAttributeInt(
+                ExifInterface.TAG_ORIENTATION,
+                ExifInterface.ORIENTATION_NORMAL
+            )
+        ) {
             ExifInterface.ORIENTATION_ROTATE_90 -> 90
             ExifInterface.ORIENTATION_ROTATE_180 -> 180
             ExifInterface.ORIENTATION_ROTATE_270 -> 270
@@ -124,7 +131,7 @@ internal object BitmapUtils {
             BitmapSampled(bitmap, options.inSampleSize)
         } catch (e: Exception) {
             throw RuntimeException(
-                "Failed to load sampled bitmap: $uri ${e.message}", e
+                "Failed to load sampled bitmap: $uri\r\n${e.message}", e
             )
         }
     }
@@ -698,10 +705,12 @@ internal object BitmapUtils {
         var decoder: BitmapRegionDecoder? = null
         try {
             val options = BitmapFactory.Options()
-            options.inSampleSize = (sampleMulti
-                * calculateInSampleSizeByReqestedSize(
-                rect.width(), rect.height(), reqWidth, reqHeight
-            ))
+            options.inSampleSize = (
+                sampleMulti
+                    * calculateInSampleSizeByReqestedSize(
+                        rect.width(), rect.height(), reqWidth, reqHeight
+                    )
+                )
             stream = context.contentResolver.openInputStream(uri)
             decoder = BitmapRegionDecoder.newInstance(stream, false)
             do {
@@ -713,10 +722,8 @@ internal object BitmapUtils {
             } while (options.inSampleSize <= 512)
         } catch (e: Exception) {
             throw RuntimeException(
-                """
-                    Failed to load sampled bitmap: $uri
-                    ${e.message}
-                    """.trimIndent(), e
+                "Failed to load sampled bitmap: $uri\r\n${e.message}",
+                e
             )
         } finally {
             closeSafe(stream)
