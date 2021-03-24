@@ -27,6 +27,7 @@ import java.lang.ref.WeakReference
 import javax.microedition.khronos.egl.EGL10
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.egl.EGLContext
+import kotlin.math.*
 
 /**
  * Utility class that deals with operations with an ImageView.
@@ -85,10 +86,10 @@ internal object BitmapUtils {
      * New bitmap is created and the old one is recycled.
      */
     fun rotateBitmapByExif(bitmap: Bitmap?, exif: ExifInterface): RotateBitmapResult {
-        val degrees: Int
-        val orientation =
-            exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
-        degrees = when (orientation) {
+        val degrees: Int = when (exif.getAttributeInt(
+            ExifInterface.TAG_ORIENTATION,
+            ExifInterface.ORIENTATION_NORMAL
+        )) {
             ExifInterface.ORIENTATION_ROTATE_90 -> 90
             ExifInterface.ORIENTATION_ROTATE_180 -> 180
             ExifInterface.ORIENTATION_ROTATE_270 -> 270
@@ -112,7 +113,7 @@ internal object BitmapUtils {
             val options = decodeImageForOption(resolver, uri)
             if (options.outWidth == -1 && options.outHeight == -1) throw RuntimeException("File is not a picture")
             // Calculate inSampleSize
-            options.inSampleSize = Math.max(
+            options.inSampleSize = max(
                 calculateInSampleSizeByReqestedSize(
                     options.outWidth, options.outHeight, reqWidth, reqHeight
                 ),
@@ -123,10 +124,7 @@ internal object BitmapUtils {
             BitmapSampled(bitmap, options.inSampleSize)
         } catch (e: Exception) {
             throw RuntimeException(
-                """
-                Failed to load sampled bitmap: $uri
-                ${e.message}
-                """.trimIndent(), e
+                "Failed to load sampled bitmap: $uri ${e.message}", e
             )
         }
     }
@@ -279,10 +277,7 @@ internal object BitmapUtils {
                 sampleMulti *= 2
                 if (sampleMulti > 16) {
                     throw RuntimeException(
-                        """
-                            Failed to handle OOM by sampling ($sampleMulti): $loadedImageUri
-                            ${e.message}
-                            """.trimIndent(),
+                        "Failed to handle OOM by sampling ($sampleMulti): $loadedImageUri\r\n${e.message}",
                         e
                     )
                 }
@@ -294,28 +289,28 @@ internal object BitmapUtils {
      * Get left value of the bounding rectangle of the given points.
      */
     fun getRectLeft(points: FloatArray): Float {
-        return Math.min(Math.min(Math.min(points[0], points[2]), points[4]), points[6])
+        return min(min(min(points[0], points[2]), points[4]), points[6])
     }
 
     /**
      * Get top value of the bounding rectangle of the given points.
      */
     fun getRectTop(points: FloatArray): Float {
-        return Math.min(Math.min(Math.min(points[1], points[3]), points[5]), points[7])
+        return min(min(min(points[1], points[3]), points[5]), points[7])
     }
 
     /**
      * Get right value of the bounding rectangle of the given points.
      */
     fun getRectRight(points: FloatArray): Float {
-        return Math.max(Math.max(Math.max(points[0], points[2]), points[4]), points[6])
+        return max(max(max(points[0], points[2]), points[4]), points[6])
     }
 
     /**
      * Get bottom value of the bounding rectangle of the given points.
      */
     fun getRectBottom(points: FloatArray): Float {
-        return Math.max(Math.max(Math.max(points[1], points[3]), points[5]), points[7])
+        return max(max(max(points[1], points[3]), points[5]), points[7])
     }
 
     /**
@@ -358,10 +353,10 @@ internal object BitmapUtils {
         aspectRatioX: Int,
         aspectRatioY: Int
     ): Rect {
-        val left = Math.round(Math.max(0f, getRectLeft(points)))
-        val top = Math.round(Math.max(0f, getRectTop(points)))
-        val right = Math.round(Math.min(imageWidth.toFloat(), getRectRight(points)))
-        val bottom = Math.round(Math.min(imageHeight.toFloat(), getRectBottom(points)))
+        val left = max(0f, getRectLeft(points)).roundToInt()
+        val top = max(0f, getRectTop(points)).roundToInt()
+        val right = min(imageWidth.toFloat(), getRectRight(points)).roundToInt()
+        val bottom = min(imageHeight.toFloat(), getRectBottom(points)).roundToInt()
         val rect = Rect(left, top, right, bottom)
         if (fixAspectRatio) {
             fixRectForAspectRatio(rect, aspectRatioX, aspectRatioY)
@@ -450,7 +445,10 @@ internal object BitmapUtils {
      * Resize the given bitmap to the given width/height by the given option.<br></br>
      */
     fun resizeBitmap(
-        bitmap: Bitmap?, reqWidth: Int, reqHeight: Int, options: RequestSizeOptions
+        bitmap: Bitmap?,
+        reqWidth: Int,
+        reqHeight: Int,
+        options: RequestSizeOptions
     ): Bitmap {
         try {
             if (reqWidth > 0 && reqHeight > 0 && (options === RequestSizeOptions.RESIZE_FIT || options === RequestSizeOptions.RESIZE_INSIDE || options === RequestSizeOptions.RESIZE_EXACT)) {
@@ -460,7 +458,7 @@ internal object BitmapUtils {
                 } else {
                     val width = bitmap!!.width
                     val height = bitmap.height
-                    val scale = Math.max(width / reqWidth.toFloat(), height / reqHeight.toFloat())
+                    val scale = max(width / reqWidth.toFloat(), height / reqHeight.toFloat())
                     if (scale > 1 || options === RequestSizeOptions.RESIZE_FIT) {
                         resized = Bitmap.createScaledBitmap(
                             bitmap, (width / scale).toInt(), (height / scale).toInt(), false
@@ -479,7 +477,7 @@ internal object BitmapUtils {
         }
         return bitmap!!
     }
-    // region: Private methods
+
     /**
      * Crop image bitmap from URI by decoding it with specific width and height to down-sample if
      * required.
@@ -547,7 +545,7 @@ internal object BitmapUtils {
                     )
                 }
             } catch (e: OutOfMemoryError) {
-                result?.recycle()
+                result.recycle()
                 throw e
             }
             BitmapSampled(result, sampleSize)
@@ -594,8 +592,15 @@ internal object BitmapUtils {
         val sampleSize: Int
         try {
             val options = BitmapFactory.Options()
-            sampleSize = (sampleMulti
-                * calculateInSampleSizeByReqestedSize(rect.width(), rect.height(), width, height))
+            sampleSize = (
+                sampleMulti *
+                    calculateInSampleSizeByReqestedSize(
+                        rect.width(),
+                        rect.height(),
+                        width,
+                        height
+                    )
+                )
             options.inSampleSize = sampleSize
             val fullBitmap = decodeImage(context.contentResolver, loadedImageUri, options)
             if (fullBitmap != null) {
@@ -627,10 +632,7 @@ internal object BitmapUtils {
             throw e
         } catch (e: Exception) {
             throw RuntimeException(
-                """
-                    Failed to load sampled bitmap: $loadedImageUri
-                    ${e.message}
-                    """.trimIndent(), e
+                "Failed to load sampled bitmap: $loadedImageUri\r\n${e.message}", e
             )
         }
         return BitmapSampled(result, sampleSize)
@@ -660,7 +662,9 @@ internal object BitmapUtils {
      */
     @Throws(FileNotFoundException::class)
     private fun decodeImage(
-        resolver: ContentResolver, uri: Uri, options: BitmapFactory.Options
+        resolver: ContentResolver,
+        uri: Uri,
+        options: BitmapFactory.Options
     ): Bitmap? {
         do {
             var stream: InputStream? = null
@@ -683,7 +687,12 @@ internal object BitmapUtils {
      * @param sampleMulti used to increase the sampling of the image to handle memory issues.
      */
     private fun decodeSampledBitmapRegion(
-        context: Context, uri: Uri, rect: Rect, reqWidth: Int, reqHeight: Int, sampleMulti: Int
+        context: Context,
+        uri: Uri,
+        rect: Rect,
+        reqWidth: Int,
+        reqHeight: Int,
+        sampleMulti: Int
     ): BitmapSampled {
         var stream: InputStream? = null
         var decoder: BitmapRegionDecoder? = null
@@ -743,13 +752,13 @@ internal object BitmapUtils {
             var i = 0
             while (i < points.size) {
                 if (points[i] >= compareTo - 1 && points[i] <= compareTo + 1) {
-                    adjLeft = Math.abs(Math.sin(rads) * (rect.bottom - points[i + 1]))
+                    adjLeft = abs(sin(rads) * (rect.bottom - points[i + 1]))
                         .toInt()
-                    adjTop = Math.abs(Math.cos(rads) * (points[i + 1] - rect.top))
+                    adjTop = abs(cos(rads) * (points[i + 1] - rect.top))
                         .toInt()
-                    width = Math.abs((points[i + 1] - rect.top) / Math.sin(rads))
+                    width = abs((points[i + 1] - rect.top) / sin(rads))
                         .toInt()
-                    height = Math.abs((rect.bottom - points[i + 1]) / Math.cos(rads))
+                    height = abs((rect.bottom - points[i + 1]) / cos(rads))
                         .toInt()
                     break
                 }
@@ -760,9 +769,15 @@ internal object BitmapUtils {
                 fixRectForAspectRatio(rect, aspectRatioX, aspectRatioY)
             }
             val bitmapTmp = bitmap
-            bitmap = Bitmap.createBitmap(bitmap!!, rect.left, rect.top, rect.width(), rect.height())
+            bitmap = Bitmap.createBitmap(
+                bitmap!!,
+                rect.left,
+                rect.top,
+                rect.width(),
+                rect.height()
+            )
             if (bitmapTmp != bitmap) {
-                bitmapTmp!!.recycle()
+                bitmapTmp?.recycle()
             }
         }
         return bitmap
@@ -773,7 +788,10 @@ internal object BitmapUtils {
      * larger than the requested height and width.
      */
     private fun calculateInSampleSizeByReqestedSize(
-        width: Int, height: Int, reqWidth: Int, reqHeight: Int
+        width: Int,
+        height: Int,
+        reqWidth: Int,
+        reqHeight: Int
     ): Int {
         var inSampleSize = 1
         if (height > reqHeight || width > reqWidth) {
@@ -788,14 +806,18 @@ internal object BitmapUtils {
      * Calculate the largest inSampleSize value that is a power of 2 and keeps both height and width
      * smaller than max texture size allowed for the device.
      */
-    private fun calculateInSampleSizeByMaxTextureSize(width: Int, height: Int): Int {
+    private fun calculateInSampleSizeByMaxTextureSize(
+        width: Int,
+        height: Int
+    ): Int {
         var inSampleSize = 1
         if (mMaxTextureSize == 0) {
             mMaxTextureSize = maxTextureSize
         }
         if (mMaxTextureSize > 0) {
-            while (height / inSampleSize > mMaxTextureSize
-                || width / inSampleSize > mMaxTextureSize
+            while (
+                height / inSampleSize > mMaxTextureSize ||
+                width / inSampleSize > mMaxTextureSize
             ) {
                 inSampleSize *= 2
             }
@@ -808,7 +830,10 @@ internal object BitmapUtils {
      * New bitmap is created and the old one is recycled.
      */
     private fun rotateAndFlipBitmapInt(
-        bitmap: Bitmap, degrees: Int, flipHorizontally: Boolean, flipVertically: Boolean
+        bitmap: Bitmap,
+        degrees: Int,
+        flipHorizontally: Boolean,
+        flipVertically: Boolean
     ): Bitmap {
         return if (degrees > 0 || flipHorizontally || flipVertically) {
             val matrix = Matrix()
@@ -826,16 +851,17 @@ internal object BitmapUtils {
         } else {
             bitmap
         }
-    }// Only need to check for width since opengl textures are always squared
+    }
+    // Only need to check for width since opengl textures are always squared
     // Keep track of the maximum texture size
     // Release
     // Return largest texture size found, or default
-// Get EGL Display
+    // Get EGL Display
     // Initialise
     // Query total number of configurations
     // Query actual list configurations
     // Iterate through all the configurations to located the maximum texture size
-// Safe minimum default size
+    // Safe minimum default size
     /**
      * Get the max size of bitmap allowed to be rendered on the device.<br></br>
      * http://stackoverflow.com/questions/7428996/hw-accelerated-activity-how-to-get-opengl-texture-size-limit.
@@ -880,7 +906,7 @@ internal object BitmapUtils {
                 // Release
                 egl.eglTerminate(display)
                 // Return largest texture size found, or default
-                Math.max(maximumTextureSize, IMAGE_MAX_BITMAP_DIMENSION)
+                max(maximumTextureSize, IMAGE_MAX_BITMAP_DIMENSION)
             } catch (e: Exception) {
                 IMAGE_MAX_BITMAP_DIMENSION
             }
@@ -893,15 +919,12 @@ internal object BitmapUtils {
      * @param closeable the closable object to close
      */
     private fun closeSafe(closeable: Closeable?) {
-        if (closeable != null) {
-            try {
-                closeable.close()
-            } catch (ignored: IOException) {
-            }
+        try {
+            closeable?.close()
+        } catch (ignored: IOException) {
         }
     }
-    // endregion
-    // region: Inner class: BitmapSampled
+
     /**
      * Holds bitmap instance and the sample size that the bitmap was loaded/cropped with.
      */
@@ -915,8 +938,7 @@ internal object BitmapUtils {
          */
         val sampleSize: Int
     )
-    // endregion
-    // region: Inner class: RotateBitmapResult
+
     /**
      * The result of [.rotateBitmapByExif].
      */
@@ -929,5 +951,5 @@ internal object BitmapUtils {
          * The degrees the image was rotated
          */
         val degrees: Int
-    ) // endregion
+    )
 }
