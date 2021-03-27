@@ -412,7 +412,7 @@ internal object BitmapUtils {
                         File.createTempFile("aic_state_store_temp", ".jpg", context.cacheDir)
                     )
                 }
-            } else if (tempUri.path?.let{File(it).exists()} == true) {
+            } else if (tempUri.path?.let { File(it).exists() } == true) {
                 needSave = false
             }
             if (needSave) {
@@ -933,8 +933,6 @@ internal object BitmapUtils {
         } catch (ignored: IOException) {
         }
     }
-
-
 
     /**
      * Holds bitmap instance and the sample size that the bitmap was loaded/cropped with.
