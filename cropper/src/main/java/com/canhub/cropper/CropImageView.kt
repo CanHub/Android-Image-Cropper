@@ -181,7 +181,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
                 mZoom = 1f
                 mZoomOffsetY = 0f
                 mZoomOffsetX = mZoomOffsetY
-                mCropOverlayView!!.resetCropOverlayView()
+                mCropOverlayView?.resetCropOverlayView()
                 requestLayout()
             }
         }
@@ -1088,15 +1088,16 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
                 var uri = state.getParcelable<Uri>("LOADED_IMAGE_URI")
                 if (uri != null) {
                     val key = state.getString("LOADED_IMAGE_STATE_BITMAP_KEY")
-                    if (key != null) {
-                        val stateBitmap =
-                            if (BitmapUtils.mStateBitmap != null && BitmapUtils.mStateBitmap.first == key) BitmapUtils.mStateBitmap.second.get() else null
+                    key?.run {
+                        val stateBitmap = BitmapUtils.mStateBitmap?.let {
+                            if (it.first == key) it.second.get() else null
+                        }
                         BitmapUtils.mStateBitmap = null
                         if (stateBitmap != null && !stateBitmap.isRecycled) {
                             setBitmap(stateBitmap, 0, uri, state.getInt("LOADED_SAMPLE_SIZE"), 0)
                         }
                     }
-                    if (imageUri == null) setImageUriAsync(uri)
+                    imageUri ?: setImageUriAsync(uri)
                 } else {
                     val resId = state.getInt("LOADED_IMAGE_RESOURCE")
 
@@ -1140,19 +1141,20 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
         val widthSize = MeasureSpec.getSize(widthMeasureSpec)
         val heightMode = MeasureSpec.getMode(heightMeasureSpec)
         var heightSize = MeasureSpec.getSize(heightMeasureSpec)
-        if (mBitmap != null) {
+        val bitmap = mBitmap
+        if (bitmap != null) {
             // Bypasses a baffling bug when used within a ScrollView, where heightSize is set to 0.
-            if (heightSize == 0) heightSize = mBitmap!!.height
+            if (heightSize == 0) heightSize = bitmap.height
             val desiredWidth: Int
             val desiredHeight: Int
             var viewToBitmapWidthRatio = Double.POSITIVE_INFINITY
             var viewToBitmapHeightRatio = Double.POSITIVE_INFINITY
             // Checks if either width or height needs to be fixed
-            if (widthSize < mBitmap!!.width) {
-                viewToBitmapWidthRatio = widthSize.toDouble() / mBitmap!!.width.toDouble()
+            if (widthSize < bitmap.width) {
+                viewToBitmapWidthRatio = widthSize.toDouble() / bitmap.width.toDouble()
             }
-            if (heightSize < mBitmap!!.height) {
-                viewToBitmapHeightRatio = heightSize.toDouble() / mBitmap!!.height.toDouble()
+            if (heightSize < bitmap.height) {
+                viewToBitmapHeightRatio = heightSize.toDouble() / bitmap.height.toDouble()
             }
             // If either needs to be fixed, choose smallest ratio and calculate from there
             if (viewToBitmapWidthRatio != Double.POSITIVE_INFINITY ||
@@ -1160,16 +1162,16 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
             ) {
                 if (viewToBitmapWidthRatio <= viewToBitmapHeightRatio) {
                     desiredWidth = widthSize
-                    desiredHeight = (mBitmap!!.height * viewToBitmapWidthRatio).toInt()
+                    desiredHeight = (bitmap.height * viewToBitmapWidthRatio).toInt()
                 } else {
                     desiredHeight = heightSize
-                    desiredWidth = (mBitmap!!.width * viewToBitmapHeightRatio).toInt()
+                    desiredWidth = (bitmap.width * viewToBitmapHeightRatio).toInt()
                 }
             } else {
                 // Otherwise, the picture is within frame layout bounds. Desired width is simply picture
                 // size
-                desiredWidth = mBitmap!!.width
-                desiredHeight = mBitmap!!.height
+                desiredWidth = bitmap.width
+                desiredHeight = bitmap.height
             }
             val width = getOnMeasureSpec(widthMode, widthSize, desiredWidth)
             val height = getOnMeasureSpec(heightMode, heightSize, desiredHeight)
@@ -1302,14 +1304,15 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
      * @param height the height of the image view
      */
     private fun applyImageMatrix(width: Float, height: Float, center: Boolean, animate: Boolean) {
-        if (mBitmap != null && width > 0 && height > 0) {
+        val bitmap = mBitmap
+        if (bitmap != null && width > 0 && height > 0) {
             mImageMatrix.invert(mImageInverseMatrix)
             val cropRect = mCropOverlayView!!.cropWindowRect
             mImageInverseMatrix.mapRect(cropRect)
             mImageMatrix.reset()
             // move the image to the center of the image view first so we can manipulate it from there
             mImageMatrix.postTranslate(
-                (width - mBitmap!!.width) / 2, (height - mBitmap!!.height) / 2
+                (width - bitmap.width) / 2, (height - bitmap.height) / 2
             )
             mapImagePointsByImageMatrix()
             // rotate the image the required degrees from center of image

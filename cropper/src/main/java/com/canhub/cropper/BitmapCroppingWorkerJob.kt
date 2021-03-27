@@ -174,7 +174,7 @@ class BitmapCroppingWorkerJob internal constructor(
                             saveCompressFormat ?: Bitmap.CompressFormat.JPEG,
                             saveCompressQuality
                         )
-                        resizedBitmap?.recycle()
+                        resizedBitmap.recycle()
                         onPostExecute(
                             Result(
                                 saveUri,
