@@ -42,6 +42,8 @@ internal object BitmapUtils {
     val EMPTY_RECT = Rect()
     val EMPTY_RECT_F = RectF()
 
+    private const val IMAGE_MAX_BITMAP_DIMENSION = 2048
+
     /**
      * Reusable rectangle for general internal usage
      */
@@ -394,12 +396,12 @@ internal object BitmapUtils {
      * file.
      */
     fun writeTempStateStoreBitmap(context: Context, bitmap: Bitmap?, uri: Uri?): Uri? {
-        var uri = uri
+        var tempUri = uri
         return try {
             var needSave = true
-            if (uri == null) {
+            if (tempUri == null) {
                 // We have this because of a HUAWEI path bug when we use getUriForFile
-                uri = if (isAtLeastQ29()) {
+                tempUri = if (isAtLeastQ29()) {
                     FileProvider.getUriForFile(
                         context,
                         context.packageName + CommonValues.authority,
@@ -410,13 +412,13 @@ internal object BitmapUtils {
                         File.createTempFile("aic_state_store_temp", ".jpg", context.cacheDir)
                     )
                 }
-            } else if (File(uri.path).exists()) {
+            } else if (tempUri.path?.let{File(it).exists()} == true) {
                 needSave = false
             }
             if (needSave) {
-                writeBitmapToUri(context, bitmap!!, uri, CompressFormat.JPEG, 95)
+                writeBitmapToUri(context, bitmap!!, tempUri, CompressFormat.JPEG, 95)
             }
-            uri
+            tempUri
         } catch (e: Exception) {
             Log.w(
                 "AIC",
@@ -747,7 +749,7 @@ internal object BitmapUtils {
         aspectRatioX: Int,
         aspectRatioY: Int
     ): Bitmap? {
-        var bitmap = bitmap
+        var tempBitmap = bitmap
         if (degreesRotated % 90 != 0) {
             var adjLeft = 0
             var adjTop = 0
@@ -775,19 +777,19 @@ internal object BitmapUtils {
             if (fixAspectRatio) {
                 fixRectForAspectRatio(rect, aspectRatioX, aspectRatioY)
             }
-            val bitmapTmp = bitmap
-            bitmap = Bitmap.createBitmap(
+            val bitmapTmp = tempBitmap
+            tempBitmap = Bitmap.createBitmap(
                 bitmap!!,
                 rect.left,
                 rect.top,
                 rect.width(),
                 rect.height()
             )
-            if (bitmapTmp != bitmap) {
+            if (bitmapTmp != tempBitmap) {
                 bitmapTmp?.recycle()
             }
         }
-        return bitmap
+        return tempBitmap
     }
 
     /**
@@ -876,7 +878,7 @@ internal object BitmapUtils {
     private val maxTextureSize: Int
         get() {
             // Safe minimum default size
-            val IMAGE_MAX_BITMAP_DIMENSION = 2048
+
             return try {
                 // Get EGL Display
                 val egl = EGLContext.getEGL() as EGL10
@@ -931,6 +933,8 @@ internal object BitmapUtils {
         } catch (ignored: IOException) {
         }
     }
+
+
 
     /**
      * Holds bitmap instance and the sample size that the bitmap was loaded/cropped with.
