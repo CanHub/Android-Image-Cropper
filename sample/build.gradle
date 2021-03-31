@@ -22,7 +22,7 @@ android {
         freeCompilerArgs = ["-Xinline-classes"]
     }
     buildFeatures {
-        viewBinding = true
+        viewBinding true
     }
 }
 
