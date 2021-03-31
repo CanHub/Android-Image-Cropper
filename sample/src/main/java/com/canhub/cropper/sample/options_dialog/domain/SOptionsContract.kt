@@ -7,18 +7,15 @@ import com.canhub.cropper.CropImageView.ScaleType
 internal interface SOptionsContract {
 
     interface View {
-
         fun updateOptions(options: SOptionsDomain)
         fun closeWithResult(options: SOptionsDomain)
     }
 
     interface Presenter {
-
         fun bind(view: View)
         fun unbind()
         fun onViewCreated(options: SOptionsDomain?)
         fun onDismiss()
-
         fun onScaleTypeSelect(scaleType: ScaleType)
         fun onCropShapeSelect(cropShape: CropShape)
         fun onGuidelinesSelect(guidelines: Guidelines)
