@@ -24,6 +24,6 @@
 ### Code Style
 Path: `.idea/codeStyles/` Please never change anything inside this folders
 
-- The file `codeStyleCondig` should be responsible to change the kotlin lint source.
+- The file `codeStyleConfig.xml` should be responsible to change the kotlin lint source.
 - Please check if Android Studio right imported the `Project` code style.
 - After changes you can run `./gradlew ktlintFormat` or the shortcuts in your touched files.
