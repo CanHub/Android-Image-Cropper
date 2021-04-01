@@ -188,10 +188,10 @@ internal class SOptionsDialogBottomSheet : BottomSheetDialogFragment(), SOptions
         when (options.cropShape) {
             CropImageView.CropShape.RECTANGLE -> binding.cropShape.chipRectangle.isChecked = true
             CropImageView.CropShape.OVAL -> binding.cropShape.chipOval.isChecked = true
-            CropImageView.CropShape.RECTANGLE_VERTICAL_ONLY -> binding.cropShape.chipRectangleVerticalOnly.isChecked =
-                true
-            CropImageView.CropShape.RECTANGLE_HORIZONTAL_ONLY -> binding.cropShape.chipRectangleHorizontalOnly.isChecked =
-                true
+            CropImageView.CropShape.RECTANGLE_VERTICAL_ONLY ->
+                binding.cropShape.chipRectangleVerticalOnly.isChecked = true
+            CropImageView.CropShape.RECTANGLE_HORIZONTAL_ONLY ->
+                binding.cropShape.chipRectangleHorizontalOnly.isChecked = true
         }
 
         when (options.guidelines) {
