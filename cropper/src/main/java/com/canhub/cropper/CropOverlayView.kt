@@ -987,7 +987,7 @@ class CropOverlayView
     }
 
     /** Interface definition for a callback to be invoked when crop window rectangle is changing.  */
-    interface CropWindowChangeListener {
+    fun interface CropWindowChangeListener {
 
         /**
          * Called after a change in crop window rectangle.

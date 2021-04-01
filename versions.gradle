@@ -1,7 +1,7 @@
 ext {
 
     // Project
-    libVersion = "2.3.0"
+    libVersion = "2.3.1"
     compileSdkVersion = 30
     targetSdkVersion = 30
     minSdkVersion = 14
@@ -19,9 +19,9 @@ ext {
     materialVersion = '1.4.0-alpha01'
 
     // AndroidX
-    androidXAppCompatVersionSample = '1.3.0-beta01'
+    androidXAppCompatVersionSample = '1.3.0-rc01'
     androidXAppCompatVersionCropper = '1.2.0'  // Used to avoid not release stable versions on the lib
     androidXExifVersion = '1.3.2'
     androidXCoreKtxVersion = '1.3.2'
-    androidXLifeCycleVersion = '2.3.0'
+    androidXLifeCycleVersion = '2.3.1'
 }

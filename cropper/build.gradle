@@ -22,7 +22,7 @@ android {
         abortOnError false
     }
     buildFeatures {
-        viewBinding = true
+        viewBinding true
     }
 }
 

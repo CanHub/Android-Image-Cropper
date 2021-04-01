@@ -1575,7 +1575,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
     }
 
     /** Interface definition for a callback to be invoked when the crop overlay is released.  */
-    interface OnSetCropOverlayReleasedListener {
+    fun interface OnSetCropOverlayReleasedListener {
 
         /**
          * Called when the crop overlay changed listener is called and inProgress is false.
@@ -1586,7 +1586,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
     }
 
     /** Interface definition for a callback to be invoked when the crop overlay is released.  */
-    interface OnSetCropOverlayMovedListener {
+    fun interface OnSetCropOverlayMovedListener {
 
         /**
          * Called when the crop overlay is moved
@@ -1597,14 +1597,14 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
     }
 
     /** Interface definition for a callback to be invoked when the crop overlay is released.  */
-    interface OnSetCropWindowChangeListener {
+    fun interface OnSetCropWindowChangeListener {
 
         /** Called when the crop window is changed  */
         fun onCropWindowChanged()
     }
 
     /** Interface definition for a callback to be invoked when image async loading is complete.  */
-    interface OnSetImageUriCompleteListener {
+    fun interface OnSetImageUriCompleteListener {
 
         /**
          * Called when a crop image view has completed loading image for cropping.<br></br>
@@ -1618,7 +1618,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
     }
 
     /** Interface definition for a callback to be invoked when image async crop is complete.  */
-    interface OnCropImageCompleteListener {
+    fun interface OnCropImageCompleteListener {
 
         /**
          * Called when a crop image view has completed cropping image.<br></br>
