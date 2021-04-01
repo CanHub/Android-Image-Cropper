@@ -10,6 +10,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - `Security` in case of vulnerabilities.
 
 ## [unreleased x.x.x] -
+## [2.3.1] - 01/04/21
+### Changed
+- Added "fun" for all Kotlin interfaces when possible [#102] https://github.com/CanHub/Android-Image-Cropper/issues/102
+
 ## [2.3.0] - 30/03/21
 ### Changed
 - CropOverlayView to Kotlin [#38](https://github.com/CanHub/Android-Image-Cropper/issues/38)
