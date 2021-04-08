@@ -9,10 +9,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - `Fixed` for any bug fixes.
 - `Security` in case of vulnerabilities.
 
-## [unreleased x.x.x] -
+## [unreleased 3.0.0] -
+### Removed
+- Methods `getUri`. // todo canato, refactor naming when done
+
+### Add
+- Methods `getFilePath` and `getUriContent`. // todo canato, refactor naming when done
+
+### Fixed
+- ENOENT (no such file or directory) [#99](https://github.com/CanHub/Android-Image-Cropper/issues/99)
+- `content://` instead of `file://` [#83](https://github.com/CanHub/Android-Image-Cropper/issues/83) [#84](https://github.com/CanHub/Android-Image-Cropper/issues/84) 
+
 ## [2.3.1] - 01/04/21
 ### Changed
-- Added "fun" for all Kotlin interfaces when possible [#102] https://github.com/CanHub/Android-Image-Cropper/issues/102
+- Added "fun" for all Kotlin interfaces when possible [#102](https://github.com/CanHub/Android-Image-Cropper/issues/102)
 
 ## [2.3.0] - 30/03/21
 ### Changed
