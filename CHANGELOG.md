@@ -11,10 +11,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [unreleased 3.0.0] -
 ### Removed
-- Methods `getUri`. // todo canato, refactor naming when done
+- Methods `getUri`.
 
 ### Add
-- Methods `getFilePath` and `getUriContent`. // todo canato, refactor naming when done
+- Methods `getFilePath` and `getUriContent`.
 
 ### Fixed
 - ENOENT (no such file or directory) [#99](https://github.com/CanHub/Android-Image-Cropper/issues/99)
