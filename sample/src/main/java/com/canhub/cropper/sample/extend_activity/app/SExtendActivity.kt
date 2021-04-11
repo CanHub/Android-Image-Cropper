@@ -94,7 +94,8 @@ internal class SExtendActivity : CropImageActivity(), SExtendContract.View {
             sampleSize
         )
 
-        binding.cropImageView.setImageUriAsync(result.uri)
+        Log.v("File Path", result.getFilePath(this).toString())
+        binding.cropImageView.setImageUriAsync(result.uriContent)
     }
 
     override fun setResultCancel() {
@@ -103,7 +104,10 @@ internal class SExtendActivity : CropImageActivity(), SExtendContract.View {
     }
 
     override fun updateMenuItemIconColor(menu: Menu, itemId: Int, color: Int) {
-        Log.i("extend", "If not using your layout, this can be one option to change colours. Check README and wiki for more")
+        Log.i(
+            "extend",
+            "If not using your layout, this can be one option to change colours. Check README and wiki for more"
+        )
         super.updateMenuItemIconColor(menu, itemId, color)
     }
 }
