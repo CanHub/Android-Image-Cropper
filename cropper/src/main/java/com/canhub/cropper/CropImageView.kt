@@ -13,6 +13,7 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.provider.MediaStore
 import android.util.AttributeSet
+import android.util.Log
 import android.util.Pair
 import android.view.LayoutInflater
 import android.widget.FrameLayout
@@ -21,6 +22,7 @@ import android.widget.ProgressBar
 import androidx.exifinterface.media.ExifInterface
 import androidx.fragment.app.FragmentActivity
 import com.canhub.cropper.CropOverlayView.CropWindowChangeListener
+import com.canhub.cropper.utils.getFilePathFromUri
 import java.lang.ref.WeakReference
 import java.util.UUID
 import kotlin.math.max
@@ -849,7 +851,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
     }
 
     /**
-     * On complete of the async bitmap loading by [.setImageUriAsync] set the result to the
+     * On complete of the async bitmap loading by [setImageUriAsync] set the result to the
      * widget if still relevant and call listener if set.
      *
      * @param result the result of bitmap loading
@@ -859,10 +861,20 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
         setProgressBarVisibility()
         if (result.error == null) {
             mInitialDegreesRotated = result.degreesRotated
-            setBitmap(result.bitmap, 0, result.uri, result.loadSampleSize, result.degreesRotated)
+            Log.v("CanatoXXX", result.uriContent.toString())
+            Log.v("CanatoXXX", result.getFilePath(context))
+            setBitmap(
+                result.bitmap,
+                0,
+                result.uriContent,
+                result.loadSampleSize,
+                result.degreesRotated
+            )
         }
         val listener = mOnSetImageUriCompleteListener
-        listener?.onSetImageUriComplete(this, result.uri, result.error)
+        Log.v("CanatoXXX", result.uriContent.toString())
+        Log.v("CanatoXXX", result.getFilePath(context))
+        listener?.onSetImageUriComplete(this, result.uriContent, result.error)
     }
 
     /**
@@ -1651,8 +1663,10 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
         /**
          * The Android uri of the saved cropped image result.<br></br>
          * Null if get cropped image was executed, no output requested or failure.
+         *
+         * This is NOT the file path, please use [getFilePath]
          */
-        val uri: Uri?,
+        val uriContent: Uri?,
         /** The error that failed the loading/cropping (null if successful)  */
         val error: Exception?,
         /** The 4 points of the cropping window in the source image  */
@@ -1702,11 +1716,18 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
          */
         fun getBitmap(context: Context): Bitmap? {
             return bitmap ?: try {
-                MediaStore.Images.Media.getBitmap(context.contentResolver, uri)
+                MediaStore.Images.Media.getBitmap(context.contentResolver, uriContent)
             } catch (e: Exception) {
                 null
             }
         }
+
+        /**
+         * The file path of the image to load
+         * Null if get cropped image was executed, no output requested or failure.
+         */
+        fun getFilePath(context: Context): String? =
+            uriContent?.let { getFilePathFromUri(context, it) }
     }
 
     companion object {

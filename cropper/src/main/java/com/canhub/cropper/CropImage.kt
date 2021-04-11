@@ -35,6 +35,7 @@ import com.canhub.cropper.CropImageView.RequestSizeOptions
 import com.canhub.cropper.common.CommonValues
 import com.canhub.cropper.common.CommonVersionCheck
 import com.canhub.cropper.common.CommonVersionCheck.isAtLeastQ29
+import com.canhub.cropper.utils.getFilePathFromUri
 import java.io.File
 import java.util.ArrayList
 
@@ -148,9 +149,9 @@ object CropImage {
     }
 
     /**
-     * Create a chooser intent to select the source to get image from.<br></br>
-     * The source can be camera's (ACTION_IMAGE_CAPTURE) or gallery's (ACTION_GET_CONTENT).<br></br>
-     * All possible sources are added to the intent chooser.<br></br>
+     * Create a chooser intent to select the source to get image from.
+     * The source can be camera's (ACTION_IMAGE_CAPTURE) or gallery's (ACTION_GET_CONTENT).
+     * All possible sources are added to the intent chooser.
      * Use "pick_image_intent_chooser_title" string resource to override chooser title.
      *
      * @param context used to access Android APIs, like content resolve, it is your
@@ -166,8 +167,8 @@ object CropImage {
     }
 
     /**
-     * Create a chooser intent to select the source to get image from.<br></br>
-     * The source can be camera's (ACTION_IMAGE_CAPTURE) or gallery's (ACTION_GET_CONTENT).<br></br>
+     * Create a chooser intent to select the source to get image from.
+     * The source can be camera's (ACTION_IMAGE_CAPTURE) or gallery's (ACTION_GET_CONTENT).
      * All possible sources are added to the intent chooser.
      *
      * @param context          used to access Android APIs, like content resolve, it is your
@@ -222,7 +223,7 @@ object CropImage {
         var newOutputFileUri = outputFileUri
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if (newOutputFileUri == null) {
-            newOutputFileUri = getCaptureImageOutputUri(context)
+            newOutputFileUri = getCaptureImageOutputUriContent(context)
         }
         intent.putExtra(MediaStore.EXTRA_OUTPUT, newOutputFileUri)
         return intent
@@ -238,7 +239,7 @@ object CropImage {
     ): List<Intent> {
         val allIntents: MutableList<Intent> = ArrayList()
         // Determine Uri of camera image to  save.
-        val outputFileUri = getCaptureImageOutputUri(context)
+        val outputFileUri = getCaptureImageOutputUriContent(context)
         val captureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         val listCam = packageManager.queryIntentActivities(captureIntent, 0)
         for (res in listCam) {
@@ -338,10 +339,12 @@ object CropImage {
     /**
      * Get URI to image received from capture by camera.
      *
+     * This is not the File Path, for it please use [getCaptureImageOutputFilePath]
+     *
      * @param context used to access Android APIs, like content resolve, it is your
      * activity/fragment/widget.
      */
-    fun getCaptureImageOutputUri(context: Context): Uri {
+    fun getCaptureImageOutputUriContent(context: Context): Uri {
         val outputFileUri: Uri
         val getImage: File?
         // We have this because of a HUAWEI path bug when we use getUriForFile
@@ -364,21 +367,43 @@ object CropImage {
     }
 
     /**
-     * Get the URI of the selected image from [.getPickImageChooserIntent].<br></br>
+     * Get File Path to image received from capture by camera.
+     *
+     * @param context used to access Android APIs, like content resolve, it is your
+     * activity/fragment/widget.
+     */
+    fun getCaptureImageOutputFilePath(context: Context): String =
+        getFilePathFromUri(context, getCaptureImageOutputUriContent(context))
+
+    /**
+     * Get the URI of the selected image from [getPickImageChooserIntent].
      * Will return the correct URI for camera and gallery image.
+     *
+     * This is not the File Path, for it please use [getPickImageResultFilePath]
      *
      * @param context used to access Android APIs, like content resolve, it is your
      * activity/fragment/widget.
      * @param data    the returned data of the activity result
      */
-    fun getPickImageResultUri(context: Context, data: Intent?): Uri {
+    fun getPickImageResultUriContent(context: Context, data: Intent?): Uri {
         var isCamera = true
         if (data != null && data.data != null) {
             val action = data.action
             isCamera = action != null && action == MediaStore.ACTION_IMAGE_CAPTURE
         }
-        return if (isCamera || data!!.data == null) getCaptureImageOutputUri(context) else data.data!!
+        return if (isCamera || data!!.data == null) getCaptureImageOutputUriContent(context)
+        else data.data!!
     }
+
+    /**
+     * Get the File Path of the selected image from [getPickImageChooserIntent].
+     *
+     * @param context used to access Android APIs, like content resolve, it is your
+     * activity/fragment/widget.
+     * @param data    the returned data of the activity result
+     */
+    fun getPickImageResultFilePath(context: Context, data: Intent?): String =
+        getFilePathFromUri(context, getPickImageResultUriContent(context, data))
 
     /**
      * Check if the given picked image URI requires READ_EXTERNAL_STORAGE permissions.<br></br>
@@ -459,6 +484,7 @@ object CropImage {
      * @param mSource The image to crop source Android uri.
      */
     class ActivityBuilder(private val mSource: Uri?) {
+
         /**
          * Options for image crop UX
          */
@@ -1001,7 +1027,7 @@ object CropImage {
 
         constructor(
             originalUri: Uri?,
-            uri: Uri?,
+            uriContent: Uri?,
             error: Exception?,
             cropPoints: FloatArray?,
             cropRect: Rect?,
@@ -1012,7 +1038,7 @@ object CropImage {
             originalBitmap = null,
             originalUri = originalUri,
             bitmap = null,
-            uri = uri,
+            uriContent = uriContent,
             error = error,
             cropPoints = cropPoints!!,
             cropRect = cropRect,
@@ -1025,7 +1051,7 @@ object CropImage {
             originalBitmap = null,
             originalUri = `in`.readParcelable<Parcelable>(Uri::class.java.classLoader) as Uri?,
             bitmap = null,
-            uri = `in`.readParcelable<Parcelable>(Uri::class.java.classLoader) as Uri?,
+            uriContent = `in`.readParcelable<Parcelable>(Uri::class.java.classLoader) as Uri?,
             error = `in`.readSerializable() as Exception?,
             cropPoints = `in`.createFloatArray()!!,
             cropRect = `in`.readParcelable<Parcelable>(Rect::class.java.classLoader) as Rect?,
@@ -1036,7 +1062,7 @@ object CropImage {
 
         override fun writeToParcel(dest: Parcel, flags: Int) {
             dest.writeParcelable(originalUri, flags)
-            dest.writeParcelable(uri, flags)
+            dest.writeParcelable(uriContent, flags)
             dest.writeSerializable(error)
             dest.writeFloatArray(cropPoints)
             dest.writeParcelable(cropRect, flags)

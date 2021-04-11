@@ -170,7 +170,7 @@ open class CropImageActivity :
         if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE) {
             if (resultCode == RESULT_CANCELED) setResultCancel()
             if (resultCode == RESULT_OK) {
-                cropImageUri = CropImage.getPickImageResultUri(this, data)
+                cropImageUri = CropImage.getPickImageResultUriContent(this, data)
                 // For API >= 23 we need to check specifically that we have permissions to read external
                 // storage.
                 if (cropImageUri?.let {
@@ -227,7 +227,7 @@ open class CropImageActivity :
     }
 
     override fun onCropImageComplete(view: CropImageView, result: CropResult) {
-        setResult(result.uri, result.error, result.sampleSize)
+        setResult(result.uriContent, result.error, result.sampleSize)
     }
 
     /**
