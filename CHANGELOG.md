@@ -10,6 +10,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - `Security` in case of vulnerabilities.
 
 ## [unreleased x.x.x] -
+
+## [2.3.2] - 12/04/21
+### Added
+- @JvmStatic annotation in CropImage.activity() and fun activity(uri) [#108](https://github.com/CanHub/Android-Image-Cropper/issues/108)
+
 ## [2.3.1] - 01/04/21
 ### Changed
 - Added "fun" for all Kotlin interfaces when possible [#102] https://github.com/CanHub/Android-Image-Cropper/issues/102
