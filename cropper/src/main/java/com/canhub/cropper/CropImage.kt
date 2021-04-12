@@ -102,6 +102,7 @@ object CropImage {
      * Create a new bitmap that has all pixels beyond the oval shape transparent. Old bitmap is
      * recycled.
      */
+    @JvmStatic
     fun toOvalBitmap(bitmap: Bitmap): Bitmap {
         val width = bitmap.width
         val height = bitmap.height
@@ -128,6 +129,7 @@ object CropImage {
      *
      * @param activity the activity to be used to start activity from
      */
+    @JvmStatic
     fun startPickImageActivity(activity: Activity) {
         activity.startActivityForResult(
             getPickImageChooserIntent(activity), PICK_IMAGE_CHOOSER_REQUEST_CODE
@@ -141,6 +143,7 @@ object CropImage {
      * @param context  The Fragments context. Use getContext()
      * @param fragment The calling Fragment to start and return the image to
      */
+    @JvmStatic
     fun startPickImageActivity(context: Context, fragment: Fragment) {
         fragment.startActivityForResult(
             getPickImageChooserIntent(context), PICK_IMAGE_CHOOSER_REQUEST_CODE
@@ -156,6 +159,7 @@ object CropImage {
      * @param context used to access Android APIs, like content resolve, it is your
      * activity/fragment/widget.
      */
+    @JvmStatic
     fun getPickImageChooserIntent(context: Context): Intent {
         return getPickImageChooserIntent(
             context = context,
@@ -176,6 +180,7 @@ object CropImage {
      * @param includeDocuments if to include KitKat documents activity containing all sources
      * @param includeCamera    if to include camera intents
      */
+    @JvmStatic
     fun getPickImageChooserIntent(
         context: Context,
         title: CharSequence?,
@@ -215,6 +220,7 @@ object CropImage {
      * @param outputFileUri the Uri where the picture will be placed.
      */
     // todo this need be public?
+    @JvmStatic
     fun getCameraIntent(
         context: Context,
         outputFileUri: Uri?,
@@ -232,6 +238,7 @@ object CropImage {
      * Get all Camera intents for capturing image using device camera apps.
      */
     // todo this need be public?
+    @JvmStatic
     fun getCameraIntents(
         context: Context,
         packageManager: PackageManager,
@@ -258,6 +265,7 @@ object CropImage {
      * images.
      */
     // todo this need be public?
+    @JvmStatic
     fun getGalleryIntents(
         packageManager: PackageManager,
         action: String?,
@@ -304,6 +312,7 @@ object CropImage {
      */
     // todo, if true, return error saying permission is needed.
     // on settings give option to library asked permission (default true)
+    @JvmStatic
     fun isExplicitCameraPermissionRequired(context: Context): Boolean = (
         CommonVersionCheck.isAtLeastM23() &&
             hasPermissionInManifest(context, "android.permission.CAMERA") &&
@@ -316,6 +325,7 @@ object CropImage {
      * @param permissionName the permission to check
      * @return true - the permission in requested in manifest, false - not.
      */
+    @JvmStatic
     fun hasPermissionInManifest(
         context: Context,
         permissionName: String,
@@ -341,6 +351,7 @@ object CropImage {
      * @param context used to access Android APIs, like content resolve, it is your
      * activity/fragment/widget.
      */
+    @JvmStatic
     fun getCaptureImageOutputUri(context: Context): Uri {
         val outputFileUri: Uri
         val getImage: File?
@@ -371,6 +382,7 @@ object CropImage {
      * activity/fragment/widget.
      * @param data    the returned data of the activity result
      */
+    @JvmStatic
     fun getPickImageResultUri(context: Context, data: Intent?): Uri {
         var isCamera = true
         if (data != null && data.data != null) {
@@ -392,6 +404,7 @@ object CropImage {
      * @return true - required permission are not granted, false - either no need for permissions or
      * they are granted
      */
+    @JvmStatic
     fun isReadExternalStoragePermissionsRequired(
         context: Context,
         uri: Uri,
@@ -408,6 +421,7 @@ object CropImage {
      * activity/fragment/widget.
      * @param uri     the result URI of image pick.
      */
+    @JvmStatic
     fun isUriRequiresPermissions(context: Context, uri: Uri): Boolean {
         return try {
             val resolver = context.contentResolver
@@ -452,6 +466,7 @@ object CropImage {
      * @return Crop Image Activity Result object or null if none exists
      */
     // TODO don't return null
+    @JvmStatic
     fun getActivityResult(data: Intent?): ActivityResult? =
         data?.getParcelableExtra<Parcelable>(CROP_IMAGE_EXTRA_RESULT) as? ActivityResult?
 
