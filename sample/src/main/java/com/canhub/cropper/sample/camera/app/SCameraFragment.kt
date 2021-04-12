@@ -1,7 +1,6 @@
 package com.canhub.cropper.sample.camera.app
 
 import android.Manifest
-import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Bitmap
@@ -256,7 +255,4 @@ internal class SCameraFragment :
             storageDir
         )
     }
-
-
 }
-

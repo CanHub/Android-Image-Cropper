@@ -21,7 +21,7 @@ import java.io.OutputStream
  *
  * @return string value of the File path.
  */
-internal fun getFilePathFromUri(context: Context, uri: Uri): String  =
+internal fun getFilePathFromUri(context: Context, uri: Uri): String =
     if (uri.path?.contains("file://") == true) uri.path!!
     else getFileFromContentUri(context, uri).path
 
@@ -32,7 +32,7 @@ private fun getFileFromContentUri(context: Context, contentUri: Uri): File {
     // Creating Temp file
     val tempFile = File(context.cacheDir, fileName)
     tempFile.createNewFile()
-    //Initialize streams
+    // Initialize streams
     var oStream: FileOutputStream? = null
     var inputStream: InputStream? = null
 
@@ -45,7 +45,7 @@ private fun getFileFromContentUri(context: Context, contentUri: Uri): File {
     } catch (e: Exception) {
         e.printStackTrace()
     } finally {
-        //Close streams
+        // Close streams
         inputStream?.close()
         oStream?.close()
     }

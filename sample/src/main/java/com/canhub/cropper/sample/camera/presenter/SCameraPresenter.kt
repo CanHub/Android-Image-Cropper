@@ -6,13 +6,11 @@ import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import com.canhub.cropper.CropImage
-import com.canhub.cropper.CropImage.getActivityResult
 import com.canhub.cropper.sample.camera.app.SCameraFragment
 import com.canhub.cropper.sample.camera.app.SCameraFragment.Companion.CODE_PHOTO_CAMERA
 import com.canhub.cropper.sample.camera.domain.CameraEnumDomain
@@ -99,7 +97,8 @@ internal class SCameraPresenter : SCameraContract.Presenter {
             when (requestCode) {
                 CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
                     val bitmap = context?.let { CropImage.getActivityResult(data)?.getBitmap(it) }
-                    Log.v("File Path",
+                    Log.v(
+                        "File Path",
                         context
                             ?.let { CropImage.getActivityResult(data)?.getFilePath(it) }
                             .toString()
