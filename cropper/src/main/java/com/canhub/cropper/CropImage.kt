@@ -373,7 +373,6 @@ object CropImage {
      * activity/fragment/widget.
      */
     fun getCaptureImageOutputUriFilePath(context: Context): String =
-    fun getCaptureImageOutputFilePath(context: Context): String =
         getFilePathFromUri(context, getCaptureImageOutputUriContent(context))
 
     /**
@@ -404,7 +403,6 @@ object CropImage {
      * @param data    the returned data of the activity result
      */
     fun getPickImageResultUriFilePath(context: Context, data: Intent?): String =
-    fun getPickImageResultFilePath(context: Context, data: Intent?): String =
         getFilePathFromUri(context, getPickImageResultUriContent(context, data))
 
     /**

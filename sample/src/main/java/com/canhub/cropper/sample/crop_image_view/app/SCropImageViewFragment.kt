@@ -177,11 +177,7 @@ internal class SCropImageViewFragment :
                     handleCropResult(CropImage.getActivityResult(data))
                 CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE -> {
                     val ctx = context
-<<<<<<< HEAD
                     ctx?.let { Log.v("File Path", CropImage.getPickImageResultUriFilePath(it, data)) }
-=======
-                    ctx?.let { Log.v("File Path", CropImage.getPickImageResultFilePath(it, data)) }
->>>>>>> main
                     val imageUri = ctx?.let { CropImage.getPickImageResultUriContent(it, data) }
 
                     if (imageUri != null &&
@@ -234,11 +230,7 @@ internal class SCropImageViewFragment :
                 if (binding.cropImageView.cropShape == CropImageView.CropShape.OVAL)
                     result.bitmap?.let { CropImage.toOvalBitmap(it) }
                 else result.bitmap
-<<<<<<< HEAD
             context?.let { Log.v("File Path", result.getUriFilePath(it).toString()) }
-=======
-            context?.let { Log.v("File Path", result.getFilePath(it).toString()) }
->>>>>>> main
             SCropResultActivity.start(this, imageBitmap, result.uriContent, result.sampleSize)
         } else {
             Log.e("AIC", "Failed to crop image", result?.error)
