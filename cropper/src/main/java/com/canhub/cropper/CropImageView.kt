@@ -13,7 +13,6 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.provider.MediaStore
 import android.util.AttributeSet
-import android.util.Log
 import android.util.Pair
 import android.view.LayoutInflater
 import android.widget.FrameLayout
@@ -861,8 +860,6 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
         setProgressBarVisibility()
         if (result.error == null) {
             mInitialDegreesRotated = result.degreesRotated
-            Log.v("CanatoXXX", result.uriContent.toString())
-            Log.v("CanatoXXX", result.getFilePath(context))
             setBitmap(
                 result.bitmap,
                 0,
@@ -872,8 +869,6 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
             )
         }
         val listener = mOnSetImageUriCompleteListener
-        Log.v("CanatoXXX", result.uriContent.toString())
-        Log.v("CanatoXXX", result.getFilePath(context))
         listener?.onSetImageUriComplete(this, result.uriContent, result.error)
     }
 

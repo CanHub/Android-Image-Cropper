@@ -283,7 +283,7 @@ open class CropImageActivity :
                             )
                             getUriForFile(applicationContext, file)
                         } catch (e: Exception) {
-                            Log.e("CropImageActivity", "${e.message}")
+                            Log.e("AIC", "${e.message}")
                             val file = File.createTempFile("cropped", ext, cacheDir)
                             getUriForFile(applicationContext, file)
                         }
