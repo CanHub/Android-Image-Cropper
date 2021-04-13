@@ -78,7 +78,7 @@ class BitmapLoadingWorkerJob internal constructor(
 
         /**
          * The Android URI of the image to load.
-         * NOT a file path, for it use [getFilePath]
+         * NOT a file path, for it use [getUriFilePath]
          */
         val uriContent: Uri
 
@@ -95,7 +95,7 @@ class BitmapLoadingWorkerJob internal constructor(
         val error: Exception?
 
         /** The file path of the image to load */
-        fun getFilePath(context: Context): String = getFilePathFromUri(context, uriContent)
+        fun getUriFilePath(context: Context): String = getFilePathFromUri(context, uriContent)
 
         internal constructor(uri: Uri, bitmap: Bitmap?, loadSampleSize: Int, degreesRotated: Int) {
             uriContent = uri

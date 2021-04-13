@@ -123,7 +123,7 @@ class MainActivity {
              val result = CropImage.getActivityResult(data)
              if (resultCode == Activity.RESULT_OK) {
                  val resultUri: Uri? = result?.uriContent
-                 val resultFilePath: String? = result?.getFilePath(requireContext())
+                 val resultFilePath: String? = result?.getUriFilePath(requireContext())
              } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                  val error = result!!.error
              }

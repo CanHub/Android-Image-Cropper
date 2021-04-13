@@ -339,7 +339,7 @@ object CropImage {
     /**
      * Get URI to image received from capture by camera.
      *
-     * This is not the File Path, for it please use [getCaptureImageOutputFilePath]
+     * This is not the File Path, for it please use [getCaptureImageOutputUriFilePath]
      *
      * @param context used to access Android APIs, like content resolve, it is your
      * activity/fragment/widget.
@@ -372,14 +372,14 @@ object CropImage {
      * @param context used to access Android APIs, like content resolve, it is your
      * activity/fragment/widget.
      */
-    fun getCaptureImageOutputFilePath(context: Context): String =
+    fun getCaptureImageOutputUriFilePath(context: Context): String =
         getFilePathFromUri(context, getCaptureImageOutputUriContent(context))
 
     /**
      * Get the URI of the selected image from [getPickImageChooserIntent].
      * Will return the correct URI for camera and gallery image.
      *
-     * This is not the File Path, for it please use [getPickImageResultFilePath]
+     * This is not the File Path, for it please use [getPickImageResultUriFilePath]
      *
      * @param context used to access Android APIs, like content resolve, it is your
      * activity/fragment/widget.
@@ -402,7 +402,7 @@ object CropImage {
      * activity/fragment/widget.
      * @param data    the returned data of the activity result
      */
-    fun getPickImageResultFilePath(context: Context, data: Intent?): String =
+    fun getPickImageResultUriFilePath(context: Context, data: Intent?): String =
         getFilePathFromUri(context, getPickImageResultUriContent(context, data))
 
     /**
