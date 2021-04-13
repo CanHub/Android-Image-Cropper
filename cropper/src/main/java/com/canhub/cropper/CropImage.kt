@@ -451,6 +451,7 @@ object CropImage {
      *
      * @return builder for Crop Image Activity
      */
+    @JvmStatic
     fun activity(): ActivityBuilder {
         return ActivityBuilder(null)
     }
@@ -464,6 +465,7 @@ object CropImage {
      * @param uri the image Android uri source to crop or null to start a picker
      * @return builder for Crop Image Activity
      */
+    @JvmStatic
     fun activity(uri: Uri?): ActivityBuilder {
         return ActivityBuilder(uri)
     }
