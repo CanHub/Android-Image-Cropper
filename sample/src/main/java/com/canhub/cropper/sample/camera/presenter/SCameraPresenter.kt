@@ -6,6 +6,7 @@ import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
@@ -96,22 +97,32 @@ internal class SCameraPresenter : SCameraContract.Presenter {
             when (requestCode) {
                 CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
                     val bitmap = context?.let { CropImage.getActivityResult(data)?.getBitmap(it) }
-                    CropImage.getActivityResult(data)?.uri?.let {
+                    Log.v(
+                        "File Path",
+                        context
+                            ?.let { CropImage.getActivityResult(data)?.getFilePath(it) }
+                            .toString()
+                    )
+
+                    CropImage.getActivityResult(data)?.uriContent?.let {
                         view?.handleCropImageResult(it.toString().replace("file:", ""))
                     } ?: view?.showErrorMessage("CropImage getActivityResult return null")
                 }
                 SCameraFragment.CUSTOM_REQUEST_CODE -> {
                     context?.let {
-                        val uri = CropImage.getPickImageResultUri(it, data)
+                        Log.v("File Path", CropImage.getPickImageResultFilePath(it, data))
+
+                        CropImage.getPickImageResultFilePath(it, data)
+                        val uri = CropImage.getPickImageResultUriContent(it, data)
                         view?.handleCropImageResult(uri.toString().replace("file:", ""))
                     }
                 }
                 CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE -> {
                     context?.let { ctx ->
-                        val uri = CropImage.getPickImageResultUri(ctx, data)
+                        Log.v("File Path", CropImage.getPickImageResultFilePath(ctx, data))
+                        val uri = CropImage.getPickImageResultUriContent(ctx, data)
 
-                        if (uri != null) view?.handleCropImageResult(uri.toString())
-                        else view?.showErrorMessage("Pick Image, null URI")
+                        view?.handleCropImageResult(uri.toString())
                     }
                 }
                 CODE_PHOTO_CAMERA -> view?.startCropImage(CameraEnumDomain.START_WITH_URI)

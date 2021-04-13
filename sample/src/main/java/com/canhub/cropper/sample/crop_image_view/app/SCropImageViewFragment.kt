@@ -177,7 +177,8 @@ internal class SCropImageViewFragment :
                     handleCropResult(CropImage.getActivityResult(data))
                 CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE -> {
                     val ctx = context
-                    val imageUri = ctx?.let { CropImage.getPickImageResultUri(it, data) }
+                    ctx?.let { Log.v("File Path", CropImage.getPickImageResultFilePath(it, data)) }
+                    val imageUri = ctx?.let { CropImage.getPickImageResultUriContent(it, data) }
 
                     if (imageUri != null &&
                         CropImage.isReadExternalStoragePermissionsRequired(ctx, imageUri)
@@ -229,8 +230,8 @@ internal class SCropImageViewFragment :
                 if (binding.cropImageView.cropShape == CropImageView.CropShape.OVAL)
                     result.bitmap?.let { CropImage.toOvalBitmap(it) }
                 else result.bitmap
-
-            SCropResultActivity.start(this, imageBitmap, result.uri, result.sampleSize)
+            context?.let { Log.v("File Path", result.getFilePath(it).toString()) }
+            SCropResultActivity.start(this, imageBitmap, result.uriContent, result.sampleSize)
         } else {
             Log.e("AIC", "Failed to crop image", result?.error)
             Toast

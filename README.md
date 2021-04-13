@@ -45,9 +45,11 @@ Android Image Cropper
 Only need if you run on devices under OS10 (SDK 29)
 
  ```xml
- <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
- <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-                 android:maxSdkVersion="28" />
+<manifest>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
+</manifest>
  ```
 
  #### Step 4. Add this line to your Proguard config file
@@ -82,43 +84,52 @@ You can check a sample code in this project `com.canhub.cropper.sample.extend_ac
    android:theme="@style/Base.Theme.AppCompat"/> <!-- optional (needed if default theme has no action bar) -->
  ```
 - Setup your `CropImageView` after call `super.onCreate(savedInstanceState)`
- ```java
- override fun onCreate(savedInstanceState: Bundle?) {
-  super.onCreate(savedInstanceState)
-  setCropImageView(binding.cropImageView)
- }
+ ```kotlin
+override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setCropImageView(binding.cropImageView)
+}
  ```
 
 ### Start the default Activity
 - Start `CropImageActivity` using builder pattern from your activity
- ```java
- // start picker to get image for cropping and then use the image in cropping activity
- CropImage.activity()
-   .setGuidelines(CropImageView.Guidelines.ON)
-   .start(this);
+ ```kotlin
+class MainActivity {
+    private fun startCrop() {
+        // start picker to get image for cropping and then use the image in cropping activity
+        CropImage
+            .activity()
+            .setGuidelines(CropImageView.Guidelines.ON)
+            .start(this)
 
- // start cropping activity for pre-acquired image saved on the device
- CropImage.activity(imageUri)
-  .start(this);
+        // start cropping activity for pre-acquired image saved on the device
+        CropImage
+            .activity(imageUri)
+            .start(this)
 
- // for fragment (DO NOT use `getActivity()`)
- CropImage.activity()
-   .start(getContext(), this);
+        // for fragment (DO NOT use `getActivity()`)
+        CropImage
+            .activity()
+            .start(requireContext(), this)
+    }
+}
  ```
 
 - Override `onActivityResult` method in your activity to get crop result
- ```java
- @Override
- public void onActivityResult(int requestCode, int resultCode, Intent data) {
-   if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-     CropImage.ActivityResult result = CropImage.getActivityResult(data);
-     if (resultCode == RESULT_OK) {
-       Uri resultUri = result.getUri();
-     } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-       Exception error = result.getError();
+ ```kotlin
+class MainActivity {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+             val result = CropImage.getActivityResult(data)
+             if (resultCode == Activity.RESULT_OK) {
+                 val resultUri: Uri? = result?.uriContent
+                 val resultFilePath: String? = result?.getFilePath(requireContext())
+             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                 val error = result!!.error
+             }
+         }
      }
-   }
- }
+}
  ```
 
 ## Using View
@@ -126,7 +137,6 @@ You can check a sample code in this project `com.canhub.cropper.sample.extend_ac
  ```xml
  <!-- Image Cropper fill the remaining available height -->
  <com.canhub.cropper.CropImageView
-   xmlns:custom="http://schemas.android.com/apk/res-auto"
    android:id="@+id/cropImageView"
    android:layout_width="match_parent"
    android:layout_height="0dp"
@@ -134,18 +144,18 @@ You can check a sample code in this project `com.canhub.cropper.sample.extend_ac
  ```
 
 3. Set image to crop
- ```java
- cropImageView.setImageUriAsync(uri);
+ ```kotlin
+ cropImageView.setImageUriAsync(uri)
  // or (prefer using uri for performance and better user experience)
- cropImageView.setImageBitmap(bitmap);
+ cropImageView.setImageBitmap(bitmap)
  ```
 
 4. Get cropped image
- ```java
+ ```kotlin
  // subscribe to async event using cropImageView.setOnCropImageCompleteListener(listener)
- cropImageView.getCroppedImageAsync();
+ cropImageView.getCroppedImageAsync()
  // or
- Bitmap cropped = cropImageView.getCroppedImage();
+ val cropped: Bitmap = cropImageView.getCroppedImage()
  ```
 
 ## Features

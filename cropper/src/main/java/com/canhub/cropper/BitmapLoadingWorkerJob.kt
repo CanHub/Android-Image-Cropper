@@ -1,9 +1,11 @@
 package com.canhub.cropper
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
+import com.canhub.cropper.utils.getFilePathFromUri
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.isActive
@@ -71,12 +73,14 @@ class BitmapLoadingWorkerJob internal constructor(
         currentJob?.cancel()
     }
 
-    // region: Inner class: Result
     /** The result of BitmapLoadingWorkerJob async loading.  */
     companion object class Result {
 
-        /** The Android URI of the image to load  */
-        val uri: Uri
+        /**
+         * The Android URI of the image to load.
+         * NOT a file path, for it use [getFilePath]
+         */
+        val uriContent: Uri
 
         /** The loaded bitmap  */
         val bitmap: Bitmap?
@@ -90,8 +94,11 @@ class BitmapLoadingWorkerJob internal constructor(
         /** The error that occurred during async bitmap loading.  */
         val error: Exception?
 
+        /** The file path of the image to load */
+        fun getFilePath(context: Context): String = getFilePathFromUri(context, uriContent)
+
         internal constructor(uri: Uri, bitmap: Bitmap?, loadSampleSize: Int, degreesRotated: Int) {
-            this.uri = uri
+            uriContent = uri
             this.bitmap = bitmap
             this.loadSampleSize = loadSampleSize
             this.degreesRotated = degreesRotated
@@ -99,12 +106,11 @@ class BitmapLoadingWorkerJob internal constructor(
         }
 
         internal constructor(uri: Uri, error: Exception?) {
-            this.uri = uri
+            uriContent = uri
             bitmap = null
             loadSampleSize = 0
             degreesRotated = 0
             this.error = error
         }
     }
-    // endregion
 }
