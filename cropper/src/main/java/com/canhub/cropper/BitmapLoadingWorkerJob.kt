@@ -96,6 +96,7 @@ class BitmapLoadingWorkerJob internal constructor(
 
         /** The file path of the image to load */
         fun getUriFilePath(context: Context): String = getFilePathFromUri(context, uriContent)
+        fun getFilePath(context: Context): String = getFilePathFromUri(context, uriContent) delete
 
         internal constructor(uri: Uri, bitmap: Bitmap?, loadSampleSize: Int, degreesRotated: Int) {
             uriContent = uri

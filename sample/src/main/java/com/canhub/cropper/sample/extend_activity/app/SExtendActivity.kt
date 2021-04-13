@@ -94,7 +94,11 @@ internal class SExtendActivity : CropImageActivity(), SExtendContract.View {
             sampleSize
         )
 
+<<<<<<< HEAD
         Log.v("File Path", result.getUriFilePath(this).toString())
+=======
+        Log.v("File Path", result.getFilePath(this).toString())
+>>>>>>> main
         binding.cropImageView.setImageUriAsync(result.uriContent)
     }
 

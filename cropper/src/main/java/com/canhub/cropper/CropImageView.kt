@@ -1722,6 +1722,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
          * Null if get cropped image was executed, no output requested or failure.
          */
         fun getUriFilePath(context: Context): String? =
+        fun getFilePath(context: Context): String? =
             uriContent?.let { getFilePathFromUri(context, it) }
     }
 
