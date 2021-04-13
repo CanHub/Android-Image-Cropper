@@ -100,7 +100,7 @@ internal class SCameraPresenter : SCameraContract.Presenter {
                     Log.v(
                         "File Path",
                         context
-                            ?.let { CropImage.getActivityResult(data)?.getFilePath(it) }
+                            ?.let { CropImage.getActivityResult(data)?.getUriFilePath(it) }
                             .toString()
                     )
 
@@ -110,16 +110,16 @@ internal class SCameraPresenter : SCameraContract.Presenter {
                 }
                 SCameraFragment.CUSTOM_REQUEST_CODE -> {
                     context?.let {
-                        Log.v("File Path", CropImage.getPickImageResultFilePath(it, data))
+                        Log.v("File Path", CropImage.getPickImageResultUriFilePath(it, data))
 
-                        CropImage.getPickImageResultFilePath(it, data)
+                        CropImage.getPickImageResultUriFilePath(it, data)
                         val uri = CropImage.getPickImageResultUriContent(it, data)
                         view?.handleCropImageResult(uri.toString().replace("file:", ""))
                     }
                 }
                 CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE -> {
                     context?.let { ctx ->
-                        Log.v("File Path", CropImage.getPickImageResultFilePath(ctx, data))
+                        Log.v("File Path", CropImage.getPickImageResultUriFilePath(ctx, data))
                         val uri = CropImage.getPickImageResultUriContent(ctx, data)
 
                         view?.handleCropImageResult(uri.toString())

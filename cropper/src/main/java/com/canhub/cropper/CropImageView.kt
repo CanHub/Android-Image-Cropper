@@ -1659,7 +1659,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
          * The Android uri of the saved cropped image result.<br></br>
          * Null if get cropped image was executed, no output requested or failure.
          *
-         * This is NOT the file path, please use [getFilePath]
+         * This is NOT the file path, please use [getUriFilePath]
          */
         val uriContent: Uri?,
         /** The error that failed the loading/cropping (null if successful)  */
@@ -1721,7 +1721,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
          * The file path of the image to load
          * Null if get cropped image was executed, no output requested or failure.
          */
-        fun getFilePath(context: Context): String? =
+        fun getUriFilePath(context: Context): String? =
             uriContent?.let { getFilePathFromUri(context, it) }
     }
 
