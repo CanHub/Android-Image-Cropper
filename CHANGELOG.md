@@ -13,7 +13,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [3.0.1] - 21/04/21
 ### Added
-- Estonian language.
+- Estonian language [#119](https://github.com/CanHub/Android-Image-Cropper/pull/119)
 
 ## [3.0.0] - 13/04/21
 ### Removed
