@@ -1,7 +1,9 @@
-name: main_push_ci
+name: CI
 
 on:
   push:
+    branches: [ main ]
+  pull_request:
     branches: [ main ]
 
 jobs:
@@ -10,6 +12,7 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+      - uses: gradle/wrapper-validation-action@v1
 
       - name: Ktlint check for code conventions
         run: ./gradlew ktlintCheck
