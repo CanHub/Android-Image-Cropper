@@ -8,6 +8,9 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale.getDefault
 
 /**
  * This class will create a temporary file in the cache if need.
@@ -18,17 +21,20 @@ import java.io.OutputStream
  *
  * @param context used to access Android APIs, like content resolve, it is your activity/fragment.
  * @param uri the URI to load the image from.
+ * @param uniqueName If true, make each image cropped have a different file name, this could cause
+ * memory issues, use wisely. [Default: false]
  *
  * @return string value of the File path.
  */
-internal fun getFilePathFromUri(context: Context, uri: Uri): String =
+internal fun getFilePathFromUri(context: Context, uri: Uri, uniqueName: Boolean = false): String =
     if (uri.path?.contains("file://") == true) uri.path!!
-    else getFileFromContentUri(context, uri).path
+    else getFileFromContentUri(context, uri, uniqueName).path
 
-private fun getFileFromContentUri(context: Context, contentUri: Uri): File {
+private fun getFileFromContentUri(context: Context, contentUri: Uri, uniqueName: Boolean): File {
     // Preparing Temp file name
     val fileExtension = getFileExtension(context, contentUri)
-    val fileName = "temp_file" + if (fileExtension != null) ".$fileExtension" else ""
+    val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", getDefault()).format(Date())
+    val fileName = ("temp_file_" + if (uniqueName) timeStamp else "") + ".$fileExtension"
     // Creating Temp file
     val tempFile = File(context.cacheDir, fileName)
     tempFile.createNewFile()
@@ -53,9 +59,9 @@ private fun getFileFromContentUri(context: Context, contentUri: Uri): File {
     return tempFile
 }
 
-private fun getFileExtension(context: Context, uri: Uri): String? {
+private fun getFileExtension(context: Context, uri: Uri): String {
     val fileType: String? = context.contentResolver.getType(uri)
-    return MimeTypeMap.getSingleton().getExtensionFromMimeType(fileType)
+    return MimeTypeMap.getSingleton().getExtensionFromMimeType(fileType) ?: ""
 }
 
 @Throws(IOException::class)
