@@ -94,8 +94,16 @@ class BitmapLoadingWorkerJob internal constructor(
         /** The error that occurred during async bitmap loading.  */
         val error: Exception?
 
-        /** The file path of the image to load */
-        fun getUriFilePath(context: Context): String = getFilePathFromUri(context, uriContent)
+        /**
+         * The file path of the image to load
+         *
+         * @param context used to access Android APIs, like content resolve, it is your
+         * activity/fragment/widget.
+         * @param uniqueName If true, make each image cropped have a different file name, this could
+         * cause memory issues, use wisely. [Default: false]
+         */
+        fun getUriFilePath(context: Context, uniqueName: Boolean = false): String =
+            getFilePathFromUri(context, uriContent, uniqueName)
 
         internal constructor(uri: Uri, bitmap: Bitmap?, loadSampleSize: Int, degreesRotated: Int) {
             uriContent = uri

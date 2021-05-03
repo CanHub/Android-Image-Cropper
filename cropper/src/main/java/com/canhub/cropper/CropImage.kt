@@ -371,9 +371,11 @@ object CropImage {
      *
      * @param context used to access Android APIs, like content resolve, it is your
      * activity/fragment/widget.
+     * @param uniqueName If true, make each image cropped have a different file name, this could cause
+     * memory issues, use wisely. [Default: false]
      */
-    fun getCaptureImageOutputUriFilePath(context: Context): String =
-        getFilePathFromUri(context, getCaptureImageOutputUriContent(context))
+    fun getCaptureImageOutputUriFilePath(context: Context, uniqueName: Boolean = false): String =
+        getFilePathFromUri(context, getCaptureImageOutputUriContent(context), uniqueName)
 
     /**
      * Get the URI of the selected image from [getPickImageChooserIntent].
@@ -401,9 +403,15 @@ object CropImage {
      * @param context used to access Android APIs, like content resolve, it is your
      * activity/fragment/widget.
      * @param data    the returned data of the activity result
+     * @param uniqueName If true, make each image cropped have a different file name, this could cause
+     * memory issues, use wisely. [Default: false]
      */
-    fun getPickImageResultUriFilePath(context: Context, data: Intent?): String =
-        getFilePathFromUri(context, getPickImageResultUriContent(context, data))
+    fun getPickImageResultUriFilePath(
+        context: Context,
+        data: Intent?,
+        uniqueName: Boolean = false
+    ): String =
+        getFilePathFromUri(context, getPickImageResultUriContent(context, data), uniqueName)
 
     /**
      * Check if the given picked image URI requires READ_EXTERNAL_STORAGE permissions.<br></br>
@@ -460,7 +468,7 @@ object CropImage {
      * Create [ActivityBuilder] instance to start [CropImageActivity] to crop the given
      * image.<br></br>
      * Result will be received in onActivityResult(int, int, Intent) and can be
-     * retrieved using [.getActivityResult].
+     * retrieved using [getActivityResult].
      *
      * @param uri the image Android uri source to crop or null to start a picker
      * @return builder for Crop Image Activity
