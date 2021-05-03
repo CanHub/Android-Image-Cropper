@@ -22,11 +22,11 @@ import java.util.Locale.getDefault
  * @param context used to access Android APIs, like content resolve, it is your activity/fragment.
  * @param uri the URI to load the image from.
  * @param uniqueName If true, make each image cropped have a different file name, this could cause
- * memory issues, use wisely. [Default: false]
+ * memory issues, use wisely.
  *
  * @return string value of the File path.
  */
-internal fun getFilePathFromUri(context: Context, uri: Uri, uniqueName: Boolean = false): String =
+internal fun getFilePathFromUri(context: Context, uri: Uri, uniqueName: Boolean): String =
     if (uri.path?.contains("file://") == true) uri.path!!
     else getFileFromContentUri(context, uri, uniqueName).path
 
