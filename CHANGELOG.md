@@ -10,6 +10,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - `Security` in case of vulnerabilities.
 
 ## [unreleased x.x.x] -
+### Changed
+- New option for different file names [#122](https://github.com/CanHub/Android-Image-Cropper/pull/122)
 
 ## [3.0.1] - 21/04/21
 ### Added
