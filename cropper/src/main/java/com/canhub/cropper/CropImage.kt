@@ -460,7 +460,7 @@ object CropImage {
      * Create [ActivityBuilder] instance to start [CropImageActivity] to crop the given
      * image.<br></br>
      * Result will be received in onActivityResult(int, int, Intent) and can be
-     * retrieved using [.getActivityResult].
+     * retrieved using [getActivityResult].
      *
      * @param uri the image Android uri source to crop or null to start a picker
      * @return builder for Crop Image Activity
