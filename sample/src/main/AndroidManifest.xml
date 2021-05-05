@@ -24,6 +24,9 @@
         <activity
             android:name="com.canhub.cropper.sample.extend_activity.app.SExtendActivity"
             android:theme="@style/Theme.SampleNoActionBar" />
+        <activity
+            android:name="com.canhub.cropper.sample.SExtendActivityJava"
+            android:theme="@style/Theme.SampleNoActionBar" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

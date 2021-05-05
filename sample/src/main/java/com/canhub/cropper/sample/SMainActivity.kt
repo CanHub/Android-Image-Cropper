@@ -1,5 +1,6 @@
 package com.canhub.cropper.sample
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -35,6 +36,11 @@ internal class SMainActivity : AppCompatActivity() {
                 .beginTransaction()
                 .replace(R.id.container, SCameraFragment.newInstance())
                 .commit()
+        }
+
+        binding.sampleCustomActivityJava.setOnClickListener {
+            val intent = Intent(this, SExtendActivityJava::class.java)
+            startActivity(intent)
         }
     }
 
