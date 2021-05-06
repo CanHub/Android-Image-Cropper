@@ -75,6 +75,7 @@
     <string name="sample_of_customactivity">Sample of CustomActivity</string>
     <string name="sample_of_customactivity_java">Sample of CustomActivity Java</string>
     <string name="sample_calling_cropimage">Sample calling CropImage</string>
+    <string name="sample_calling_cropimage_java">Sample calling CropImage Java</string>
     <string name="take_picture">Take Picture</string>
     <string name="crop_settings">Crop Settings</string>
     <string name="ok">ok</string>
