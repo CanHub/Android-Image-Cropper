@@ -1,4 +1,4 @@
-package com.canhub.cropper.sample;
+package com.canhub.cropper.sample.extend_activity.app;
 
 import android.content.Intent;
 import android.net.Uri;
