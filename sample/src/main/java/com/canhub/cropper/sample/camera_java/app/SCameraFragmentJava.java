@@ -33,10 +33,11 @@ import androidx.viewpager.widget.ViewPager;
 import com.canhub.cropper.CropImage;
 import com.canhub.cropper.CropImageView;
 import com.canhub.cropper.sample.SCropResultActivity;
-import com.canhub.cropper.sample.camera.domain.CameraEnumDomain;
-import com.canhub.cropper.sample.camera.domain.SCameraContract;
-import com.canhub.cropper.sample.camera.presenter.SCameraPresenter;
+import com.canhub.cropper.sample.camera_java.domain.CameraEnumDomainJava;
+import com.canhub.cropper.sample.camera_java.domain.SCameraContractJava;
+import com.canhub.cropper.sample.camera_java.presenter.SCameraPresenterJava;
 import com.example.croppersample.R;
+import com.example.croppersample.databinding.FragmentCameraBinding;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -49,31 +50,22 @@ import java.util.Locale;
 import static android.graphics.Color.RED;
 import static android.graphics.Color.WHITE;
 
-public class SCameraFragmentJava extends Fragment implements SCameraContract.View {
+public class SCameraFragmentJava extends Fragment implements SCameraContractJava.View {
 
-    static final int CODE_PHOTO_CAMERA = 811917;
+    public static final int CODE_PHOTO_CAMERA = 811917;
     static final String DATE_FORMAT = "yyyyMMdd_HHmmss";
     static final String FILE_NAMING_PREFIX = "JPEG_";
     static final String FILE_NAMING_SUFFIX = "_";
     static final String FILE_FORMAT = ".jpg";
     static final String AUTHORITY_SUFFIX = ".fileprovider";
-    static final int CUSTOM_REQUEST_CODE = 8119153;
+    public static final int CUSTOM_REQUEST_CODE = 8119153;
 
-    private ViewHolder viewHolder;
-    private SCameraContract.Presenter presenter = new SCameraPresenter();
+    private FragmentCameraBinding binding;
+    private SCameraContractJava.Presenter presenter = new SCameraPresenterJava();
     private Uri photoUri;
     private ActivityResultLauncher<String> requestPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-                if (isGranted) {
-                    // Permission is granted. Continue the action or workflow in your
-                    // app.
-                } else {
-                    // Explain to the user that the feature is unavailable because the
-                    // features requires a permission that the user has denied. At the
-                    // same time, respect the user's decision. Don't link to system
-                    // settings in an effort to convince the user to change their
-                    // decision.
-                }
+                presenter.onPermissionResult(isGranted);
             });
 
     public static SCameraFragmentJava newInstance(){
@@ -83,11 +75,9 @@ public class SCameraFragmentJava extends Fragment implements SCameraContract.Vie
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_camera, container, false);
-        viewHolder = new ViewHolder(rootView);
-        rootView.setTag(viewHolder);
+        binding = FragmentCameraBinding.inflate(inflater, container, false);
 
-        return rootView;
+        return binding.getRoot();
     }
 
     @Override
@@ -95,28 +85,28 @@ public class SCameraFragmentJava extends Fragment implements SCameraContract.Vie
         super.onViewCreated(view, savedInstanceState);
         presenter.bind(this);
 
-        viewHolder.startWithUri.setOnClickListener(new View.OnClickListener() {
+        binding.startWithUri.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 presenter.startWithUriClicked();
             }
         });
 
-        viewHolder.startWithoutUri.setOnClickListener(new View.OnClickListener() {
+        binding.startWithoutUri.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 presenter.startWithoutUriClicked();
             }
         });
 
-        viewHolder.startPickImageActivity.setOnClickListener(new View.OnClickListener() {
+        binding.startPickImageActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 presenter.startPickImageActivityClicked();
             }
         });
 
-        viewHolder.startActivityForResult.setOnClickListener(new View.OnClickListener() {
+        binding.startActivityForResult.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 presenter.startActivityForResultClicked();
@@ -127,7 +117,7 @@ public class SCameraFragmentJava extends Fragment implements SCameraContract.Vie
     }
 
     @Override
-    public void startCropImage(@NotNull CameraEnumDomain option) {
+    public void startCropImage(@NotNull CameraEnumDomainJava option) {
         switch (option) {
             case START_WITH_URI : startCameraWithUri(); break;
             case START_WITHOUT_URI : startCameraWithoutUri(); break;
@@ -253,7 +243,7 @@ public class SCameraFragmentJava extends Fragment implements SCameraContract.Vie
     @Override
     public void showErrorMessage(@NotNull String message) {
         Log.e("Camera Error:", message);
-        Toast.makeText(getActivity(), "Crop failed: $message", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Crop failed: "+message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -323,16 +313,5 @@ public class SCameraFragmentJava extends Fragment implements SCameraContract.Vie
                 FILE_FORMAT,
                 storageDir
         );
-    }
-
-    public static class ViewHolder {
-        public final Button startWithUri, startWithoutUri, startPickImageActivity, startActivityForResult;
-
-        public ViewHolder(View view) {
-            startWithUri = view.findViewById(R.id.startWithUri);
-            startWithoutUri = view.findViewById(R.id.startWithoutUri);
-            startPickImageActivity = view.findViewById(R.id.startPickImageActivity);
-            startActivityForResult = view.findViewById(R.id.startActivityForResult);
-        }
     }
 }
