@@ -3,7 +3,6 @@ buildscript {
 
     repositories {
         maven { url "https://plugins.gradle.org/m2/" }
-        jcenter()
         google()
     }
 
@@ -21,7 +20,6 @@ subprojects {
 
 allprojects {
     repositories {
-        jcenter()
         mavenCentral()
         maven { url "https://maven.google.com" }
         maven { url "https://jitpack.io" }
