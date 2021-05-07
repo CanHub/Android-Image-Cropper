@@ -1,11 +1,9 @@
 package com.canhub.cropper.sample.camera_java.app;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -17,8 +15,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -27,8 +23,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.viewpager.widget.ViewPager;
 
 import com.canhub.cropper.CropImage;
 import com.canhub.cropper.CropImageView;
@@ -44,7 +38,6 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Locale;
 
 import static android.graphics.Color.RED;
@@ -61,14 +54,12 @@ public class SCameraFragmentJava extends Fragment implements SCameraContractJava
     public static final int CUSTOM_REQUEST_CODE = 8119153;
 
     private FragmentCameraBinding binding;
-    private SCameraContractJava.Presenter presenter = new SCameraPresenterJava();
+    private final SCameraContractJava.Presenter presenter = new SCameraPresenterJava();
     private Uri photoUri;
-    private ActivityResultLauncher<String> requestPermissionLauncher =
-            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-                presenter.onPermissionResult(isGranted);
-            });
+    private final ActivityResultLauncher<String> requestPermissionLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), presenter::onPermissionResult);
 
-    public static SCameraFragmentJava newInstance(){
+    public static SCameraFragmentJava newInstance() {
         return new SCameraFragmentJava();
     }
 
@@ -85,33 +76,13 @@ public class SCameraFragmentJava extends Fragment implements SCameraContractJava
         super.onViewCreated(view, savedInstanceState);
         presenter.bind(this);
 
-        binding.startWithUri.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.startWithUriClicked();
-            }
-        });
+        binding.startWithUri.setOnClickListener(v -> presenter.startWithUriClicked());
 
-        binding.startWithoutUri.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.startWithoutUriClicked();
-            }
-        });
+        binding.startWithoutUri.setOnClickListener(v -> presenter.startWithoutUriClicked());
 
-        binding.startPickImageActivity.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.startPickImageActivityClicked();
-            }
-        });
+        binding.startPickImageActivity.setOnClickListener(v -> presenter.startPickImageActivityClicked());
 
-        binding.startActivityForResult.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.startActivityForResultClicked();
-            }
-        });
+        binding.startActivityForResult.setOnClickListener(v -> presenter.startActivityForResultClicked());
 
         presenter.onCreate(getActivity(), getContext());
     }
@@ -119,16 +90,25 @@ public class SCameraFragmentJava extends Fragment implements SCameraContractJava
     @Override
     public void startCropImage(@NotNull CameraEnumDomainJava option) {
         switch (option) {
-            case START_WITH_URI : startCameraWithUri(); break;
-            case START_WITHOUT_URI : startCameraWithoutUri(); break;
-            case START_PICK_IMG : startPickImage(); break;
-            case START_FOR_RESULT : startForResult(); break;
-            default: break;
+            case START_WITH_URI:
+                startCameraWithUri();
+                break;
+            case START_WITHOUT_URI:
+                startCameraWithoutUri();
+                break;
+            case START_PICK_IMG:
+                startPickImage();
+                break;
+            case START_FOR_RESULT:
+                startForResult();
+                break;
+            default:
+                break;
         }
     }
 
-    private void startForResult(){
-        assert(getContext()!=null);
+    private void startForResult() {
+        assert (getContext() != null);
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -136,14 +116,14 @@ public class SCameraFragmentJava extends Fragment implements SCameraContractJava
 
     }
 
-    private void startPickImage(){
-        assert(getContext()!=null);
+    private void startPickImage() {
+        assert (getContext() != null);
         CropImage.activity()
                 .start(getContext(), this);
     }
 
-    private void startCameraWithoutUri(){
-        assert(getContext()!=null);
+    private void startCameraWithoutUri() {
+        assert (getContext() != null);
         Context ctx = getContext();
         CropImage.activity()
                 .setScaleType(CropImageView.ScaleType.CENTER)
@@ -191,8 +171,8 @@ public class SCameraFragmentJava extends Fragment implements SCameraContractJava
                 .start(ctx, this);
     }
 
-    private void startCameraWithUri(){
-        assert(getContext()!=null);
+    private void startCameraWithUri() {
+        assert (getContext() != null);
         Context ctx = getContext();
         CropImage.activity(photoUri)
                 .setScaleType(CropImageView.ScaleType.FIT_CENTER)
@@ -243,16 +223,16 @@ public class SCameraFragmentJava extends Fragment implements SCameraContractJava
     @Override
     public void showErrorMessage(@NotNull String message) {
         Log.e("Camera Error:", message);
-        Toast.makeText(getActivity(), "Crop failed: "+message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Crop failed: " + message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void dispatchTakePictureIntent() {
-        assert(getContext()!=null);
+        assert (getContext() != null);
         Context ctx = getContext();
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         try {
-            if(takePictureIntent.resolveActivity(ctx.getPackageManager()) != null){
+            if (takePictureIntent.resolveActivity(ctx.getPackageManager()) != null) {
                 String authorities = getContext().getPackageName() + AUTHORITY_SUFFIX;
                 photoUri = FileProvider.getUriForFile(ctx, authorities, createImageFile());
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
@@ -275,19 +255,8 @@ public class SCameraFragmentJava extends Fragment implements SCameraContractJava
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
         alertDialogBuilder.setTitle(R.string.missing_camera_permission_title);
         alertDialogBuilder.setMessage(R.string.missing_camera_permission_body);
-                alertDialogBuilder.setPositiveButton(R.string.ok,
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface arg0, int arg1) {
-                                presenter.onOk();
-                            }
-                        });
-        alertDialogBuilder.setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                presenter.onCancel();
-            }
-        });
+        alertDialogBuilder.setPositiveButton(R.string.ok, (arg0, arg1) -> presenter.onOk());
+        alertDialogBuilder.setNegativeButton(R.string.cancel, (dialog, which) -> presenter.onCancel());
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
 
@@ -305,11 +274,11 @@ public class SCameraFragmentJava extends Fragment implements SCameraContractJava
     }
 
     private File createImageFile() throws IOException {
-        assert getActivity()!=null;
+        assert getActivity() != null;
         SimpleDateFormat timeStamp = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
         File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         return File.createTempFile(
-                "$FILE_NAMING_PREFIX$$FILE_NAMING_SUFFIX",
+                FILE_NAMING_PREFIX + FILE_NAMING_SUFFIX,
                 FILE_FORMAT,
                 storageDir
         );
