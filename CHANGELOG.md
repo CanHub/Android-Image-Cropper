@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [unreleased x.x.x] -
 ### Changed
+- Kotlin Version from `1.4.30` to `1.5.0`
 - New option for different file names [#122](https://github.com/CanHub/Android-Image-Cropper/pull/122)
 
 ## [3.0.1] - 21/04/21
