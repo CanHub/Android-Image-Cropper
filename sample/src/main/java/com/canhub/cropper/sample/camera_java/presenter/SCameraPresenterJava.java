@@ -62,8 +62,11 @@ public class SCameraPresenterJava implements SCameraContractJava.Presenter {
         this.context = context;
 
         request = ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.CAMERA);
-        assert context.getPackageManager()!=null;
-        hasSystemFeature = context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY);
+        if(context.getPackageManager()!=null) {
+            hasSystemFeature = context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY);
+        } else {
+            hasSystemFeature = false;
+        }
         selfPermission = ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
     }
 
