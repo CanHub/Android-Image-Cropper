@@ -118,7 +118,7 @@ public class SCameraPresenterJava implements SCameraContractJava.Presenter {
             switch (requestCode) {
                 case CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE : {
                     assert(context!=null);
-                    /*Bitmap bitmap = CropImage.getActivityResult(data).getBitmap(this);
+                    Bitmap bitmap = CropImage.getActivityResult(data).getBitmap(this);
                     Log.v(
                             "File Path",
                             CropImage.getActivityResult(data).getUriFilePath(this).toString()
@@ -129,27 +129,27 @@ public class SCameraPresenterJava implements SCameraContractJava.Presenter {
                         view.handleCropImageResult(uriContent.toString().replace("file:", ""));
                     } else {
                         view.showErrorMessage("CropImage getActivityResult return null");
-                    }*/
+                    }
                     break;
                 }
                 case SCameraFragmentJava.CUSTOM_REQUEST_CODE : {
-                    /*assert context!=null;
+                    assert context!=null;
                     Log.v("File Path", CropImage.getPickImageResultUriFilePath(context, data));
                     CropImage.getPickImageResultUriFilePath(context, data);
                     Uri uri = CropImage.getPickImageResultUriContent(context, data);
                     if(view!=null){
                         view.handleCropImageResult(uri.toString().replace("file:", ""));
                     }
-                    */
+
                     break;
                 }
                 case CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE : {
-                    /*assert context!=null;
+                    assert context!=null;
                     Log.v("File Path", CropImage.getPickImageResultUriFilePath(context, data));
                     Uri uri = CropImage.getPickImageResultUriContent(context, data);
                     if(view!=null){
                         view.handleCropImageResult(uri.toString());
-                    }*/
+                    }
                     break;
                 }
                 case CODE_PHOTO_CAMERA : {
