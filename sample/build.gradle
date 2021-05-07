@@ -4,22 +4,25 @@ apply plugin: 'kotlin-parcelize'
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion rootProject.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion 24
+        minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
         versionCode 1
-        versionName '1.0'
-    }
-    lintOptions {
-        abortOnError false
+        versionName rootProject.libVersion
     }
     compileOptions {
+        encoding "UTF-8"
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
         freeCompilerArgs = ["-Xinline-classes"]
+    }
+    lintOptions {
+        abortOnError false
     }
     buildFeatures {
         viewBinding true
@@ -27,9 +30,14 @@ android {
 }
 
 dependencies {
+// Project
     api project(':cropper')
-    api "androidx.appcompat:appcompat:$androidXAppCompatVersionSample"
-    implementation "androidx.core:core-ktx:$androidXCoreKtxVersion"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
+
+// Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
+
+// AndroidX
+    api "androidx.appcompat:appcompat:$appcompatVersionSample"
+    implementation "androidx.core:core-ktx:$coreKtxVersion"
     implementation "com.google.android.material:material:$materialVersion"
 }

@@ -1,22 +1,22 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'kotlin-parcelize'
-
-group='com.github.Canato'
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion rootProject.buildToolsVersion
 
     defaultConfig {
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 1
-        versionName rootProject.libVersion
     }
     compileOptions {
+        encoding "UTF-8"
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
     lintOptions {
         abortOnError false
@@ -27,14 +27,14 @@ android {
 }
 
 dependencies {
-    api "androidx.appcompat:appcompat:$androidXAppCompatVersionCropper"
-
-    implementation "androidx.exifinterface:exifinterface:$androidXExifVersion"
-    implementation "androidx.core:core-ktx:$androidXCoreKtxVersion"
-
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$androidXLifeCycleVersion"
-
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
+// Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
+
+// AndroidX
+    api "androidx.appcompat:appcompat:$appcompatVersionCropper"
+    implementation "androidx.core:core-ktx:$coreKtxVersion"
+    implementation "androidx.exifinterface:exifinterface:$exifVersion"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion"
 }
