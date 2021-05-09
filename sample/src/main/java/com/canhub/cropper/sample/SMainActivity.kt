@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.canhub.cropper.sample.camera.app.SCameraFragment
+import com.canhub.cropper.sample.camera_java.app.SCameraFragmentJava
 import com.canhub.cropper.sample.crop_image_view.app.SCropImageViewFragment
 import com.canhub.cropper.sample.extend_activity.app.SExtendActivity
 import com.example.croppersample.R
@@ -34,6 +35,14 @@ internal class SMainActivity : AppCompatActivity() {
             supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.container, SCameraFragment.newInstance())
+                .commit()
+        }
+
+        binding.sampleCropImageJava.setOnClickListener {
+            hideButtons(binding)
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.container, SCameraFragmentJava.newInstance())
                 .commit()
         }
     }

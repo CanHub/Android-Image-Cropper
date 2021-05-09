@@ -387,6 +387,7 @@ object CropImage {
      * activity/fragment/widget.
      * @param data    the returned data of the activity result
      */
+    @JvmStatic
     fun getPickImageResultUriContent(context: Context, data: Intent?): Uri {
         var isCamera = true
         if (data != null && data.data != null) {
@@ -406,6 +407,7 @@ object CropImage {
      * @param uniqueName If true, make each image cropped have a different file name, this could cause
      * memory issues, use wisely. [Default: false]
      */
+    @JvmStatic
     fun getPickImageResultUriFilePath(
         context: Context,
         data: Intent?,
@@ -485,6 +487,7 @@ object CropImage {
      * @return Crop Image Activity Result object or null if none exists
      */
     // TODO don't return null
+    @JvmStatic
     fun getActivityResult(data: Intent?): ActivityResult? =
         data?.getParcelableExtra<Parcelable>(CROP_IMAGE_EXTRA_RESULT) as? ActivityResult?
 

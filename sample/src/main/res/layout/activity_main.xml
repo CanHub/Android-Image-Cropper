@@ -58,7 +58,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/keyline_x4"
             android:text="@string/sample_calling_cropimage"/>
+
+        <Button
+            style="@style/Sample.Button"
+            android:id="@+id/sampleCropImageJava"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/sample_calling_cropimage_java"/>
     </LinearLayout>
 
     <FrameLayout
