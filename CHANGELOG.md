@@ -10,6 +10,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - `Security` in case of vulnerabilities.
 
 ## [unreleased x.x.x] -
+
+## [3.1.0] - 09/05/21
+### Added
+- Add Java Sample code [#125](https://github.com/CanHub/Android-Image-Cropper/pull/125)
+
+### Fixed
+- Cannot call library method from Java language [#113](https://github.com/CanHub/Android-Image-Cropper/issues/113) [#123](https://github.com/CanHub/Android-Image-Cropper/issues/123)
+
 ### Changed
 - New option for different file names [#122](https://github.com/CanHub/Android-Image-Cropper/pull/122)
 
