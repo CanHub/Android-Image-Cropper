@@ -109,10 +109,8 @@ public class SCameraFragmentJava extends Fragment implements SCameraContractJava
 
     private void startForResult() {
         assert (getContext() != null);
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), CUSTOM_REQUEST_CODE);
+        Intent intent =  CropImage.getPickImageChooserIntent(getContext(),"Selection Baby", true, false);
+        startActivityForResult(intent, CUSTOM_REQUEST_CODE);
 
     }
 
