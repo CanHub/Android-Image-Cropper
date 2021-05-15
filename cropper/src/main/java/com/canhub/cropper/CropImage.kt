@@ -157,6 +157,7 @@ object CropImage {
      * @param context used to access Android APIs, like content resolve, it is your
      * activity/fragment/widget.
      */
+    @JvmStatic
     fun getPickImageChooserIntent(context: Context): Intent {
         return getPickImageChooserIntent(
             context = context,
@@ -177,6 +178,7 @@ object CropImage {
      * @param includeDocuments if to include KitKat documents activity containing all sources
      * @param includeCamera    if to include camera intents
      */
+    @JvmStatic
     fun getPickImageChooserIntent(
         context: Context,
         title: CharSequence?,
@@ -427,6 +429,7 @@ object CropImage {
      * @return true - required permission are not granted, false - either no need for permissions or
      * they are granted
      */
+    @JvmStatic
     fun isReadExternalStoragePermissionsRequired(
         context: Context,
         uri: Uri,

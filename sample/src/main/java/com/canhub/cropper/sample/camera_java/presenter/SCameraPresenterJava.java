@@ -127,7 +127,7 @@ public class SCameraPresenterJava implements SCameraContractJava.Presenter {
                     );
 
                     Uri uriContent = CropImage.getActivityResult(data).getUriContent();
-                    if (uriContent != null) {
+                    if (uriContent != null && !CropImage.isReadExternalStoragePermissionsRequired(context, uriContent)) {
                         view.handleCropImageResult(uriContent.toString().replace("file:", ""));
                     } else {
                         view.showErrorMessage("CropImage getActivityResult return null");
