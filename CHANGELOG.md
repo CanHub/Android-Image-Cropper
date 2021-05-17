@@ -10,6 +10,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - `Security` in case of vulnerabilities.
 
 ## [unreleased x.x.x] -
+
+## [3.1.1] - 17/05/21
 ### Fixed
 - Make isReadExternalStoragePermissionsRequired and 2 other functions visible in Java [#129](https://github.com/CanHub/Android-Image-Cropper/issues/129)
 
