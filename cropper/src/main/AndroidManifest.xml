@@ -12,6 +12,7 @@
         </intent>
     </queries>
     <application>
+        <activity android:name=".CropImageActivity" />
         <provider
             android:name=".CropFileProvider"
             android:authorities="${applicationId}.cropper.fileprovider"
