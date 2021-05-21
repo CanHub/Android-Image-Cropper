@@ -10,6 +10,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - `Security` in case of vulnerabilities.
 
 ## [unreleased x.x.x] -
+### Fixed
+- Crashing when using the code `CropImage.activity().start(requireActivity(), this)` resolved
 
 ## [3.1.1] - 17/05/21
 ### Fixed
