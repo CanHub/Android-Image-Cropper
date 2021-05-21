@@ -50,3 +50,6 @@ build/
 
 .idea/inspectionProfiles/
 .idea/*
+.idea/markdown-navigator-enh.xml
+.idea/markdown-navigator.xml
+.idea/runConfigurations.xml
