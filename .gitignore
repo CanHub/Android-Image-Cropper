@@ -49,3 +49,4 @@ build/
 
 
 .idea/inspectionProfiles/
+.idea/*
