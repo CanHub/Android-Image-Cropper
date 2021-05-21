@@ -21,5 +21,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/library_file_paths" />
         </provider>
+        <activity android:name=".CropImageActivity" />
     </application>
 </manifest>

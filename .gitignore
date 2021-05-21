@@ -49,3 +49,7 @@ build/
 
 
 .idea/inspectionProfiles/
+
+.idea/runConfigurations.xml
+.idea/markdown-navigator.xml
+.idea/markdown-navigator-enh.xml
