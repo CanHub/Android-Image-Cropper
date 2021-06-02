@@ -19,9 +19,9 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.exifinterface.media.ExifInterface
-import androidx.fragment.app.FragmentActivity
 import com.canhub.cropper.CropOverlayView.CropWindowChangeListener
 import com.canhub.cropper.utils.getFilePathFromUri
+import com.canhub.cropper.utils.getFragmentActivityFrom
 import java.lang.ref.WeakReference
 import java.util.UUID
 import kotlin.math.max
@@ -731,7 +731,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
             clearImageInt()
             mCropOverlayView!!.initialCropWindowRect = null
             mBitmapLoadingWorkerJob =
-                WeakReference(BitmapLoadingWorkerJob((context as FragmentActivity), this, uri))
+                WeakReference(BitmapLoadingWorkerJob(getFragmentActivityFrom(context), this, uri))
             mBitmapLoadingWorkerJob!!.get()!!.start()
             setProgressBarVisibility()
         }
@@ -999,7 +999,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
             ) {
                 WeakReference(
                     BitmapCroppingWorkerJob(
-                        (context as FragmentActivity),
+                        getFragmentActivityFrom(context),
                         this,
                         imageUri,
                         cropPoints,
@@ -1022,7 +1022,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
             } else {
                 WeakReference(
                     BitmapCroppingWorkerJob(
-                        (context as FragmentActivity),
+                        getFragmentActivityFrom(context),
                         this,
                         bitmap,
                         cropPoints,
