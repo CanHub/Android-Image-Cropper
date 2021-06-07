@@ -11,7 +11,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [unreleased x.x.x] -
 ### Fixed
-- Crashing when using the code `CropImage.activity().start(requireActivity(), this)` resolved
+- Missing file extension under Android 10 [#138](https://github.com/CanHub/Android-Image-Cropper/issues/138)
+- Crashing when using the code `CropImage.activity().start(requireActivity(), this)` resolved [#133](https://github.com/CanHub/Android-Image-Cropper/issues/133)
 
 ## [3.1.1] - 17/05/21
 ### Fixed
