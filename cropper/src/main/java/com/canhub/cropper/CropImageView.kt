@@ -19,7 +19,6 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.exifinterface.media.ExifInterface
-import androidx.fragment.app.FragmentActivity
 import com.canhub.cropper.CropOverlayView.CropWindowChangeListener
 import com.canhub.cropper.utils.getFilePathFromUri
 import java.lang.ref.WeakReference
@@ -731,7 +730,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
             clearImageInt()
             mCropOverlayView!!.initialCropWindowRect = null
             mBitmapLoadingWorkerJob =
-                WeakReference(BitmapLoadingWorkerJob((context as FragmentActivity), this, uri))
+                WeakReference(BitmapLoadingWorkerJob(context, this, uri))
             mBitmapLoadingWorkerJob!!.get()!!.start()
             setProgressBarVisibility()
         }
@@ -999,45 +998,49 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
             ) {
                 WeakReference(
                     BitmapCroppingWorkerJob(
-                        (context as FragmentActivity),
-                        this,
-                        imageUri,
-                        cropPoints,
-                        mDegreesRotated,
-                        orgWidth,
-                        orgHeight,
-                        mCropOverlayView!!.isFixAspectRatio,
-                        mCropOverlayView.aspectRatioX,
-                        mCropOverlayView.aspectRatioY,
-                        newReqWidth,
-                        newReqHeight,
-                        mFlipHorizontally,
-                        mFlipVertically,
-                        options,
-                        saveUri,
-                        saveCompressFormat,
-                        saveCompressQuality
+                        context = context,
+                        cropImageViewReference = WeakReference(this),
+                        uri = imageUri,
+                        bitmap = null,
+                        cropPoints = cropPoints,
+                        degreesRotated = mDegreesRotated,
+                        orgWidth = orgWidth,
+                        orgHeight = orgHeight,
+                        fixAspectRatio = mCropOverlayView!!.isFixAspectRatio,
+                        aspectRatioX = mCropOverlayView.aspectRatioX,
+                        aspectRatioY = mCropOverlayView.aspectRatioY,
+                        reqWidth = newReqWidth,
+                        reqHeight = newReqHeight,
+                        flipHorizontally = mFlipHorizontally,
+                        flipVertically = mFlipVertically,
+                        options = options,
+                        saveUri = saveUri,
+                        saveCompressFormat = saveCompressFormat,
+                        saveCompressQuality = saveCompressQuality
                     )
                 )
             } else {
                 WeakReference(
                     BitmapCroppingWorkerJob(
-                        (context as FragmentActivity),
-                        this,
-                        bitmap,
-                        cropPoints,
-                        mDegreesRotated,
-                        mCropOverlayView!!.isFixAspectRatio,
-                        mCropOverlayView.aspectRatioX,
-                        mCropOverlayView.aspectRatioY,
-                        newReqWidth,
-                        newReqHeight,
-                        mFlipHorizontally,
-                        mFlipVertically,
-                        options,
-                        saveUri,
-                        saveCompressFormat,
-                        saveCompressQuality
+                        context = context,
+                        cropImageViewReference = WeakReference(this),
+                        uri = null,
+                        bitmap = bitmap,
+                        cropPoints = cropPoints,
+                        degreesRotated = mDegreesRotated,
+                        orgWidth = 0,
+                        orgHeight = 0,
+                        fixAspectRatio = mCropOverlayView!!.isFixAspectRatio,
+                        aspectRatioX = mCropOverlayView.aspectRatioX,
+                        aspectRatioY = mCropOverlayView.aspectRatioY,
+                        reqWidth = newReqWidth,
+                        reqHeight = newReqHeight,
+                        flipHorizontally = mFlipHorizontally,
+                        flipVertically = mFlipVertically,
+                        options = options,
+                        saveUri = saveUri,
+                        saveCompressFormat = saveCompressFormat,
+                        saveCompressQuality = saveCompressQuality
                     )
                 )
             }
