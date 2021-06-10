@@ -3,25 +3,28 @@ package com.canhub.cropper
 import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
-import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.lifecycleScope
 import com.canhub.cropper.utils.getFilePathFromUri
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.lang.ref.WeakReference
+import kotlin.coroutines.CoroutineContext
 
 class BitmapLoadingWorkerJob internal constructor(
-    private val activity: FragmentActivity,
+    private val context: Context,
     cropImageView: CropImageView,
     val uri: Uri
-) {
+) : CoroutineScope {
+
     private val width: Int
     private val height: Int
     private val cropImageViewReference = WeakReference(cropImageView)
-    private var currentJob: Job? = null
+    private var currentJob: Job = Job()
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main + currentJob
 
     init {
         val metrics = cropImageView.resources.displayMetrics
@@ -31,15 +34,22 @@ class BitmapLoadingWorkerJob internal constructor(
     }
 
     fun start() {
-        currentJob = activity.lifecycleScope.launch(Dispatchers.Default) {
+        currentJob = launch(Dispatchers.Default) {
             try {
                 if (isActive) {
                     val decodeResult =
-                        BitmapUtils.decodeSampledBitmap(activity, uri, width, height)
+                        BitmapUtils.decodeSampledBitmap(context, uri, width, height)
                     if (isActive) {
                         val rotateResult =
-                            BitmapUtils.rotateBitmapByExif(decodeResult.bitmap, activity, uri)
-                        onPostExecute(Result(uri, rotateResult.bitmap, decodeResult.sampleSize, rotateResult.degrees))
+                            BitmapUtils.rotateBitmapByExif(decodeResult.bitmap, context, uri)
+                        onPostExecute(
+                            Result(
+                                uri = uri,
+                                bitmap = rotateResult.bitmap,
+                                loadSampleSize = decodeResult.sampleSize,
+                                degreesRotated = rotateResult.degrees
+                            )
+                        )
                     }
                 }
             } catch (e: Exception) {
@@ -70,11 +80,12 @@ class BitmapLoadingWorkerJob internal constructor(
     }
 
     fun cancel() {
-        currentJob?.cancel()
+        currentJob.cancel()
     }
 
     /** The result of BitmapLoadingWorkerJob async loading.  */
-    companion object class Result {
+    companion object
+    class Result {
 
         /**
          * The Android URI of the image to load.

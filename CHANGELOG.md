@@ -11,6 +11,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [unreleased x.x.x] -
 
+## [3.1.3] - 10/06/21
+### Fixed
+- ContextWrapper cannot be cast to FragmentActivity [#136](https://github.com/CanHub/Android-Image-Cropper/issues/136)
+
 ## [3.1.2] - 07/06/21
 ### Fixed
 - Missing file extension under Android 10 [#138](https://github.com/CanHub/Android-Image-Cropper/issues/138)
