@@ -1,5 +1,6 @@
 package com.canhub.cropper.utils
 
+import android.content.ContentResolver
 import android.content.Context
 import android.net.Uri
 import android.webkit.MimeTypeMap
@@ -32,7 +33,7 @@ internal fun getFilePathFromUri(context: Context, uri: Uri, uniqueName: Boolean)
 
 private fun getFileFromContentUri(context: Context, contentUri: Uri, uniqueName: Boolean): File {
     // Preparing Temp file name
-    val fileExtension = getFileExtension(context, contentUri)
+    val fileExtension = getFileExtension(context, contentUri) ?: ""
     val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", getDefault()).format(Date())
     val fileName = ("temp_file_" + if (uniqueName) timeStamp else "") + ".$fileExtension"
     // Creating Temp file
@@ -59,10 +60,10 @@ private fun getFileFromContentUri(context: Context, contentUri: Uri, uniqueName:
     return tempFile
 }
 
-private fun getFileExtension(context: Context, uri: Uri): String {
-    val fileType: String? = context.contentResolver.getType(uri)
-    return MimeTypeMap.getSingleton().getExtensionFromMimeType(fileType) ?: ""
-}
+private fun getFileExtension(context: Context, uri: Uri): String? =
+    if (uri.scheme == ContentResolver.SCHEME_CONTENT)
+        MimeTypeMap.getSingleton().getExtensionFromMimeType(context.contentResolver.getType(uri))
+    else uri.path?.let { MimeTypeMap.getFileExtensionFromUrl(Uri.fromFile(File(it)).toString()) }
 
 @Throws(IOException::class)
 private fun copy(source: InputStream, target: OutputStream) {
