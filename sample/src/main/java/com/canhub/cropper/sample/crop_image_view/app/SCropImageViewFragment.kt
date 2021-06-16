@@ -1,7 +1,6 @@
 package com.canhub.cropper.sample.crop_image_view.app
 
 import android.Manifest
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Rect
 import android.net.Uri
@@ -14,13 +13,13 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.canhub.cropper.CropImage
 import com.canhub.cropper.CropImageView
 import com.canhub.cropper.CropImageView.CropResult
 import com.canhub.cropper.CropImageView.OnCropImageCompleteListener
 import com.canhub.cropper.CropImageView.OnSetImageUriCompleteListener
+import com.canhub.cropper.OpenChooser
 import com.canhub.cropper.sample.SCropResultActivity
 import com.canhub.cropper.sample.crop_image_view.domain.SCropImageViewContract
 import com.canhub.cropper.sample.crop_image_view.presenter.SCropImageViewPresenter
@@ -45,6 +44,19 @@ internal class SCropImageViewFragment :
     private val presenter = SCropImageViewPresenter()
     private var options: SOptionsDomain? = null
     private var cropImageUri: Uri? = null
+
+    private val openPicker = registerForActivityResult(OpenChooser()) { imageUri ->
+        if (imageUri != null && CropImage.isReadExternalStoragePermissionsRequired(requireContext(), imageUri)
+        ) {
+            cropImageUri = imageUri
+            requestPermissions(
+                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE
+            )
+        } else {
+            binding.cropImageView.setImageUriAsync(imageUri)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -79,7 +91,7 @@ internal class SCropImageViewFragment :
                         arrayOf(Manifest.permission.CAMERA),
                         CropImage.CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE
                     )
-                } else context?.let { context -> CropImage.startPickImageActivity(context, this) }
+                } else openPicker.launch(true)
             }
         }
 
@@ -169,33 +181,6 @@ internal class SCropImageViewFragment :
         handleCropResult(result)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == AppCompatActivity.RESULT_OK) {
-            when (requestCode) {
-                CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE ->
-                    handleCropResult(CropImage.getActivityResult(data))
-                CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE -> {
-                    val ctx = context
-                    ctx?.let { Log.v("File Path", CropImage.getPickImageResultUriFilePath(it, data)) }
-                    val imageUri = ctx?.let { CropImage.getPickImageResultUriContent(it, data) }
-
-                    if (imageUri != null &&
-                        CropImage.isReadExternalStoragePermissionsRequired(ctx, imageUri)
-                    ) {
-                        cropImageUri = imageUri
-                        requestPermissions(
-                            arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                            CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE
-                        )
-                    } else {
-                        binding.cropImageView.setImageUriAsync(imageUri)
-                    }
-                }
-            }
-        }
-    }
-
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>,
@@ -203,7 +188,7 @@ internal class SCropImageViewFragment :
     ) {
         if (requestCode == CropImage.CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                activity?.let { CropImage.startPickImageActivity(it) }
+                openPicker.launch(true)
             } else {
                 Toast
                     .makeText(context, "Cancelling, permissions not granted", Toast.LENGTH_LONG)

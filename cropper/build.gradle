@@ -29,6 +29,8 @@ android {
 dependencies {
     api "androidx.appcompat:appcompat:$androidXAppCompatVersionCropper"
 
+    implementation "androidx.activity:activity-ktx:$androidXActivity"
+
     implementation "androidx.exifinterface:exifinterface:$androidXExifVersion"
     implementation "androidx.core:core-ktx:$androidXCoreKtxVersion"
 
