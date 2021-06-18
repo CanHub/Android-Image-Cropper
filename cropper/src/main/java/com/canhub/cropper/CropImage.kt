@@ -129,6 +129,7 @@ object CropImage {
      *
      * @param activity the activity to be used to start activity from
      */
+    @Deprecated("use the OpenChooser ActivityResultContract instead")
     fun startPickImageActivity(activity: Activity) {
         activity.startActivityForResult(
             getPickImageChooserIntent(activity), PICK_IMAGE_CHOOSER_REQUEST_CODE
@@ -142,6 +143,7 @@ object CropImage {
      * @param context  The Fragments context. Use getContext()
      * @param fragment The calling Fragment to start and return the image to
      */
+    @Deprecated("use the OpenChooser ActivityResultContract instead")
     fun startPickImageActivity(context: Context, fragment: Fragment) {
         fragment.startActivityForResult(
             getPickImageChooserIntent(context), PICK_IMAGE_CHOOSER_REQUEST_CODE
@@ -465,6 +467,7 @@ object CropImage {
      * @return builder for Crop Image Activity
      */
     @JvmStatic
+    @Deprecated("use the CropImageContract ActivityResultContract instead")
     fun activity(): ActivityBuilder {
         return ActivityBuilder(null)
     }
@@ -479,6 +482,7 @@ object CropImage {
      * @return builder for Crop Image Activity
      */
     @JvmStatic
+    @Deprecated("use the CropImageContract ActivityResultContract instead")
     fun activity(uri: Uri?): ActivityBuilder {
         return ActivityBuilder(uri)
     }
@@ -499,6 +503,7 @@ object CropImage {
      *
      * @param mSource The image to crop source Android uri.
      */
+    @Deprecated("use the CropImageContract ActivityResultContract instead")
     class ActivityBuilder(private val mSource: Uri?) {
 
         /**
