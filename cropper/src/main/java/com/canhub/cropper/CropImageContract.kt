@@ -49,9 +49,9 @@ fun options(
     return options
 }
 
-data class CropImageContractOptions @JvmOverloads constructor(
-    val uri: Uri? = null,
-    val options: CropImageOptions = CropImageOptions()
+data class CropImageContractOptions(
+    val uri: Uri?,
+    val options: CropImageOptions
 ) {
 
     /**
