@@ -1106,4 +1106,17 @@ object CropImage {
                 }
         }
     }
+
+    object CancelledResult: CropImageView.CropResult(
+        originalBitmap = null,
+        originalUri = null,
+        bitmap = null,
+        uriContent = null,
+        error = Exception("cropping has been cancelled by the user"),
+        cropPoints = floatArrayOf(),
+        cropRect = null,
+        wholeImageRect = null,
+        rotation = 0,
+        sampleSize = 0
+    )
 }

@@ -96,7 +96,7 @@ override fun onCreate(savedInstanceState: Bundle?) {
  ```kotlin
 class MainActivity {
     private val cropImage = registerForActivityResult(CropImageContract()) { result ->
-            if (result != null) {
+            if (result.isSuccessful) {
                 // use the returned uri
                 val uri = result.uriContent
             } else {

@@ -1,5 +1,6 @@
 package com.canhub.cropper
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -14,7 +15,7 @@ import com.canhub.cropper.CropImageView.Guidelines
 import com.canhub.cropper.CropImageView.RequestSizeOptions
 
 class CropImageContract :
-    ActivityResultContract<CropImageContractOptions, CropImage.ActivityResult?>() {
+    ActivityResultContract<CropImageContractOptions, CropImageView.CropResult>() {
 
     override fun createIntent(context: Context, input: CropImageContractOptions): Intent {
         input.options.validate()
@@ -29,8 +30,13 @@ class CropImageContract :
     override fun parseResult(
         resultCode: Int,
         intent: Intent?
-    ): CropImage.ActivityResult? {
-        return getActivityResult(intent)
+    ): CropImageView.CropResult {
+        val result = getActivityResult(intent)
+        return if (result == null || resultCode == Activity.RESULT_CANCELED) {
+            CropImage.CancelledResult
+        } else {
+            result
+        }
     }
 }
 
