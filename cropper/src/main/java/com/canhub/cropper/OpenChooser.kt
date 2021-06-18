@@ -6,7 +6,7 @@ import android.net.Uri
 import androidx.activity.result.contract.ActivityResultContract
 import com.canhub.cropper.CropImage.getPickImageResultUriContent
 
-class OpenChooser: ActivityResultContract<Boolean, Uri?>() {
+class OpenChooser : ActivityResultContract<Boolean, Uri?>() {
 
     private var context: Context? = null
 

@@ -1107,7 +1107,7 @@ object CropImage {
         }
     }
 
-    object CancelledResult: CropImageView.CropResult(
+    object CancelledResult : CropImageView.CropResult(
         originalBitmap = null,
         originalUri = null,
         bitmap = null,
