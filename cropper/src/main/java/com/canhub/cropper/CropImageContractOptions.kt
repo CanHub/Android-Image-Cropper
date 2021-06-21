@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import android.graphics.Rect
 import android.net.Uri
 import androidx.annotation.DrawableRes
+import com.canhub.cropper.CropImageOptions.Companion.DEGREES_360
 import com.canhub.cropper.CropImageView.CropShape
 import com.canhub.cropper.CropImageView.Guidelines
 import com.canhub.cropper.CropImageView.RequestSizeOptions
@@ -369,7 +370,7 @@ data class CropImageContractOptions(
      * *Default: NONE - will read image exif data*
      */
     fun setInitialRotation(initialRotation: Int): CropImageContractOptions {
-        options.initialRotation = (initialRotation + 360) % 360
+        options.initialRotation = (initialRotation + DEGREES_360) % DEGREES_360
         return this
     }
 
@@ -406,7 +407,7 @@ data class CropImageContractOptions(
      * *Default: 90*
      */
     fun setRotationDegrees(rotationDegrees: Int): CropImageContractOptions {
-        options.rotationDegrees = (rotationDegrees + 360) % 360
+        options.rotationDegrees = (rotationDegrees + DEGREES_360) % DEGREES_360
         return this
     }
 

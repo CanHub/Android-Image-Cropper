@@ -436,10 +436,13 @@ open class CropImageOptions : Parcelable {
         require(maxCropResultHeight >= minCropResultHeight) { "Cannot set max crop result height to smaller value than min crop result height" }
         require(outputRequestWidth >= 0) { "Cannot set request width value to a number < 0 " }
         require(outputRequestHeight >= 0) { "Cannot set request height value to a number < 0 " }
-        require(!(rotationDegrees < 0 || rotationDegrees > 360)) { "Cannot set rotation degrees value to a number < 0 or > 360" }
+        require(!(rotationDegrees < 0 || rotationDegrees > DEGREES_360)) { "Cannot set rotation degrees value to a number < 0 or > 360" }
     }
 
     companion object {
+
+        internal const val DEGREES_360 = 360
+
         @JvmField
         val CREATOR: Parcelable.Creator<CropImageOptions?> =
             object : Parcelable.Creator<CropImageOptions?> {
