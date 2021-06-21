@@ -19,7 +19,7 @@ import com.canhub.cropper.CropImageView
 import com.canhub.cropper.CropImageView.CropResult
 import com.canhub.cropper.CropImageView.OnCropImageCompleteListener
 import com.canhub.cropper.CropImageView.OnSetImageUriCompleteListener
-import com.canhub.cropper.OpenChooser
+import com.canhub.cropper.PickImageContract
 import com.canhub.cropper.sample.SCropResultActivity
 import com.canhub.cropper.sample.crop_image_view.domain.SCropImageViewContract
 import com.canhub.cropper.sample.crop_image_view.presenter.SCropImageViewPresenter
@@ -45,7 +45,7 @@ internal class SCropImageViewFragment :
     private var options: SOptionsDomain? = null
     private var cropImageUri: Uri? = null
 
-    private val openPicker = registerForActivityResult(OpenChooser()) { imageUri ->
+    private val openPicker = registerForActivityResult(PickImageContract()) { imageUri ->
         if (imageUri != null && CropImage.isReadExternalStoragePermissionsRequired(requireContext(), imageUri)
         ) {
             cropImageUri = imageUri
