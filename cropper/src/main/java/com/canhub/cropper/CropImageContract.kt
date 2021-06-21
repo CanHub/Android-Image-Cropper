@@ -7,6 +7,12 @@ import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContract
 import com.canhub.cropper.CropImage.getActivityResult
 
+/**
+ * An ActivityResultContract to start an activity that allows the user to crop an image.
+ * The activity can be heavily customized by the input CropImageContractOptions.
+ * If you do not provide an uri in the input the user will be asked to pick an image before cropping.
+ */
+
 class CropImageContract :
     ActivityResultContract<CropImageContractOptions, CropImageView.CropResult>() {
 
