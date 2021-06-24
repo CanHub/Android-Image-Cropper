@@ -317,7 +317,7 @@ data class CropImageContractOptions(
     }
 
     /**
-     * the quility (if applicable) to use when writting the image (0 - 100).<br></br>
+     * the quality (if applicable) to use when writting the image (0 - 100).<br></br>
      * *Default: 90*
      */
     fun setOutputCompressQuality(outputCompressQuality: Int): CropImageContractOptions {

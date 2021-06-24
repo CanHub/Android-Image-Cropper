@@ -2,6 +2,8 @@ package com.canhub.cropper
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Color
 import android.graphics.Rect
 import androidx.activity.result.ActivityResultRegistry
 import androidx.activity.result.contract.ActivityResultContract
@@ -15,6 +17,27 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class CropImageContractTest {
+
+    @Test(expected = IllegalArgumentException::class)
+    fun testInvalidOptionsShouldCrash() {
+
+        val testRegistry = object : ActivityResultRegistry() {
+            override fun <I, O> onLaunch(
+                requestCode: Int,
+                contract: ActivityResultContract<I, O>,
+                input: I,
+                options: ActivityOptionsCompat?
+            ) {
+                dispatchResult(requestCode, Activity.RESULT_CANCELED, Intent())
+            }
+        }
+
+        with(launchFragmentInContainer { ContractTestFragment(testRegistry) }) {
+            onFragment { fragment ->
+                fragment.cropImageIntent(options { setMaxZoom(-10) })
+            }
+        }
+    }
 
     @Test
     fun testCancelledByUser() {
@@ -79,6 +102,37 @@ class CropImageContractTest {
     fun testCropWithAllOptions() {
 
         val options = options("file://testInput".toUri()) {
+            setCropShape(CropImageView.CropShape.OVAL)
+            setSnapRadius(1f)
+            setTouchRadius(2f)
+            setGuidelines(CropImageView.Guidelines.ON_TOUCH)
+            setScaleType(CropImageView.ScaleType.CENTER)
+            setShowCropOverlay(true)
+            setAutoZoomEnabled(false)
+            setMultiTouchEnabled(true)
+            setCenterMoveEnabled(false)
+            setMaxZoom(17)
+            setInitialCropWindowPaddingRatio(0.2f)
+            setFixAspectRatio(true)
+            setAspectRatio(3, 4)
+            setBorderLineThickness(3f)
+            setBorderLineColor(Color.GREEN)
+            setBorderCornerThickness(5f)
+            setBorderCornerOffset(6f)
+            setBorderCornerLength(7f)
+            setBorderCornerColor(Color.MAGENTA)
+            setGuidelinesThickness(8f)
+            setGuidelinesColor(Color.RED)
+            setBackgroundColor(Color.BLUE)
+            setMinCropWindowSize(5, 5)
+            setMinCropResultSize(10, 10)
+            setMaxCropResultSize(5000,5000)
+            setActivityTitle("Test Activity Title")
+            setActivityMenuIconColor(Color.BLACK)
+            setOutputUri("file://testOutputUri".toUri())
+            setOutputCompressFormat(Bitmap.CompressFormat.JPEG)
+            setOutputCompressQuality(85)
+            setRequestedSize(25, 30, CropImageView.RequestSizeOptions.NONE)
             setNoOutputImage(false)
             setInitialCropWindowRectangle(Rect(4, 5, 6, 7))
             setInitialRotation(13)
@@ -88,7 +142,7 @@ class CropImageContractTest {
             setRotationDegrees(4)
             setFlipHorizontally(true)
             setFlipVertically(false)
-            setCropMenuCropButtonTitle("Test Title")
+            setCropMenuCropButtonTitle("Test Button Title")
             setCropMenuCropButtonIcon(R.drawable.ic_rotate_left_24)
         }
 
