@@ -18,7 +18,6 @@ import com.example.croppersample.databinding.ExtendedActivityBinding
 internal class SExtendActivity : CropImageActivity(), SExtendContract.View {
 
     companion object {
-
         fun start(activity: Activity) {
             ActivityCompat.startActivity(
                 activity,
@@ -68,11 +67,11 @@ internal class SExtendActivity : CropImageActivity(), SExtendContract.View {
         binding.rotateText.text = getString(R.string.rotation_value, counter)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+    override fun onPickImageResult(resultUri: Uri?) {
+        super.onPickImageResult(resultUri)
 
-        if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE && resultCode == RESULT_OK) {
-            binding.cropImageView.setImageUriAsync(cropImageUri)
+        if (resultUri != null) {
+            binding.cropImageView.setImageUriAsync(resultUri)
         }
     }
 

@@ -14,6 +14,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - `CropImageContract` and `PickImageContract`
 - added dependency to `androidx.activity:activity-ktx:.2.3`
 
+### Changed
+- `CropImageActivity.onActivityResult` no longer receives any result. Override `onPickImageResult` instead.
+
 ### Deprecated
 - deprecated old methods that depend on the deprecated `onActivityResult`. Use `CropImageContract` and `PickImageContract` instead.
 

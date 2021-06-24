@@ -1,7 +1,6 @@
 package com.canhub.cropper
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -49,6 +48,8 @@ open class CropImageActivity :
     private var cropImageView: CropImageView? = null
     private lateinit var binding: CropImageActivityBinding
 
+    private val pickImage = registerForActivityResult(PickImageContract(), ::onPickImageResult)
+
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -68,7 +69,7 @@ open class CropImageActivity :
                         CropImage.CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE
                     )
                 } else {
-                    CropImage.startPickImageActivity(this)
+                    pickImage.launch(true)
                 }
             } else if (
                 cropImageUri?.let {
@@ -163,30 +164,25 @@ open class CropImageActivity :
         setResultCancel()
     }
 
-    @SuppressLint("NewApi")
-    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        // handle result of pick image chooser
-        if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE) {
-            if (resultCode == RESULT_CANCELED) setResultCancel()
-            if (resultCode == RESULT_OK) {
-                cropImageUri = CropImage.getPickImageResultUriContent(this, data)
-                // For API >= 23 we need to check specifically that we have permissions to read external
-                // storage.
-                if (cropImageUri?.let {
-                    CropImage.isReadExternalStoragePermissionsRequired(this, it)
-                } == true &&
-                    CommonVersionCheck.isAtLeastM23()
-                ) {
-                    // request permissions and handle the result in onRequestPermissionsResult()
-                    requestPermissions(
-                        arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                        CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE
-                    )
-                } else {
-                    // no permissions required or already grunted, can start crop image activity
-                    cropImageView?.setImageUriAsync(cropImageUri)
-                }
+    protected open fun onPickImageResult(resultUri: Uri?) {
+        if (resultUri == null) setResultCancel()
+        if (resultUri != null) {
+            cropImageUri = resultUri
+            // For API >= 23 we need to check specifically that we have permissions to read external
+            // storage.
+            if (cropImageUri?.let {
+                CropImage.isReadExternalStoragePermissionsRequired(this, it)
+            } == true &&
+                CommonVersionCheck.isAtLeastM23()
+            ) {
+                // request permissions and handle the result in onRequestPermissionsResult()
+                requestPermissions(
+                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                    CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE
+                )
+            } else {
+                // no permissions required or already granted, can start crop image activity
+                cropImageView?.setImageUriAsync(cropImageUri)
             }
         }
     }
@@ -212,7 +208,7 @@ open class CropImageActivity :
         } else if (requestCode == CropImage.CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE) {
             // Irrespective of whether camera permission was given or not, we show the picker
             // The picker will not add the camera intent if permission is not available
-            CropImage.startPickImageActivity(this)
+            pickImage.launch(true)
         } else super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 

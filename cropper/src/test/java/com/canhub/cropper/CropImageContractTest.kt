@@ -126,7 +126,7 @@ class CropImageContractTest {
             setBackgroundColor(Color.BLUE)
             setMinCropWindowSize(5, 5)
             setMinCropResultSize(10, 10)
-            setMaxCropResultSize(5000,5000)
+            setMaxCropResultSize(5000, 5000)
             setActivityTitle("Test Activity Title")
             setActivityMenuIconColor(Color.BLACK)
             setOutputUri("file://testOutputUri".toUri())
