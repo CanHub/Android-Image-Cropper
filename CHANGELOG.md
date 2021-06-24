@@ -10,6 +10,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - `Security` in case of vulnerabilities.
 
 ## [unreleased x.x.x] -
+### Added
+- `CropImageContract` and `PickImageContract`
+- added dependency to `androidx.activity:activity-ktx:.2.3`
+
+### Deprecated
+- deprecated old methods that depend on the deprecated `onActivityResult`. Use `CropImageContract` and `PickImageContract` instead.
 
 ## [3.1.3] - 10/06/21
 ### Fixed
