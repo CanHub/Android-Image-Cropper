@@ -147,7 +147,6 @@ internal class SCameraFragment :
                 setFixAspectRatio(true)
             }
         )
-
     }
 
     private fun startCameraWithUri() {

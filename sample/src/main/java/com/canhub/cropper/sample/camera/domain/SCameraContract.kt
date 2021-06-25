@@ -1,7 +1,6 @@
 package com.canhub.cropper.sample.camera.domain
 
 import android.content.Context
-import android.content.Intent
 import android.net.Uri
 import androidx.fragment.app.FragmentActivity
 import com.canhub.cropper.CropImageView
