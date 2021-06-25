@@ -159,6 +159,8 @@ class CropImageContractTest {
             onFragment { fragment ->
                 val cropImageIntent = fragment.cropImageIntent(options)
 
+                assertEquals(CropImageActivity::class.java.name, cropImageIntent.component?.className)
+
                 val bundle = cropImageIntent.getBundleExtra(CropImage.CROP_IMAGE_EXTRA_BUNDLE)
                 assertEquals("file://testInput".toUri(), bundle?.getParcelable(CropImage.CROP_IMAGE_EXTRA_SOURCE))
                 assertEquals(options.options, bundle?.getParcelable(CropImage.CROP_IMAGE_EXTRA_OPTIONS))
