@@ -2,17 +2,15 @@ package com.canhub.cropper.sample.camera.presenter
 
 import android.Manifest
 import android.app.Activity
-import android.app.Activity.RESULT_OK
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import com.canhub.cropper.CropImage
-import com.canhub.cropper.sample.camera.app.SCameraFragment
-import com.canhub.cropper.sample.camera.app.SCameraFragment.Companion.CODE_PHOTO_CAMERA
+import com.canhub.cropper.CropImageView
 import com.canhub.cropper.sample.camera.domain.CameraEnumDomain
 import com.canhub.cropper.sample.camera.domain.SCameraContract
 
@@ -36,7 +34,7 @@ internal class SCameraPresenter : SCameraContract.Presenter {
     override fun onPermissionResult(granted: Boolean) {
         view?.apply {
             when {
-                granted -> dispatchTakePictureIntent()
+                granted -> startTakePicture()
                 minVersion && request -> showDialog()
                 else -> cameraPermissionLaunch()
             }
@@ -64,7 +62,7 @@ internal class SCameraPresenter : SCameraContract.Presenter {
     override fun startWithUriClicked() {
         view?.apply {
             when {
-                hasSystemFeature && selfPermission -> dispatchTakePictureIntent()
+                hasSystemFeature && selfPermission -> startTakePicture()
                 hasSystemFeature && minVersion && request -> showDialog()
                 hasSystemFeature -> cameraPermissionLaunch()
                 else -> showErrorMessage("onCreate no case apply")
@@ -80,10 +78,6 @@ internal class SCameraPresenter : SCameraContract.Presenter {
         view?.startCropImage(CameraEnumDomain.START_PICK_IMG)
     }
 
-    override fun startActivityForResultClicked() {
-        view?.startCropImage(CameraEnumDomain.START_FOR_RESULT)
-    }
-
     override fun onOk() {
         view?.cameraPermissionLaunch()
     }
@@ -92,41 +86,30 @@ internal class SCameraPresenter : SCameraContract.Presenter {
         view?.showErrorMessage("onCancel")
     }
 
-    override fun onActivityResult(resultCode: Int, requestCode: Int, data: Intent?) {
-        if (resultCode == RESULT_OK) {
-            when (requestCode) {
-                CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
-                    val bitmap = context?.let { CropImage.getActivityResult(data)?.getBitmap(it) }
-                    Log.v(
-                        "File Path",
-                        context
-                            ?.let { CropImage.getActivityResult(data)?.getUriFilePath(it) }
-                            .toString()
-                    )
+    override fun onCropImageResult(result: CropImageView.CropResult) {
+        if (result.isSuccessful) {
+            view?.handleCropImageResult(result.uriContent.toString().replace("file:", ""))
+        } else if (result is CropImage.CancelledResult) {
+            view?.showErrorMessage("cropping image was cancelled by the user")
+        } else {
+            view?.showErrorMessage("cropping image failed")
+        }
+    }
 
-                    CropImage.getActivityResult(data)?.uriContent?.let {
-                        view?.handleCropImageResult(it.toString().replace("file:", ""))
-                    } ?: view?.showErrorMessage("CropImage getActivityResult return null")
-                }
-                SCameraFragment.CUSTOM_REQUEST_CODE -> {
-                    context?.let {
-                        Log.v("File Path", CropImage.getPickImageResultUriFilePath(it, data))
-                        CropImage.getPickImageResultUriFilePath(it, data)
-                        val uri = CropImage.getPickImageResultUriContent(it, data)
-                        view?.handleCropImageResult(uri.toString().replace("file:", ""))
-                    }
-                }
-                CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE -> {
-                    context?.let { ctx ->
-                        Log.v("File Path", CropImage.getPickImageResultUriFilePath(ctx, data))
-                        val uri = CropImage.getPickImageResultUriContent(ctx, data)
+    override fun onPickImageResult(resultUri: Uri?) {
+        if (resultUri != null) {
+            Log.v("File Path", resultUri.toString())
+            view?.handleCropImageResult(resultUri.toString())
+        } else {
+            view?.showErrorMessage("picking image failed")
+        }
+    }
 
-                        view?.handleCropImageResult(uri.toString())
-                    }
-                }
-                CODE_PHOTO_CAMERA -> view?.startCropImage(CameraEnumDomain.START_WITH_URI)
-                else -> view?.showErrorMessage("requestCode = $requestCode")
-            }
-        } else view?.showErrorMessage("resultCode = $resultCode")
+    override fun onTakePictureResult(success: Boolean) {
+        if (success) {
+            view?.startCropImage(CameraEnumDomain.START_WITH_URI)
+        } else {
+            view?.showErrorMessage("taking picture failed")
+        }
     }
 }

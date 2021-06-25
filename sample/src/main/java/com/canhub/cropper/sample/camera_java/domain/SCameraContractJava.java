@@ -1,9 +1,13 @@
 package com.canhub.cropper.sample.camera_java.domain;
 
 import android.content.Context;
-import android.content.Intent;
+import android.net.Uri;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
+
+import com.canhub.cropper.CropImageView;
 
 public interface SCameraContractJava {
 
@@ -12,7 +16,7 @@ public interface SCameraContractJava {
 
         void showErrorMessage(String message);
 
-        void dispatchTakePictureIntent();
+        void startTakePicture();
 
         void cameraPermissionLaunch();
 
@@ -34,14 +38,16 @@ public interface SCameraContractJava {
 
         void onCancel();
 
-        void onActivityResult(int resultCode, int requestCode, Intent data);
+        void onCropImageResult(@NonNull CropImageView.CropResult result);
+
+        void onPickImageResult(@Nullable Uri resultUri);
+
+        void onTakePictureResult(boolean success);
 
         void startWithUriClicked();
 
         void startWithoutUriClicked();
 
         void startPickImageActivityClicked();
-
-        void startActivityForResultClicked();
     }
 }

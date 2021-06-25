@@ -2,15 +2,12 @@ package com.canhub.cropper.sample.camera_java.app;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,8 +21,11 @@ import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
-import com.canhub.cropper.CropImage;
+import com.canhub.cropper.CropImageContract;
+import com.canhub.cropper.CropImageContractOptions;
+import com.canhub.cropper.CropImageOptions;
 import com.canhub.cropper.CropImageView;
+import com.canhub.cropper.PickImageContract;
 import com.canhub.cropper.sample.SCropResultActivity;
 import com.canhub.cropper.sample.camera_java.domain.CameraEnumDomainJava;
 import com.canhub.cropper.sample.camera_java.domain.SCameraContractJava;
@@ -45,19 +45,26 @@ import static android.graphics.Color.WHITE;
 
 public class SCameraFragmentJava extends Fragment implements SCameraContractJava.View {
 
-    public static final int CODE_PHOTO_CAMERA = 811917;
     static final String DATE_FORMAT = "yyyyMMdd_HHmmss";
     static final String FILE_NAMING_PREFIX = "JPEG_";
     static final String FILE_NAMING_SUFFIX = "_";
     static final String FILE_FORMAT = ".jpg";
     static final String AUTHORITY_SUFFIX = ".fileprovider";
-    public static final int CUSTOM_REQUEST_CODE = 8119153;
 
     private FragmentCameraBinding binding;
     private final SCameraContractJava.Presenter presenter = new SCameraPresenterJava();
     private Uri photoUri;
     private final ActivityResultLauncher<String> requestPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), presenter::onPermissionResult);
+
+    private final ActivityResultLauncher<Boolean> pickImage =
+            registerForActivityResult(new PickImageContract(), presenter::onPickImageResult);
+
+    private final ActivityResultLauncher<CropImageContractOptions> cropImage =
+            registerForActivityResult(new CropImageContract(), presenter::onCropImageResult);
+
+    private final ActivityResultLauncher<Uri> takePicture =
+            registerForActivityResult(new ActivityResultContracts.TakePicture(), presenter::onTakePictureResult);
 
     public static SCameraFragmentJava newInstance() {
         return new SCameraFragmentJava();
@@ -82,8 +89,6 @@ public class SCameraFragmentJava extends Fragment implements SCameraContractJava
 
         binding.startPickImageActivity.setOnClickListener(v -> presenter.startPickImageActivityClicked());
 
-        binding.startActivityForResult.setOnClickListener(v -> presenter.startActivityForResultClicked());
-
         presenter.onCreate(getActivity(), getContext());
     }
 
@@ -99,31 +104,17 @@ public class SCameraFragmentJava extends Fragment implements SCameraContractJava
             case START_PICK_IMG:
                 startPickImage();
                 break;
-            case START_FOR_RESULT:
-                startForResult();
-                break;
             default:
                 break;
         }
     }
 
-    private void startForResult() {
-        assert (getContext() != null);
-        Intent intent =  CropImage.getPickImageChooserIntent(getContext(),"Selection Baby", true, false);
-        startActivityForResult(intent, CUSTOM_REQUEST_CODE);
-
-    }
-
     private void startPickImage() {
-        assert (getContext() != null);
-        CropImage.activity()
-                .start(getContext(), this);
+        pickImage.launch(false);
     }
 
     private void startCameraWithoutUri() {
-        assert (getContext() != null);
-        Context ctx = getContext();
-        CropImage.activity()
+        CropImageContractOptions options = new CropImageContractOptions(null, new CropImageOptions())
                 .setScaleType(CropImageView.ScaleType.CENTER)
                 .setCropShape(CropImageView.CropShape.OVAL)
                 .setGuidelines(CropImageView.Guidelines.ON)
@@ -165,14 +156,13 @@ public class SCameraFragmentJava extends Fragment implements SCameraContractJava
                 .setCropMenuCropButtonIcon(R.drawable.ic_gear_24)
                 .setAllowRotation(false)
                 .setNoOutputImage(false)
-                .setFixAspectRatio(true)
-                .start(ctx, this);
+                .setFixAspectRatio(true);
+
+        cropImage.launch(options);
     }
 
     private void startCameraWithUri() {
-        assert (getContext() != null);
-        Context ctx = getContext();
-        CropImage.activity(photoUri)
+        CropImageContractOptions options = new CropImageContractOptions(photoUri, new CropImageOptions())
                 .setScaleType(CropImageView.ScaleType.FIT_CENTER)
                 .setCropShape(CropImageView.CropShape.RECTANGLE)
                 .setGuidelines(CropImageView.Guidelines.ON_TOUCH)
@@ -214,8 +204,8 @@ public class SCameraFragmentJava extends Fragment implements SCameraContractJava
                 .setCropMenuCropButtonIcon(0)
                 .setAllowRotation(true)
                 .setNoOutputImage(false)
-                .setFixAspectRatio(false)
-                .start(ctx, this);
+                .setFixAspectRatio(false);
+        cropImage.launch(options);
     }
 
     @Override
@@ -225,19 +215,12 @@ public class SCameraFragmentJava extends Fragment implements SCameraContractJava
     }
 
     @Override
-    public void dispatchTakePictureIntent() {
-        assert (getContext() != null);
-        Context ctx = getContext();
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+    public void startTakePicture() {
         try {
-            if (takePictureIntent.resolveActivity(ctx.getPackageManager()) != null) {
-                String authorities = getContext().getPackageName() + AUTHORITY_SUFFIX;
-                photoUri = FileProvider.getUriForFile(ctx, authorities, createImageFile());
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-                startActivityForResult(takePictureIntent, CODE_PHOTO_CAMERA);
-            }
-        } catch (ActivityNotFoundException e) {
-            // display error state to the user
+            Context ctx = requireContext();
+            String authorities = ctx.getPackageName() + AUTHORITY_SUFFIX;
+            photoUri = FileProvider.getUriForFile(ctx, authorities, createImageFile());
+            takePicture.launch(photoUri);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -257,7 +240,6 @@ public class SCameraFragmentJava extends Fragment implements SCameraContractJava
         alertDialogBuilder.setNegativeButton(R.string.cancel, (dialog, which) -> presenter.onCancel());
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
-
     }
 
     @Override
@@ -265,18 +247,11 @@ public class SCameraFragmentJava extends Fragment implements SCameraContractJava
         SCropResultActivity.Companion.start(this, null, Uri.parse(uri), null);
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        presenter.onActivityResult(resultCode, requestCode, data);
-    }
-
     private File createImageFile() throws IOException {
-        assert getActivity() != null;
         SimpleDateFormat timeStamp = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
-        File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File storageDir = requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         return File.createTempFile(
-                FILE_NAMING_PREFIX + FILE_NAMING_SUFFIX,
+                FILE_NAMING_PREFIX + timeStamp + FILE_NAMING_SUFFIX,
                 FILE_FORMAT,
                 storageDir
         );

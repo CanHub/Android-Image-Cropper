@@ -1,5 +1,5 @@
 package com.canhub.cropper.sample.camera_java.domain;
 
 public enum CameraEnumDomainJava {
-    START_WITH_URI, START_WITHOUT_URI, START_PICK_IMG, START_FOR_RESULT;
+    START_WITH_URI, START_WITHOUT_URI, START_PICK_IMG
 }
