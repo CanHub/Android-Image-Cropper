@@ -4,8 +4,8 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Parcelable
 import androidx.activity.result.contract.ActivityResultContract
-import com.canhub.cropper.CropImage.getActivityResult
 
 /**
  * An ActivityResultContract to start an activity that allows the user to crop an image.
@@ -30,7 +30,7 @@ class CropImageContract :
         resultCode: Int,
         intent: Intent?
     ): CropImageView.CropResult {
-        val result = getActivityResult(intent)
+        val result = intent?.getParcelableExtra<Parcelable>(CropImage.CROP_IMAGE_EXTRA_RESULT) as? CropImage.ActivityResult?
         return if (result == null || resultCode == Activity.RESULT_CANCELED) {
             CropImage.CancelledResult
         } else {

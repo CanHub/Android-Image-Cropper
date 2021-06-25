@@ -496,6 +496,7 @@ object CropImage {
      */
     // TODO don't return null
     @JvmStatic
+    @Deprecated("use the CropImageContract ActivityResultContract instead")
     fun getActivityResult(data: Intent?): ActivityResult? =
         data?.getParcelableExtra<Parcelable>(CROP_IMAGE_EXTRA_RESULT) as? ActivityResult?
 
