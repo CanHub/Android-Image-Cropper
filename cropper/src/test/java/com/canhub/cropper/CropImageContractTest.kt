@@ -19,7 +19,7 @@ import org.junit.runner.RunWith
 class CropImageContractTest {
 
     @Test(expected = IllegalArgumentException::class)
-    fun testInvalidOptionsShouldCrash() {
+    fun `when providing invalid options then cropping should crash`() {
 
         val testRegistry = object : ActivityResultRegistry() {
             override fun <I, O> onLaunch(
@@ -40,7 +40,7 @@ class CropImageContractTest {
     }
 
     @Test
-    fun testCancelledByUser() {
+    fun `when cropping is cancelled by user then result should be cancelled`() {
 
         val testRegistry = object : ActivityResultRegistry() {
             override fun <I, O> onLaunch(
@@ -62,7 +62,7 @@ class CropImageContractTest {
     }
 
     @Test
-    fun testCropSuccessWithEmptyOptions() {
+    fun `when cropping succeeds result should be successful`() {
 
         val result = CropImage.ActivityResult(
             originalUri = "content://original".toUri(),
@@ -99,7 +99,7 @@ class CropImageContractTest {
     }
 
     @Test
-    fun testCropWithAllOptions() {
+    fun `when starting crop with all options then intent should contain these options`() {
 
         val options = options("file://testInput".toUri()) {
             setCropShape(CropImageView.CropShape.OVAL)
@@ -169,7 +169,7 @@ class CropImageContractTest {
     }
 
     @Test
-    fun testCropError() {
+    fun `when cropping fails result should be unsuccessful`() {
 
         val testRegistry = object : ActivityResultRegistry() {
             override fun <I, O> onLaunch(

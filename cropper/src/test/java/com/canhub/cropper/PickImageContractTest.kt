@@ -25,7 +25,7 @@ class PickImageContractTest {
     }
 
     @Test
-    fun testImagePicking() {
+    fun `when starting image pick then intent action should be ACTION_CHOOSER`() {
         with(launchFragmentInContainer { ContractTestFragment(testRegistry) }) {
             onFragment { fragment ->
                 val pickImageIntent = fragment.pickImageIntent(true)
@@ -36,7 +36,7 @@ class PickImageContractTest {
     }
 
     @Test
-    fun testParsePickResult() {
+    fun `when parsing image pick result correct uri should be returned`() {
         with(launchFragmentInContainer { ContractTestFragment(testRegistry) }) {
             onFragment { fragment ->
                 fragment.pickImageIntent(true)
