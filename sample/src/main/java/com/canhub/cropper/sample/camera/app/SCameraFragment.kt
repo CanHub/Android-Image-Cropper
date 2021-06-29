@@ -61,7 +61,7 @@ internal class SCameraFragment :
 
     private val pickImageCustom =
         registerForActivityResult(
-            object: PickImageContract() {
+            object : PickImageContract() {
                 override fun parseResult(resultCode: Int, intent: Intent?): Uri? {
                     if (intent != null) {
                         context?.let {

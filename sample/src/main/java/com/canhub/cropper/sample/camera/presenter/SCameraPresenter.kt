@@ -92,6 +92,8 @@ internal class SCameraPresenter : SCameraContract.Presenter {
 
     override fun onCropImageResult(result: CropImageView.CropResult) {
         if (result.isSuccessful) {
+            val bitmap = result.bitmap
+            Log.v("File Path", context?.let { result.getUriFilePath(it) }.toString())
             view?.handleCropImageResult(result.uriContent.toString().replace("file:", ""))
         } else if (result is CropImage.CancelledResult) {
             view?.showErrorMessage("cropping image was cancelled by the user")
