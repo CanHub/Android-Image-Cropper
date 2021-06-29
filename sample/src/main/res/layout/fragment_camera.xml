@@ -28,6 +28,19 @@
         android:layout_margin="@dimen/keyline_x4"
         android:text="@string/startWithoutUri_text"
         app:elevation="@dimen/elevation_fab_resting_or_snackbar"
+        app:layout_constraintBottom_toTopOf="@id/startActivityForResult"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:pressedTranslationZ="@dimen/elevation_fab_pressed" />
+
+    <Button
+        android:id="@+id/startActivityForResult"
+        style="@style/Sample.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/keyline_x8"
+        android:text="@string/startActivityForResult_text"
+        app:elevation="@dimen/elevation_fab_resting_or_snackbar"
         app:layout_constraintBottom_toTopOf="@id/startPickImageActivity"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

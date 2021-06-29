@@ -3,6 +3,7 @@ package com.canhub.cropper.sample.camera_java.app;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
@@ -21,6 +22,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
+import com.canhub.cropper.CropImage;
 import com.canhub.cropper.CropImageContract;
 import com.canhub.cropper.CropImageContractOptions;
 import com.canhub.cropper.CropImageOptions;
@@ -60,6 +62,23 @@ public class SCameraFragmentJava extends Fragment implements SCameraContractJava
     private final ActivityResultLauncher<Boolean> pickImage =
             registerForActivityResult(new PickImageContract(), presenter::onPickImageResult);
 
+    private final ActivityResultLauncher<Boolean> pickImageCustom =
+            registerForActivityResult(new PickImageContract() {
+
+                @Override
+                @Nullable
+                public Uri parseResult(int resultCode, @Nullable Intent intent) {
+                    if (intent != null) {
+                        Uri result = Uri.parse(CropImage.getPickImageResultUriFilePath(requireContext(), intent, false));
+                        setContext(null);
+                        return result;
+                    }
+
+                    setContext(null);
+                    return null;
+                }
+            }, presenter::onPickImageResultCustom);
+
     private final ActivityResultLauncher<CropImageContractOptions> cropImage =
             registerForActivityResult(new CropImageContract(), presenter::onCropImageResult);
 
@@ -89,6 +108,8 @@ public class SCameraFragmentJava extends Fragment implements SCameraContractJava
 
         binding.startPickImageActivity.setOnClickListener(v -> presenter.startPickImageActivityClicked());
 
+        binding.startActivityForResult.setOnClickListener(v -> presenter.startPickImageActivityCustomClicked());
+
         presenter.onCreate(getActivity(), getContext());
     }
 
@@ -104,9 +125,16 @@ public class SCameraFragmentJava extends Fragment implements SCameraContractJava
             case START_PICK_IMG:
                 startPickImage();
                 break;
+            case START_PICK_IMG_CUSTOM:
+                startPickImageCustom();
+                break;
             default:
                 break;
         }
+    }
+
+    private void startPickImageCustom() {
+        pickImageCustom.launch(false);
     }
 
     private void startPickImage() {

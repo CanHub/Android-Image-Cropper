@@ -20,6 +20,7 @@ android {
     }
     kotlinOptions {
         freeCompilerArgs = ["-Xinline-classes"]
+        jvmTarget = "1.8"
     }
     buildFeatures {
         viewBinding true

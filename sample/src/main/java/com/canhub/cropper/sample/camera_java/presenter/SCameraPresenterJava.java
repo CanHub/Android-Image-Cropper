@@ -91,6 +91,12 @@ public class SCameraPresenterJava implements SCameraContractJava.Presenter {
     }
 
     @Override
+    public void startPickImageActivityCustomClicked() {
+        assert view != null;
+        view.startCropImage(CameraEnumDomainJava.START_PICK_IMG_CUSTOM);
+    }
+
+    @Override
     public void onOk() {
         assert view != null;
         view.cameraPermissionLaunch();
@@ -115,6 +121,16 @@ public class SCameraPresenterJava implements SCameraContractJava.Presenter {
 
     @Override
     public void onPickImageResult(@Nullable Uri resultUri) {
+        if (resultUri != null) {
+            Log.v("Uri", resultUri.toString());
+            view.handleCropImageResult(resultUri.toString());
+        } else {
+            view.showErrorMessage("picking image failed");
+        }
+    }
+
+    @Override
+    public void onPickImageResultCustom(@Nullable Uri resultUri) {
         if (resultUri != null) {
             Log.v("File Path", resultUri.toString());
             view.handleCropImageResult(resultUri.toString());

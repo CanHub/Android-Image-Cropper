@@ -2,6 +2,7 @@ package com.canhub.cropper.sample.camera.app
 
 import android.Manifest
 import android.app.AlertDialog
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.Color.RED
@@ -16,7 +17,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
+import com.canhub.cropper.CropImage
 import com.canhub.cropper.CropImageContract
 import com.canhub.cropper.CropImageView
 import com.canhub.cropper.PickImageContract
@@ -56,6 +59,23 @@ internal class SCameraFragment :
     private val pickImage =
         registerForActivityResult(PickImageContract(), presenter::onPickImageResult)
 
+    private val pickImageCustom =
+        registerForActivityResult(
+            object: PickImageContract() {
+                override fun parseResult(resultCode: Int, intent: Intent?): Uri? {
+                    if (intent != null) {
+                        context?.let {
+                            context = null
+                            return CropImage.getPickImageResultUriFilePath(it, intent).toUri()
+                        }
+                    }
+                    context = null
+                    return null
+                }
+            },
+            presenter::onPickImageResultCustom
+        )
+
     private val cropImage =
         registerForActivityResult(CropImageContract(), presenter::onCropImageResult)
 
@@ -84,6 +104,9 @@ internal class SCameraFragment :
         binding.startPickImageActivity.setOnClickListener {
             presenter.startPickImageActivityClicked()
         }
+        binding.startActivityForResult.setOnClickListener {
+            presenter.startPickImageActivityCustomClicked()
+        }
 
         presenter.onCreate(activity, context)
     }
@@ -93,7 +116,12 @@ internal class SCameraFragment :
             CameraEnumDomain.START_WITH_URI -> startCameraWithUri()
             CameraEnumDomain.START_WITHOUT_URI -> startCameraWithoutUri()
             CameraEnumDomain.START_PICK_IMG -> startPickImage()
+            CameraEnumDomain.START_PICK_IMG_CUSTOM -> startPickImageCustom()
         }
+    }
+
+    private fun startPickImageCustom() {
+        pickImageCustom.launch(false)
     }
 
     private fun startPickImage() {

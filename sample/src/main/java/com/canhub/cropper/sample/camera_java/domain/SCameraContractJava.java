@@ -42,6 +42,8 @@ public interface SCameraContractJava {
 
         void onPickImageResult(@Nullable Uri resultUri);
 
+        void onPickImageResultCustom(@Nullable Uri resultUri);
+
         void onTakePictureResult(boolean success);
 
         void startWithUriClicked();
@@ -49,5 +51,7 @@ public interface SCameraContractJava {
         void startWithoutUriClicked();
 
         void startPickImageActivityClicked();
+
+        void startPickImageActivityCustomClicked();
     }
 }

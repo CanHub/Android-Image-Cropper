@@ -13,11 +13,12 @@ import com.canhub.cropper.CropImage.getPickImageResultUriContent
  * <p>
  * Set the boolean input flag to true to include the camera in the options presented to the user.
  * <p>
+ * If you want to customize how the result is parsed, extend this class and override parseResult
 */
 
-class PickImageContract : ActivityResultContract<Boolean, Uri?>() {
+open class PickImageContract : ActivityResultContract<Boolean, Uri?>() {
 
-    private var context: Context? = null
+    protected var context: Context? = null
 
     override fun createIntent(context: Context, input: Boolean): Intent {
 
@@ -31,7 +32,7 @@ class PickImageContract : ActivityResultContract<Boolean, Uri?>() {
         )
     }
 
-    override fun parseResult(
+    open override fun parseResult(
         resultCode: Int,
         intent: Intent?
     ): Uri? {

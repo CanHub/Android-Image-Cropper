@@ -25,9 +25,11 @@ internal interface SCameraContract {
         fun onCancel()
         fun onCropImageResult(result: CropImageView.CropResult)
         fun onPickImageResult(resultUri: Uri?)
+        fun onPickImageResultCustom(resultUri: Uri?)
         fun onTakePictureResult(success: Boolean)
         fun startWithUriClicked()
         fun startWithoutUriClicked()
         fun startPickImageActivityClicked()
+        fun startPickImageActivityCustomClicked()
     }
 }
