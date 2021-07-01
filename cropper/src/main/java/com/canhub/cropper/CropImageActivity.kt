@@ -48,7 +48,7 @@ open class CropImageActivity :
     private var cropImageView: CropImageView? = null
     private lateinit var binding: CropImageActivityBinding
 
-    private val pickImage = registerForActivityResult(PickImageContract(), ::onPickImageResult)
+    private val pickImage = registerForActivityResult(PickImageContract()){ onPickImageResult(it) }
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -40,6 +40,7 @@ internal class SCameraFragment :
     SCameraContract.View {
 
     companion object {
+
         fun newInstance() = SCameraFragment()
 
         const val DATE_FORMAT = "yyyyMMdd_HHmmss"
@@ -52,12 +53,13 @@ internal class SCameraFragment :
     private lateinit var binding: FragmentCameraBinding
     private val presenter: SCameraContract.Presenter = SCameraPresenter()
     private var photoUri: Uri? = null
+
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean -> presenter.onPermissionResult(isGranted) }
 
     private val pickImage =
-        registerForActivityResult(PickImageContract(), presenter::onPickImageResult)
+        registerForActivityResult(PickImageContract()) { presenter.onPickImageResult(it) }
 
     private val pickImageCustom =
         registerForActivityResult(
@@ -72,15 +74,15 @@ internal class SCameraFragment :
                     context = null
                     return null
                 }
-            },
-            presenter::onPickImageResultCustom
-        )
+            }
+        ) { presenter.onPickImageResultCustom(it) }
 
     private val cropImage =
-        registerForActivityResult(CropImageContract(), presenter::onCropImageResult)
+        registerForActivityResult(CropImageContract()) { presenter.onCropImageResult(it) }
 
-    private val takePicture =
-        registerForActivityResult(ActivityResultContracts.TakePicture(), presenter::onTakePictureResult)
+    private val takePicture = registerForActivityResult(ActivityResultContracts.TakePicture()) {
+        presenter.onTakePictureResult(it)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
