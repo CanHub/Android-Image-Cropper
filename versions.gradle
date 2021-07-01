@@ -19,9 +19,19 @@ ext {
     materialVersion = '1.4.0-alpha01'
 
     // AndroidX
+    androidXActivity = '1.2.3'
     androidXAppCompatVersionSample = '1.3.0-rc01'
     androidXAppCompatVersionCropper = '1.2.0'  // Used to avoid not release stable versions on the lib
     androidXExifVersion = '1.3.2'
     androidXCoreKtxVersion = '1.3.2'
     androidXLifeCycleVersion = '2.3.1'
+    androidXJunitVersion = '1.0.0'
+    androidXFragmentVersion = '1.3.5'
+    androidXTestVersion = '1.3.0'
+
+    // JUnit
+    junitVersion = '4.13.2'
+
+    // Robolectric
+    robolectricVersion = '4.5.1'
 }

@@ -92,43 +92,33 @@ override fun onCreate(savedInstanceState: Bundle?) {
  ```
 
 ### Start the default Activity
-- Start `CropImageActivity` using builder pattern from your activity
+- Register for activity result with `CropImageContract`
  ```kotlin
 class MainActivity {
-    private fun startCrop() {
-        // start picker to get image for cropping and then use the image in cropping activity
-        CropImage
-            .activity()
-            .setGuidelines(CropImageView.Guidelines.ON)
-            .start(this)
-
-        // start cropping activity for pre-acquired image saved on the device
-        CropImage
-            .activity(imageUri)
-            .start(this)
-
-        // for fragment (DO NOT use `getActivity()`)
-        CropImage
-            .activity()
-            .start(requireContext(), this)
-    }
+    private val cropImage = registerForActivityResult(CropImageContract()) { result ->
+            if (result.isSuccessful) {
+                // use the returned uri
+                val uri = result.uriContent
+            } else {
+                // an error occured
+            }
+        }
 }
  ```
 
-- Override `onActivityResult` method in your activity to get crop result
+- Launch the activity
  ```kotlin
-class MainActivity {
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-             val result = CropImage.getActivityResult(data)
-             if (resultCode == Activity.RESULT_OK) {
-                 val resultUri: Uri? = result?.uriContent
-                 val resultFilePath: String? = result?.getUriFilePath(requireContext())
-             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                 val error = result!!.error
-             }
-         }
-     }
+private fun startCrop() {
+    // start picker to get image for cropping and then use the image in cropping activity
+    cropImage.launch(options())
+
+    // start cropping activity for pre-acquired image saved on the device and customize settings
+    cropImage.launch(
+        options(uri = imageUri) {
+            setGuidelines(Guidelines.ON)
+            setOutputCompressFormat(CompressFormat.PNG)
+        }
+    )
 }
  ```
 

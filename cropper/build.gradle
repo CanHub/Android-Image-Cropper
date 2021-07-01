@@ -24,10 +24,20 @@ android {
     buildFeatures {
         viewBinding true
     }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
 }
 
 dependencies {
     api "androidx.appcompat:appcompat:$androidXAppCompatVersionCropper"
+
+    implementation "androidx.activity:activity-ktx:$androidXActivity"
 
     implementation "androidx.exifinterface:exifinterface:$androidXExifVersion"
     implementation "androidx.core:core-ktx:$androidXCoreKtxVersion"
@@ -37,4 +47,11 @@ dependencies {
 
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
+
+    testImplementation "junit:junit:$junitVersion"
+    testImplementation "androidx.test.ext:junit:$androidXJunitVersion"
+    testImplementation "androidx.test:core:$androidXTestVersion"
+    testImplementation "androidx.test:runner:$androidXTestVersion"
+    debugImplementation "androidx.fragment:fragment-testing:$androidXFragmentVersion"
+    testImplementation "org.robolectric:robolectric:$robolectricVersion"
 }

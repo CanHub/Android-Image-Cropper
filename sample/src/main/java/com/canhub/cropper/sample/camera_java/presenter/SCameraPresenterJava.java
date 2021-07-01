@@ -2,24 +2,21 @@ package com.canhub.cropper.sample.camera_java.presenter;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import com.canhub.cropper.CropImage;
+import com.canhub.cropper.CropImageView;
 import com.canhub.cropper.common.CommonVersionCheck;
-import com.canhub.cropper.sample.camera_java.app.SCameraFragmentJava;
 import com.canhub.cropper.sample.camera_java.domain.CameraEnumDomainJava;
 import com.canhub.cropper.sample.camera_java.domain.SCameraContractJava;
-
-import static android.app.Activity.RESULT_OK;
-import static com.canhub.cropper.sample.camera_java.app.SCameraFragmentJava.CODE_PHOTO_CAMERA;
 
 public class SCameraPresenterJava implements SCameraContractJava.Presenter {
     private SCameraContractJava.View view = null;
@@ -27,7 +24,6 @@ public class SCameraPresenterJava implements SCameraContractJava.Presenter {
     private boolean request = false;
     private boolean hasSystemFeature = false;
     private boolean selfPermission = false;
-    private Context context = null;
 
     @Override
     public void bind(SCameraContractJava.View view) {
@@ -43,7 +39,7 @@ public class SCameraPresenterJava implements SCameraContractJava.Presenter {
     public void onPermissionResult(boolean granted) {
         assert view != null;
         if (granted) {
-            view.dispatchTakePictureIntent();
+            view.startTakePicture();
         } else if (minVersion && request) {
             view.showDialog();
         } else {
@@ -58,7 +54,6 @@ public class SCameraPresenterJava implements SCameraContractJava.Presenter {
             view.showErrorMessage("onCreate activity and/or context are null");
             return;
         }
-        this.context = context;
 
         request = ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.CAMERA);
         if (context.getPackageManager() != null) {
@@ -73,7 +68,7 @@ public class SCameraPresenterJava implements SCameraContractJava.Presenter {
     public void startWithUriClicked() {
         assert view != null;
         if (hasSystemFeature && selfPermission) {
-            view.dispatchTakePictureIntent();
+            view.startTakePicture();
         } else if (hasSystemFeature && minVersion && request) {
             view.showDialog();
         } else if (hasSystemFeature) {
@@ -96,9 +91,9 @@ public class SCameraPresenterJava implements SCameraContractJava.Presenter {
     }
 
     @Override
-    public void startActivityForResultClicked() {
+    public void startPickImageActivityCustomClicked() {
         assert view != null;
-        view.startCropImage(CameraEnumDomainJava.START_FOR_RESULT);
+        view.startCropImage(CameraEnumDomainJava.START_PICK_IMG_CUSTOM);
     }
 
     @Override
@@ -114,57 +109,42 @@ public class SCameraPresenterJava implements SCameraContractJava.Presenter {
     }
 
     @Override
-    public void onActivityResult(int resultCode, int requestCode, Intent data) {
-        assert view != null;
-        if (resultCode == RESULT_OK) {
-            switch (requestCode) {
-                case CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE: {
-                    assert (context != null);
-                    Bitmap bitmap = CropImage.getActivityResult(data).getBitmap(context);
-                    Log.v(
-                            "File Path",
-                            CropImage.getActivityResult(data).getUriFilePath(context, false)
-                    );
-
-                    Uri uriContent = CropImage.getActivityResult(data).getUriContent();
-                    if (uriContent != null && !CropImage.isReadExternalStoragePermissionsRequired(context, uriContent)) {
-                        view.handleCropImageResult(uriContent.toString().replace("file:", ""));
-                    } else {
-                        view.showErrorMessage("CropImage getActivityResult return null");
-                    }
-                    break;
-                }
-                case SCameraFragmentJava.CUSTOM_REQUEST_CODE: {
-                    assert context != null;
-                    Log.v("File Path", CropImage.getPickImageResultUriFilePath(context, data, false));
-                    CropImage.getPickImageResultUriFilePath(context, data, false);
-                    Uri uri = CropImage.getPickImageResultUriContent(context, data);
-                    if (view != null) {
-                        view.handleCropImageResult(uri.toString().replace("file:", ""));
-                    }
-
-                    break;
-                }
-                case CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE: {
-                    assert context != null;
-                    Log.v("File Path", CropImage.getPickImageResultUriFilePath(context, data, false));
-                    Uri uri = CropImage.getPickImageResultUriContent(context, data);
-                    if (view != null) {
-                        view.handleCropImageResult(uri.toString());
-                    }
-                    break;
-                }
-                case CODE_PHOTO_CAMERA: {
-                    view.startCropImage(CameraEnumDomainJava.START_WITH_URI);
-                    break;
-                }
-                default: {
-                    view.showErrorMessage("requestCode = " + requestCode);
-                    break;
-                }
-            }
+    public void onCropImageResult(@NonNull CropImageView.CropResult result) {
+        if (result.isSuccessful()) {
+            view.handleCropImageResult(result.getUriContent().toString().replace("file:", ""));
+        } else if (result.equals(CropImage.CancelledResult.INSTANCE)) {
+            view.showErrorMessage("cropping image was cancelled by the user");
         } else {
-            view.showErrorMessage("resultCode = " + resultCode);
+            view.showErrorMessage("cropping image failed");
+        }
+    }
+
+    @Override
+    public void onPickImageResult(@Nullable Uri resultUri) {
+        if (resultUri != null) {
+            Log.v("Uri", resultUri.toString());
+            view.handleCropImageResult(resultUri.toString());
+        } else {
+            view.showErrorMessage("picking image failed");
+        }
+    }
+
+    @Override
+    public void onPickImageResultCustom(@Nullable Uri resultUri) {
+        if (resultUri != null) {
+            Log.v("File Path", resultUri.toString());
+            view.handleCropImageResult(resultUri.toString());
+        } else {
+            view.showErrorMessage("picking image failed");
+        }
+    }
+
+    @Override
+    public void onTakePictureResult(boolean success) {
+        if (success) {
+            view.startCropImage(CameraEnumDomainJava.START_WITH_URI);
+        } else {
+            view.showErrorMessage("taking picture failed");
         }
     }
 }
