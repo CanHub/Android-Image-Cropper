@@ -18,9 +18,12 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class CropImageContractTest {
 
-    @Test(expected = IllegalArgumentException::class)
-    fun `when providing invalid options then cropping should crash`() {
-
+    @Test
+    fun `WHEN providing invalid options THEN cropping should crash`() {
+        // GIVEN
+        var result: Exception? = null
+        val expected: IllegalArgumentException = IllegalArgumentException()
+        var fragment: ContractTestFragment? = null
         val testRegistry = object : ActivityResultRegistry() {
             override fun <I, O> onLaunch(
                 requestCode: Int,
@@ -31,17 +34,24 @@ class CropImageContractTest {
                 dispatchResult(requestCode, Activity.RESULT_CANCELED, Intent())
             }
         }
-
         with(launchFragmentInContainer { ContractTestFragment(testRegistry) }) {
-            onFragment { fragment ->
-                fragment.cropImageIntent(options { setMaxZoom(-10) })
-            }
+            onFragment { fragment = it }
         }
+        // WHEN
+        try {
+            fragment?.cropImageIntent(options { setMaxZoom(-10) })
+        } catch (e: Exception) {
+            result = e
+        }
+        // THEN
+        assertEquals(expected.javaClass, result?.javaClass)
     }
 
     @Test
-    fun `when cropping is cancelled by user then result should be cancelled`() {
-
+    fun `WHEN cropping is cancelled by user, THEN result should be cancelled`() {
+        // GIVEN
+        val expected = CropImage.CancelledResult
+        var fragment: ContractTestFragment? = null
         val testRegistry = object : ActivityResultRegistry() {
             override fun <I, O> onLaunch(
                 requestCode: Int,
@@ -52,19 +62,20 @@ class CropImageContractTest {
                 dispatchResult(requestCode, Activity.RESULT_CANCELED, Intent())
             }
         }
-
         with(launchFragmentInContainer { ContractTestFragment(testRegistry) }) {
-            onFragment { fragment ->
-                fragment.cropImage(options())
-                assert(fragment.cropResult == CropImage.CancelledResult)
-            }
+            onFragment { fragment = it }
         }
+        // WHEN
+        fragment?.cropImage(options())
+        // THEN
+        assertEquals(expected, fragment?.cropResult)
     }
 
     @Test
-    fun `when cropping succeeds result should be successful`() {
-
-        val result = CropImage.ActivityResult(
+    fun `WHEN cropping succeeds, THEN result should be successful`() {
+        // GIVEN
+        var fragment: ContractTestFragment? = null
+        val expected = CropImage.ActivityResult(
             originalUri = "content://original".toUri(),
             uriContent = "content://content".toUri(),
             error = null,
@@ -74,7 +85,6 @@ class CropImageContractTest {
             wholeImageRect = Rect(10, 20, 0, 0),
             sampleSize = 0
         )
-
         val testRegistry = object : ActivityResultRegistry() {
             override fun <I, O> onLaunch(
                 requestCode: Int,
@@ -82,26 +92,28 @@ class CropImageContractTest {
                 input: I,
                 options: ActivityOptionsCompat?
             ) {
-
                 val intent = Intent()
-                intent.putExtra(CropImage.CROP_IMAGE_EXTRA_RESULT, result)
+                intent.putExtra(CropImage.CROP_IMAGE_EXTRA_RESULT, expected)
 
                 dispatchResult(requestCode, CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE, intent)
             }
         }
-
         with(launchFragmentInContainer { ContractTestFragment(testRegistry) }) {
-            onFragment { fragment ->
-                fragment.cropImage(options())
-                assert(fragment.cropResult == result)
-            }
+            onFragment { fragment = it }
         }
+        // WHEN
+        fragment?.cropImage(options())
+        // THEN
+        assertEquals(expected, fragment?.cropResult)
     }
 
     @Test
-    fun `when starting crop with all options then intent should contain these options`() {
-
-        val options = options("file://testInput".toUri()) {
+    fun `WHEN starting crop with all options, THEN intent should contain these options`() {
+        // GIVEN
+        var cropImageIntent: Intent? = null
+        val expectedClassName = CropImageActivity::class.java.name
+        val expectedSource = "file://testInput".toUri()
+        val options = options(expectedSource) {
             setCropShape(CropImageView.CropShape.OVAL)
             setSnapRadius(1f)
             setTouchRadius(2f)
@@ -129,7 +141,7 @@ class CropImageContractTest {
             setMaxCropResultSize(5000, 5000)
             setActivityTitle("Test Activity Title")
             setActivityMenuIconColor(Color.BLACK)
-            setOutputUri("file://testOutputUri".toUri())
+            setOutputUri(expectedSource)
             setOutputCompressFormat(Bitmap.CompressFormat.JPEG)
             setOutputCompressQuality(85)
             setRequestedSize(25, 30, CropImageView.RequestSizeOptions.NONE)
@@ -145,32 +157,30 @@ class CropImageContractTest {
             setCropMenuCropButtonTitle("Test Button Title")
             setCropMenuCropButtonIcon(R.drawable.ic_rotate_left_24)
         }
-
         val testRegistry = object : ActivityResultRegistry() {
             override fun <I, O> onLaunch(
                 requestCode: Int,
                 contract: ActivityResultContract<I, O>,
                 input: I,
                 options: ActivityOptionsCompat?
-            ) {}
-        }
-
-        with(launchFragmentInContainer { ContractTestFragment(testRegistry) }) {
-            onFragment { fragment ->
-                val cropImageIntent = fragment.cropImageIntent(options)
-
-                assertEquals(CropImageActivity::class.java.name, cropImageIntent.component?.className)
-
-                val bundle = cropImageIntent.getBundleExtra(CropImage.CROP_IMAGE_EXTRA_BUNDLE)
-                assertEquals("file://testInput".toUri(), bundle?.getParcelable(CropImage.CROP_IMAGE_EXTRA_SOURCE))
-                assertEquals(options.options, bundle?.getParcelable(CropImage.CROP_IMAGE_EXTRA_OPTIONS))
+            ) {
             }
         }
+        // WHEN
+        with(launchFragmentInContainer { ContractTestFragment(testRegistry) }) {
+            onFragment { fragment -> cropImageIntent = fragment.cropImageIntent(options) }
+        }
+        val bundle = cropImageIntent?.getBundleExtra(CropImage.CROP_IMAGE_EXTRA_BUNDLE)
+        // THEN
+        assertEquals(expectedClassName, cropImageIntent?.component?.className)
+        assertEquals(expectedSource, bundle?.getParcelable(CropImage.CROP_IMAGE_EXTRA_SOURCE))
+        assertEquals(options.options, bundle?.getParcelable(CropImage.CROP_IMAGE_EXTRA_OPTIONS))
     }
 
     @Test
-    fun `when cropping fails result should be unsuccessful`() {
-
+    fun `WHEN cropping fails, THEN result should be unsuccessful`() {
+        // GIVEN
+        var fragment: ContractTestFragment? = null
         val testRegistry = object : ActivityResultRegistry() {
             override fun <I, O> onLaunch(
                 requestCode: Int,
@@ -194,12 +204,12 @@ class CropImageContractTest {
                 dispatchResult(requestCode, CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE, intent)
             }
         }
-
         with(launchFragmentInContainer { ContractTestFragment(testRegistry) }) {
-            onFragment { fragment ->
-                fragment.cropImage(options())
-                assertEquals(false, fragment.cropResult?.isSuccessful)
-            }
+            onFragment { fragment = it }
         }
+        // WHEN
+        fragment?.cropImage(options())
+        // THEN
+        assertEquals(false, fragment?.cropResult?.isSuccessful)
     }
 }

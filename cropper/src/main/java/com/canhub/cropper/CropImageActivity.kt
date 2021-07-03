@@ -47,8 +47,7 @@ open class CropImageActivity :
     /** The crop image view library widget used in the activity */
     private var cropImageView: CropImageView? = null
     private lateinit var binding: CropImageActivityBinding
-
-    private val pickImage = registerForActivityResult(PickImageContract(), ::onPickImageResult)
+    private val pickImage = registerForActivityResult(PickImageContract()) { onPickImageResult(it) }
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,7 +88,10 @@ open class CropImageActivity :
         }
 
         supportActionBar?.let {
-            title = if (options.activityTitle.isNotEmpty()) options.activityTitle else resources.getString(R.string.crop_image_activity_title)
+            title =
+                if (options.activityTitle.isNotEmpty()) options.activityTitle else resources.getString(
+                    R.string.crop_image_activity_title
+                )
             it.setDisplayHomeAsUpEnabled(true)
         }
     }

@@ -1,4 +1,4 @@
-package com.canhub.cropper.sample.camera.presenter
+package com.canhub.cropper.sample.crop_image.presenter
 
 import android.Manifest
 import android.app.Activity
@@ -11,19 +11,19 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import com.canhub.cropper.CropImage
 import com.canhub.cropper.CropImageView
-import com.canhub.cropper.sample.camera.domain.CameraEnumDomain
-import com.canhub.cropper.sample.camera.domain.SCameraContract
+import com.canhub.cropper.sample.crop_image.domain.CameraEnumDomain
+import com.canhub.cropper.sample.crop_image.domain.SCropImageContract
 
-internal class SCameraPresenter : SCameraContract.Presenter {
+internal class SCropImagePresenter : SCropImageContract.Presenter {
 
-    private var view: SCameraContract.View? = null
+    private var view: SCropImageContract.View? = null
     private val minVersion = com.canhub.cropper.common.CommonVersionCheck.isAtLeastM23()
     private var request = false
     private var hasSystemFeature = false
     private var selfPermission = false
     private var context: Context? = null
 
-    override fun bind(view: SCameraContract.View) {
+    override fun bind(view: SCropImageContract.View) {
         this.view = view
     }
 
@@ -91,14 +91,18 @@ internal class SCameraPresenter : SCameraContract.Presenter {
     }
 
     override fun onCropImageResult(result: CropImageView.CropResult) {
-        if (result.isSuccessful) {
-            val bitmap = result.bitmap
-            Log.v("File Path", context?.let { result.getUriFilePath(it) }.toString())
-            view?.handleCropImageResult(result.uriContent.toString().replace("file:", ""))
-        } else if (result is CropImage.CancelledResult) {
-            view?.showErrorMessage("cropping image was cancelled by the user")
-        } else {
-            view?.showErrorMessage("cropping image failed")
+        when {
+            result.isSuccessful -> {
+                Log.v("Bitmap", result.bitmap.toString())
+                Log.v("File Path", context?.let { result.getUriFilePath(it) }.toString())
+                view?.handleCropImageResult(result.uriContent.toString().replace("file:", ""))
+            }
+            result is CropImage.CancelledResult -> {
+                view?.showErrorMessage("cropping image was cancelled by the user")
+            }
+            else -> {
+                view?.showErrorMessage("cropping image failed")
+            }
         }
     }
 

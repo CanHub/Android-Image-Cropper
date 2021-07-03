@@ -1,4 +1,4 @@
-package com.canhub.cropper.sample.camera.app
+package com.canhub.cropper.sample.crop_image.app
 
 import android.Manifest
 import android.app.AlertDialog
@@ -25,9 +25,9 @@ import com.canhub.cropper.CropImageView
 import com.canhub.cropper.PickImageContract
 import com.canhub.cropper.options
 import com.canhub.cropper.sample.SCropResultActivity
-import com.canhub.cropper.sample.camera.domain.CameraEnumDomain
-import com.canhub.cropper.sample.camera.domain.SCameraContract
-import com.canhub.cropper.sample.camera.presenter.SCameraPresenter
+import com.canhub.cropper.sample.crop_image.domain.CameraEnumDomain
+import com.canhub.cropper.sample.crop_image.domain.SCropImageContract
+import com.canhub.cropper.sample.crop_image.presenter.SCropImagePresenter
 import com.example.croppersample.R
 import com.example.croppersample.databinding.FragmentCameraBinding
 import java.io.File
@@ -35,12 +35,13 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-internal class SCameraFragment :
+internal class SCropImageFragment :
     Fragment(),
-    SCameraContract.View {
+    SCropImageContract.View {
 
     companion object {
-        fun newInstance() = SCameraFragment()
+
+        fun newInstance() = SCropImageFragment()
 
         const val DATE_FORMAT = "yyyyMMdd_HHmmss"
         const val FILE_NAMING_PREFIX = "JPEG_"
@@ -50,14 +51,17 @@ internal class SCameraFragment :
     }
 
     private lateinit var binding: FragmentCameraBinding
-    private val presenter: SCameraContract.Presenter = SCameraPresenter()
+    private val presenter: SCropImageContract.Presenter = SCropImagePresenter()
     private var photoUri: Uri? = null
+
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean -> presenter.onPermissionResult(isGranted) }
 
     private val pickImage =
-        registerForActivityResult(PickImageContract(), presenter::onPickImageResult)
+        registerForActivityResult(PickImageContract()) {
+            presenter.onPickImageResult(it)
+        }
 
     private val pickImageCustom =
         registerForActivityResult(
@@ -72,15 +76,15 @@ internal class SCameraFragment :
                     context = null
                     return null
                 }
-            },
-            presenter::onPickImageResultCustom
-        )
+            }
+        ) { presenter.onPickImageResultCustom(it) }
 
     private val cropImage =
-        registerForActivityResult(CropImageContract(), presenter::onCropImageResult)
+        registerForActivityResult(CropImageContract()) { presenter.onCropImageResult(it) }
 
-    private val takePicture =
-        registerForActivityResult(ActivityResultContracts.TakePicture(), presenter::onTakePictureResult)
+    private val takePicture = registerForActivityResult(ActivityResultContracts.TakePicture()) {
+        presenter.onTakePictureResult(it)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

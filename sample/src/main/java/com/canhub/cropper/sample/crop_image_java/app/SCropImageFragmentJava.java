@@ -1,4 +1,4 @@
-package com.canhub.cropper.sample.camera_java.app;
+package com.canhub.cropper.sample.crop_image_java.app;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -29,9 +29,9 @@ import com.canhub.cropper.CropImageOptions;
 import com.canhub.cropper.CropImageView;
 import com.canhub.cropper.PickImageContract;
 import com.canhub.cropper.sample.SCropResultActivity;
-import com.canhub.cropper.sample.camera_java.domain.CameraEnumDomainJava;
-import com.canhub.cropper.sample.camera_java.domain.SCameraContractJava;
-import com.canhub.cropper.sample.camera_java.presenter.SCameraPresenterJava;
+import com.canhub.cropper.sample.crop_image_java.domain.SCropImageEnumDomainJava;
+import com.canhub.cropper.sample.crop_image_java.domain.SCropImageContractJava;
+import com.canhub.cropper.sample.crop_image_java.presenter.SCropImagePresenterJava;
 import com.example.croppersample.R;
 import com.example.croppersample.databinding.FragmentCameraBinding;
 
@@ -45,7 +45,7 @@ import java.util.Locale;
 import static android.graphics.Color.RED;
 import static android.graphics.Color.WHITE;
 
-public class SCameraFragmentJava extends Fragment implements SCameraContractJava.View {
+public class SCropImageFragmentJava extends Fragment implements SCropImageContractJava.View {
 
     static final String DATE_FORMAT = "yyyyMMdd_HHmmss";
     static final String FILE_NAMING_PREFIX = "JPEG_";
@@ -54,7 +54,7 @@ public class SCameraFragmentJava extends Fragment implements SCameraContractJava
     static final String AUTHORITY_SUFFIX = ".fileprovider";
 
     private FragmentCameraBinding binding;
-    private final SCameraContractJava.Presenter presenter = new SCameraPresenterJava();
+    private final SCropImageContractJava.Presenter presenter = new SCropImagePresenterJava();
     private Uri photoUri;
     private final ActivityResultLauncher<String> requestPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), presenter::onPermissionResult);
@@ -85,8 +85,8 @@ public class SCameraFragmentJava extends Fragment implements SCameraContractJava
     private final ActivityResultLauncher<Uri> takePicture =
             registerForActivityResult(new ActivityResultContracts.TakePicture(), presenter::onTakePictureResult);
 
-    public static SCameraFragmentJava newInstance() {
-        return new SCameraFragmentJava();
+    public static SCropImageFragmentJava newInstance() {
+        return new SCropImageFragmentJava();
     }
 
     @Nullable
@@ -114,7 +114,7 @@ public class SCameraFragmentJava extends Fragment implements SCameraContractJava
     }
 
     @Override
-    public void startCropImage(@NotNull CameraEnumDomainJava option) {
+    public void startCropImage(@NotNull SCropImageEnumDomainJava option) {
         switch (option) {
             case START_WITH_URI:
                 startCameraWithUri();

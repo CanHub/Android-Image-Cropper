@@ -10,15 +10,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - `Security` in case of vulnerabilities.
 
 ## [unreleased x.x.x] -
+
+## [3.2.0] - 03/07/21
 ### Added
-- `CropImageContract` and `PickImageContract`
-- added dependency to `androidx.activity:activity-ktx:.2.3`
+- `CropImageContract` and `PickImageContract` [#145](https://github.com/CanHub/Android-Image-Cropper/issues/145)
+- added dependency to `androidx.activity:activity-ktx:.2.3` [#145](https://github.com/CanHub/Android-Image-Cropper/issues/145)
 
 ### Changed
-- `CropImageActivity.onActivityResult` no longer receives any result. Override `onPickImageResult` instead.
+- `CropImageActivity.onActivityResult` no longer receives any result. Override `onPickImageResult` instead. [#145](https://github.com/CanHub/Android-Image-Cropper/issues/145)
 
 ### Deprecated
-- deprecated old methods that depend on the deprecated `onActivityResult`. Use `CropImageContract` and `PickImageContract` instead.
+- deprecated old methods that depend on the deprecated `onActivityResult`. Use `CropImageContract` and `PickImageContract` instead. [#145](https://github.com/CanHub/Android-Image-Cropper/issues/145)
 
 ## [3.1.3] - 10/06/21
 ### Fixed
