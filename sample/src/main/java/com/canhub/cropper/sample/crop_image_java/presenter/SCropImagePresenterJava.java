@@ -1,4 +1,4 @@
-package com.canhub.cropper.sample.camera_java.presenter;
+package com.canhub.cropper.sample.crop_image_java.presenter;
 
 import android.Manifest;
 import android.content.Context;
@@ -15,18 +15,18 @@ import androidx.fragment.app.FragmentActivity;
 import com.canhub.cropper.CropImage;
 import com.canhub.cropper.CropImageView;
 import com.canhub.cropper.common.CommonVersionCheck;
-import com.canhub.cropper.sample.camera_java.domain.CameraEnumDomainJava;
-import com.canhub.cropper.sample.camera_java.domain.SCameraContractJava;
+import com.canhub.cropper.sample.crop_image_java.domain.SCropImageEnumDomainJava;
+import com.canhub.cropper.sample.crop_image_java.domain.SCropImageContractJava;
 
-public class SCameraPresenterJava implements SCameraContractJava.Presenter {
-    private SCameraContractJava.View view = null;
+public class SCropImagePresenterJava implements SCropImageContractJava.Presenter {
+    private SCropImageContractJava.View view = null;
     private boolean minVersion = CommonVersionCheck.INSTANCE.isAtLeastM23();
     private boolean request = false;
     private boolean hasSystemFeature = false;
     private boolean selfPermission = false;
 
     @Override
-    public void bind(SCameraContractJava.View view) {
+    public void bind(SCropImageContractJava.View view) {
         this.view = view;
     }
 
@@ -81,19 +81,19 @@ public class SCameraPresenterJava implements SCameraContractJava.Presenter {
     @Override
     public void startWithoutUriClicked() {
         assert view != null;
-        view.startCropImage(CameraEnumDomainJava.START_WITHOUT_URI);
+        view.startCropImage(SCropImageEnumDomainJava.START_WITHOUT_URI);
     }
 
     @Override
     public void startPickImageActivityClicked() {
         assert view != null;
-        view.startCropImage(CameraEnumDomainJava.START_PICK_IMG);
+        view.startCropImage(SCropImageEnumDomainJava.START_PICK_IMG);
     }
 
     @Override
     public void startPickImageActivityCustomClicked() {
         assert view != null;
-        view.startCropImage(CameraEnumDomainJava.START_PICK_IMG_CUSTOM);
+        view.startCropImage(SCropImageEnumDomainJava.START_PICK_IMG_CUSTOM);
     }
 
     @Override
@@ -142,7 +142,7 @@ public class SCameraPresenterJava implements SCameraContractJava.Presenter {
     @Override
     public void onTakePictureResult(boolean success) {
         if (success) {
-            view.startCropImage(CameraEnumDomainJava.START_WITH_URI);
+            view.startCropImage(SCropImageEnumDomainJava.START_WITH_URI);
         } else {
             view.showErrorMessage("taking picture failed");
         }

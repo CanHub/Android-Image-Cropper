@@ -1,11 +1,11 @@
-package com.canhub.cropper.sample.camera.domain
+package com.canhub.cropper.sample.crop_image.domain
 
 import android.content.Context
 import android.net.Uri
 import androidx.fragment.app.FragmentActivity
 import com.canhub.cropper.CropImageView
 
-internal interface SCameraContract {
+internal interface SCropImageContract {
 
     interface View {
         fun startCropImage(option: CameraEnumDomain)

@@ -1,4 +1,4 @@
-package com.canhub.cropper.sample.camera_java.domain;
+package com.canhub.cropper.sample.crop_image_java.domain;
 
 import android.content.Context;
 import android.net.Uri;
@@ -9,10 +9,10 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.canhub.cropper.CropImageView;
 
-public interface SCameraContractJava {
+public interface SCropImageContractJava {
 
     interface View {
-        void startCropImage(CameraEnumDomainJava option);
+        void startCropImage(SCropImageEnumDomainJava option);
 
         void showErrorMessage(String message);
 

@@ -3,8 +3,8 @@ package com.canhub.cropper.sample
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.canhub.cropper.sample.camera.app.SCameraFragment
-import com.canhub.cropper.sample.camera_java.app.SCameraFragmentJava
+import com.canhub.cropper.sample.crop_image.app.SCropImageFragment
+import com.canhub.cropper.sample.crop_image_java.app.SCropImageFragmentJava
 import com.canhub.cropper.sample.crop_image_view.app.SCropImageViewFragment
 import com.canhub.cropper.sample.extend_activity.app.SExtendActivity
 import com.example.croppersample.R
@@ -34,7 +34,7 @@ internal class SMainActivity : AppCompatActivity() {
             hideButtons(binding)
             supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.container, SCameraFragment.newInstance())
+                .replace(R.id.container, SCropImageFragment.newInstance())
                 .commit()
         }
 
@@ -42,7 +42,7 @@ internal class SMainActivity : AppCompatActivity() {
             hideButtons(binding)
             supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.container, SCameraFragmentJava.newInstance())
+                .replace(R.id.container, SCropImageFragmentJava.newInstance())
                 .commit()
         }
     }

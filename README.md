@@ -16,11 +16,11 @@ Android Image Cropper
 
 ![Crop](https://github.com/CanHub/Android-Image-Cropper/blob/main/art/demo.gif?raw=true)
 
-## Add to your project
+# Add to your project
 
 [See GitHub Wiki for more info.](https://github.com/CanHub/Android-Image-Cropper/wiki)
 
-#### Step 1. Add the JitPack repository to your root build.gradle
+### Step 1. Add the JitPack repository to your root build.gradle
 
 ```gradle
   allprojects {
@@ -31,7 +31,7 @@ Android Image Cropper
   }
 ```
 
-#### Step 2. Add the dependency
+### Step 2. Add the dependency
 
 ```gradle
   dependencies {
@@ -40,7 +40,7 @@ Android Image Cropper
 ```
 [Latest Release Version](https://github.com/CanHub/Android-Image-Cropper/releases)
 
-#### Step 3. Add permissions to manifest 
+### Step 3. Add permissions to manifest 
 
 Only need if you run on devices under OS10 (SDK 29)
 
@@ -52,13 +52,13 @@ Only need if you run on devices under OS10 (SDK 29)
 </manifest>
  ```
 
- #### Step 4. Add this line to your Proguard config file
+### Step 4. Add this line to your Proguard config file
 
 ```
 -keep class androidx.appcompat.widget.** { *; }
 ```
 
-#### Step 5. Set source compatibility version to Java 8
+### Step 5. Set source compatibility version to Java 8
 
 - Go to app level `build.gradle` file
 
@@ -72,57 +72,50 @@ Only need if you run on devices under OS10 (SDK 29)
 	
 - This will set the java version to 8
 
-## Using Activity
+# Using the Library
+There is 3 ways of using the library:
+- Calling crop directly (Sample code: `sample/crop_image`)
+- Using the CropView (Sample code: `sample/crop_image_view`)
+- Extending the activity (Sample code: `sample/extend_activity`)
+Your choice depends on how you want your layout to look.
 
-### Extend to make a custom activity
-If you want to extend the `CropImageActivity` please be aware you will need to setup your `CropImageView`
-You can check a sample code in this project `com.canhub.cropper.sample.extend_activity.app.ExtendActivity`
+Obs: The library has a public pick image contract, more on wiki.
 
-- Add `CropImageActivity` into your AndroidManifest.xml
- ```xml
- <activity android:name="com.canhub.cropper.CropImageActivity"
-   android:theme="@style/Base.Theme.AppCompat"/> <!-- optional (needed if default theme has no action bar) -->
- ```
-- Setup your `CropImageView` after call `super.onCreate(savedInstanceState)`
- ```kotlin
-override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    setCropImageView(binding.cropImageView)
-}
- ```
-
-### Start the default Activity
+## Calling crop directly
 - Register for activity result with `CropImageContract`
  ```kotlin
 class MainActivity {
     private val cropImage = registerForActivityResult(CropImageContract()) { result ->
             if (result.isSuccessful) {
                 // use the returned uri
-                val uri = result.uriContent
+                val uriContent = result.uriContent 
+                val uriFilePath = result.getUriFilePath(context) // optional usage
             } else {
-                // an error occured
+                // an error occurred
+                val exception = result.error
             }
         }
+
+    private fun startCrop() {
+        // start picker to get image for cropping and then use the image in cropping activity
+        cropImage.launch(
+            options {
+                setGuidelines(Guidelines.ON)
+            }
+        )
+
+        // start cropping activity for pre-acquired image saved on the device and customize settings
+        cropImage.launch(
+            options(uri = imageUri) {
+                setGuidelines(Guidelines.ON)
+                setOutputCompressFormat(CompressFormat.PNG)
+            }
+        )
+    }
 }
  ```
 
-- Launch the activity
- ```kotlin
-private fun startCrop() {
-    // start picker to get image for cropping and then use the image in cropping activity
-    cropImage.launch(options())
-
-    // start cropping activity for pre-acquired image saved on the device and customize settings
-    cropImage.launch(
-        options(uri = imageUri) {
-            setGuidelines(Guidelines.ON)
-            setOutputCompressFormat(CompressFormat.PNG)
-        }
-    )
-}
- ```
-
-## Using View
+## Using CropView
 2. Add `CropImageView` into your activity
  ```xml
  <!-- Image Cropper fill the remaining available height -->
@@ -146,6 +139,23 @@ private fun startCrop() {
  cropImageView.getCroppedImageAsync()
  // or
  val cropped: Bitmap = cropImageView.getCroppedImage()
+ ```
+
+## Extend to make a custom activity
+If you want to extend the `CropImageActivity` please be aware you will need to setup your `CropImageView`
+You can check a sample code in this project `com.canhub.cropper.sample.extend_activity.app.ExtendActivity`
+
+- Add `CropImageActivity` into your AndroidManifest.xml
+ ```xml
+ <activity android:name="com.canhub.cropper.CropImageActivity"
+   android:theme="@style/Base.Theme.AppCompat"/> <!-- optional (needed if default theme has no action bar) -->
+ ```
+- Setup your `CropImageView` after call `super.onCreate(savedInstanceState)`
+ ```kotlin
+override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setCropImageView(binding.cropImageView)
+}
  ```
 
 ## Features
