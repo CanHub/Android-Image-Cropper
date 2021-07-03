@@ -9,10 +9,11 @@ import com.canhub.cropper.CropImage.getPickImageResultUriContent
 /**
  * An ActivityResultContract to prompt the user to pick an image, receiving
  * a Uri for that image that allows you to use
+ *
  * android.content.ContentResolver#openInputStream(Uri) to access the raw data.
- * <p>
+ *
  * Set the boolean input flag to true to include the camera in the options presented to the user.
- * <p>
+ *
  * If you want to customize how the result is parsed, extend this class and override parseResult
 */
 
