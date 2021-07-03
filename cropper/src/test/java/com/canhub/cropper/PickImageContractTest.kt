@@ -25,27 +25,36 @@ class PickImageContractTest {
     }
 
     @Test
-    fun `when starting image pick then intent action should be ACTION_CHOOSER`() {
+    fun `GIVEN pick image contract, WHEN starting image pick, THEN intent action should be ACTION_CHOOSER`() {
+        // GIVEN
+        val expected = Intent.ACTION_CHOOSER
+        var fragment: ContractTestFragment? = null
         with(launchFragmentInContainer { ContractTestFragment(testRegistry) }) {
-            onFragment { fragment ->
-                val pickImageIntent = fragment.pickImageIntent(true)
-
-                assertEquals(pickImageIntent.action, Intent.ACTION_CHOOSER)
-            }
+            onFragment { fragment = it }
         }
+
+        // WHEN
+        val result = fragment?.pickImageIntent(true)?.action
+
+        // THEN
+        assertEquals(expected, result)
     }
 
     @Test
-    fun `when parsing image pick result correct uri should be returned`() {
+    fun `GIVEN pick image contract, WHEN parsing image pick, THEN result correct uri should be returned`() {
+        // GIVEN
+        var fragment: ContractTestFragment? = null
+        val expected = "content://testResult".toUri()
         with(launchFragmentInContainer { ContractTestFragment(testRegistry) }) {
-            onFragment { fragment ->
-                fragment.pickImageIntent(true)
-                val resultIntent = Intent().apply {
-                    data = "content://testResult".toUri()
-                }
-                val result = fragment.pickImage.contract.parseResult(Activity.RESULT_OK, resultIntent)
-                assertEquals("content://testResult".toUri(), result)
-            }
+            onFragment { fragment = it }
         }
+
+        // WHEN
+        fragment?.pickImageIntent(true)
+        val resultIntent = Intent().apply { data = expected }
+        val result = fragment?.pickImage?.contract?.parseResult(Activity.RESULT_OK, resultIntent)
+
+        // THEN
+        assertEquals(expected, result)
     }
 }
