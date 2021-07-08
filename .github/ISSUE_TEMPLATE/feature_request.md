@@ -7,6 +7,11 @@ assignees: ''
 
 ---
 
+🚨🚨 Important to remember that this library is maintained for free. 
+You can check the maintainers plans for the library in the Project tab. 
+If you really want to have some maintainer working in your feature please check the sponsorship options.
+But feel free to suggest features and do yourself, this is a community driven open source library
+
 **Is your feature request related to a problem? Please describe.**
 A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
 
