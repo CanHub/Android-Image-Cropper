@@ -37,11 +37,9 @@ open class PickImageContract : ActivityResultContract<Boolean, Uri?>() {
         resultCode: Int,
         intent: Intent?
     ): Uri? {
-        if (intent != null) {
-            context?.let {
-                context = null
-                return getPickImageResultUriContent(it, intent)
-            }
+        context?.let {
+            context = null
+            return getPickImageResultUriContent(it, intent)
         }
         context = null
         return null

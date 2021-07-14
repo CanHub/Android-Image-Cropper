@@ -11,6 +11,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [unreleased x.x.x] -
 
+## [3.2.1] - 14/07/21
+### Fixed
+- Unable to get camera image from contract [#160](https://github.com/CanHub/Android-Image-Cropper/issues/160)
+
 ## [3.2.0] - 03/07/21
 ### Added
 - `CropImageContract` and `PickImageContract` [#145](https://github.com/CanHub/Android-Image-Cropper/issues/145)

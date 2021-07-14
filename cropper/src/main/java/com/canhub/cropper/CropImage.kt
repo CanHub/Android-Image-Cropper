@@ -395,12 +395,13 @@ object CropImage {
     @JvmStatic
     fun getPickImageResultUriContent(context: Context, data: Intent?): Uri {
         var isCamera = true
-        if (data != null && data.data != null) {
+        val uri = data?.data
+        if (uri != null) {
             val action = data.action
             isCamera = action != null && action == MediaStore.ACTION_IMAGE_CAPTURE
         }
-        return if (isCamera || data!!.data == null) getCaptureImageOutputUriContent(context)
-        else data.data!!
+        return if (isCamera || uri == null) getCaptureImageOutputUriContent(context)
+        else uri
     }
 
     /**
