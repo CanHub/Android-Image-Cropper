@@ -1,7 +1,7 @@
 ext {
 
     // Project
-    libVersion = "3.2.0"
+    libVersion = "3.2.1"
     compileSdkVersion = 30
     targetSdkVersion = 30
     minSdkVersion = 14
