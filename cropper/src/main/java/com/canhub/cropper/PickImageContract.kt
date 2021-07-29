@@ -1,5 +1,6 @@
 package com.canhub.cropper
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -37,6 +38,10 @@ open class PickImageContract : ActivityResultContract<Boolean, Uri?>() {
         resultCode: Int,
         intent: Intent?
     ): Uri? {
+        if (resultCode == Activity.RESULT_CANCELED) {
+            context = null
+            return null
+        }
         context?.let {
             context = null
             return getPickImageResultUriContent(it, intent)
