@@ -10,6 +10,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - `Security` in case of vulnerabilities.
 
 ## [unreleased x.x.x] -
+### Fixed
+- After cropping a camera image, cancelling library picker shows again the last cropped image [#162](https://github.com/CanHub/Android-Image-Cropper/issues/162)
 
 ## [3.2.1] - 14/07/21
 ### Fixed
