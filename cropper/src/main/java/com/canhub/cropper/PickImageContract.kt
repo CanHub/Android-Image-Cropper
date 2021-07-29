@@ -23,7 +23,6 @@ open class PickImageContract : ActivityResultContract<Boolean, Uri?>() {
     protected var context: Context? = null
 
     override fun createIntent(context: Context, input: Boolean): Intent {
-
         this.context = context
 
         return CropImage.getPickImageChooserIntent(
@@ -37,16 +36,17 @@ open class PickImageContract : ActivityResultContract<Boolean, Uri?>() {
     open override fun parseResult(
         resultCode: Int,
         intent: Intent?
-    ): Uri? {
-        if (resultCode == Activity.RESULT_CANCELED) {
-            context = null
-            return null
+    ): Uri? =
+        when (resultCode) {
+            Activity.RESULT_CANCELED -> {
+                context = null
+                null
+            }
+            else -> {
+                context?.let {
+                    context = null
+                    getPickImageResultUriContent(it, intent)
+                }
+            }
         }
-        context?.let {
-            context = null
-            return getPickImageResultUriContent(it, intent)
-        }
-        context = null
-        return null
-    }
 }
