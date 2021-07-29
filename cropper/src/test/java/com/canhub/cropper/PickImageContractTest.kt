@@ -57,4 +57,28 @@ class PickImageContractTest {
         // THEN
         assertEquals(expected, result)
     }
+
+    @Test
+    fun `GIVEN pick image contract and previous image selection, WHEN cancelling image pick, THEN no uri should be returned`() {
+        // GIVEN
+        var firstFragment: ContractTestFragment? = null
+        var secondFragment: ContractTestFragment? = null
+        val firstSelection = "content://testResult".toUri()
+        with(launchFragmentInContainer { ContractTestFragment(testRegistry) }) {
+            onFragment { firstFragment = it }
+        }
+        firstFragment?.pickImageIntent(true)
+        firstFragment?.pickImage?.contract?.parseResult(Activity.RESULT_OK, Intent().apply { data = firstSelection })
+        with(launchFragmentInContainer { ContractTestFragment(testRegistry) }) {
+            onFragment { secondFragment = it }
+        }
+
+        // WHEN
+        secondFragment?.pickImageIntent(true)
+        val resultIntent = Intent()
+        val result = secondFragment?.pickImage?.contract?.parseResult(Activity.RESULT_CANCELED, resultIntent)
+
+        // THEN
+        assertEquals(null, result)
+    }
 }
