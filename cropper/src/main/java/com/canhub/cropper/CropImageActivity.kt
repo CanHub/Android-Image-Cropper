@@ -14,6 +14,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.BlendModeColorFilterCompat
 import androidx.core.graphics.BlendModeCompat
 import com.canhub.cropper.CropImageView.CropResult
@@ -153,6 +154,7 @@ open class CropImageActivity :
             R.id.crop_image_menu_crop -> cropImage()
             R.id.ic_rotate_left_24 -> rotateImage(-options.rotationDegrees)
             R.id.ic_rotate_right_24 -> rotateImage(options.rotationDegrees)
+            R.id.ic_crop_shape -> setProperCropShape(item)
             R.id.ic_flip_24_horizontally -> cropImageView?.flipImageHorizontally()
             R.id.ic_flip_24_vertically -> cropImageView?.flipImageVertically()
             android.R.id.home -> setResultCancel()
@@ -173,8 +175,8 @@ open class CropImageActivity :
             // For API >= 23 we need to check specifically that we have permissions to read external
             // storage.
             if (cropImageUri?.let {
-                CropImage.isReadExternalStoragePermissionsRequired(this, it)
-            } == true &&
+                    CropImage.isReadExternalStoragePermissionsRequired(this, it)
+                } == true &&
                 CommonVersionCheck.isAtLeastM23()
             ) {
                 // request permissions and handle the result in onRequestPermissionsResult()
@@ -255,6 +257,43 @@ open class CropImageActivity :
      */
     open fun rotateImage(degrees: Int) {
         cropImageView?.rotateImage(degrees)
+    }
+
+    open fun setProperCropShape(item: MenuItem) {
+        when {
+            cropImageView?.cropShape === CropImageView.CropShape.RECTANGLE -> {
+                item.icon = ResourcesCompat.getDrawable(
+                    resources, R.drawable.ic_crop_shape_circle_24,
+                    theme
+                )
+                cropImageView?.cropShape = CropImageView.CropShape.OVAL
+                cropImageView?.setFixedAspectRatio(true)
+            }
+            cropImageView?.cropShape === CropImageView.CropShape.OVAL -> {
+                item.icon = ResourcesCompat.getDrawable(
+                    resources, R.drawable.ic_crop_shape_rectangle_vertical_24,
+                    theme
+                )
+                cropImageView?.cropShape = CropImageView.CropShape.RECTANGLE_VERTICAL_ONLY
+                cropImageView?.setFixedAspectRatio(false)
+            }
+            cropImageView?.cropShape === CropImageView.CropShape.RECTANGLE_VERTICAL_ONLY -> {
+                item.icon = ResourcesCompat.getDrawable(
+                    resources, R.drawable.ic_crop_shape_rectangle_horizontal_24,
+                    theme
+                )
+                cropImageView?.cropShape = CropImageView.CropShape.RECTANGLE_HORIZONTAL_ONLY
+                cropImageView?.setFixedAspectRatio(false)
+            }
+            else -> {
+                item.icon = ResourcesCompat.getDrawable(
+                    resources, R.drawable.ic_crop_shape_square_24,
+                    theme
+                )
+                cropImageView?.cropShape = CropImageView.CropShape.RECTANGLE
+                cropImageView?.setFixedAspectRatio(true)
+            }
+        }
     }
 
     /**

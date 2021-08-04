@@ -5,6 +5,10 @@
     <string name="ic_rotate_right_24">Rotate</string>
     <string name="crop_image_menu_crop">Crop</string>
     <string name="ic_flip_24">Flip</string>
+    <string name="ic_crop_shape_square">Square</string>
+    <string name="ic_crop_shape_circle">Circle</string>
+    <string name="ic_crop_shape_rectangle_vertical">Rectangle - Vertical</string>
+    <string name="ic_crop_shape_rectangle_horizontal">Rectangle - Horizontal</string>
     <string name="ic_flip_24_horizontally">Flip horizontally</string>
     <string name="ic_flip_24_vertically">Flip vertically</string>
     <string name="pick_image_intent_chooser_title">Select source</string>

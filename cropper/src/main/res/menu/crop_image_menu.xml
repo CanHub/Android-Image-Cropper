@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto">
-
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/ic_crop_shape"
+        android:icon="@drawable/ic_crop_shape_square_24"
+        android:title="@string/ic_crop_shape_square"
+        app:showAsAction="always" />
     <item
         android:id="@+id/ic_rotate_left_24"
         android:icon="@drawable/ic_rotate_left_24"
         android:title="@string/ic_rotate_left_24"
         android:visible="false"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/ic_rotate_right_24"
         android:icon="@drawable/ic_rotate_right_24"
         android:title="@string/ic_rotate_right_24"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/ic_flip_24"
         android:icon="@drawable/ic_flip_24"
@@ -21,15 +25,16 @@
         <menu>
             <item
                 android:id="@+id/ic_flip_24_horizontally"
-                android:title="@string/ic_flip_24_horizontally"/>
+                android:title="@string/ic_flip_24_horizontally" />
             <item
                 android:id="@+id/ic_flip_24_vertically"
-                android:title="@string/ic_flip_24_vertically"/>
+                android:title="@string/ic_flip_24_vertically" />
         </menu>
     </item>
     <item
         android:id="@+id/crop_image_menu_crop"
+        android:icon="@drawable/ic_crop_24"
         android:title="@string/crop_image_menu_crop"
-        app:showAsAction="always"/>
+        app:showAsAction="always" />
 
 </menu>
