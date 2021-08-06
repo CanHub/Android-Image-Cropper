@@ -1,62 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+<FrameLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingStart="@dimen/keyline_x4"
-    android:paddingEnd="@dimen/keyline_x4">
+    android:background="@color/white"
+    android:focusable="true"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <Button
-        android:id="@+id/startWithUri"
-        style="@style/Sample.Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/keyline_x4"
-        android:text="@string/startWithUri_text"
-        app:elevation="@dimen/elevation_fab_resting_or_snackbar"
-        app:layout_constraintBottom_toTopOf="@id/startWithoutUri"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:pressedTranslationZ="@dimen/elevation_fab_pressed" />
 
-    <Button
-        android:id="@+id/startWithoutUri"
-        style="@style/Sample.Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/keyline_x4"
-        android:text="@string/startWithoutUri_text"
-        app:elevation="@dimen/elevation_fab_resting_or_snackbar"
-        app:layout_constraintBottom_toTopOf="@id/startActivityForResult"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:pressedTranslationZ="@dimen/elevation_fab_pressed" />
 
-    <Button
-        android:id="@+id/startActivityForResult"
-        style="@style/Sample.Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/keyline_x8"
-        android:text="@string/startActivityForResult_text"
-        app:elevation="@dimen/elevation_fab_resting_or_snackbar"
-        app:layout_constraintBottom_toTopOf="@id/startPickImageActivity"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:pressedTranslationZ="@dimen/elevation_fab_pressed" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="@dimen/keyline_x4"
+        android:paddingEnd="@dimen/keyline_x4">
 
-    <Button
-        android:id="@+id/startPickImageActivity"
-        style="@style/Sample.Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/keyline_x4"
-        android:text="@string/startPickImageActivity_text"
-        app:elevation="@dimen/elevation_fab_resting_or_snackbar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:pressedTranslationZ="@dimen/elevation_fab_pressed" />
+        <Button
+            android:id="@+id/startWithUri"
+            style="@style/Sample.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/keyline_x4"
+            android:text="@string/startWithUri_text"
+            app:elevation="@dimen/elevation_fab_resting_or_snackbar"
+            app:layout_constraintBottom_toTopOf="@id/startWithoutUri"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:pressedTranslationZ="@dimen/elevation_fab_pressed" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/startWithoutUri"
+            style="@style/Sample.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/keyline_x4"
+            android:text="@string/startWithoutUri_text"
+            app:elevation="@dimen/elevation_fab_resting_or_snackbar"
+            app:layout_constraintBottom_toTopOf="@id/startActivityForResult"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:pressedTranslationZ="@dimen/elevation_fab_pressed" />
+
+        <Button
+            android:id="@+id/startActivityForResult"
+            style="@style/Sample.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/keyline_x8"
+            android:text="@string/startActivityForResult_text"
+            app:elevation="@dimen/elevation_fab_resting_or_snackbar"
+            app:layout_constraintBottom_toTopOf="@id/startPickImageActivity"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:pressedTranslationZ="@dimen/elevation_fab_pressed" />
+
+        <Button
+            android:id="@+id/startPickImageActivity"
+            style="@style/Sample.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/keyline_x4"
+            android:text="@string/startPickImageActivity_text"
+            app:elevation="@dimen/elevation_fab_resting_or_snackbar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:pressedTranslationZ="@dimen/elevation_fab_pressed" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

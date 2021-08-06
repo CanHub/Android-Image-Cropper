@@ -19,7 +19,6 @@ internal class SMainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.sampleCropImageView.setOnClickListener {
-            hideButtons(binding)
             supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.container, SCropImageViewFragment.newInstance())
@@ -31,7 +30,6 @@ internal class SMainActivity : AppCompatActivity() {
         }
 
         binding.sampleCropImage.setOnClickListener {
-            hideButtons(binding)
             supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.container, SCropImageFragment.newInstance())
@@ -39,7 +37,6 @@ internal class SMainActivity : AppCompatActivity() {
         }
 
         binding.sampleCropImageJava.setOnClickListener {
-            hideButtons(binding)
             supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.container, SCropImageFragmentJava.newInstance())
@@ -47,8 +44,20 @@ internal class SMainActivity : AppCompatActivity() {
         }
     }
 
-    private fun hideButtons(binding: ActivityMainBinding) {
-        binding.image.visibility = View.GONE
-        binding.buttons.visibility = View.GONE
+
+
+    override fun onBackPressed() {
+
+        if(supportFragmentManager.findFragmentById(R.id.container) != null) {
+            supportFragmentManager.beginTransaction()
+                .remove(supportFragmentManager.findFragmentById(R.id.container)!!)
+                .commit()
+            return
+        }
+
+
+        super.onBackPressed()
     }
+
+
 }
