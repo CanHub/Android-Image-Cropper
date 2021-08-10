@@ -1,7 +1,6 @@
 package com.canhub.cropper.sample
 
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.canhub.cropper.sample.crop_image.app.SCropImageFragment
 import com.canhub.cropper.sample.crop_image_java.app.SCropImageFragmentJava
@@ -44,20 +43,13 @@ internal class SMainActivity : AppCompatActivity() {
         }
     }
 
-
-
     override fun onBackPressed() {
-
-        if(supportFragmentManager.findFragmentById(R.id.container) != null) {
+        if (supportFragmentManager.findFragmentById(R.id.container) != null) {
             supportFragmentManager.beginTransaction()
                 .remove(supportFragmentManager.findFragmentById(R.id.container)!!)
                 .commit()
             return
         }
-
-
         super.onBackPressed()
     }
-
-
 }
