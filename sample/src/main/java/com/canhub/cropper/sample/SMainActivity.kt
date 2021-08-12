@@ -36,7 +36,7 @@ internal class SMainActivity : AppCompatActivity() {
         }
     }
 
-    private fun Fragment.show(){
+    private fun Fragment.show() {
         supportFragmentManager
             .beginTransaction()
             .replace(binding.container.id, this)
