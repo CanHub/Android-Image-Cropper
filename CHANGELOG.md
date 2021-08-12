@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ## [unreleased x.x.x] -
 ### Fixed
 - After cropping a camera image, cancelling library picker shows again the last cropped image [#162](https://github.com/CanHub/Android-Image-Cropper/issues/162)
+- implement onBackPressed() in sample code for handle backButton pressed [#174](https://github.com/CanHub/Android-Image-Cropper/issues/174)
 
 ## [3.2.1] - 14/07/21
 ### Fixed
