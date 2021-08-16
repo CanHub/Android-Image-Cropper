@@ -233,7 +233,7 @@ open class CropImageActivity :
      */
     open fun cropImage() {
         if (options.noOutputImage) setResult(null, null, 1)
-        else cropImageView?.saveCroppedImageAsync(
+        else cropImageView?.croppedImageAsync(
             outputUri,
             options.outputCompressFormat,
             options.outputCompressQuality,

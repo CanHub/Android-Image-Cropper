@@ -592,43 +592,10 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
     }
 
     /**
-     * Gets the cropped image based on the current crop window.<br></br>
-     * The result will be invoked to listener set by [ ][.setOnCropImageCompleteListener].
-     */
-    fun getCroppedImageAsync() {
-        getCroppedImageAsync(0, 0, RequestSizeOptions.NONE)
-    }
-
-    /**
-     * Gets the cropped image based on the current crop window.<br></br>
-     * Uses [RequestSizeOptions.RESIZE_INSIDE] option.<br></br>
+     * Cropped image based on the current crop window to the given uri.
      * The result will be invoked to listener set by [ ][.setOnCropImageCompleteListener].
      *
-     * @param reqWidth the width to resize the cropped image to
-     * @param reqHeight the height to resize the cropped image to
-     */
-    fun getCroppedImageAsync(reqWidth: Int, reqHeight: Int) {
-        getCroppedImageAsync(reqWidth, reqHeight, RequestSizeOptions.RESIZE_INSIDE)
-    }
-
-    /**
-     * Gets the cropped image based on the current crop window.<br></br>
-     * The result will be invoked to listener set by [ ][.setOnCropImageCompleteListener].
-     *
-     * @param reqWidth the width to resize the cropped image to (see options)
-     * @param reqHeight the height to resize the cropped image to (see options)
-     * @param options the resize method to use, see its documentation
-     */
-    fun getCroppedImageAsync(reqWidth: Int, reqHeight: Int, options: RequestSizeOptions) {
-        requireNotNull(mOnCropImageCompleteListener) { "mOnCropImageCompleteListener is not set" }
-        startCropWorkerTask(reqWidth, reqHeight, options, null, CompressFormat.JPEG, 0)
-    }
-
-    /**
-     * Save the cropped image based on the current crop window to the given uri.<br></br>
-     * The result will be invoked to listener set by [ ][.setOnCropImageCompleteListener].
-     *
-     * @param saveUri the Android Uri to save the cropped image to
+     * @param saveUri the Android Uri to save the cropped image to. Without it we don't have uri values
      * @param saveCompressFormat the compression format to use when writing the image
      * @param saveCompressQuality the quality (if applicable) to use when writing the image (0 - 100)
      * @param reqWidth the width to resize the cropped image to (see options)
@@ -636,12 +603,12 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
      * @param options the resize method to use, see its documentation
      */
     @JvmOverloads
-    fun saveCroppedImageAsync(
-        saveUri: Uri?,
-        saveCompressFormat: CompressFormat,
-        saveCompressQuality: Int,
-        reqWidth: Int,
-        reqHeight: Int,
+    fun croppedImageAsync(
+        saveUri: Uri? = null,
+        saveCompressFormat: CompressFormat = CompressFormat.JPEG,
+        saveCompressQuality: Int = 0,
+        reqWidth: Int = 0,
+        reqHeight: Int = 0,
         options: RequestSizeOptions = RequestSizeOptions.RESIZE_INSIDE
     ) {
         requireNotNull(mOnCropImageCompleteListener) { "mOnCropImageCompleteListener is not set" }
@@ -960,10 +927,10 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
     }
 
     /**
-     * Gets the cropped image based on the current crop window.<br></br>
+     * Gets the cropped image based on the current crop window.
      * If (reqWidth,reqHeight) is given AND image is loaded from URI cropping will try to use sample
      * size to fit in the requested width and height down-sampling if possible - optimization to get
-     * best size to quality.<br></br>
+     * best size to quality.
      * The result will be invoked to listener set by [ ][.setOnCropImageCompleteListener].
      *
      * @param reqWidth the width to resize the cropped image to (see options)
