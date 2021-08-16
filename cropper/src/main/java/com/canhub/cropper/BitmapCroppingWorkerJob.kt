@@ -85,7 +85,7 @@ class BitmapCroppingWorkerJob(
                         onPostExecute(Result(resizedBitmap, bitmapSampled.sampleSize))
                     else
                         launch(Dispatchers.IO) {
-                            BitmapUtils.writeBitmapToUri(
+                            val newUri = BitmapUtils.writeBitmapToUri(
                                 context,
                                 resizedBitmap,
                                 saveUri,
@@ -95,7 +95,7 @@ class BitmapCroppingWorkerJob(
                             resizedBitmap.recycle()
                             onPostExecute(
                                 Result(
-                                    saveUri,
+                                    newUri, //saveUri,
                                     bitmapSampled.sampleSize
                                 )
                             )

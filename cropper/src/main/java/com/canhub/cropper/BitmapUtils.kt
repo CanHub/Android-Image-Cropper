@@ -10,6 +10,7 @@ import android.graphics.Matrix
 import android.graphics.Rect
 import android.graphics.RectF
 import android.net.Uri
+import android.os.Environment
 import android.util.Log
 import android.util.Pair
 import androidx.core.content.FileProvider
@@ -17,6 +18,7 @@ import androidx.exifinterface.media.ExifInterface
 import com.canhub.cropper.CropImageView.RequestSizeOptions
 import com.canhub.cropper.common.CommonValues
 import com.canhub.cropper.common.CommonVersionCheck.isAtLeastQ29
+import com.canhub.cropper.utils.getUriForFile
 import java.io.Closeable
 import java.io.File
 import java.io.FileNotFoundException
@@ -41,7 +43,6 @@ internal object BitmapUtils {
 
     val EMPTY_RECT = Rect()
     val EMPTY_RECT_F = RectF()
-
     private const val IMAGE_MAX_BITMAP_DIMENSION = 2048
 
     /**
@@ -415,10 +416,8 @@ internal object BitmapUtils {
             } else if (tempUri.path?.let { File(it).exists() } == true) {
                 needSave = false
             }
-            if (needSave) {
-                writeBitmapToUri(context, bitmap!!, tempUri, CompressFormat.JPEG, 95)
-            }
-            tempUri
+            if (needSave) writeBitmapToUri(context, bitmap!!, tempUri, CompressFormat.JPEG, 95)
+            else tempUri
         } catch (e: Exception) {
             Log.w(
                 "AIC",
@@ -439,16 +438,47 @@ internal object BitmapUtils {
         uri: Uri?,
         compressFormat: CompressFormat?,
         compressQuality: Int
-    ) {
+    ): Uri? {
+        val newUri = buildUri(context, compressFormat)
         var outputStream: OutputStream? = null
         try {
-            outputStream = context.contentResolver.openOutputStream(uri!!)
+            outputStream = context.contentResolver.openOutputStream(newUri!!)
 
             bitmap.compress(compressFormat ?: CompressFormat.JPEG, compressQuality, outputStream)
         } finally {
             closeSafe(outputStream)
         }
+        return newUri
     }
+
+    private fun buildUri(
+        context: Context,
+        compressFormat: CompressFormat?
+    ): Uri? =
+        try {
+            val ext = when (compressFormat) {
+                CompressFormat.JPEG -> ".jpg"
+                CompressFormat.PNG -> ".png"
+                else -> ".webp"
+            }
+            // We have this because of a HUAWEI path bug when we use getUriForFile
+            if (isAtLeastQ29()) {
+                try {
+                    val file = File.createTempFile(
+                        "cropped",
+                        ext,
+                        context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+                    )
+                    getUriForFile(context, file)
+                } catch (e: Exception) {
+                    Log.e("AIC", "${e.message}")
+                    val file = File.createTempFile("cropped", ext, context.cacheDir)
+                    getUriForFile(context, file)
+                }
+            } else Uri.fromFile(File.createTempFile("cropped", ext, context.cacheDir))
+        } catch (e: IOException) {
+            throw RuntimeException("Failed to create temp file for output image", e)
+        }
 
     /**
      * Resize the given bitmap to the given width/height by the given option.<br></br>
@@ -710,8 +740,8 @@ internal object BitmapUtils {
             options.inSampleSize = (
                 sampleMulti
                     * calculateInSampleSizeByReqestedSize(
-                        rect.width(), rect.height(), reqWidth, reqHeight
-                    )
+                    rect.width(), rect.height(), reqWidth, reqHeight
+                )
                 )
             stream = context.contentResolver.openInputStream(uri)
             decoder = BitmapRegionDecoder.newInstance(stream, false)
@@ -878,7 +908,6 @@ internal object BitmapUtils {
     private val maxTextureSize: Int
         get() {
             // Safe minimum default size
-
             return try {
                 // Get EGL Display
                 val egl = EGLContext.getEGL() as EGL10
