@@ -1,6 +1,5 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'kotlin-parcelize'
 
 group='com.github.Canato'
@@ -15,8 +14,8 @@ android {
         versionName rootProject.libVersion
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
     lintOptions {
         abortOnError false
@@ -25,7 +24,7 @@ android {
         viewBinding true
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = JavaVersion.VERSION_11.toString()
     }
     testOptions {
         unitTests {
@@ -35,7 +34,7 @@ android {
 }
 
 dependencies {
-    api "androidx.appcompat:appcompat:$androidXAppCompatVersionCropper"
+    implementation "androidx.appcompat:appcompat:$androidXAppCompatVersion"
 
     implementation "androidx.activity:activity-ktx:$androidXActivity"
 

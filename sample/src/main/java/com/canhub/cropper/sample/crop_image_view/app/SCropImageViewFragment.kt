@@ -144,7 +144,7 @@ internal class SCropImageViewFragment :
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.main_action_crop -> {
-                binding.cropImageView.getCroppedImageAsync()
+                binding.cropImageView.croppedImageAsync()
                 return true
             }
             R.id.main_action_rotate -> {

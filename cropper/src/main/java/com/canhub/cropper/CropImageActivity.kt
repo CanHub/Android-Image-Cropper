@@ -3,11 +3,9 @@ package com.canhub.cropper
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -21,9 +19,6 @@ import com.canhub.cropper.CropImageView.OnCropImageCompleteListener
 import com.canhub.cropper.CropImageView.OnSetImageUriCompleteListener
 import com.canhub.cropper.common.CommonVersionCheck
 import com.canhub.cropper.databinding.CropImageActivityBinding
-import com.canhub.cropper.utils.getUriForFile
-import java.io.File
-import java.io.IOException
 
 /**
  * Built-in activity for image cropping.<br></br>
@@ -233,8 +228,7 @@ open class CropImageActivity :
      */
     open fun cropImage() {
         if (options.noOutputImage) setResult(null, null, 1)
-        else cropImageView?.saveCroppedImageAsync(
-            outputUri,
+        else cropImageView?.croppedImageAsync(
             options.outputCompressFormat,
             options.outputCompressQuality,
             options.outputRequestWidth,
@@ -256,42 +250,6 @@ open class CropImageActivity :
     open fun rotateImage(degrees: Int) {
         cropImageView?.rotateImage(degrees)
     }
-
-    /**
-     * Get Android uri to save the cropped image into.<br></br>
-     * Use the given in options or create a temp file.
-     */
-    val outputUri: Uri?
-        get() {
-            var outputUri = options.outputUri
-            if (outputUri == null || outputUri == Uri.EMPTY) {
-                outputUri = try {
-                    val ext = when (options.outputCompressFormat) {
-                        Bitmap.CompressFormat.JPEG -> ".jpg"
-                        Bitmap.CompressFormat.PNG -> ".png"
-                        else -> ".webp"
-                    }
-                    // We have this because of a HUAWEI path bug when we use getUriForFile
-                    if (CommonVersionCheck.isAtLeastQ29()) {
-                        try {
-                            val file = File.createTempFile(
-                                "cropped",
-                                ext,
-                                getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-                            )
-                            getUriForFile(applicationContext, file)
-                        } catch (e: Exception) {
-                            Log.e("AIC", "${e.message}")
-                            val file = File.createTempFile("cropped", ext, cacheDir)
-                            getUriForFile(applicationContext, file)
-                        }
-                    } else Uri.fromFile(File.createTempFile("cropped", ext, cacheDir))
-                } catch (e: IOException) {
-                    throw RuntimeException("Failed to create temp file for output image", e)
-                }
-            }
-            return outputUri
-        }
 
     /**
      * Result with cropped image data or error if failed.

@@ -1,33 +1,32 @@
 ext {
 
     // Project
-    libVersion = "3.2.1"
-    compileSdkVersion = 30
-    targetSdkVersion = 30
+    libVersion = "3.3.0"
+    compileSdkVersion = 31
+    targetSdkVersion = 31
     minSdkVersion = 14
 
     // Gradle's
-    androidGradleVersion = '4.1.2'
+    androidGradleVersion = '7.0.0'
     ktlintGradleVersion = '10.0.0'
     mavenGradleVersion = '2.1'
 
     // JetBrains
-    kotlinVersion = '1.4.30'
-    coroutinesVersion = '1.4.2'
+    kotlinVersion = '1.5.20'
+    coroutinesVersion = '1.5.1'
 
     // Android
-    materialVersion = '1.4.0-alpha01'
+    materialVersion = '1.4.0'
 
     // AndroidX
-    androidXActivity = '1.2.3'
-    androidXAppCompatVersionSample = '1.3.0-rc01'
-    androidXAppCompatVersionCropper = '1.2.0'  // Used to avoid not release stable versions on the lib
-    androidXExifVersion = '1.3.2'
-    androidXCoreKtxVersion = '1.3.2'
+    androidXActivity = '1.3.1'
+    androidXAppCompatVersion = '1.3.1'
+    androidXExifVersion = '1.3.3'
+    androidXCoreKtxVersion = '1.6.0'
     androidXLifeCycleVersion = '2.3.1'
-    androidXJunitVersion = '1.0.0'
+    androidXJunitVersion = '1.1.3'
     androidXFragmentVersion = '1.3.5'
-    androidXTestVersion = '1.3.0'
+    androidXTestVersion = '1.4.0' // when update to android 12, please uncomment PickImageContractTest && CropImageContractTest
 
     // JUnit
     junitVersion = '4.13.2'

@@ -9,10 +9,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - `Fixed` for any bug fixes.
 - `Security` in case of vulnerabilities.
 
-## [unreleased x.x.x] -
+## [3.3.0] -
+### Changed
+- Update to Android 12
+- Update library to gradle 7.0.1 and Java 11 [#191](https://github.com/CanHub/Android-Image-Cropper/issues/191)
+- Any crop action should return uri content [#180](https://github.com/CanHub/Android-Image-Cropper/issues/180)
+
+### Fixed
+- Implement onBackPressed() in sample code for handle backButton pressed [#174](https://github.com/CanHub/Android-Image-Cropper/issues/174)
+
+## [3.2.2] - 31/07/21
 ### Fixed
 - After cropping a camera image, cancelling library picker shows again the last cropped image [#162](https://github.com/CanHub/Android-Image-Cropper/issues/162)
-- implement onBackPressed() in sample code for handle backButton pressed [#174](https://github.com/CanHub/Android-Image-Cropper/issues/174)
 
 ## [3.2.1] - 14/07/21
 ### Fixed

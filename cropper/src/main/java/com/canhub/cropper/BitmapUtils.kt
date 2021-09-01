@@ -10,13 +10,13 @@ import android.graphics.Matrix
 import android.graphics.Rect
 import android.graphics.RectF
 import android.net.Uri
+import android.os.Environment
 import android.util.Log
 import android.util.Pair
-import androidx.core.content.FileProvider
 import androidx.exifinterface.media.ExifInterface
 import com.canhub.cropper.CropImageView.RequestSizeOptions
-import com.canhub.cropper.common.CommonValues
 import com.canhub.cropper.common.CommonVersionCheck.isAtLeastQ29
+import com.canhub.cropper.utils.getUriForFile
 import java.io.Closeable
 import java.io.File
 import java.io.FileNotFoundException
@@ -41,8 +41,8 @@ internal object BitmapUtils {
 
     val EMPTY_RECT = Rect()
     val EMPTY_RECT_F = RectF()
-
     private const val IMAGE_MAX_BITMAP_DIMENSION = 2048
+    private const val WRITE_AND_TRUNCATE = "wt"
 
     /**
      * Reusable rectangle for general internal usage
@@ -391,34 +391,12 @@ internal object BitmapUtils {
      * Write given bitmap to a temp file. If file already exists no-op as we already saved the file in
      * this session. Uses JPEG 95% compression.
      *
-     * @param uri the uri to write the bitmap to, if null
      * @return the uri where the image was saved in, either the given uri or new pointing to temp
      * file.
      */
-    fun writeTempStateStoreBitmap(context: Context, bitmap: Bitmap?, uri: Uri?): Uri? {
-        var tempUri = uri
-        return try {
-            var needSave = true
-            if (tempUri == null) {
-                // We have this because of a HUAWEI path bug when we use getUriForFile
-                tempUri = if (isAtLeastQ29()) {
-                    FileProvider.getUriForFile(
-                        context,
-                        context.packageName + CommonValues.authority,
-                        File.createTempFile("aic_state_store_temp", ".jpg", context.cacheDir)
-                    )
-                } else {
-                    Uri.fromFile(
-                        File.createTempFile("aic_state_store_temp", ".jpg", context.cacheDir)
-                    )
-                }
-            } else if (tempUri.path?.let { File(it).exists() } == true) {
-                needSave = false
-            }
-            if (needSave) {
-                writeBitmapToUri(context, bitmap!!, tempUri, CompressFormat.JPEG, 95)
-            }
-            tempUri
+    fun writeTempStateStoreBitmap(context: Context, bitmap: Bitmap?): Uri? =
+        try {
+            writeBitmapToUri(context, bitmap!!, CompressFormat.JPEG, 95)
         } catch (e: Exception) {
             Log.w(
                 "AIC",
@@ -427,7 +405,6 @@ internal object BitmapUtils {
             )
             null
         }
-    }
 
     /**
      * Write the given bitmap to the given uri using the given compression.
@@ -436,19 +413,49 @@ internal object BitmapUtils {
     fun writeBitmapToUri(
         context: Context,
         bitmap: Bitmap,
-        uri: Uri?,
-        compressFormat: CompressFormat?,
+        compressFormat: CompressFormat,
         compressQuality: Int
-    ) {
+    ): Uri? {
+        val newUri = buildUri(context, compressFormat)
         var outputStream: OutputStream? = null
         try {
-            outputStream = context.contentResolver.openOutputStream(uri!!)
+            outputStream = context.contentResolver.openOutputStream(newUri!!, WRITE_AND_TRUNCATE)
 
-            bitmap.compress(compressFormat ?: CompressFormat.JPEG, compressQuality, outputStream)
+            bitmap.compress(compressFormat, compressQuality, outputStream)
         } finally {
             closeSafe(outputStream)
         }
+        return newUri
     }
+
+    private fun buildUri(
+        context: Context,
+        compressFormat: CompressFormat
+    ): Uri? =
+        try {
+            val ext = when (compressFormat) {
+                CompressFormat.JPEG -> ".jpg"
+                CompressFormat.PNG -> ".png"
+                else -> ".webp"
+            }
+            // We have this because of a HUAWEI path bug when we use getUriForFile
+            if (isAtLeastQ29()) {
+                try {
+                    val file = File.createTempFile(
+                        "cropped",
+                        ext,
+                        context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+                    )
+                    getUriForFile(context, file)
+                } catch (e: Exception) {
+                    Log.e("AIC", "${e.message}")
+                    val file = File.createTempFile("cropped", ext, context.cacheDir)
+                    getUriForFile(context, file)
+                }
+            } else Uri.fromFile(File.createTempFile("cropped", ext, context.cacheDir))
+        } catch (e: IOException) {
+            throw RuntimeException("Failed to create temp file for output image", e)
+        }
 
     /**
      * Resize the given bitmap to the given width/height by the given option.<br></br>
@@ -703,8 +710,6 @@ internal object BitmapUtils {
         reqHeight: Int,
         sampleMulti: Int
     ): BitmapSampled {
-        var stream: InputStream? = null
-        var decoder: BitmapRegionDecoder? = null
         try {
             val options = BitmapFactory.Options()
             options.inSampleSize = (
@@ -713,23 +718,23 @@ internal object BitmapUtils {
                         rect.width(), rect.height(), reqWidth, reqHeight
                     )
                 )
-            stream = context.contentResolver.openInputStream(uri)
-            decoder = BitmapRegionDecoder.newInstance(stream, false)
+            val stream = context.contentResolver.openInputStream(uri)
+            val decoder = BitmapRegionDecoder.newInstance(stream!!, false)
             do {
                 try {
-                    return BitmapSampled(decoder.decodeRegion(rect, options), options.inSampleSize)
+                    return BitmapSampled(decoder!!.decodeRegion(rect, options), options.inSampleSize)
                 } catch (e: OutOfMemoryError) {
                     options.inSampleSize *= 2
                 }
             } while (options.inSampleSize <= 512)
+
+            closeSafe(stream)
+            decoder?.recycle()
         } catch (e: Exception) {
             throw RuntimeException(
                 "Failed to load sampled bitmap: $uri\r\n${e.message}",
                 e
             )
-        } finally {
-            closeSafe(stream)
-            decoder?.recycle()
         }
         return BitmapSampled(null, 1)
     }
@@ -878,7 +883,6 @@ internal object BitmapUtils {
     private val maxTextureSize: Int
         get() {
             // Safe minimum default size
-
             return try {
                 // Get EGL Display
                 val egl = EGLContext.getEGL() as EGL10
