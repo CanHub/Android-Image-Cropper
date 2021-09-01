@@ -13,10 +13,8 @@ import android.net.Uri
 import android.os.Environment
 import android.util.Log
 import android.util.Pair
-import androidx.core.content.FileProvider
 import androidx.exifinterface.media.ExifInterface
 import com.canhub.cropper.CropImageView.RequestSizeOptions
-import com.canhub.cropper.common.CommonValues
 import com.canhub.cropper.common.CommonVersionCheck.isAtLeastQ29
 import com.canhub.cropper.utils.getUriForFile
 import java.io.Closeable
@@ -44,6 +42,7 @@ internal object BitmapUtils {
     val EMPTY_RECT = Rect()
     val EMPTY_RECT_F = RectF()
     private const val IMAGE_MAX_BITMAP_DIMENSION = 2048
+    private const val WRITE_AND_TRUNCATE = "wt"
 
     /**
      * Reusable rectangle for general internal usage
@@ -392,32 +391,12 @@ internal object BitmapUtils {
      * Write given bitmap to a temp file. If file already exists no-op as we already saved the file in
      * this session. Uses JPEG 95% compression.
      *
-     * @param uri the uri to write the bitmap to, if null
      * @return the uri where the image was saved in, either the given uri or new pointing to temp
      * file.
      */
-    fun writeTempStateStoreBitmap(context: Context, bitmap: Bitmap?, uri: Uri?): Uri? {
-        var tempUri = uri
-        return try {
-            var needSave = true
-            if (tempUri == null) {
-                // We have this because of a HUAWEI path bug when we use getUriForFile
-                tempUri = if (isAtLeastQ29()) {
-                    FileProvider.getUriForFile(
-                        context,
-                        context.packageName + CommonValues.authority,
-                        File.createTempFile("aic_state_store_temp", ".jpg", context.cacheDir)
-                    )
-                } else {
-                    Uri.fromFile(
-                        File.createTempFile("aic_state_store_temp", ".jpg", context.cacheDir)
-                    )
-                }
-            } else if (tempUri.path?.let { File(it).exists() } == true) {
-                needSave = false
-            }
-            if (needSave) writeBitmapToUri(context, bitmap!!, tempUri, CompressFormat.JPEG, 95)
-            else tempUri
+    fun writeTempStateStoreBitmap(context: Context, bitmap: Bitmap?): Uri? =
+        try {
+            writeBitmapToUri(context, bitmap!!, CompressFormat.JPEG, 95)
         } catch (e: Exception) {
             Log.w(
                 "AIC",
@@ -426,7 +405,6 @@ internal object BitmapUtils {
             )
             null
         }
-    }
 
     /**
      * Write the given bitmap to the given uri using the given compression.
@@ -435,16 +413,15 @@ internal object BitmapUtils {
     fun writeBitmapToUri(
         context: Context,
         bitmap: Bitmap,
-        uri: Uri?,
-        compressFormat: CompressFormat?,
+        compressFormat: CompressFormat,
         compressQuality: Int
     ): Uri? {
         val newUri = buildUri(context, compressFormat)
         var outputStream: OutputStream? = null
         try {
-            outputStream = context.contentResolver.openOutputStream(newUri!!)
+            outputStream = context.contentResolver.openOutputStream(newUri!!, WRITE_AND_TRUNCATE)
 
-            bitmap.compress(compressFormat ?: CompressFormat.JPEG, compressQuality, outputStream)
+            bitmap.compress(compressFormat, compressQuality, outputStream)
         } finally {
             closeSafe(outputStream)
         }
@@ -453,7 +430,7 @@ internal object BitmapUtils {
 
     private fun buildUri(
         context: Context,
-        compressFormat: CompressFormat?
+        compressFormat: CompressFormat
     ): Uri? =
         try {
             val ext = when (compressFormat) {
@@ -740,8 +717,8 @@ internal object BitmapUtils {
             options.inSampleSize = (
                 sampleMulti
                     * calculateInSampleSizeByReqestedSize(
-                    rect.width(), rect.height(), reqWidth, reqHeight
-                )
+                        rect.width(), rect.height(), reqWidth, reqHeight
+                    )
                 )
             stream = context.contentResolver.openInputStream(uri)
             decoder = BitmapRegionDecoder.newInstance(stream, false)

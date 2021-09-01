@@ -34,7 +34,7 @@ android {
 }
 
 dependencies {
-    api "androidx.appcompat:appcompat:$androidXAppCompatVersion"
+    implementation "androidx.appcompat:appcompat:$androidXAppCompatVersion"
 
     implementation "androidx.activity:activity-ktx:$androidXActivity"
 
