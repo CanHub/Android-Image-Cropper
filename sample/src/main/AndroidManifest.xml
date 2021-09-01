@@ -12,6 +12,7 @@
         android:theme="@style/Theme.Sample">
         <activity
             android:name="com.canhub.cropper.sample.SMainActivity"
+            android:exported="true"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,6 +35,5 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_file_paths" />
         </provider>
-
     </application>
 </manifest>

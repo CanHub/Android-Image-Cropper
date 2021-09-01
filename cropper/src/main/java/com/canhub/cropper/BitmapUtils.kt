@@ -710,8 +710,6 @@ internal object BitmapUtils {
         reqHeight: Int,
         sampleMulti: Int
     ): BitmapSampled {
-        var stream: InputStream? = null
-        var decoder: BitmapRegionDecoder? = null
         try {
             val options = BitmapFactory.Options()
             options.inSampleSize = (
@@ -720,23 +718,23 @@ internal object BitmapUtils {
                         rect.width(), rect.height(), reqWidth, reqHeight
                     )
                 )
-            stream = context.contentResolver.openInputStream(uri)
-            decoder = BitmapRegionDecoder.newInstance(stream, false)
+            val stream = context.contentResolver.openInputStream(uri)
+            val decoder = BitmapRegionDecoder.newInstance(stream!!, false)
             do {
                 try {
-                    return BitmapSampled(decoder.decodeRegion(rect, options), options.inSampleSize)
+                    return BitmapSampled(decoder!!.decodeRegion(rect, options), options.inSampleSize)
                 } catch (e: OutOfMemoryError) {
                     options.inSampleSize *= 2
                 }
             } while (options.inSampleSize <= 512)
+
+            closeSafe(stream)
+            decoder?.recycle()
         } catch (e: Exception) {
             throw RuntimeException(
                 "Failed to load sampled bitmap: $uri\r\n${e.message}",
                 e
             )
-        } finally {
-            closeSafe(stream)
-            decoder?.recycle()
         }
         return BitmapSampled(null, 1)
     }
