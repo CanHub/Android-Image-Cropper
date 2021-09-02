@@ -68,6 +68,15 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/sample_calling_cropimage_java"/>
+
+        <Button
+            style="@style/Sample.Button"
+            android:id="@+id/reproduceBug"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Reproduce Bug"/>
+
     </LinearLayout>
 
     <FrameLayout
