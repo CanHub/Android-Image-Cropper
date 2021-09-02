@@ -3,7 +3,6 @@ buildscript {
 
     repositories {
         maven { url "https://plugins.gradle.org/m2/" }
-        jcenter()
         google()
     }
 
@@ -11,7 +10,6 @@ buildscript {
         classpath "com.android.tools.build:gradle:$androidGradleVersion"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         classpath "org.jlleitschuh.gradle:ktlint-gradle:$ktlintGradleVersion"
-        classpath "com.github.dcendents:android-maven-gradle-plugin:$mavenGradleVersion"
     }
 }
 
@@ -21,7 +19,6 @@ subprojects {
 
 allprojects {
     repositories {
-        jcenter()
         mavenCentral()
         maven { url "https://maven.google.com" }
         maven { url "https://jitpack.io" }
