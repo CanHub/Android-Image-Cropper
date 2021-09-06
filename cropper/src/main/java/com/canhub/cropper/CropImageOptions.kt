@@ -185,7 +185,7 @@ open class CropImageOptions : Parcelable {
 
     /** the Android Uri to save the cropped image to  */
     @JvmField
-    var outputUri: Uri?
+    var customOutputUri: Uri?
 
     /** the compression format to use when writing the image  */
     @JvmField
@@ -287,7 +287,7 @@ open class CropImageOptions : Parcelable {
         maxCropResultHeight = 99999
         activityTitle = ""
         activityMenuIconColor = 0
-        outputUri = Uri.EMPTY
+        customOutputUri = Uri.EMPTY
         outputCompressFormat = CompressFormat.JPEG
         outputCompressQuality = 90
         outputRequestWidth = 0
@@ -340,7 +340,7 @@ open class CropImageOptions : Parcelable {
         maxCropResultHeight = parcel.readInt()
         activityTitle = TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(parcel)
         activityMenuIconColor = parcel.readInt()
-        outputUri = parcel.readParcelable(Uri::class.java.classLoader)
+        customOutputUri = parcel.readParcelable(Uri::class.java.classLoader)
         outputCompressFormat = CompressFormat.valueOf(parcel.readString()!!)
         outputCompressQuality = parcel.readInt()
         outputRequestWidth = parcel.readInt()
@@ -392,7 +392,7 @@ open class CropImageOptions : Parcelable {
         dest.writeInt(maxCropResultHeight)
         TextUtils.writeToParcel(activityTitle, dest, flags)
         dest.writeInt(activityMenuIconColor)
-        dest.writeParcelable(outputUri, flags)
+        dest.writeParcelable(customOutputUri, flags)
         dest.writeString(outputCompressFormat.name)
         dest.writeInt(outputCompressQuality)
         dest.writeInt(outputRequestWidth)

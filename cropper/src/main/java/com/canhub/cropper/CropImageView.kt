@@ -39,6 +39,8 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
     /** Image view widget used to show the image for cropping.  */
     private val imageView: ImageView
 
+
+
     /** Overlay over the image view to show cropping UI.  */
     private val mCropOverlayView: CropOverlayView?
 
@@ -306,6 +308,8 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
                 )
             }
         }
+    /** the Android Uri to save the cropped image to  */
+    var customOutputUri: Uri? = null
     /** whether the image should be flipped vertically  */
     /** Sets whether the image should be flipped vertically  */
     var isFlippedVertically: Boolean
@@ -608,10 +612,18 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
         saveCompressQuality: Int = 90,
         reqWidth: Int = 0,
         reqHeight: Int = 0,
-        options: RequestSizeOptions = RequestSizeOptions.RESIZE_INSIDE
+        options: RequestSizeOptions = RequestSizeOptions.RESIZE_INSIDE,
+        customOutputUri: Uri? = null,
     ) {
         requireNotNull(mOnCropImageCompleteListener) { "mOnCropImageCompleteListener is not set" }
-        startCropWorkerTask(reqWidth, reqHeight, options, saveCompressFormat, saveCompressQuality)
+        startCropWorkerTask(
+            reqWidth = reqWidth,
+            reqHeight = reqHeight,
+            options = options,
+            saveCompressFormat = saveCompressFormat,
+            saveCompressQuality = saveCompressQuality,
+            customOutputUri = customOutputUri
+        )
     }
 
     /** Set the callback t  */
@@ -943,7 +955,8 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
         reqHeight: Int,
         options: RequestSizeOptions,
         saveCompressFormat: CompressFormat,
-        saveCompressQuality: Int
+        saveCompressQuality: Int,
+        customOutputUri: Uri?,
     ) {
         val bitmap = originalBitmap
         if (bitmap != null) {
@@ -976,7 +989,8 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
                     flipVertically = mFlipVertically,
                     options = options,
                     saveCompressFormat = saveCompressFormat,
-                    saveCompressQuality = saveCompressQuality
+                    saveCompressQuality = saveCompressQuality,
+                    customOutputUri = customOutputUri,
                 )
             )
 
@@ -991,7 +1005,10 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
         }
         val bundle = Bundle()
         if (isSaveBitmapToInstanceState && saveInstanceStateBitmapUri == null && mImageResource < 1) {
-            saveInstanceStateBitmapUri = BitmapUtils.writeTempStateStoreBitmap(context, originalBitmap)
+            saveInstanceStateBitmapUri = BitmapUtils.writeTempStateStoreBitmap(
+                context = context,
+                bitmap = originalBitmap,
+                customOutputUri = customOutputUri)
         }
         if (saveInstanceStateBitmapUri != null && originalBitmap != null) {
             val key = UUID.randomUUID().toString()

@@ -894,7 +894,7 @@ object CropImage {
          * *Default: NONE, will create a temp file*
          */
         fun setOutputUri(outputUri: Uri?): ActivityBuilder {
-            cropImageOptions.outputUri = outputUri
+            cropImageOptions.customOutputUri = outputUri
             return this
         }
 

@@ -30,7 +30,8 @@ class BitmapCroppingWorkerJob(
     private val flipVertically: Boolean,
     private val options: CropImageView.RequestSizeOptions,
     private val saveCompressFormat: Bitmap.CompressFormat,
-    private val saveCompressQuality: Int
+    private val saveCompressQuality: Int,
+    private val customOutputUri: Uri?,
 ) : CoroutineScope {
 
     private var job: Job = Job()
@@ -82,10 +83,11 @@ class BitmapCroppingWorkerJob(
 
                     launch(Dispatchers.IO) {
                         val newUri = BitmapUtils.writeBitmapToUri(
-                            context,
-                            resizedBitmap,
-                            saveCompressFormat,
-                            saveCompressQuality
+                            context = context,
+                            bitmap = resizedBitmap,
+                            compressFormat = saveCompressFormat,
+                            compressQuality = saveCompressQuality,
+                            customOutputUri = customOutputUri
                         )
                         resizedBitmap.recycle()
                         onPostExecute(
