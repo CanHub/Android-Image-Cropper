@@ -92,7 +92,7 @@ class BitmapCroppingWorkerJob(
                         resizedBitmap.recycle()
                         onPostExecute(
                             Result(
-                                newUri, // saveUri,
+                                newUri,
                                 bitmapSampled.sampleSize
                             )
                         )
