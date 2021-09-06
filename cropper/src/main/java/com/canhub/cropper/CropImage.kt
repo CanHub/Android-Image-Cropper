@@ -512,7 +512,7 @@ object CropImage {
         /**
          * Options for image crop UX
          */
-        private val mOptions: CropImageOptions = CropImageOptions()
+        private val cropImageOptions: CropImageOptions = CropImageOptions()
 
         /**
          * Get [CropImageActivity] intent to start the activity.
@@ -525,12 +525,12 @@ object CropImage {
          * Get [CropImageActivity] intent to start the activity.
          */
         fun getIntent(context: Context, cls: Class<*>?): Intent {
-            mOptions.validate()
+            cropImageOptions.validate()
             val intent = Intent()
             intent.setClass(context, cls!!)
             val bundle = Bundle()
             bundle.putParcelable(CROP_IMAGE_EXTRA_SOURCE, mSource)
-            bundle.putParcelable(CROP_IMAGE_EXTRA_OPTIONS, mOptions)
+            bundle.putParcelable(CROP_IMAGE_EXTRA_OPTIONS, cropImageOptions)
             intent.putExtra(CROP_IMAGE_EXTRA_BUNDLE, bundle)
             return intent
         }
@@ -541,7 +541,7 @@ object CropImage {
          * @param activity activity to receive result
          */
         fun start(activity: Activity) {
-            mOptions.validate()
+            cropImageOptions.validate()
             activity.startActivityForResult(getIntent(activity), CROP_IMAGE_ACTIVITY_REQUEST_CODE)
         }
 
@@ -551,7 +551,7 @@ object CropImage {
          * @param activity activity to receive result
          */
         fun start(activity: Activity, cls: Class<*>?) {
-            mOptions.validate()
+            cropImageOptions.validate()
             activity.startActivityForResult(
                 getIntent(activity, cls),
                 CROP_IMAGE_ACTIVITY_REQUEST_CODE
@@ -624,7 +624,7 @@ object CropImage {
          * [ActivityBuilder.setInitialCropWindowPaddingRatio] (with argument `0f).
          */
         fun setCropShape(cropShape: CropShape): ActivityBuilder {
-            mOptions.cropShape = cropShape
+            cropImageOptions.cropShape = cropShape
             return this
         }
 
@@ -635,7 +635,7 @@ object CropImage {
          * *Default: 3dp*
          */
         fun setSnapRadius(snapRadius: Float): ActivityBuilder {
-            mOptions.snapRadius = snapRadius
+            cropImageOptions.snapRadius = snapRadius
             return this
         }
 
@@ -646,7 +646,7 @@ object CropImage {
          * *Default: 48dp*
          */
         fun setTouchRadius(touchRadius: Float): ActivityBuilder {
-            mOptions.touchRadius = touchRadius
+            cropImageOptions.touchRadius = touchRadius
             return this
         }
 
@@ -655,7 +655,7 @@ object CropImage {
          * *Default: ON_TOUCH*
          */
         fun setGuidelines(guidelines: Guidelines): ActivityBuilder {
-            mOptions.guidelines = guidelines
+            cropImageOptions.guidelines = guidelines
             return this
         }
 
@@ -664,7 +664,7 @@ object CropImage {
          * *Default: FIT_CENTER*
          */
         fun setScaleType(scaleType: CropImageView.ScaleType): ActivityBuilder {
-            mOptions.scaleType = scaleType
+            cropImageOptions.scaleType = scaleType
             return this
         }
 
@@ -674,7 +674,7 @@ object CropImage {
          * *default: true, may disable for animation or frame transition.*
          */
         fun setShowCropOverlay(showCropOverlay: Boolean): ActivityBuilder {
-            mOptions.showCropOverlay = showCropOverlay
+            cropImageOptions.showCropOverlay = showCropOverlay
             return this
         }
 
@@ -683,7 +683,7 @@ object CropImage {
          * default: true.
          */
         fun setAutoZoomEnabled(autoZoomEnabled: Boolean): ActivityBuilder {
-            mOptions.autoZoomEnabled = autoZoomEnabled
+            cropImageOptions.autoZoomEnabled = autoZoomEnabled
             return this
         }
 
@@ -692,7 +692,7 @@ object CropImage {
          * default: true.
          */
         fun setMultiTouchEnabled(multiTouchEnabled: Boolean): ActivityBuilder {
-            mOptions.multiTouchEnabled = multiTouchEnabled
+            cropImageOptions.multiTouchEnabled = multiTouchEnabled
             return this
         }
 
@@ -701,7 +701,7 @@ object CropImage {
          * default: true
          */
         fun setCenterMoveEnabled(centerMoveEnabled: Boolean): ActivityBuilder {
-            mOptions.centerMoveEnabled = centerMoveEnabled
+            cropImageOptions.centerMoveEnabled = centerMoveEnabled
             return this
         }
 
@@ -710,7 +710,7 @@ object CropImage {
          * *Default: 4*
          */
         fun setMaxZoom(maxZoom: Int): ActivityBuilder {
-            mOptions.maxZoom = maxZoom
+            cropImageOptions.maxZoom = maxZoom
             return this
         }
 
@@ -720,7 +720,7 @@ object CropImage {
          * *Default: 0.1*
          */
         fun setInitialCropWindowPaddingRatio(initialCropWindowPaddingRatio: Float): ActivityBuilder {
-            mOptions.initialCropWindowPaddingRatio = initialCropWindowPaddingRatio
+            cropImageOptions.initialCropWindowPaddingRatio = initialCropWindowPaddingRatio
             return this
         }
 
@@ -729,7 +729,7 @@ object CropImage {
          * *Default: false*
          */
         fun setFixAspectRatio(fixAspectRatio: Boolean): ActivityBuilder {
-            mOptions.fixAspectRatio = fixAspectRatio
+            cropImageOptions.fixAspectRatio = fixAspectRatio
             return this
         }
 
@@ -742,9 +742,9 @@ object CropImage {
          * @param aspectRatioY the height
          */
         fun setAspectRatio(aspectRatioX: Int, aspectRatioY: Int): ActivityBuilder {
-            mOptions.aspectRatioX = aspectRatioX
-            mOptions.aspectRatioY = aspectRatioY
-            mOptions.fixAspectRatio = true
+            cropImageOptions.aspectRatioX = aspectRatioX
+            cropImageOptions.aspectRatioY = aspectRatioY
+            cropImageOptions.fixAspectRatio = true
             return this
         }
 
@@ -753,7 +753,7 @@ object CropImage {
          * *Default: 3dp*
          */
         fun setBorderLineThickness(borderLineThickness: Float): ActivityBuilder {
-            mOptions.borderLineThickness = borderLineThickness
+            cropImageOptions.borderLineThickness = borderLineThickness
             return this
         }
 
@@ -762,7 +762,7 @@ object CropImage {
          * *Default: Color.argb(170, 255, 255, 255)*
          */
         fun setBorderLineColor(borderLineColor: Int): ActivityBuilder {
-            mOptions.borderLineColor = borderLineColor
+            cropImageOptions.borderLineColor = borderLineColor
             return this
         }
 
@@ -771,7 +771,7 @@ object CropImage {
          * *Default: 2dp*
          */
         fun setBorderCornerThickness(borderCornerThickness: Float): ActivityBuilder {
-            mOptions.borderCornerThickness = borderCornerThickness
+            cropImageOptions.borderCornerThickness = borderCornerThickness
             return this
         }
 
@@ -780,7 +780,7 @@ object CropImage {
          * *Default: 5dp*
          */
         fun setBorderCornerOffset(borderCornerOffset: Float): ActivityBuilder {
-            mOptions.borderCornerOffset = borderCornerOffset
+            cropImageOptions.borderCornerOffset = borderCornerOffset
             return this
         }
 
@@ -789,7 +789,7 @@ object CropImage {
          * *Default: 14dp*
          */
         fun setBorderCornerLength(borderCornerLength: Float): ActivityBuilder {
-            mOptions.borderCornerLength = borderCornerLength
+            cropImageOptions.borderCornerLength = borderCornerLength
             return this
         }
 
@@ -798,7 +798,7 @@ object CropImage {
          * *Default: WHITE*
          */
         fun setBorderCornerColor(borderCornerColor: Int): ActivityBuilder {
-            mOptions.borderCornerColor = borderCornerColor
+            cropImageOptions.borderCornerColor = borderCornerColor
             return this
         }
 
@@ -807,7 +807,7 @@ object CropImage {
          * *Default: 1dp*
          */
         fun setGuidelinesThickness(guidelinesThickness: Float): ActivityBuilder {
-            mOptions.guidelinesThickness = guidelinesThickness
+            cropImageOptions.guidelinesThickness = guidelinesThickness
             return this
         }
 
@@ -816,7 +816,7 @@ object CropImage {
          * *Default: Color.argb(170, 255, 255, 255)*
          */
         fun setGuidelinesColor(guidelinesColor: Int): ActivityBuilder {
-            mOptions.guidelinesColor = guidelinesColor
+            cropImageOptions.guidelinesColor = guidelinesColor
             return this
         }
 
@@ -826,7 +826,7 @@ object CropImage {
          * *Default: Color.argb(119, 0, 0, 0)*
          */
         fun setBackgroundColor(backgroundColor: Int): ActivityBuilder {
-            mOptions.backgroundColor = backgroundColor
+            cropImageOptions.backgroundColor = backgroundColor
             return this
         }
 
@@ -838,8 +838,8 @@ object CropImage {
             minCropWindowWidth: Int,
             minCropWindowHeight: Int
         ): ActivityBuilder {
-            mOptions.minCropWindowWidth = minCropWindowWidth
-            mOptions.minCropWindowHeight = minCropWindowHeight
+            cropImageOptions.minCropWindowWidth = minCropWindowWidth
+            cropImageOptions.minCropWindowHeight = minCropWindowHeight
             return this
         }
 
@@ -852,8 +852,8 @@ object CropImage {
             minCropResultWidth: Int,
             minCropResultHeight: Int
         ): ActivityBuilder {
-            mOptions.minCropResultWidth = minCropResultWidth
-            mOptions.minCropResultHeight = minCropResultHeight
+            cropImageOptions.minCropResultWidth = minCropResultWidth
+            cropImageOptions.minCropResultHeight = minCropResultHeight
             return this
         }
 
@@ -866,8 +866,8 @@ object CropImage {
             maxCropResultWidth: Int,
             maxCropResultHeight: Int
         ): ActivityBuilder {
-            mOptions.maxCropResultWidth = maxCropResultWidth
-            mOptions.maxCropResultHeight = maxCropResultHeight
+            cropImageOptions.maxCropResultWidth = maxCropResultWidth
+            cropImageOptions.maxCropResultHeight = maxCropResultHeight
             return this
         }
 
@@ -876,7 +876,7 @@ object CropImage {
          * *Default: ""*
          */
         fun setActivityTitle(activityTitle: CharSequence?): ActivityBuilder {
-            mOptions.activityTitle = activityTitle!!
+            cropImageOptions.activityTitle = activityTitle!!
             return this
         }
 
@@ -885,7 +885,7 @@ object CropImage {
          * *Default: NONE*
          */
         fun setActivityMenuIconColor(activityMenuIconColor: Int): ActivityBuilder {
-            mOptions.activityMenuIconColor = activityMenuIconColor
+            cropImageOptions.activityMenuIconColor = activityMenuIconColor
             return this
         }
 
@@ -894,7 +894,7 @@ object CropImage {
          * *Default: NONE, will create a temp file*
          */
         fun setOutputUri(outputUri: Uri?): ActivityBuilder {
-            mOptions.outputUri = outputUri
+            cropImageOptions.outputUri = outputUri
             return this
         }
 
@@ -903,7 +903,7 @@ object CropImage {
          * *Default: JPEG*
          */
         fun setOutputCompressFormat(outputCompressFormat: CompressFormat?): ActivityBuilder {
-            mOptions.outputCompressFormat = outputCompressFormat!!
+            cropImageOptions.outputCompressFormat = outputCompressFormat!!
             return this
         }
 
@@ -912,7 +912,7 @@ object CropImage {
          * *Default: 90*
          */
         fun setOutputCompressQuality(outputCompressQuality: Int): ActivityBuilder {
-            mOptions.outputCompressQuality = outputCompressQuality
+            cropImageOptions.outputCompressQuality = outputCompressQuality
             return this
         }
 
@@ -934,9 +934,9 @@ object CropImage {
             reqHeight: Int,
             options: RequestSizeOptions?,
         ): ActivityBuilder {
-            mOptions.outputRequestWidth = reqWidth
-            mOptions.outputRequestHeight = reqHeight
-            mOptions.outputRequestSizeOptions = options!!
+            cropImageOptions.outputRequestWidth = reqWidth
+            cropImageOptions.outputRequestHeight = reqHeight
+            cropImageOptions.outputRequestSizeOptions = options!!
             return this
         }
 
@@ -947,7 +947,7 @@ object CropImage {
          * *Default: false*
          */
         fun setNoOutputImage(noOutputImage: Boolean): ActivityBuilder {
-            mOptions.noOutputImage = noOutputImage
+            cropImageOptions.noOutputImage = noOutputImage
             return this
         }
 
@@ -956,7 +956,7 @@ object CropImage {
          * *Default: NONE - will initialize using initial crop window padding ratio*
          */
         fun setInitialCropWindowRectangle(initialCropWindowRectangle: Rect?): ActivityBuilder {
-            mOptions.initialCropWindowRectangle = initialCropWindowRectangle
+            cropImageOptions.initialCropWindowRectangle = initialCropWindowRectangle
             return this
         }
 
@@ -966,7 +966,7 @@ object CropImage {
          * *Default: NONE - will read image exif data*
          */
         fun setInitialRotation(initialRotation: Int): ActivityBuilder {
-            mOptions.initialRotation = (initialRotation + DEGREES_360) % DEGREES_360
+            cropImageOptions.initialRotation = (initialRotation + DEGREES_360) % DEGREES_360
             return this
         }
 
@@ -975,7 +975,7 @@ object CropImage {
          * *Default: true*
          */
         fun setAllowRotation(allowRotation: Boolean): ActivityBuilder {
-            mOptions.allowRotation = allowRotation
+            cropImageOptions.allowRotation = allowRotation
             return this
         }
 
@@ -984,7 +984,7 @@ object CropImage {
          * *Default: true*
          */
         fun setAllowFlipping(allowFlipping: Boolean): ActivityBuilder {
-            mOptions.allowFlipping = allowFlipping
+            cropImageOptions.allowFlipping = allowFlipping
             return this
         }
 
@@ -994,7 +994,7 @@ object CropImage {
          * *Default: false*
          */
         fun setAllowCounterRotation(allowCounterRotation: Boolean): ActivityBuilder {
-            mOptions.allowCounterRotation = allowCounterRotation
+            cropImageOptions.allowCounterRotation = allowCounterRotation
             return this
         }
 
@@ -1003,7 +1003,7 @@ object CropImage {
          * *Default: 90*
          */
         fun setRotationDegrees(rotationDegrees: Int): ActivityBuilder {
-            mOptions.rotationDegrees = (rotationDegrees + DEGREES_360) % DEGREES_360
+            cropImageOptions.rotationDegrees = (rotationDegrees + DEGREES_360) % DEGREES_360
             return this
         }
 
@@ -1012,7 +1012,7 @@ object CropImage {
          * *Default: false*
          */
         fun setFlipHorizontally(flipHorizontally: Boolean): ActivityBuilder {
-            mOptions.flipHorizontally = flipHorizontally
+            cropImageOptions.flipHorizontally = flipHorizontally
             return this
         }
 
@@ -1021,7 +1021,7 @@ object CropImage {
          * *Default: false*
          */
         fun setFlipVertically(flipVertically: Boolean): ActivityBuilder {
-            mOptions.flipVertically = flipVertically
+            cropImageOptions.flipVertically = flipVertically
             return this
         }
 
@@ -1030,7 +1030,7 @@ object CropImage {
          * *Default: null, will use resource string: crop_image_menu_crop*
          */
         fun setCropMenuCropButtonTitle(title: CharSequence?): ActivityBuilder {
-            mOptions.cropMenuCropButtonTitle = title
+            cropImageOptions.cropMenuCropButtonTitle = title
             return this
         }
 
@@ -1039,7 +1039,7 @@ object CropImage {
          * *Default: 0*
          */
         fun setCropMenuCropButtonIcon(@DrawableRes drawableResource: Int): ActivityBuilder {
-            mOptions.cropMenuCropButtonIcon = drawableResource
+            cropImageOptions.cropMenuCropButtonIcon = drawableResource
             return this
         }
     }
