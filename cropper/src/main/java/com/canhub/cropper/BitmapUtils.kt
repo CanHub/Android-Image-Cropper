@@ -726,8 +726,8 @@ internal object BitmapUtils {
             options.inSampleSize = (
                 sampleMulti
                     * calculateInSampleSizeByReqestedSize(
-                    rect.width(), rect.height(), reqWidth, reqHeight
-                )
+                        rect.width(), rect.height(), reqWidth, reqHeight
+                    )
                 )
             val stream = context.contentResolver.openInputStream(uri)
             val decoder = BitmapRegionDecoder.newInstance(stream!!, false)

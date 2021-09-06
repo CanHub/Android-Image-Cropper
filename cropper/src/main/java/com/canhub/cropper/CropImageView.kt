@@ -39,8 +39,6 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
     /** Image view widget used to show the image for cropping.  */
     private val imageView: ImageView
 
-
-
     /** Overlay over the image view to show cropping UI.  */
     private val mCropOverlayView: CropOverlayView?
 
@@ -1008,7 +1006,8 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
             saveInstanceStateBitmapUri = BitmapUtils.writeTempStateStoreBitmap(
                 context = context,
                 bitmap = originalBitmap,
-                customOutputUri = customOutputUri)
+                customOutputUri = customOutputUri
+            )
         }
         if (saveInstanceStateBitmapUri != null && originalBitmap != null) {
             val key = UUID.randomUUID().toString()
