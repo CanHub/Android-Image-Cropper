@@ -23,6 +23,8 @@ import com.canhub.cropper.CropImage
 import com.canhub.cropper.CropImageContract
 import com.canhub.cropper.CropImageView
 import com.canhub.cropper.PickImageContract
+import com.canhub.cropper.common.CommonValues
+import com.canhub.cropper.common.CommonVersionCheck
 import com.canhub.cropper.options
 import com.canhub.cropper.sample.SCropResultActivity
 import com.canhub.cropper.sample.crop_image.domain.CameraEnumDomain
@@ -31,6 +33,7 @@ import com.canhub.cropper.sample.crop_image.presenter.SCropImagePresenter
 import com.example.croppersample.R
 import com.example.croppersample.databinding.FragmentCameraBinding
 import java.io.File
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -53,16 +56,14 @@ internal class SCropImageFragment :
     private lateinit var binding: FragmentCameraBinding
     private val presenter: SCropImageContract.Presenter = SCropImagePresenter()
     private var photoUri: Uri? = null
-
+    private var customUri: Uri? = null
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean -> presenter.onPermissionResult(isGranted) }
-
     private val pickImage =
         registerForActivityResult(PickImageContract()) {
             presenter.onPickImageResult(it)
         }
-
     private val pickImageCustom =
         registerForActivityResult(
             object : PickImageContract() {
@@ -78,10 +79,11 @@ internal class SCropImageFragment :
                 }
             }
         ) { presenter.onPickImageResultCustom(it) }
-
     private val cropImage =
         registerForActivityResult(CropImageContract()) { presenter.onCropImageResult(it) }
-
+    private val customCropImage = registerForActivityResult(CropImageContract()) {
+        presenter.onCustomCropImageResult(customUri)
+    }
     private val takePicture = registerForActivityResult(ActivityResultContracts.TakePicture()) {
         presenter.onTakePictureResult(it)
     }
@@ -133,7 +135,9 @@ internal class SCropImageFragment :
     }
 
     private fun startCameraWithoutUri() {
-        cropImage.launch(
+        if (customUri == null) customUri = buildUri()
+
+        customCropImage.launch(
             options {
                 setScaleType(CropImageView.ScaleType.CENTER)
                 setCropShape(CropImageView.CropShape.OVAL)
@@ -162,7 +166,7 @@ internal class SCropImageFragment :
                 setMaxCropResultSize(999, 999)
                 setActivityTitle("CUSTOM title")
                 setActivityMenuIconColor(RED)
-                setOutputUri(null)
+                setOutputUri(customUri)
                 setOutputCompressFormat(Bitmap.CompressFormat.PNG)
                 setOutputCompressQuality(50)
                 setRequestedSize(100, 100)
@@ -271,4 +275,35 @@ internal class SCropImageFragment :
             storageDir
         )
     }
+
+    private fun buildUri(): Uri? =
+        try {
+            context?.let { context ->
+                // We have this because of a HUAWEI path bug when we use getUriForFile
+                if (CommonVersionCheck.isAtLeastQ29()) {
+                    try {
+                        val file = File.createTempFile(
+                            "cropped",
+                            ".jpg",
+                            context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+                        )
+                        FileProvider.getUriForFile(
+                            context,
+                            context.packageName + CommonValues.authority,
+                            file
+                        )
+                    } catch (e: Exception) {
+                        Log.e("AIC", "${e.message}")
+                        val file = File.createTempFile("cropped", ".jpg", context.cacheDir)
+                        FileProvider.getUriForFile(
+                            context,
+                            context.packageName + CommonValues.authority,
+                            file
+                        )
+                    }
+                } else Uri.fromFile(File.createTempFile("cropped", ".jpg", context.cacheDir))
+            }
+        } catch (e: IOException) {
+            throw RuntimeException("Failed to create temp file for output image", e)
+        }
 }

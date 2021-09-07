@@ -303,7 +303,7 @@ data class CropImageContractOptions(
      * *Default: NONE, will create a temp file*
      */
     fun setOutputUri(outputUri: Uri?): CropImageContractOptions {
-        options.outputUri = outputUri
+        options.customOutputUri = outputUri
         return this
     }
 

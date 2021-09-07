@@ -24,6 +24,7 @@ internal interface SCropImageContract {
         fun onOk()
         fun onCancel()
         fun onCropImageResult(result: CropImageView.CropResult)
+        fun onCustomCropImageResult(customUri: Uri?)
         fun onPickImageResult(resultUri: Uri?)
         fun onPickImageResultCustom(resultUri: Uri?)
         fun onTakePictureResult(success: Boolean)

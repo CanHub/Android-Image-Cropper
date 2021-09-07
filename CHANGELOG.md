@@ -9,7 +9,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - `Fixed` for any bug fixes.
 - `Security` in case of vulnerabilities.
 
-## [3.3.0] -
+## [3.3.5] - 07/09/21
+### Fixed
+- Set output uri ignored [#207](https://github.com/CanHub/Android-Image-Cropper/issues/207)
+
+## [3.3.4] - 02/09/21
 ### Changed
 - Update to Android 12
 - Update library to gradle 7.0.1 and Java 11 [#191](https://github.com/CanHub/Android-Image-Cropper/issues/191)

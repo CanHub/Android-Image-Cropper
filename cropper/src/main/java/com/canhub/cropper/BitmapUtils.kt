@@ -394,9 +394,19 @@ internal object BitmapUtils {
      * @return the uri where the image was saved in, either the given uri or new pointing to temp
      * file.
      */
-    fun writeTempStateStoreBitmap(context: Context, bitmap: Bitmap?): Uri? =
+    fun writeTempStateStoreBitmap(
+        context: Context,
+        bitmap: Bitmap?,
+        customOutputUri: Uri?,
+    ): Uri? =
         try {
-            writeBitmapToUri(context, bitmap!!, CompressFormat.JPEG, 95)
+            writeBitmapToUri(
+                context = context,
+                bitmap = bitmap!!,
+                compressFormat = CompressFormat.JPEG,
+                compressQuality = 95,
+                customOutputUri = customOutputUri
+            )
         } catch (e: Exception) {
             Log.w(
                 "AIC",
@@ -414,9 +424,10 @@ internal object BitmapUtils {
         context: Context,
         bitmap: Bitmap,
         compressFormat: CompressFormat,
-        compressQuality: Int
+        compressQuality: Int,
+        customOutputUri: Uri?,
     ): Uri? {
-        val newUri = buildUri(context, compressFormat)
+        val newUri = customOutputUri ?: buildUri(context, compressFormat)
         var outputStream: OutputStream? = null
         try {
             outputStream = context.contentResolver.openOutputStream(newUri!!, WRITE_AND_TRUNCATE)
@@ -722,7 +733,10 @@ internal object BitmapUtils {
             val decoder = BitmapRegionDecoder.newInstance(stream!!, false)
             do {
                 try {
-                    return BitmapSampled(decoder!!.decodeRegion(rect, options), options.inSampleSize)
+                    return BitmapSampled(
+                        decoder!!.decodeRegion(rect, options),
+                        options.inSampleSize
+                    )
                 } catch (e: OutOfMemoryError) {
                     options.inSampleSize *= 2
                 }

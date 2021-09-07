@@ -233,7 +233,8 @@ open class CropImageActivity :
             options.outputCompressQuality,
             options.outputRequestWidth,
             options.outputRequestHeight,
-            options.outputRequestSizeOptions
+            options.outputRequestSizeOptions,
+            options.customOutputUri,
         )
     }
 

@@ -106,6 +106,10 @@ internal class SCropImagePresenter : SCropImageContract.Presenter {
         }
     }
 
+    override fun onCustomCropImageResult(customUri: Uri?) {
+        view?.handleCropImageResult(customUri.toString().replace("file:", ""))
+    }
+
     override fun onPickImageResult(resultUri: Uri?) {
         if (resultUri != null) {
             Log.v("Uri", resultUri.toString())
