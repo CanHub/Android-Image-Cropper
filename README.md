@@ -1,3 +1,14 @@
+## Hacktoberfest
+> We have a [project](https://github.com/CanHub/Android-Image-Cropper/projects/2) in the repo that suggest some possible and useful PRs we need.
+
+> Feel free to get any [issue](https://github.com/CanHub/Android-Image-Cropper/issues) and bring a PR with a solution
+
+> To avoid wasting your time, please open a Issue or Discussion to be sure your PR is valid for us
+
+> Do not forget to check the [Contributing Guide](https://github.com/CanHub/Android-Image-Cropper/blob/main/CONTRIBUTING.md)
+
+> Thanks in advance for the help
+
 [![CanHub](https://github.com/CanHub/Android-Image-Cropper/blob/main/art/canhub_logo_horizontal_transparent.png?raw=true)](https://github.com/canhub)
 
 [![](https://jitpack.io/v/CanHub/Android-Image-Cropper.svg)](https://jitpack.io/#CanHub/Android-Image-Cropper)
