@@ -33,4 +33,7 @@ ext {
 
     // Robolectric
     robolectricVersion = '4.5.1'
+
+    // Mockk
+    mockkVersion = '1.12.0'
 }
