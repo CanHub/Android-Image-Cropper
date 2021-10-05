@@ -24,73 +24,73 @@ class BitmapUtilsTest {
 
     @Test
     fun `WHEN float array of rectangle points is provided, THEN result should be left value of the bounding rectangle`() {
-        // when
+        // WHEN
         val rectLeft = BitmapUtils.getRectLeft(RECT_POINTS)
 
-        // then
+        // THEN
         assertEquals(1f, rectLeft)
     }
 
     @Test
     fun `WHEN float array of rectangle points is provided, THEN result should be right value of the bounding rectangle`() {
-        // when
+        // WHEN
         val rectRight = BitmapUtils.getRectRight(RECT_POINTS)
 
-        // then
+        // THEN
         assertEquals(7f, rectRight)
     }
 
     @Test
     fun `WHEN float array of rectangle points is provided, THEN result should be bottom value of the bounding rectangle`() {
-        // when
+        // WHEN
         val rectBottom = BitmapUtils.getRectBottom(RECT_POINTS)
 
-        // then
+        // THEN
         assertEquals(8f, rectBottom)
     }
 
     @Test
     fun `WHEN float array of rectangle points is provided, THEN result should be top value of the bounding rectangle`() {
-        // when
+        // WHEN
         val rectTop = BitmapUtils.getRectTop(RECT_POINTS)
 
-        // then
+        // THEN
         assertEquals(2f, rectTop)
     }
 
     @Test
     fun `WHEN float array of rectangle points is provided, THEN result should be rect height`() {
-        // when
+        // WHEN
         val rectHeight = BitmapUtils.getRectHeight(RECT_POINTS)
 
-        // then
+        // THEN
         assertEquals(6f, rectHeight)
     }
 
     @Test
     fun `WHEN float array of rectangle points is provided, THEN result should be rect width`() {
-        // when
+        // WHEN
         val rectWidth = BitmapUtils.getRectWidth(RECT_POINTS)
 
-        // then
+        // THEN
         assertEquals(6f, rectWidth)
     }
 
     @Test
     fun `WHEN float array of rectangle points is provided, THEN result should be rect centerX`() {
-        // when
+        // WHEN
         val rectCenterX = BitmapUtils.getRectCenterX(RECT_POINTS)
 
-        // then
+        // THEN
         assertEquals(4f, rectCenterX)
     }
 
     @Test
     fun `WHEN float array of rectangle points is provided, THEN result should be rect centerY`() {
-        // when
+        // WHEN
         val rectCenterY = BitmapUtils.getRectCenterY(RECT_POINTS)
 
-        // then
+        // THEN
         assertEquals(5f, rectCenterY)
     }
 
