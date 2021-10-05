@@ -13,10 +13,10 @@ import com.canhub.cropper.CropImageView.RequestSizeOptions
  * Options to customize the activity opened by CropImageContract.
  * Conveniently created by the options method.
  */
-
-data class CropImageContractOptions(
+data class CropImageContractOptions @JvmOverloads constructor(
     val uri: Uri?,
-    val options: CropImageOptions
+    val cropImageOptions: CropImageOptions,
+    val pickImageOptions: PickImageContractOptions = PickImageContractOptions(includeCamera = true)
 ) {
 
     /**
@@ -33,7 +33,7 @@ data class CropImageContractOptions(
      * [setInitialCropWindowPaddingRatio] (with argument `0f).
      */
     fun setCropShape(cropShape: CropShape): CropImageContractOptions {
-        options.cropShape = cropShape
+        cropImageOptions.cropShape = cropShape
         return this
     }
 
@@ -44,7 +44,7 @@ data class CropImageContractOptions(
      * *Default: 3dp*
      */
     fun setSnapRadius(snapRadius: Float): CropImageContractOptions {
-        options.snapRadius = snapRadius
+        cropImageOptions.snapRadius = snapRadius
         return this
     }
 
@@ -55,7 +55,7 @@ data class CropImageContractOptions(
      * *Default: 48dp*
      */
     fun setTouchRadius(touchRadius: Float): CropImageContractOptions {
-        options.touchRadius = touchRadius
+        cropImageOptions.touchRadius = touchRadius
         return this
     }
 
@@ -64,7 +64,7 @@ data class CropImageContractOptions(
      * *Default: ON_TOUCH*
      */
     fun setGuidelines(guidelines: Guidelines): CropImageContractOptions {
-        options.guidelines = guidelines
+        cropImageOptions.guidelines = guidelines
         return this
     }
 
@@ -73,7 +73,7 @@ data class CropImageContractOptions(
      * *Default: FIT_CENTER*
      */
     fun setScaleType(scaleType: CropImageView.ScaleType): CropImageContractOptions {
-        options.scaleType = scaleType
+        cropImageOptions.scaleType = scaleType
         return this
     }
 
@@ -83,7 +83,7 @@ data class CropImageContractOptions(
      * *default: true, may disable for animation or frame transition.*
      */
     fun setShowCropOverlay(showCropOverlay: Boolean): CropImageContractOptions {
-        options.showCropOverlay = showCropOverlay
+        cropImageOptions.showCropOverlay = showCropOverlay
         return this
     }
 
@@ -92,7 +92,7 @@ data class CropImageContractOptions(
      * default: true.
      */
     fun setAutoZoomEnabled(autoZoomEnabled: Boolean): CropImageContractOptions {
-        options.autoZoomEnabled = autoZoomEnabled
+        cropImageOptions.autoZoomEnabled = autoZoomEnabled
         return this
     }
 
@@ -101,7 +101,7 @@ data class CropImageContractOptions(
      * default: true.
      */
     fun setMultiTouchEnabled(multiTouchEnabled: Boolean): CropImageContractOptions {
-        options.multiTouchEnabled = multiTouchEnabled
+        cropImageOptions.multiTouchEnabled = multiTouchEnabled
         return this
     }
 
@@ -110,7 +110,7 @@ data class CropImageContractOptions(
      * default: true
      */
     fun setCenterMoveEnabled(centerMoveEnabled: Boolean): CropImageContractOptions {
-        options.centerMoveEnabled = centerMoveEnabled
+        cropImageOptions.centerMoveEnabled = centerMoveEnabled
         return this
     }
 
@@ -119,7 +119,7 @@ data class CropImageContractOptions(
      * *Default: 4*
      */
     fun setMaxZoom(maxZoom: Int): CropImageContractOptions {
-        options.maxZoom = maxZoom
+        cropImageOptions.maxZoom = maxZoom
         return this
     }
 
@@ -129,7 +129,7 @@ data class CropImageContractOptions(
      * *Default: 0.1*
      */
     fun setInitialCropWindowPaddingRatio(initialCropWindowPaddingRatio: Float): CropImageContractOptions {
-        options.initialCropWindowPaddingRatio = initialCropWindowPaddingRatio
+        cropImageOptions.initialCropWindowPaddingRatio = initialCropWindowPaddingRatio
         return this
     }
 
@@ -138,7 +138,7 @@ data class CropImageContractOptions(
      * *Default: false*
      */
     fun setFixAspectRatio(fixAspectRatio: Boolean): CropImageContractOptions {
-        options.fixAspectRatio = fixAspectRatio
+        cropImageOptions.fixAspectRatio = fixAspectRatio
         return this
     }
 
@@ -151,9 +151,9 @@ data class CropImageContractOptions(
      * @param aspectRatioY the height
      */
     fun setAspectRatio(aspectRatioX: Int, aspectRatioY: Int): CropImageContractOptions {
-        options.aspectRatioX = aspectRatioX
-        options.aspectRatioY = aspectRatioY
-        options.fixAspectRatio = true
+        cropImageOptions.aspectRatioX = aspectRatioX
+        cropImageOptions.aspectRatioY = aspectRatioY
+        cropImageOptions.fixAspectRatio = true
         return this
     }
 
@@ -162,7 +162,7 @@ data class CropImageContractOptions(
      * *Default: 3dp*
      */
     fun setBorderLineThickness(borderLineThickness: Float): CropImageContractOptions {
-        options.borderLineThickness = borderLineThickness
+        cropImageOptions.borderLineThickness = borderLineThickness
         return this
     }
 
@@ -171,7 +171,7 @@ data class CropImageContractOptions(
      * *Default: Color.argb(170, 255, 255, 255)*
      */
     fun setBorderLineColor(borderLineColor: Int): CropImageContractOptions {
-        options.borderLineColor = borderLineColor
+        cropImageOptions.borderLineColor = borderLineColor
         return this
     }
 
@@ -180,7 +180,7 @@ data class CropImageContractOptions(
      * *Default: 2dp*
      */
     fun setBorderCornerThickness(borderCornerThickness: Float): CropImageContractOptions {
-        options.borderCornerThickness = borderCornerThickness
+        cropImageOptions.borderCornerThickness = borderCornerThickness
         return this
     }
 
@@ -189,7 +189,7 @@ data class CropImageContractOptions(
      * *Default: 5dp*
      */
     fun setBorderCornerOffset(borderCornerOffset: Float): CropImageContractOptions {
-        options.borderCornerOffset = borderCornerOffset
+        cropImageOptions.borderCornerOffset = borderCornerOffset
         return this
     }
 
@@ -198,7 +198,7 @@ data class CropImageContractOptions(
      * *Default: 14dp*
      */
     fun setBorderCornerLength(borderCornerLength: Float): CropImageContractOptions {
-        options.borderCornerLength = borderCornerLength
+        cropImageOptions.borderCornerLength = borderCornerLength
         return this
     }
 
@@ -207,7 +207,7 @@ data class CropImageContractOptions(
      * *Default: WHITE*
      */
     fun setBorderCornerColor(borderCornerColor: Int): CropImageContractOptions {
-        options.borderCornerColor = borderCornerColor
+        cropImageOptions.borderCornerColor = borderCornerColor
         return this
     }
 
@@ -216,7 +216,7 @@ data class CropImageContractOptions(
      * *Default: 1dp*
      */
     fun setGuidelinesThickness(guidelinesThickness: Float): CropImageContractOptions {
-        options.guidelinesThickness = guidelinesThickness
+        cropImageOptions.guidelinesThickness = guidelinesThickness
         return this
     }
 
@@ -225,7 +225,7 @@ data class CropImageContractOptions(
      * *Default: Color.argb(170, 255, 255, 255)*
      */
     fun setGuidelinesColor(guidelinesColor: Int): CropImageContractOptions {
-        options.guidelinesColor = guidelinesColor
+        cropImageOptions.guidelinesColor = guidelinesColor
         return this
     }
 
@@ -235,7 +235,7 @@ data class CropImageContractOptions(
      * *Default: Color.argb(119, 0, 0, 0)*
      */
     fun setBackgroundColor(backgroundColor: Int): CropImageContractOptions {
-        options.backgroundColor = backgroundColor
+        cropImageOptions.backgroundColor = backgroundColor
         return this
     }
 
@@ -247,8 +247,8 @@ data class CropImageContractOptions(
         minCropWindowWidth: Int,
         minCropWindowHeight: Int
     ): CropImageContractOptions {
-        options.minCropWindowWidth = minCropWindowWidth
-        options.minCropWindowHeight = minCropWindowHeight
+        cropImageOptions.minCropWindowWidth = minCropWindowWidth
+        cropImageOptions.minCropWindowHeight = minCropWindowHeight
         return this
     }
 
@@ -261,8 +261,8 @@ data class CropImageContractOptions(
         minCropResultWidth: Int,
         minCropResultHeight: Int
     ): CropImageContractOptions {
-        options.minCropResultWidth = minCropResultWidth
-        options.minCropResultHeight = minCropResultHeight
+        cropImageOptions.minCropResultWidth = minCropResultWidth
+        cropImageOptions.minCropResultHeight = minCropResultHeight
         return this
     }
 
@@ -275,8 +275,8 @@ data class CropImageContractOptions(
         maxCropResultWidth: Int,
         maxCropResultHeight: Int
     ): CropImageContractOptions {
-        options.maxCropResultWidth = maxCropResultWidth
-        options.maxCropResultHeight = maxCropResultHeight
+        cropImageOptions.maxCropResultWidth = maxCropResultWidth
+        cropImageOptions.maxCropResultHeight = maxCropResultHeight
         return this
     }
 
@@ -285,7 +285,7 @@ data class CropImageContractOptions(
      * *Default: ""*
      */
     fun setActivityTitle(activityTitle: CharSequence): CropImageContractOptions {
-        options.activityTitle = activityTitle
+        cropImageOptions.activityTitle = activityTitle
         return this
     }
 
@@ -294,7 +294,7 @@ data class CropImageContractOptions(
      * *Default: NONE*
      */
     fun setActivityMenuIconColor(activityMenuIconColor: Int): CropImageContractOptions {
-        options.activityMenuIconColor = activityMenuIconColor
+        cropImageOptions.activityMenuIconColor = activityMenuIconColor
         return this
     }
 
@@ -303,7 +303,7 @@ data class CropImageContractOptions(
      * *Default: NONE, will create a temp file*
      */
     fun setOutputUri(outputUri: Uri?): CropImageContractOptions {
-        options.customOutputUri = outputUri
+        cropImageOptions.customOutputUri = outputUri
         return this
     }
 
@@ -312,7 +312,7 @@ data class CropImageContractOptions(
      * *Default: JPEG*
      */
     fun setOutputCompressFormat(outputCompressFormat: Bitmap.CompressFormat): CropImageContractOptions {
-        options.outputCompressFormat = outputCompressFormat
+        cropImageOptions.outputCompressFormat = outputCompressFormat
         return this
     }
 
@@ -321,7 +321,7 @@ data class CropImageContractOptions(
      * *Default: 90*
      */
     fun setOutputCompressQuality(outputCompressQuality: Int): CropImageContractOptions {
-        options.outputCompressQuality = outputCompressQuality
+        cropImageOptions.outputCompressQuality = outputCompressQuality
         return this
     }
 
@@ -343,9 +343,9 @@ data class CropImageContractOptions(
         reqHeight: Int,
         reqSizeOptions: RequestSizeOptions,
     ): CropImageContractOptions {
-        options.outputRequestWidth = reqWidth
-        options.outputRequestHeight = reqHeight
-        options.outputRequestSizeOptions = reqSizeOptions
+        cropImageOptions.outputRequestWidth = reqWidth
+        cropImageOptions.outputRequestHeight = reqHeight
+        cropImageOptions.outputRequestSizeOptions = reqSizeOptions
         return this
     }
 
@@ -356,7 +356,7 @@ data class CropImageContractOptions(
      * *Default: false*
      */
     fun setNoOutputImage(noOutputImage: Boolean): CropImageContractOptions {
-        options.noOutputImage = noOutputImage
+        cropImageOptions.noOutputImage = noOutputImage
         return this
     }
 
@@ -365,7 +365,7 @@ data class CropImageContractOptions(
      * *Default: NONE - will initialize using initial crop window padding ratio*
      */
     fun setInitialCropWindowRectangle(initialCropWindowRectangle: Rect?): CropImageContractOptions {
-        options.initialCropWindowRectangle = initialCropWindowRectangle
+        cropImageOptions.initialCropWindowRectangle = initialCropWindowRectangle
         return this
     }
 
@@ -375,7 +375,7 @@ data class CropImageContractOptions(
      * *Default: NONE - will read image exif data*
      */
     fun setInitialRotation(initialRotation: Int): CropImageContractOptions {
-        options.initialRotation = (initialRotation + DEGREES_360) % DEGREES_360
+        cropImageOptions.initialRotation = (initialRotation + DEGREES_360) % DEGREES_360
         return this
     }
 
@@ -384,7 +384,7 @@ data class CropImageContractOptions(
      * *Default: true*
      */
     fun setAllowRotation(allowRotation: Boolean): CropImageContractOptions {
-        options.allowRotation = allowRotation
+        cropImageOptions.allowRotation = allowRotation
         return this
     }
 
@@ -393,7 +393,7 @@ data class CropImageContractOptions(
      * *Default: true*
      */
     fun setAllowFlipping(allowFlipping: Boolean): CropImageContractOptions {
-        options.allowFlipping = allowFlipping
+        cropImageOptions.allowFlipping = allowFlipping
         return this
     }
 
@@ -403,7 +403,7 @@ data class CropImageContractOptions(
      * *Default: false*
      */
     fun setAllowCounterRotation(allowCounterRotation: Boolean): CropImageContractOptions {
-        options.allowCounterRotation = allowCounterRotation
+        cropImageOptions.allowCounterRotation = allowCounterRotation
         return this
     }
 
@@ -412,7 +412,7 @@ data class CropImageContractOptions(
      * *Default: 90*
      */
     fun setRotationDegrees(rotationDegrees: Int): CropImageContractOptions {
-        options.rotationDegrees = (rotationDegrees + DEGREES_360) % DEGREES_360
+        cropImageOptions.rotationDegrees = (rotationDegrees + DEGREES_360) % DEGREES_360
         return this
     }
 
@@ -421,7 +421,7 @@ data class CropImageContractOptions(
      * *Default: false*
      */
     fun setFlipHorizontally(flipHorizontally: Boolean): CropImageContractOptions {
-        options.flipHorizontally = flipHorizontally
+        cropImageOptions.flipHorizontally = flipHorizontally
         return this
     }
 
@@ -430,7 +430,7 @@ data class CropImageContractOptions(
      * *Default: false*
      */
     fun setFlipVertically(flipVertically: Boolean): CropImageContractOptions {
-        options.flipVertically = flipVertically
+        cropImageOptions.flipVertically = flipVertically
         return this
     }
 
@@ -439,7 +439,7 @@ data class CropImageContractOptions(
      * *Default: null, will use resource string: crop_image_menu_crop*
      */
     fun setCropMenuCropButtonTitle(title: CharSequence?): CropImageContractOptions {
-        options.cropMenuCropButtonTitle = title
+        cropImageOptions.cropMenuCropButtonTitle = title
         return this
     }
 
@@ -448,7 +448,7 @@ data class CropImageContractOptions(
      * *Default: 0*
      */
     fun setCropMenuCropButtonIcon(@DrawableRes drawableResource: Int): CropImageContractOptions {
-        options.cropMenuCropButtonIcon = drawableResource
+        cropImageOptions.cropMenuCropButtonIcon = drawableResource
         return this
     }
 }

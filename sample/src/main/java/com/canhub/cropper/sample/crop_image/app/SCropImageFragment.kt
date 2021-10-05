@@ -23,6 +23,7 @@ import com.canhub.cropper.CropImage
 import com.canhub.cropper.CropImageContract
 import com.canhub.cropper.CropImageView
 import com.canhub.cropper.PickImageContract
+import com.canhub.cropper.PickImageContractOptions
 import com.canhub.cropper.common.CommonValues
 import com.canhub.cropper.common.CommonVersionCheck
 import com.canhub.cropper.options
@@ -127,11 +128,11 @@ internal class SCropImageFragment :
     }
 
     private fun startPickImageCustom() {
-        pickImageCustom.launch(false)
+        pickImageCustom.launch(PickImageContractOptions(includeCamera = false))
     }
 
     private fun startPickImage() {
-        pickImage.launch(false)
+        pickImage.launch(PickImageContractOptions(includeCamera = false))
     }
 
     private fun startCameraWithoutUri() {

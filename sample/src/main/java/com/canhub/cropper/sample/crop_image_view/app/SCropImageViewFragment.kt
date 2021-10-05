@@ -20,6 +20,7 @@ import com.canhub.cropper.CropImageView.CropResult
 import com.canhub.cropper.CropImageView.OnCropImageCompleteListener
 import com.canhub.cropper.CropImageView.OnSetImageUriCompleteListener
 import com.canhub.cropper.PickImageContract
+import com.canhub.cropper.PickImageContractOptions
 import com.canhub.cropper.sample.SCropResultActivity
 import com.canhub.cropper.sample.crop_image_view.domain.SCropImageViewContract
 import com.canhub.cropper.sample.crop_image_view.presenter.SCropImageViewPresenter
@@ -91,7 +92,7 @@ internal class SCropImageViewFragment :
                         arrayOf(Manifest.permission.CAMERA),
                         CropImage.CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE
                     )
-                } else openPicker.launch(true)
+                } else openPicker.launch(PickImageContractOptions(includeCamera = true))
             }
         }
 
@@ -188,7 +189,7 @@ internal class SCropImageViewFragment :
     ) {
         if (requestCode == CropImage.CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                openPicker.launch(true)
+                openPicker.launch(PickImageContractOptions(includeCamera = true))
             } else {
                 Toast
                     .makeText(context, "Cancelling, permissions not granted", Toast.LENGTH_LONG)

@@ -19,11 +19,12 @@ class CropImageContract :
     ActivityResultContract<CropImageContractOptions, CropImageView.CropResult>() {
 
     override fun createIntent(context: Context, input: CropImageContractOptions): Intent {
-        input.options.validate()
+        input.cropImageOptions.validate()
         return Intent(context, CropImageActivity::class.java).apply {
             val bundle = Bundle()
             bundle.putParcelable(CropImage.CROP_IMAGE_EXTRA_SOURCE, input.uri)
-            bundle.putParcelable(CropImage.CROP_IMAGE_EXTRA_OPTIONS, input.options)
+            bundle.putParcelable(CropImage.CROP_IMAGE_EXTRA_OPTIONS, input.cropImageOptions)
+            bundle.putParcelable(CropImage.PICK_IMAGE_SOURCE_OPTIONS, input.pickImageOptions)
             putExtra(CropImage.CROP_IMAGE_EXTRA_BUNDLE, bundle)
         }
     }

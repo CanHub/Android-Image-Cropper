@@ -38,7 +38,6 @@ import com.canhub.cropper.common.CommonVersionCheck
 import com.canhub.cropper.common.CommonVersionCheck.isAtLeastQ29
 import com.canhub.cropper.utils.getFilePathFromUri
 import java.io.File
-import java.util.ArrayList
 
 /**
  * Helper to simplify crop image work like starting pick-image acitvity and handling camera/gallery
@@ -62,6 +61,11 @@ object CropImage {
      * The key used to pass crop image options to [CropImageActivity].
      */
     const val CROP_IMAGE_EXTRA_OPTIONS = "CROP_IMAGE_EXTRA_OPTIONS"
+
+    /**
+     * The key used to pass options for the picker of image to crop to [CropImageActivity].
+     */
+    const val PICK_IMAGE_SOURCE_OPTIONS = "CROP_IMAGE_EXTRA_OPTIONS"
 
     /**
      * The key used to pass crop image bundle data to [CropImageActivity].
@@ -165,8 +169,10 @@ object CropImage {
         return getPickImageChooserIntent(
             context = context,
             title = context.getString(R.string.pick_image_intent_chooser_title),
-            includeDocuments = false,
-            includeCamera = true
+            options = PickImageContractOptions(
+                includeDocuments = false,
+                includeCamera = true
+            )
         )
     }
 
@@ -185,22 +191,26 @@ object CropImage {
     fun getPickImageChooserIntent(
         context: Context,
         title: CharSequence?,
-        includeDocuments: Boolean, // todo, remove this. Should always be false for image to crop.
-        includeCamera: Boolean,
+        options: PickImageContractOptions
     ): Intent {
+        val includeDocuments = options.includeDocuments
+        val includeCamera = options.includeCamera
+        val includeGallery = options.includeGallery
         val allIntents: MutableList<Intent> = ArrayList()
         val packageManager = context.packageManager
         // collect all camera intents if Camera permission is available
         if (!isExplicitCameraPermissionRequired(context) && includeCamera) {
             allIntents.addAll(getCameraIntents(context, packageManager))
         }
-        allIntents.addAll(
-            getGalleryIntents(
-                packageManager,
-                Intent.ACTION_GET_CONTENT,
-                includeDocuments
+        if (includeGallery) {
+            allIntents.addAll(
+                getGalleryIntents(
+                    packageManager,
+                    Intent.ACTION_GET_CONTENT,
+                    includeDocuments
+                )
             )
-        )
+        }
         // Create a chooser from the main  intent
         val chooserIntent = Intent.createChooser(allIntents.removeAt(allIntents.size - 1), title)
         // Add all other intents

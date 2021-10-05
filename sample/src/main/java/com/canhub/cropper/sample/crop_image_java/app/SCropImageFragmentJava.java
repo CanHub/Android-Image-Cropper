@@ -28,6 +28,7 @@ import com.canhub.cropper.CropImageContractOptions;
 import com.canhub.cropper.CropImageOptions;
 import com.canhub.cropper.CropImageView;
 import com.canhub.cropper.PickImageContract;
+import com.canhub.cropper.PickImageContractOptions;
 import com.canhub.cropper.sample.SCropResultActivity;
 import com.canhub.cropper.sample.crop_image_java.domain.SCropImageEnumDomainJava;
 import com.canhub.cropper.sample.crop_image_java.domain.SCropImageContractJava;
@@ -59,10 +60,10 @@ public class SCropImageFragmentJava extends Fragment implements SCropImageContra
     private final ActivityResultLauncher<String> requestPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), presenter::onPermissionResult);
 
-    private final ActivityResultLauncher<Boolean> pickImage =
+    private final ActivityResultLauncher<PickImageContractOptions> pickImage =
             registerForActivityResult(new PickImageContract(), presenter::onPickImageResult);
 
-    private final ActivityResultLauncher<Boolean> pickImageCustom =
+    private final ActivityResultLauncher<PickImageContractOptions> pickImageCustom =
             registerForActivityResult(new PickImageContract() {
 
                 @Override
@@ -134,11 +135,11 @@ public class SCropImageFragmentJava extends Fragment implements SCropImageContra
     }
 
     private void startPickImageCustom() {
-        pickImageCustom.launch(false);
+        pickImageCustom.launch(new PickImageContractOptions(false));
     }
 
     private void startPickImage() {
-        pickImage.launch(false);
+        pickImage.launch(new PickImageContractOptions(false));
     }
 
     private void startCameraWithoutUri() {

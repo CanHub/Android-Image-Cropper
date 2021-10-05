@@ -37,7 +37,8 @@ open class CropImageActivity :
     /**
      * the options that were set for the crop image
      */
-    lateinit var options: CropImageOptions
+    lateinit var cropImageOptions: CropImageOptions
+    lateinit var pickImageOptions: PickImageContractOptions
 
     /** The crop image view library widget used in the activity */
     private var cropImageView: CropImageView? = null
@@ -52,7 +53,12 @@ open class CropImageActivity :
         setCropImageView(binding.cropImageView)
         val bundle = intent.getBundleExtra(CropImage.CROP_IMAGE_EXTRA_BUNDLE)
         cropImageUri = bundle?.getParcelable(CropImage.CROP_IMAGE_EXTRA_SOURCE)
-        options = bundle?.getParcelable(CropImage.CROP_IMAGE_EXTRA_OPTIONS) ?: CropImageOptions()
+        cropImageOptions =
+            bundle?.getParcelable(CropImage.CROP_IMAGE_EXTRA_OPTIONS) ?: CropImageOptions()
+        pickImageOptions =
+            bundle?.getParcelable(CropImage.PICK_IMAGE_SOURCE_OPTIONS) ?: PickImageContractOptions(
+                includeCamera = true
+            )
 
         if (savedInstanceState == null) {
             if (cropImageUri == null || cropImageUri == Uri.EMPTY) {
@@ -63,7 +69,7 @@ open class CropImageActivity :
                         CropImage.CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE
                     )
                 } else {
-                    pickImage.launch(true)
+                    pickImage.launch(pickImageOptions)
                 }
             } else if (
                 cropImageUri?.let {
@@ -84,7 +90,7 @@ open class CropImageActivity :
 
         supportActionBar?.let {
             title =
-                if (options.activityTitle.isNotEmpty()) options.activityTitle else resources.getString(
+                if (cropImageOptions.activityTitle.isNotEmpty()) cropImageOptions.activityTitle else resources.getString(
                     R.string.crop_image_activity_title
                 )
             it.setDisplayHomeAsUpEnabled(true)
@@ -106,37 +112,37 @@ open class CropImageActivity :
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.crop_image_menu, menu)
 
-        if (!options.allowRotation) {
+        if (!cropImageOptions.allowRotation) {
             menu.removeItem(R.id.ic_rotate_left_24)
             menu.removeItem(R.id.ic_rotate_right_24)
-        } else if (options.allowCounterRotation) {
+        } else if (cropImageOptions.allowCounterRotation) {
             menu.findItem(R.id.ic_rotate_left_24).isVisible = true
         }
 
-        if (!options.allowFlipping) menu.removeItem(R.id.ic_flip_24)
+        if (!cropImageOptions.allowFlipping) menu.removeItem(R.id.ic_flip_24)
 
-        if (options.cropMenuCropButtonTitle != null) {
-            menu.findItem(R.id.crop_image_menu_crop).title = options.cropMenuCropButtonTitle
+        if (cropImageOptions.cropMenuCropButtonTitle != null) {
+            menu.findItem(R.id.crop_image_menu_crop).title = cropImageOptions.cropMenuCropButtonTitle
         }
         var cropIcon: Drawable? = null
         try {
-            if (options.cropMenuCropButtonIcon != 0) {
-                cropIcon = ContextCompat.getDrawable(this, options.cropMenuCropButtonIcon)
+            if (cropImageOptions.cropMenuCropButtonIcon != 0) {
+                cropIcon = ContextCompat.getDrawable(this, cropImageOptions.cropMenuCropButtonIcon)
                 menu.findItem(R.id.crop_image_menu_crop).icon = cropIcon
             }
         } catch (e: Exception) {
             Log.w("AIC", "Failed to read menu crop drawable", e)
         }
-        if (options.activityMenuIconColor != 0) {
-            updateMenuItemIconColor(menu, R.id.ic_rotate_left_24, options.activityMenuIconColor)
-            updateMenuItemIconColor(menu, R.id.ic_rotate_right_24, options.activityMenuIconColor)
-            updateMenuItemIconColor(menu, R.id.ic_flip_24, options.activityMenuIconColor)
+        if (cropImageOptions.activityMenuIconColor != 0) {
+            updateMenuItemIconColor(menu, R.id.ic_rotate_left_24, cropImageOptions.activityMenuIconColor)
+            updateMenuItemIconColor(menu, R.id.ic_rotate_right_24, cropImageOptions.activityMenuIconColor)
+            updateMenuItemIconColor(menu, R.id.ic_flip_24, cropImageOptions.activityMenuIconColor)
 
             if (cropIcon != null) {
                 updateMenuItemIconColor(
                     menu,
                     R.id.crop_image_menu_crop,
-                    options.activityMenuIconColor
+                    cropImageOptions.activityMenuIconColor
                 )
             }
         }
@@ -146,8 +152,8 @@ open class CropImageActivity :
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.crop_image_menu_crop -> cropImage()
-            R.id.ic_rotate_left_24 -> rotateImage(-options.rotationDegrees)
-            R.id.ic_rotate_right_24 -> rotateImage(options.rotationDegrees)
+            R.id.ic_rotate_left_24 -> rotateImage(-cropImageOptions.rotationDegrees)
+            R.id.ic_rotate_right_24 -> rotateImage(cropImageOptions.rotationDegrees)
             R.id.ic_flip_24_horizontally -> cropImageView?.flipImageHorizontally()
             R.id.ic_flip_24_vertically -> cropImageView?.flipImageVertically()
             android.R.id.home -> setResultCancel()
@@ -205,17 +211,17 @@ open class CropImageActivity :
         } else if (requestCode == CropImage.CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE) {
             // Irrespective of whether camera permission was given or not, we show the picker
             // The picker will not add the camera intent if permission is not available
-            pickImage.launch(true)
+            pickImage.launch(pickImageOptions)
         } else super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
     override fun onSetImageUriComplete(view: CropImageView, uri: Uri, error: Exception?) {
         if (error == null) {
-            if (options.initialCropWindowRectangle != null)
-                cropImageView?.cropRect = options.initialCropWindowRectangle
+            if (cropImageOptions.initialCropWindowRectangle != null)
+                cropImageView?.cropRect = cropImageOptions.initialCropWindowRectangle
 
-            if (options.initialRotation > -1)
-                cropImageView?.rotatedDegrees = options.initialRotation
+            if (cropImageOptions.initialRotation > -1)
+                cropImageView?.rotatedDegrees = cropImageOptions.initialRotation
         } else setResult(null, error, 1)
     }
 
@@ -227,14 +233,14 @@ open class CropImageActivity :
      * Execute crop image and save the result tou output uri.
      */
     open fun cropImage() {
-        if (options.noOutputImage) setResult(null, null, 1)
+        if (cropImageOptions.noOutputImage) setResult(null, null, 1)
         else cropImageView?.croppedImageAsync(
-            options.outputCompressFormat,
-            options.outputCompressQuality,
-            options.outputRequestWidth,
-            options.outputRequestHeight,
-            options.outputRequestSizeOptions,
-            options.customOutputUri,
+            cropImageOptions.outputCompressFormat,
+            cropImageOptions.outputCompressQuality,
+            cropImageOptions.outputRequestWidth,
+            cropImageOptions.outputRequestHeight,
+            cropImageOptions.outputRequestSizeOptions,
+            cropImageOptions.customOutputUri,
         )
     }
 
