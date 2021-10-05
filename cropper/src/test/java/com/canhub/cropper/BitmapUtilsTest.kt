@@ -7,7 +7,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
-private val RECT_POINTS: FloatArray = floatArrayOf(1f,2f,3f,4f, 5f, 6f, 7f, 8f)
+private val RECT_POINTS: FloatArray = floatArrayOf(1f, 2f, 3f,4f, 5f, 6f, 7f, 8f)
 private val LOW_RECT_POINTS: FloatArray = floatArrayOf(1f)
 
 class BitmapUtilsTest {
