@@ -65,7 +65,7 @@ object CropImage {
     /**
      * The key used to pass options for the picker of image to crop to [CropImageActivity].
      */
-    const val PICK_IMAGE_SOURCE_OPTIONS = "CROP_IMAGE_EXTRA_OPTIONS"
+    const val PICK_IMAGE_SOURCE_OPTIONS = "PICK_IMAGE_SOURCE_OPTIONS"
 
     /**
      * The key used to pass crop image bundle data to [CropImageActivity].
