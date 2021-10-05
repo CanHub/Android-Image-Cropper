@@ -451,6 +451,15 @@ data class CropImageContractOptions @JvmOverloads constructor(
         cropImageOptions.cropMenuCropButtonIcon = drawableResource
         return this
     }
+
+    /**
+     * optional, set the image picker options*/
+    fun setImagePickerContractOptions(pickImageContractOptions: PickImageContractOptions): CropImageContractOptions{
+        pickImageOptions.includeCamera = pickImageContractOptions.includeCamera
+        pickImageOptions.includeDocuments = pickImageContractOptions.includeDocuments
+        pickImageOptions.includeGallery = pickImageContractOptions.includeGallery
+        return this
+    }
 }
 
 fun options(

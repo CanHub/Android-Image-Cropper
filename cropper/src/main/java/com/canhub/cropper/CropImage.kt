@@ -169,10 +169,7 @@ object CropImage {
         return getPickImageChooserIntent(
             context = context,
             title = context.getString(R.string.pick_image_intent_chooser_title),
-            options = PickImageContractOptions(
-                includeDocuments = false,
-                includeCamera = true
-            )
+            options = PickImageContractOptions()
         )
     }
 
@@ -202,7 +199,15 @@ object CropImage {
         if (!isExplicitCameraPermissionRequired(context) && includeCamera) {
             allIntents.addAll(getCameraIntents(context, packageManager))
         }
-        if (includeGallery) {
+        if (includeDocuments) {
+            allIntents.addAll(
+                getGalleryIntents(
+                    packageManager,
+                    Intent.ACTION_GET_CONTENT,
+                    includeDocuments
+                )
+            )
+        }else if (!includeDocuments && includeGallery){
             allIntents.addAll(
                 getGalleryIntents(
                     packageManager,

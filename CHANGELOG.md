@@ -9,6 +9,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - `Fixed` for any bug fixes.
 - `Security` in case of vulnerabilities.
 
+## [unreleased 3.3.6] - 05/10/21
+### Added
+- Added `PickImageContractOptions` to enable users specify image source [#226](https://github.com/CanHub/Android-Image-Cropper/issues/226)
+
 ## [3.3.5] - 07/09/21
 ### Fixed
 - Set output uri ignored [#207](https://github.com/CanHub/Android-Image-Cropper/issues/207)

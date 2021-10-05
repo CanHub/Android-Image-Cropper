@@ -90,9 +90,10 @@ open class CropImageActivity :
 
         supportActionBar?.let {
             title =
-                if (cropImageOptions.activityTitle.isNotEmpty()) cropImageOptions.activityTitle else resources.getString(
-                    R.string.crop_image_activity_title
-                )
+                if (cropImageOptions.activityTitle.isNotEmpty())
+                    cropImageOptions.activityTitle
+                else
+                    resources.getString(R.string.crop_image_activity_title)
             it.setDisplayHomeAsUpEnabled(true)
         }
     }

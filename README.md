@@ -115,6 +115,16 @@ class MainActivity {
             }
         )
 
+        //start picker to get image for cropping from only gallery and then use the image in
+        //cropping activity
+        cropImage.launch(
+            options {
+                setImagePickerContractOptions(
+                    PickImageContractOptions(true, false, false)
+                )
+            }
+        )
+
         // start cropping activity for pre-acquired image saved on the device and customize settings
         cropImage.launch(
             options(uri = imageUri) {
