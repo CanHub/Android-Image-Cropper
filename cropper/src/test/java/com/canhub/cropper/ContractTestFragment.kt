@@ -28,7 +28,7 @@ class ContractTestFragment(
         return cropImage.contract.createIntent(requireContext(), input)
     }
 
-    fun pickImageIntent(input: Boolean): Intent {
+    fun pickImageIntent(input: PickImageContractOptions): Intent {
         return pickImage.contract.createIntent(requireContext(), input)
     }
 }
