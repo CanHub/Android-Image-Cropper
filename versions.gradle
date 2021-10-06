@@ -1,7 +1,7 @@
 ext {
 
     // Project
-    libVersion = "3.3.4"
+    libVersion = "3.3.6"
     compileSdkVersion = 31
     targetSdkVersion = 31
     minSdkVersion = 14
@@ -33,4 +33,7 @@ ext {
 
     // Robolectric
     robolectricVersion = '4.5.1'
+
+    // Mockk
+    mockkVersion = '1.12.0'
 }
