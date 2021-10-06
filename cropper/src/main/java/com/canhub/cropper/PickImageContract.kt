@@ -18,18 +18,17 @@ import com.canhub.cropper.CropImage.getPickImageResultUriContent
  * If you want to customize how the result is parsed, extend this class and override parseResult
 */
 
-open class PickImageContract : ActivityResultContract<Boolean, Uri?>() {
+open class PickImageContract : ActivityResultContract<PickImageContractOptions, Uri?>() {
 
     protected var context: Context? = null
 
-    override fun createIntent(context: Context, input: Boolean): Intent {
+    override fun createIntent(context: Context, options: PickImageContractOptions): Intent {
         this.context = context
 
         return CropImage.getPickImageChooserIntent(
             context = context,
             title = context.getString(R.string.pick_image_intent_chooser_title),
-            includeDocuments = false,
-            includeCamera = input
+            options = options
         )
     }
 
