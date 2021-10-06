@@ -73,4 +73,5 @@ dependencies {
     testImplementation "androidx.test:runner:$androidXTestVersion"
     debugImplementation "androidx.fragment:fragment-testing:$androidXFragmentVersion"
     testImplementation "org.robolectric:robolectric:$robolectricVersion"
+    testImplementation "io.mockk:mockk:$mockkVersion"
 }
