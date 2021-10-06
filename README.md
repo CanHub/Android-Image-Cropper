@@ -120,7 +120,7 @@ class MainActivity {
         cropImage.launch(
             options {
                 setImagePickerContractOptions(
-                    PickImageContractOptions(true, false, false)
+                    PickImageContractOptions(includeGallery = true, includeCamera = false)
                 )
             }
         )
