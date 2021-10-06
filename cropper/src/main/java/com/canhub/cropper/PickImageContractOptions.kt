@@ -5,17 +5,15 @@ import kotlinx.parcelize.Parcelize
 
 /**
  * A data class to specify where the user can
- * select images from, there are 3 options
+ * select images from, there are 2 options
  * @param includeGallery,
  * @param includeCamera,
- * @param includeDocuments,
  * to include from a particular source just set its
- * attribute to true, by default Gallery is always
- * included and documents excluded, so all the user must
- * always specify is whether to include camera or not*/
+ * attribute to true, by default Gallery and Camera are
+ * always included, to exclude one of them, set it to
+ * false*/
 @Parcelize
 data class PickImageContractOptions @JvmOverloads constructor(
     var includeGallery: Boolean = true,
-    var includeCamera: Boolean = true,
-    var includeDocuments: Boolean = false
+    var includeCamera: Boolean = true
 ) : Parcelable

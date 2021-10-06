@@ -190,7 +190,6 @@ object CropImage {
         title: CharSequence?,
         options: PickImageContractOptions
     ): Intent {
-        val includeDocuments = options.includeDocuments
         val includeCamera = options.includeCamera
         val includeGallery = options.includeGallery
         val allIntents: MutableList<Intent> = ArrayList()
@@ -199,20 +198,11 @@ object CropImage {
         if (!isExplicitCameraPermissionRequired(context) && includeCamera) {
             allIntents.addAll(getCameraIntents(context, packageManager))
         }
-        if (includeDocuments) {
+        if (includeGallery) {
             allIntents.addAll(
                 getGalleryIntents(
                     packageManager,
-                    Intent.ACTION_GET_CONTENT,
-                    includeDocuments
-                )
-            )
-        }else if (!includeDocuments && includeGallery){
-            allIntents.addAll(
-                getGalleryIntents(
-                    packageManager,
-                    Intent.ACTION_GET_CONTENT,
-                    includeDocuments
+                    Intent.ACTION_GET_CONTENT
                 )
             )
         }
@@ -281,12 +271,11 @@ object CropImage {
     // todo this need be public?
     fun getGalleryIntents(
         packageManager: PackageManager,
-        action: String?,
-        includeDocuments: Boolean,
+        action: String?
     ): List<Intent> {
         val intents: MutableList<Intent> = ArrayList()
         val galleryIntent = Intent(action)
-        galleryIntent.type = if (includeDocuments) "*/*" else "image/*"
+        galleryIntent.type = "image/*"
         galleryIntent.addCategory(Intent.CATEGORY_OPENABLE)
         var listGallery = packageManager.queryIntentActivities(galleryIntent, 0)
         if (isAtLeastQ29() && listGallery.size > 2) {

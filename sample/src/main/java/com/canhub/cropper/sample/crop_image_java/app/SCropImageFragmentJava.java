@@ -135,11 +135,11 @@ public class SCropImageFragmentJava extends Fragment implements SCropImageContra
     }
 
     private void startPickImageCustom() {
-        pickImageCustom.launch(new PickImageContractOptions(false));
+        pickImageCustom.launch(new PickImageContractOptions(true, false));
     }
 
     private void startPickImage() {
-        pickImage.launch(new PickImageContractOptions(false));
+        pickImage.launch(new PickImageContractOptions(true, false));
     }
 
     private void startCameraWithoutUri() {

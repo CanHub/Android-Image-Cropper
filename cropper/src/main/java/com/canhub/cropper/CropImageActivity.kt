@@ -57,8 +57,8 @@ open class CropImageActivity :
             bundle?.getParcelable(CropImage.CROP_IMAGE_EXTRA_OPTIONS) ?: CropImageOptions()
         pickImageOptions =
             bundle?.getParcelable(CropImage.PICK_IMAGE_SOURCE_OPTIONS) ?: PickImageContractOptions(
-                includeCamera = true
-            )
+            includeCamera = true
+        )
 
         if (savedInstanceState == null) {
             if (cropImageUri == null || cropImageUri == Uri.EMPTY) {

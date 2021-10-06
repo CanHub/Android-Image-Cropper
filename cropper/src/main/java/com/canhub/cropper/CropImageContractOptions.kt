@@ -454,9 +454,8 @@ data class CropImageContractOptions @JvmOverloads constructor(
 
     /**
      * optional, set the image picker options*/
-    fun setImagePickerContractOptions(pickImageContractOptions: PickImageContractOptions): CropImageContractOptions{
+    fun setImagePickerContractOptions(pickImageContractOptions: PickImageContractOptions): CropImageContractOptions {
         pickImageOptions.includeCamera = pickImageContractOptions.includeCamera
-        pickImageOptions.includeDocuments = pickImageContractOptions.includeDocuments
         pickImageOptions.includeGallery = pickImageContractOptions.includeGallery
         return this
     }
