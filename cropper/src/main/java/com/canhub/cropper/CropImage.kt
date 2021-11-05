@@ -194,24 +194,20 @@ object CropImage {
         val includeGallery = options.includeGallery
         val allIntents: MutableList<Intent> = ArrayList()
         val packageManager = context.packageManager
+
         // collect all camera intents if Camera permission is available
-        if (!isExplicitCameraPermissionRequired(context) && includeCamera) {
+        if (!isExplicitCameraPermissionRequired(context) && includeCamera)
             allIntents.addAll(getCameraIntents(context, packageManager))
-        }
-        if (includeGallery) {
-            allIntents.addAll(
-                getGalleryIntents(
-                    packageManager,
-                    Intent.ACTION_GET_CONTENT
-                )
-            )
-        }
+
+        if (includeGallery)
+            allIntents.addAll(getGalleryIntents(packageManager, Intent.ACTION_GET_CONTENT))
+
         // Create a chooser from the main  intent
         val chooserIntent = Intent.createChooser(allIntents.removeAt(allIntents.size - 1), title)
+
         // Add all other intents
-        chooserIntent.putExtra(
-            Intent.EXTRA_INITIAL_INTENTS, allIntents.toTypedArray<Parcelable>()
-        )
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, allIntents.toTypedArray<Parcelable>())
+
         return chooserIntent
     }
 
