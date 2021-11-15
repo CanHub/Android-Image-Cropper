@@ -9,6 +9,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - `Fixed` for any bug fixes.
 - `Security` in case of vulnerabilities.
 
+## [unreleased] 
+### Removed
+- Removed ProGuard rule from ReadMe [#257](https://github.com/CanHub/Android-Image-Cropper/issues/257)
+
 ## [3.3.6] - 05/11/21
 ### Added
 - Added `PickImageContractOptions` to enable users specify image source [#226](https://github.com/CanHub/Android-Image-Cropper/issues/226)
