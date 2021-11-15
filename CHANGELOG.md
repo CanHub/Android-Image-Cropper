@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ## [unreleased] 
 ### Removed
 - Removed ProGuard rule from ReadMe [#257](https://github.com/CanHub/Android-Image-Cropper/issues/257)
+- Removed unused dependencies and settings from Gradle files [#265](https://github.com/CanHub/Android-Image-Cropper/issues/265)
 
 ## [3.3.6] - 05/11/21
 ### Added
