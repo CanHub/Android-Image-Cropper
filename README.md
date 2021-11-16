@@ -56,7 +56,7 @@ Only need if you run on devices under OS10 (SDK 29)
 
 - Go to app level `build.gradle` file
 
-- Add this line inside ```android``` in build.gradle
+- Add this line inside ```android``` in build.gradle (Android Gradle Plugin < 4.2)
 	```gradle
 	compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

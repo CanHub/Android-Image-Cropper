@@ -3,11 +3,11 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-parcelize'
 
 android {
-    compileSdkVersion rootProject.compileSdkVersion
+    compileSdk rootProject.compileSdkVersion
 
     defaultConfig {
-        minSdkVersion 24
-        targetSdkVersion rootProject.targetSdkVersion
+        minSdk 24
+        targetSdk rootProject.targetSdkVersion
         versionCode 1
         versionName '1.0'
     }
@@ -31,6 +31,5 @@ dependencies {
     api project(':cropper')
     implementation "androidx.appcompat:appcompat:$androidXAppCompatVersion"
     implementation "androidx.core:core-ktx:$androidXCoreKtxVersion"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
     implementation "com.google.android.material:material:$materialVersion"
 }
