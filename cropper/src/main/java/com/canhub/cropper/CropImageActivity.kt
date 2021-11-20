@@ -62,7 +62,7 @@ open class CropImageActivity :
 
         if (savedInstanceState == null) {
             if (cropImageUri == null || cropImageUri == Uri.EMPTY) {
-                if (CropImage.isExplicitCameraPermissionRequired(this)) {
+                if (pickImageOptions.includeCamera && CropImage.isExplicitCameraPermissionRequired(this)) {
                     // request permissions and handle the result in onRequestPermissionsResult()
                     requestPermissions(
                         arrayOf(Manifest.permission.CAMERA),
