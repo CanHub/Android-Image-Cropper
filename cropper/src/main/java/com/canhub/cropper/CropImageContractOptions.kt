@@ -20,6 +20,20 @@ data class CropImageContractOptions @JvmOverloads constructor(
 ) {
 
     /**
+     * When library is responsible for fetching the image you can decide which source you wanna
+     * let the user choose. Both or just one of them
+     *
+     * Attention: Make them both `False` can cause unexpected behavior
+     *
+     * Default values: `True`
+     */
+    fun setImageSource(includeGallery: Boolean, includeCamera: Boolean): CropImageContractOptions {
+        cropImageOptions.imageSourceIncludeGallery = includeGallery
+        cropImageOptions.imageSourceIncludeCamera = includeCamera
+        return this
+    }
+
+    /**
      * The shape of the cropping window.<br></br>
      * To set square/circle crop shape set aspect ratio to 1:1.<br></br>
      * *Default: RECTANGLE*

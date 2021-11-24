@@ -19,6 +19,24 @@ import com.canhub.cropper.CropImageView.RequestSizeOptions
  */
 open class CropImageOptions : Parcelable {
 
+    /**
+     * When library picking and image if this value is true user will be prompt with option to
+     * retrieve the image from gallery. The rule used is "image/<*>"
+     *
+     * Default value: true
+     */
+    @JvmField
+    var imageSourceIncludeGallery: Boolean
+
+    /**
+     * When library picking and image if this value is true user will be prompt with option to
+     * retrieve the image from camera(take picture).
+     *
+     * Default value: true
+     */
+    @JvmField
+    var imageSourceIncludeCamera: Boolean
+
     /** The shape of the cropping window.  */
     @JvmField
     var cropShape: CropShape
@@ -254,6 +272,8 @@ open class CropImageOptions : Parcelable {
     /** Init options with defaults.  */
     constructor() {
         val dm = Resources.getSystem().displayMetrics
+        imageSourceIncludeCamera = true
+        imageSourceIncludeGallery = true
         cropShape = CropShape.RECTANGLE
         snapRadius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 3f, dm)
         touchRadius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24f, dm)
@@ -308,6 +328,8 @@ open class CropImageOptions : Parcelable {
 
     /** Create object from parcel.  */
     protected constructor(parcel: Parcel) {
+        imageSourceIncludeCamera = parcel.readByte().toInt() != 0
+        imageSourceIncludeGallery = parcel.readByte().toInt() != 0
         cropShape = CropShape.values()[parcel.readInt()]
         snapRadius = parcel.readFloat()
         touchRadius = parcel.readFloat()
@@ -360,6 +382,8 @@ open class CropImageOptions : Parcelable {
     }
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
+        dest.writeByte((if (imageSourceIncludeCamera) 1 else 0).toByte())
+        dest.writeByte((if (imageSourceIncludeGallery) 1 else 0).toByte())
         dest.writeInt(cropShape.ordinal)
         dest.writeFloat(snapRadius)
         dest.writeFloat(touchRadius)
