@@ -4,7 +4,7 @@ ext {
     libVersion = "3.3.6"
     compileSdkVersion = 31
     targetSdkVersion = 31
-    minSdkVersion = 14
+    minSdkVersion = 16
 
     // Gradle's
     androidGradleVersion = '7.0.0'
