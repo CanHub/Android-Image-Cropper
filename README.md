@@ -46,7 +46,6 @@ Only need if you run on devices under OS10 (SDK 29)
 
  ```xml
 <manifest>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="28" />
 </manifest>
