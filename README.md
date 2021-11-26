@@ -152,7 +152,7 @@ class MainActivity {
 
 ## Extend to make a custom activity
 If you want to extend the `CropImageActivity` please be aware you will need to setup your `CropImageView`
-You can check a sample code in this project `com.canhub.cropper.sample.extend_activity.app.ExtendActivity`
+You can check a sample code in this project `com.canhub.cropper.sample.extend_activity.app.SExtendActivity`
 
 - Add `CropImageActivity` into your AndroidManifest.xml
  ```xml
@@ -166,6 +166,15 @@ override fun onCreate(savedInstanceState: Bundle?) {
     setCropImageView(binding.cropImageView)
 }
  ```
+
+### Custom dialog for image source pick
+When calling crop directly the library will prompt a dialog for the user choose between gallery or camera (If you keep both enable).
+We use the Android default AlertDialog for this. If you wanna customised it with your app theme you need to override the method `showImageSourceDialog(..)` when extending the activity _(above)_
+```kotlin 
+override fun showImageSourceDialog(openCamera: () -> Unit, openGallery: () -> Unit) {
+     super.showImageSourceDialog(openCamera, openGallery)
+}
+```
 
 ## Features
 - Built-in `CropImageActivity`.

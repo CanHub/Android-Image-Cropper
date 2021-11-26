@@ -1,15 +1,14 @@
 package com.canhub.cropper
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.BlendModeColorFilterCompat
@@ -17,8 +16,9 @@ import androidx.core.graphics.BlendModeCompat
 import com.canhub.cropper.CropImageView.CropResult
 import com.canhub.cropper.CropImageView.OnCropImageCompleteListener
 import com.canhub.cropper.CropImageView.OnSetImageUriCompleteListener
-import com.canhub.cropper.common.CommonVersionCheck
 import com.canhub.cropper.databinding.CropImageActivityBinding
+import com.canhub.cropper.utils.getUriForFile
+import java.io.File
 
 /**
  * Built-in activity for image cropping.<br></br>
@@ -32,18 +32,24 @@ open class CropImageActivity :
     /**
      * Persist URI image to crop URI if specific permissions are required
      */
-    var cropImageUri: Uri? = null
+    private var cropImageUri: Uri? = null
 
     /**
      * the options that were set for the crop image
      */
-    lateinit var cropImageOptions: CropImageOptions
-    lateinit var pickImageOptions: PickImageContractOptions
+    private lateinit var cropImageOptions: CropImageOptions
 
     /** The crop image view library widget used in the activity */
     private var cropImageView: CropImageView? = null
     private lateinit var binding: CropImageActivityBinding
-    private val pickImage = registerForActivityResult(PickImageContract()) { onPickImageResult(it) }
+    private var latestTmpUri: Uri? = null
+    private val pickImageGallery =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+            onPickImageResult(uri)
+        }
+    private val takePicture = registerForActivityResult(ActivityResultContracts.TakePicture()) {
+        if (it) onPickImageResult(latestTmpUri)
+    }
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,37 +61,23 @@ open class CropImageActivity :
         cropImageUri = bundle?.getParcelable(CropImage.CROP_IMAGE_EXTRA_SOURCE)
         cropImageOptions =
             bundle?.getParcelable(CropImage.CROP_IMAGE_EXTRA_OPTIONS) ?: CropImageOptions()
-        pickImageOptions =
-            bundle?.getParcelable(CropImage.PICK_IMAGE_SOURCE_OPTIONS) ?: PickImageContractOptions(
-            includeCamera = true
-        )
 
         if (savedInstanceState == null) {
             if (cropImageUri == null || cropImageUri == Uri.EMPTY) {
-                if (CropImage.isExplicitCameraPermissionRequired(this)) {
-                    // request permissions and handle the result in onRequestPermissionsResult()
-                    requestPermissions(
-                        arrayOf(Manifest.permission.CAMERA),
-                        CropImage.CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE
-                    )
-                } else {
-                    pickImage.launch(pickImageOptions)
+                when {
+                    cropImageOptions.imageSourceIncludeGallery &&
+                        cropImageOptions.imageSourceIncludeCamera ->
+                        showImageSourceDialog(
+                            openCamera = { openCamera() },
+                            openGallery = { pickImageGallery.launch("/image/*") },
+                        )
+                    cropImageOptions.imageSourceIncludeGallery ->
+                        pickImageGallery.launch("/image/*")
+                    cropImageOptions.imageSourceIncludeCamera ->
+                        openCamera()
+                    else -> finish()
                 }
-            } else if (
-                cropImageUri?.let {
-                    CropImage.isReadExternalStoragePermissionsRequired(this, it)
-                } == true &&
-                CommonVersionCheck.isAtLeastM23()
-            ) {
-                // request permissions and handle the result in onRequestPermissionsResult()
-                requestPermissions(
-                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                    CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE
-                )
-            } else {
-                // no permissions required or already granted, can start crop image activity
-                cropImageView?.setImageUriAsync(cropImageUri)
-            }
+            } else cropImageView?.setImageUriAsync(cropImageUri)
         }
 
         supportActionBar?.let {
@@ -96,6 +88,33 @@ open class CropImageActivity :
                     resources.getString(R.string.crop_image_activity_title)
             it.setDisplayHomeAsUpEnabled(true)
         }
+    }
+
+    private fun openCamera() {
+        getTmpFileUri().let { uri ->
+            latestTmpUri = uri
+            takePicture.launch(uri)
+        }
+    }
+
+    private fun getTmpFileUri(): Uri {
+        val tmpFile = File.createTempFile("tmp_image_file", ".png", cacheDir).apply {
+            createNewFile()
+            deleteOnExit()
+        }
+
+        return getUriForFile(this, tmpFile)
+    }
+
+    /**
+     * This method show the dialog for user source choice, it is an open function so can be override
+     * and customised with the app layout if need.
+     */
+    open fun showImageSourceDialog(openCamera: () -> Unit, openGallery: () -> Unit) {
+        AlertDialog.Builder(this)
+            .setTitle(R.string.pick_image_chooser_title)
+            .setNegativeButton(R.string.pick_image_camera) { _, _ -> openCamera() }
+            .setPositiveButton(R.string.pick_image_gallery) { _, _ -> openGallery() }
     }
 
     public override fun onStart() {
@@ -123,7 +142,8 @@ open class CropImageActivity :
         if (!cropImageOptions.allowFlipping) menu.removeItem(R.id.ic_flip_24)
 
         if (cropImageOptions.cropMenuCropButtonTitle != null) {
-            menu.findItem(R.id.crop_image_menu_crop).title = cropImageOptions.cropMenuCropButtonTitle
+            menu.findItem(R.id.crop_image_menu_crop).title =
+                cropImageOptions.cropMenuCropButtonTitle
         }
         var cropIcon: Drawable? = null
         try {
@@ -135,8 +155,16 @@ open class CropImageActivity :
             Log.w("AIC", "Failed to read menu crop drawable", e)
         }
         if (cropImageOptions.activityMenuIconColor != 0) {
-            updateMenuItemIconColor(menu, R.id.ic_rotate_left_24, cropImageOptions.activityMenuIconColor)
-            updateMenuItemIconColor(menu, R.id.ic_rotate_right_24, cropImageOptions.activityMenuIconColor)
+            updateMenuItemIconColor(
+                menu,
+                R.id.ic_rotate_left_24,
+                cropImageOptions.activityMenuIconColor
+            )
+            updateMenuItemIconColor(
+                menu,
+                R.id.ic_rotate_right_24,
+                cropImageOptions.activityMenuIconColor
+            )
             updateMenuItemIconColor(menu, R.id.ic_flip_24, cropImageOptions.activityMenuIconColor)
 
             if (cropIcon != null) {
@@ -169,51 +197,13 @@ open class CropImageActivity :
     }
 
     protected open fun onPickImageResult(resultUri: Uri?) {
-        if (resultUri == null) setResultCancel()
-        if (resultUri != null) {
-            cropImageUri = resultUri
-            // For API >= 23 we need to check specifically that we have permissions to read external
-            // storage.
-            if (cropImageUri?.let {
-                CropImage.isReadExternalStoragePermissionsRequired(this, it)
-            } == true &&
-                CommonVersionCheck.isAtLeastM23()
-            ) {
-                // request permissions and handle the result in onRequestPermissionsResult()
-                requestPermissions(
-                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                    CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE
-                )
-            } else {
-                // no permissions required or already granted, can start crop image activity
+        when (resultUri) {
+            null -> setResultCancel()
+            else -> {
+                cropImageUri = resultUri
                 cropImageView?.setImageUriAsync(cropImageUri)
             }
         }
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-        if (requestCode == CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE) {
-            if (cropImageUri != null &&
-                grantResults.isNotEmpty() &&
-                grantResults[0] == PackageManager.PERMISSION_GRANTED
-            ) {
-                // required permissions granted, start crop image activity
-                cropImageView?.setImageUriAsync(cropImageUri)
-            } else {
-                Toast
-                    .makeText(this, R.string.crop_image_activity_no_permissions, Toast.LENGTH_LONG)
-                    .show()
-                setResultCancel()
-            }
-        } else if (requestCode == CropImage.CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE) {
-            // Irrespective of whether camera permission was given or not, we show the picker
-            // The picker will not add the camera intent if permission is not available
-            pickImage.launch(pickImageOptions)
-        } else super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
     override fun onSetImageUriComplete(view: CropImageView, uri: Uri, error: Exception?) {
@@ -236,12 +226,12 @@ open class CropImageActivity :
     open fun cropImage() {
         if (cropImageOptions.noOutputImage) setResult(null, null, 1)
         else cropImageView?.croppedImageAsync(
-            cropImageOptions.outputCompressFormat,
-            cropImageOptions.outputCompressQuality,
-            cropImageOptions.outputRequestWidth,
-            cropImageOptions.outputRequestHeight,
-            cropImageOptions.outputRequestSizeOptions,
-            cropImageOptions.customOutputUri,
+            saveCompressFormat = cropImageOptions.outputCompressFormat,
+            saveCompressQuality = cropImageOptions.outputCompressQuality,
+            reqWidth = cropImageOptions.outputRequestWidth,
+            reqHeight = cropImageOptions.outputRequestHeight,
+            options = cropImageOptions.outputRequestSizeOptions,
+            customOutputUri = cropImageOptions.customOutputUri,
         )
     }
 

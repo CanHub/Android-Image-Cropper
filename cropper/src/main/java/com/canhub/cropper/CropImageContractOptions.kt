@@ -16,7 +16,6 @@ import com.canhub.cropper.CropImageView.RequestSizeOptions
 data class CropImageContractOptions @JvmOverloads constructor(
     val uri: Uri?,
     val cropImageOptions: CropImageOptions,
-    val pickImageOptions: PickImageContractOptions = PickImageContractOptions(includeCamera = true)
 ) {
 
     /**
@@ -463,14 +462,6 @@ data class CropImageContractOptions @JvmOverloads constructor(
      */
     fun setCropMenuCropButtonIcon(@DrawableRes drawableResource: Int): CropImageContractOptions {
         cropImageOptions.cropMenuCropButtonIcon = drawableResource
-        return this
-    }
-
-    /**
-     * optional, set the image picker options*/
-    fun setImagePickerContractOptions(pickImageContractOptions: PickImageContractOptions): CropImageContractOptions {
-        pickImageOptions.includeCamera = pickImageContractOptions.includeCamera
-        pickImageOptions.includeGallery = pickImageContractOptions.includeGallery
         return this
     }
 }

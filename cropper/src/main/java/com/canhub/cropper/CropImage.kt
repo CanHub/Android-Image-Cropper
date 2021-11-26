@@ -1,14 +1,10 @@
 package com.canhub.cropper
 
-import android.Manifest
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.app.Activity
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.content.pm.PackageManager.PERMISSION_GRANTED
-import android.content.pm.ResolveInfo
 import android.graphics.Bitmap
 import android.graphics.Bitmap.CompressFormat
 import android.graphics.Canvas
@@ -61,11 +57,6 @@ object CropImage {
      * The key used to pass crop image options to [CropImageActivity].
      */
     const val CROP_IMAGE_EXTRA_OPTIONS = "CROP_IMAGE_EXTRA_OPTIONS"
-
-    /**
-     * The key used to pass options for the picker of image to crop to [CropImageActivity].
-     */
-    const val PICK_IMAGE_SOURCE_OPTIONS = "PICK_IMAGE_SOURCE_OPTIONS"
 
     /**
      * The key used to pass crop image bundle data to [CropImageActivity].
@@ -124,225 +115,6 @@ object CropImage {
         canvas.drawBitmap(bitmap, 0f, 0f, paint)
         bitmap.recycle()
         return output
-    }
-
-    /**
-     * Start an activity to get image for cropping using chooser intent that will have all the
-     * available applications for the device like camera (MyCamera), gallery (Photos), store apps
-     * (Dropbox), etc.<br></br>
-     * Use "pick_image_intent_chooser_title" string resource to override pick chooser title.
-     *
-     * @param activity the activity to be used to start activity from
-     */
-    @Deprecated("use the PickImageContract ActivityResultContract instead")
-    fun startPickImageActivity(activity: Activity) {
-        activity.startActivityForResult(
-            getPickImageChooserIntent(activity), PICK_IMAGE_CHOOSER_REQUEST_CODE
-        )
-    }
-
-    /**
-     * Same as [startPickImageActivity][.startPickImageActivity] method but instead of
-     * being called and returning to an Activity, this method can be called and return to a Fragment.
-     *
-     * @param context  The Fragments context. Use getContext()
-     * @param fragment The calling Fragment to start and return the image to
-     */
-    @Deprecated("use the PickImageContract ActivityResultContract instead")
-    fun startPickImageActivity(context: Context, fragment: Fragment) {
-        fragment.startActivityForResult(
-            getPickImageChooserIntent(context), PICK_IMAGE_CHOOSER_REQUEST_CODE
-        )
-    }
-
-    /**
-     * Create a chooser intent to select the source to get image from.
-     * The source can be camera's (ACTION_IMAGE_CAPTURE) or gallery's (ACTION_GET_CONTENT).
-     * All possible sources are added to the intent chooser.
-     * Use "pick_image_intent_chooser_title" string resource to override chooser title.
-     *
-     * @param context used to access Android APIs, like content resolve, it is your
-     * activity/fragment/widget.
-     */
-    @JvmStatic
-    fun getPickImageChooserIntent(context: Context): Intent {
-        return getPickImageChooserIntent(
-            context = context,
-            title = context.getString(R.string.pick_image_intent_chooser_title),
-            options = PickImageContractOptions()
-        )
-    }
-
-    /**
-     * Create a chooser intent to select the source to get image from.
-     * The source can be camera's (ACTION_IMAGE_CAPTURE) or gallery's (ACTION_GET_CONTENT).
-     * All possible sources are added to the intent chooser.
-     *
-     * @param context          used to access Android APIs, like content resolve, it is your
-     * activity/fragment/widget.
-     * @param title            the title to use for the chooser UI
-     * @param includeDocuments if to include KitKat documents activity containing all sources
-     * @param includeCamera    if to include camera intents
-     */
-    @JvmStatic
-    fun getPickImageChooserIntent(
-        context: Context,
-        title: CharSequence?,
-        options: PickImageContractOptions
-    ): Intent {
-        val includeCamera = options.includeCamera
-        val includeGallery = options.includeGallery
-        val allIntents: MutableList<Intent> = ArrayList()
-        val packageManager = context.packageManager
-        // collect all camera intents if Camera permission is available
-        if (!isExplicitCameraPermissionRequired(context) && includeCamera) {
-            allIntents.addAll(getCameraIntents(context, packageManager))
-        }
-        if (includeGallery) {
-            allIntents.addAll(
-                getGalleryIntents(
-                    packageManager,
-                    Intent.ACTION_GET_CONTENT
-                )
-            )
-        }
-        // Create a chooser from the main  intent
-        val chooserIntent = Intent.createChooser(allIntents.removeAt(allIntents.size - 1), title)
-        // Add all other intents
-        chooserIntent.putExtra(
-            Intent.EXTRA_INITIAL_INTENTS, allIntents.toTypedArray<Parcelable>()
-        )
-        return chooserIntent
-    }
-
-    /**
-     * Get the main Camera intent for capturing image using device camera app. If the outputFileUri is
-     * null, a default Uri will be created with [.getCaptureImageOutputUri], so then
-     * you will be able to get the pictureUri using [.getPickImageResultUri].
-     * Otherwise, it is just you use the Uri passed to this method.
-     *
-     * @param context       used to access Android APIs, like content resolve, it is your
-     * activity/fragment/widget.
-     * @param outputFileUri the Uri where the picture will be placed.
-     */
-    // todo this need be public?
-    fun getCameraIntent(
-        context: Context,
-        outputFileUri: Uri?,
-    ): Intent {
-        var newOutputFileUri = outputFileUri
-        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        if (newOutputFileUri == null) {
-            newOutputFileUri = getCaptureImageOutputUriContent(context)
-        }
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, newOutputFileUri)
-        return intent
-    }
-
-    /**
-     * Get all Camera intents for capturing image using device camera apps.
-     */
-    // todo this need be public?
-    fun getCameraIntents(
-        context: Context,
-        packageManager: PackageManager,
-    ): List<Intent> {
-        val allIntents: MutableList<Intent> = ArrayList()
-        // Determine Uri of camera image to  save.
-        val outputFileUri = getCaptureImageOutputUriContent(context)
-        val captureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        val listCam = packageManager.queryIntentActivities(captureIntent, 0)
-        for (res in listCam) {
-            val intent = Intent(captureIntent)
-            intent.component = ComponentName(res.activityInfo.packageName, res.activityInfo.name)
-            intent.setPackage(res.activityInfo.packageName)
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri)
-            allIntents.add(intent)
-        }
-        // Just in case queryIntentActivities returns emptyList
-        if (allIntents.isEmpty()) allIntents.add(captureIntent)
-        return allIntents
-    }
-
-    /**
-     * Get all Gallery intents for getting image from one of the apps of the device that handle
-     * images.
-     */
-    // todo this need be public?
-    fun getGalleryIntents(
-        packageManager: PackageManager,
-        action: String?
-    ): List<Intent> {
-        val intents: MutableList<Intent> = ArrayList()
-        val galleryIntent = Intent(action)
-        galleryIntent.type = "image/*"
-        galleryIntent.addCategory(Intent.CATEGORY_OPENABLE)
-        var listGallery = packageManager.queryIntentActivities(galleryIntent, 0)
-        if (isAtLeastQ29() && listGallery.size > 2) {
-            // Workaround for the bug that only 2 items are shown in Android Q
-            // // https://issuetracker.google.com/issues/134367295
-            // Trying to pick best match items
-            listGallery.sortWith { o1: ResolveInfo, _: ResolveInfo? ->
-                val packageName = o1.activityInfo.packageName
-                if (packageName.contains("photo")) return@sortWith -1
-                if (packageName.contains("gallery")) return@sortWith -1
-                if (packageName.contains("album")) return@sortWith -1
-                if (packageName.contains("media")) return@sortWith -1
-                0
-            }
-            listGallery = listGallery.subList(0, 2)
-        }
-        for (res in listGallery) {
-            val intent = Intent(galleryIntent)
-            intent.component = ComponentName(res.activityInfo.packageName, res.activityInfo.name)
-            intent.setPackage(res.activityInfo.packageName)
-            intents.add(intent)
-        }
-        // Just in case queryIntentActivities returns emptyList
-        if (intents.isEmpty()) {
-            intents.add(galleryIntent)
-        }
-        return intents
-    }
-
-    /**
-     * Check if explicetly requesting camera permission is required.<br></br>
-     * It is required in Android Marshmellow and above if "CAMERA" permission is requested in the
-     * manifest.<br></br>
-     * See [StackOverflow
- * question](http://stackoverflow.com/questions/32789027/android-m-camera-intent-permission-bug).
-     */
-    // todo, if true, return error saying permission is needed.
-    // on settings give option to library asked permission (default true)
-    fun isExplicitCameraPermissionRequired(context: Context): Boolean = (
-        CommonVersionCheck.isAtLeastM23() &&
-            hasPermissionInManifest(context, "android.permission.CAMERA") &&
-            (context.checkSelfPermission(Manifest.permission.CAMERA) != PERMISSION_GRANTED)
-        )
-
-    /**
-     * Check if the app requests a specific permission in the manifest.
-     *
-     * @param permissionName the permission to check
-     * @return true - the permission in requested in manifest, false - not.
-     */
-    fun hasPermissionInManifest(
-        context: Context,
-        permissionName: String,
-    ): Boolean {
-        val packageName = context.packageName
-        try {
-            val packageInfo =
-                context.packageManager.getPackageInfo(packageName, PackageManager.GET_PERMISSIONS)
-            val declaredPermissions = packageInfo.requestedPermissions
-            if (declaredPermissions != null && declaredPermissions.isNotEmpty()) {
-                for (p in declaredPermissions) {
-                    if (p.equals(permissionName, ignoreCase = true)) return true
-                }
-            }
-        } catch (e: PackageManager.NameNotFoundException) {
-        }
-        return false
     }
 
     /**
@@ -424,46 +196,6 @@ object CropImage {
         uniqueName: Boolean = false
     ): String =
         getFilePathFromUri(context, getPickImageResultUriContent(context, data), uniqueName)
-
-    /**
-     * Check if the given picked image URI requires READ_EXTERNAL_STORAGE permissions.<br></br>
-     * Only relevant for API version 23 and above and not required for all URI's depends on the
-     * implementation of the app that was used for picking the image. So we just test if we can open
-     * the stream or do we get an exception when we try, Android is awesome.
-     *
-     * @param context used to access Android APIs, like content resolve, it is your
-     * activity/fragment/widget.
-     * @param uri     the result URI of image pick.
-     * @return true - required permission are not granted, false - either no need for permissions or
-     * they are granted
-     */
-    @JvmStatic
-    fun isReadExternalStoragePermissionsRequired(
-        context: Context,
-        uri: Uri,
-    ): Boolean =
-        CommonVersionCheck.isAtLeastM23() &&
-            (context.checkSelfPermission(READ_EXTERNAL_STORAGE) != PERMISSION_GRANTED) &&
-            isUriRequiresPermissions(context, uri)
-
-    /**
-     * Test if we can open the given Android URI to test if permission required error is thrown.<br></br>
-     * Only relevant for API version 23 and above.
-     *
-     * @param context used to access Android APIs, like content resolve, it is your
-     * activity/fragment/widget.
-     * @param uri     the result URI of image pick.
-     */
-    fun isUriRequiresPermissions(context: Context, uri: Uri): Boolean {
-        return try {
-            val resolver = context.contentResolver
-            val stream = resolver.openInputStream(uri)
-            stream?.close()
-            false
-        } catch (e: Exception) {
-            true
-        }
-    }
 
     /**
      * Create [ActivityBuilder] instance to open image picker for cropping and then start [ ] to crop the selected image.<br></br>
@@ -695,6 +427,7 @@ object CropImage {
          * if multi touch functionality is enabled.<br></br>
          * default: true.
          */
+        // TODO canato remove all ActivityBuilder
         fun setMultiTouchEnabled(multiTouchEnabled: Boolean): ActivityBuilder {
             cropImageOptions.multiTouchEnabled = multiTouchEnabled
             return this
