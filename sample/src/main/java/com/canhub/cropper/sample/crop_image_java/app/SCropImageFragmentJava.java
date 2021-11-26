@@ -1,9 +1,11 @@
 package com.canhub.cropper.sample.crop_image_java.app;
 
+import static android.graphics.Color.RED;
+import static android.graphics.Color.WHITE;
+
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
@@ -22,16 +24,13 @@ import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
-import com.canhub.cropper.CropImage;
 import com.canhub.cropper.CropImageContract;
 import com.canhub.cropper.CropImageContractOptions;
 import com.canhub.cropper.CropImageOptions;
 import com.canhub.cropper.CropImageView;
-import com.canhub.cropper.PickImageContract;
-import com.canhub.cropper.PickImageContractOptions;
 import com.canhub.cropper.sample.SCropResultActivity;
-import com.canhub.cropper.sample.crop_image_java.domain.SCropImageEnumDomainJava;
 import com.canhub.cropper.sample.crop_image_java.domain.SCropImageContractJava;
+import com.canhub.cropper.sample.crop_image_java.domain.SCropImageEnumDomainJava;
 import com.canhub.cropper.sample.crop_image_java.presenter.SCropImagePresenterJava;
 import com.example.croppersample.R;
 import com.example.croppersample.databinding.FragmentCameraBinding;
@@ -42,9 +41,6 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
-
-import static android.graphics.Color.RED;
-import static android.graphics.Color.WHITE;
 
 public class SCropImageFragmentJava extends Fragment implements SCropImageContractJava.View {
 
@@ -60,25 +56,8 @@ public class SCropImageFragmentJava extends Fragment implements SCropImageContra
     private final ActivityResultLauncher<String> requestPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), presenter::onPermissionResult);
 
-    private final ActivityResultLauncher<PickImageContractOptions> pickImage =
-            registerForActivityResult(new PickImageContract(), presenter::onPickImageResult);
-
-    private final ActivityResultLauncher<PickImageContractOptions> pickImageCustom =
-            registerForActivityResult(new PickImageContract() {
-
-                @Override
-                @Nullable
-                public Uri parseResult(int resultCode, @Nullable Intent intent) {
-                    if (intent != null) {
-                        Uri result = Uri.parse(CropImage.getPickImageResultUriFilePath(requireContext(), intent, false));
-                        setContext(null);
-                        return result;
-                    }
-
-                    setContext(null);
-                    return null;
-                }
-            }, presenter::onPickImageResultCustom);
+    private final ActivityResultLauncher<String> pickImage =
+            registerForActivityResult(new ActivityResultContracts.GetContent(), presenter::onPickImageResult);
 
     private final ActivityResultLauncher<CropImageContractOptions> cropImage =
             registerForActivityResult(new CropImageContract(), presenter::onCropImageResult);
@@ -109,8 +88,6 @@ public class SCropImageFragmentJava extends Fragment implements SCropImageContra
 
         binding.startPickImageActivity.setOnClickListener(v -> presenter.startPickImageActivityClicked());
 
-        binding.startActivityForResult.setOnClickListener(v -> presenter.startPickImageActivityCustomClicked());
-
         presenter.onCreate(getActivity(), getContext());
     }
 
@@ -126,20 +103,13 @@ public class SCropImageFragmentJava extends Fragment implements SCropImageContra
             case START_PICK_IMG:
                 startPickImage();
                 break;
-            case START_PICK_IMG_CUSTOM:
-                startPickImageCustom();
-                break;
             default:
                 break;
         }
     }
 
-    private void startPickImageCustom() {
-        pickImageCustom.launch(new PickImageContractOptions(true, false));
-    }
-
     private void startPickImage() {
-        pickImage.launch(new PickImageContractOptions(true, false));
+        pickImage.launch("image/*");
     }
 
     private void startCameraWithoutUri() {

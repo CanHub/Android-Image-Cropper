@@ -78,10 +78,6 @@ internal class SCropImagePresenter : SCropImageContract.Presenter {
         view?.startCropImage(CameraEnumDomain.START_PICK_IMG)
     }
 
-    override fun startPickImageActivityCustomClicked() {
-        view?.startCropImage(CameraEnumDomain.START_PICK_IMG_CUSTOM)
-    }
-
     override fun onOk() {
         view?.cameraPermissionLaunch()
     }
@@ -113,15 +109,6 @@ internal class SCropImagePresenter : SCropImageContract.Presenter {
     override fun onPickImageResult(resultUri: Uri?) {
         if (resultUri != null) {
             Log.v("Uri", resultUri.toString())
-            view?.handleCropImageResult(resultUri.toString())
-        } else {
-            view?.showErrorMessage("picking image failed")
-        }
-    }
-
-    override fun onPickImageResultCustom(resultUri: Uri?) {
-        if (resultUri != null) {
-            Log.v("File Path", resultUri.toString())
             view?.handleCropImageResult(resultUri.toString())
         } else {
             view?.showErrorMessage("picking image failed")

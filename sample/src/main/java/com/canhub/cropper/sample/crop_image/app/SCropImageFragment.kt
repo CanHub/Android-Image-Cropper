@@ -2,7 +2,6 @@ package com.canhub.cropper.sample.crop_image.app
 
 import android.Manifest
 import android.app.AlertDialog
-import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.Color.RED
@@ -17,13 +16,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
-import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
-import com.canhub.cropper.CropImage
 import com.canhub.cropper.CropImageContract
 import com.canhub.cropper.CropImageView
-import com.canhub.cropper.PickImageContract
-import com.canhub.cropper.PickImageContractOptions
 import com.canhub.cropper.common.CommonValues
 import com.canhub.cropper.common.CommonVersionCheck
 import com.canhub.cropper.options
@@ -62,24 +57,9 @@ internal class SCropImageFragment :
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean -> presenter.onPermissionResult(isGranted) }
     private val pickImage =
-        registerForActivityResult(PickImageContract()) {
+        registerForActivityResult(ActivityResultContracts.GetContent()) {
             presenter.onPickImageResult(it)
         }
-    private val pickImageCustom =
-        registerForActivityResult(
-            object : PickImageContract() {
-                override fun parseResult(resultCode: Int, intent: Intent?): Uri? {
-                    if (intent != null) {
-                        context?.let {
-                            context = null
-                            return CropImage.getPickImageResultUriFilePath(it, intent).toUri()
-                        }
-                    }
-                    context = null
-                    return null
-                }
-            }
-        ) { presenter.onPickImageResultCustom(it) }
     private val cropImage =
         registerForActivityResult(CropImageContract()) { presenter.onCropImageResult(it) }
     private val customCropImage = registerForActivityResult(CropImageContract()) {
@@ -111,9 +91,6 @@ internal class SCropImageFragment :
         binding.startPickImageActivity.setOnClickListener {
             presenter.startPickImageActivityClicked()
         }
-        binding.startActivityForResult.setOnClickListener {
-            presenter.startPickImageActivityCustomClicked()
-        }
 
         presenter.onCreate(activity, context)
     }
@@ -123,16 +100,11 @@ internal class SCropImageFragment :
             CameraEnumDomain.START_WITH_URI -> startCameraWithUri()
             CameraEnumDomain.START_WITHOUT_URI -> startCameraWithoutUri()
             CameraEnumDomain.START_PICK_IMG -> startPickImage()
-            CameraEnumDomain.START_PICK_IMG_CUSTOM -> startPickImageCustom()
         }
     }
 
-    private fun startPickImageCustom() {
-        pickImageCustom.launch(PickImageContractOptions(includeCamera = false))
-    }
-
     private fun startPickImage() {
-        pickImage.launch(PickImageContractOptions(includeCamera = false))
+        pickImage.launch("image/*")
     }
 
     private fun startCameraWithoutUri() {

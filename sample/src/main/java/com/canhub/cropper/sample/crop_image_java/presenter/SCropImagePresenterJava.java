@@ -18,9 +18,11 @@ import com.canhub.cropper.common.CommonVersionCheck;
 import com.canhub.cropper.sample.crop_image_java.domain.SCropImageEnumDomainJava;
 import com.canhub.cropper.sample.crop_image_java.domain.SCropImageContractJava;
 
+import java.util.Objects;
+
 public class SCropImagePresenterJava implements SCropImageContractJava.Presenter {
     private SCropImageContractJava.View view = null;
-    private boolean minVersion = CommonVersionCheck.INSTANCE.isAtLeastM23();
+    private final boolean minVersion = CommonVersionCheck.INSTANCE.isAtLeastM23();
     private boolean request = false;
     private boolean hasSystemFeature = false;
     private boolean selfPermission = false;
@@ -91,12 +93,6 @@ public class SCropImagePresenterJava implements SCropImageContractJava.Presenter
     }
 
     @Override
-    public void startPickImageActivityCustomClicked() {
-        assert view != null;
-        view.startCropImage(SCropImageEnumDomainJava.START_PICK_IMG_CUSTOM);
-    }
-
-    @Override
     public void onOk() {
         assert view != null;
         view.cameraPermissionLaunch();
@@ -111,7 +107,9 @@ public class SCropImagePresenterJava implements SCropImageContractJava.Presenter
     @Override
     public void onCropImageResult(@NonNull CropImageView.CropResult result) {
         if (result.isSuccessful()) {
-            view.handleCropImageResult(result.getUriContent().toString().replace("file:", ""));
+            view.handleCropImageResult(Objects.requireNonNull(result.getUriContent())
+                    .toString()
+                    .replace("file:", ""));
         } else if (result.equals(CropImage.CancelledResult.INSTANCE)) {
             view.showErrorMessage("cropping image was cancelled by the user");
         } else {
@@ -123,16 +121,6 @@ public class SCropImagePresenterJava implements SCropImageContractJava.Presenter
     public void onPickImageResult(@Nullable Uri resultUri) {
         if (resultUri != null) {
             Log.v("Uri", resultUri.toString());
-            view.handleCropImageResult(resultUri.toString());
-        } else {
-            view.showErrorMessage("picking image failed");
-        }
-    }
-
-    @Override
-    public void onPickImageResultCustom(@Nullable Uri resultUri) {
-        if (resultUri != null) {
-            Log.v("File Path", resultUri.toString());
             view.handleCropImageResult(resultUri.toString());
         } else {
             view.showErrorMessage("picking image failed");

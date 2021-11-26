@@ -1,7 +1,5 @@
 package com.canhub.cropper.sample.crop_image_view.app
 
-import android.Manifest
-import android.content.pm.PackageManager
 import android.graphics.Rect
 import android.net.Uri
 import android.os.Bundle
@@ -13,14 +11,13 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.canhub.cropper.CropImage
 import com.canhub.cropper.CropImageView
 import com.canhub.cropper.CropImageView.CropResult
 import com.canhub.cropper.CropImageView.OnCropImageCompleteListener
 import com.canhub.cropper.CropImageView.OnSetImageUriCompleteListener
-import com.canhub.cropper.PickImageContract
-import com.canhub.cropper.PickImageContractOptions
 import com.canhub.cropper.sample.SCropResultActivity
 import com.canhub.cropper.sample.crop_image_view.domain.SCropImageViewContract
 import com.canhub.cropper.sample.crop_image_view.presenter.SCropImageViewPresenter
@@ -44,20 +41,10 @@ internal class SCropImageViewFragment :
     private lateinit var binding: FragmentCropImageViewBinding
     private val presenter = SCropImageViewPresenter()
     private var options: SOptionsDomain? = null
-    private var cropImageUri: Uri? = null
-
-    private val openPicker = registerForActivityResult(PickImageContract()) { imageUri ->
-        if (imageUri != null && CropImage.isReadExternalStoragePermissionsRequired(requireContext(), imageUri)
-        ) {
-            cropImageUri = imageUri
-            requestPermissions(
-                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE
-            )
-        } else {
-            binding.cropImageView.setImageUriAsync(imageUri)
+    private val openPicker =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+            binding.cropImageView.setImageUriAsync(uri)
         }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -86,14 +73,7 @@ internal class SCropImageViewFragment :
         }
 
         binding.searchImage.setOnClickListener {
-            context?.let { ctx ->
-                if (CropImage.isExplicitCameraPermissionRequired(ctx)) {
-                    requestPermissions(
-                        arrayOf(Manifest.permission.CAMERA),
-                        CropImage.CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE
-                    )
-                } else openPicker.launch(PickImageContractOptions(includeCamera = true))
-            }
+            openPicker.launch("image/*")
         }
 
         binding.reset.setOnClickListener {
@@ -180,34 +160,6 @@ internal class SCropImageViewFragment :
 
     override fun onCropImageComplete(view: CropImageView, result: CropResult) {
         handleCropResult(result)
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-        if (requestCode == CropImage.CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                openPicker.launch(PickImageContractOptions(includeCamera = true))
-            } else {
-                Toast
-                    .makeText(context, "Cancelling, permissions not granted", Toast.LENGTH_LONG)
-                    .show()
-            }
-        }
-        if (requestCode == CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE) {
-            if (cropImageUri != null &&
-                grantResults.isNotEmpty() &&
-                grantResults[0] == PackageManager.PERMISSION_GRANTED
-            ) {
-                binding.cropImageView.setImageUriAsync(cropImageUri)
-            } else {
-                Toast
-                    .makeText(context, "Cancelling, permissions not granted", Toast.LENGTH_LONG)
-                    .show()
-            }
-        }
     }
 
     private fun handleCropResult(result: CropResult?) {

@@ -26,11 +26,9 @@ internal interface SCropImageContract {
         fun onCropImageResult(result: CropImageView.CropResult)
         fun onCustomCropImageResult(customUri: Uri?)
         fun onPickImageResult(resultUri: Uri?)
-        fun onPickImageResultCustom(resultUri: Uri?)
         fun onTakePictureResult(success: Boolean)
         fun startWithUriClicked()
         fun startWithoutUriClicked()
         fun startPickImageActivityClicked()
-        fun startPickImageActivityCustomClicked()
     }
 }
