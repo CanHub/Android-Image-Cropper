@@ -7,6 +7,6 @@
     <string name="ic_flip_24">Espelhar</string>
     <string name="ic_flip_24_horizontally">Espelhar na horizontal</string>
     <string name="ic_flip_24_vertically">Espelhar na vertifcal</string>
-    <string name="pick_image_intent_chooser_title">Escolher foto a partir de</string>
+    <string name="pick_image_chooser_title">Escolher foto a partir de</string>
     <string name="crop_image_activity_no_permissions">Cancelando, permissões negadas mano</string>
 </resources>

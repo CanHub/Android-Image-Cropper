@@ -7,6 +7,6 @@
     <string name="ic_flip_24">پلٹائیں</string>
     <string name="ic_flip_24_horizontally">افقی پلٹائیں</string>
     <string name="ic_flip_24_vertically">عمودی طور پر پلٹائیں</string>
-    <string name="pick_image_intent_chooser_title">ذریعہ منتخب کریں</string>
+    <string name="pick_image_chooser_title">ذریعہ منتخب کریں</string>
     <string name="crop_image_activity_no_permissions">منسوخ کرنا، ضروری اجازت نہیں دی جاتی ہیں</string>
 </resources>

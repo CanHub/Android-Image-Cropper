@@ -9,7 +9,7 @@
     <string name="ic_flip_24_horizontally">좌우반전</string>
     <string name="ic_flip_24_vertically">상하반전</string>
 
-    <string name="pick_image_intent_chooser_title">이미지 선택</string>
+    <string name="pick_image_chooser_title">이미지 선택</string>
 
     <string name="crop_image_activity_no_permissions">필수 권한이 없어서 취소합니다.</string>
 

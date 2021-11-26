@@ -9,7 +9,7 @@
     <string name="ic_flip_24_horizontally">Vend vannrett</string>
     <string name="ic_flip_24_vertically">Vend loddrett</string>
 
-    <string name="pick_image_intent_chooser_title">Velg kilde</string>
+    <string name="pick_image_chooser_title">Velg kilde</string>
 
     <string name="crop_image_activity_no_permissions">Avbryter, nødvendige tillatelser er ikke gitt</string>
 

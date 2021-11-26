@@ -9,7 +9,7 @@
     <string name="ic_flip_24_horizontally">הפוך אופקית</string>
     <string name="ic_flip_24_vertically">הפוך אנכית</string>
 
-    <string name="pick_image_intent_chooser_title">בחר מקור</string>
+    <string name="pick_image_chooser_title">בחר מקור</string>
 
     <string name="crop_image_activity_no_permissions">ההרשאות הנדרשות חסרות, מבטל</string>
 

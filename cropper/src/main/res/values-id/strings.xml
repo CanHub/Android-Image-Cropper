@@ -7,6 +7,6 @@
     <string name="ic_flip_24">Balik</string>
     <string name="ic_flip_24_horizontally">Balik secara horizontal</string>
     <string name="ic_flip_24_vertically">Balik secara vertikal</string>
-    <string name="pick_image_intent_chooser_title">Pilih sumber</string>
+    <string name="pick_image_chooser_title">Pilih sumber</string>
     <string name="crop_image_activity_no_permissions">Membatalkan, tidak mendapatkan izin yang diperlukan</string>
 </resources>

@@ -9,7 +9,7 @@
     <string name="ic_flip_24_horizontally">Horizontaal spiegelen</string>
     <string name="ic_flip_24_vertically">Verticaal spiegelen</string>
 
-    <string name="pick_image_intent_chooser_title">Bron selecteren</string>
+    <string name="pick_image_chooser_title">Bron selecteren</string>
 
     <string name="crop_image_activity_no_permissions">Wordt geannuleerd, vereiste machtigingen zijn niet toegekend</string>
 
