@@ -51,17 +51,11 @@ Only need if you run on devices under OS10 (SDK 29)
 </manifest>
  ```
 
-### Step 4. Add this line to your Proguard config file
-
-```
--keep class androidx.appcompat.widget.** { *; }
-```
-
-### Step 5. Set source compatibility version to Java 8
+### Step 4. Set source compatibility version to Java 8
 
 - Go to app level `build.gradle` file
 
-- Add this line inside ```android``` in build.gradle
+- Add this line inside ```android``` in build.gradle (Android Gradle Plugin < 4.2)
 	```gradle
 	compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

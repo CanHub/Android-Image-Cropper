@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Changed
 - `minSdkVersion = 16`, previous versions have been deprecated by Google.
 
+## [3.3.6] - 05/11/21
 ### Added
 - Added option to enable users specify image source [#226](https://github.com/CanHub/Android-Image-Cropper/issues/226)
 
@@ -23,6 +24,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - Pick Image, now the library will handle this without expose the contract [#271](https://github.com/CanHub/Android-Image-Cropper/issues/271)
 - Need for `READ_EXTERNAL_STORAGE` permission [#271](https://github.com/CanHub/Android-Image-Cropper/issues/271)
 - Previous deprecated `ActivityBuilder`, `startPickImageActivity`, `getActivityResult` and `onActivityResult` [#145](https://github.com/CanHub/Android-Image-Cropper/issues/145)
+- Removed ProGuard rule from ReadMe [#257](https://github.com/CanHub/Android-Image-Cropper/issues/257)
+- Removed unused dependencies and settings from Gradle files [#265](https://github.com/CanHub/Android-Image-Cropper/issues/265)
 
 ## [3.3.5] - 07/09/21
 ### Fixed

@@ -25,11 +25,11 @@ afterEvaluate {
 }
 
 android {
-    compileSdkVersion rootProject.compileSdkVersion
+    compileSdk rootProject.compileSdkVersion
 
     defaultConfig {
-        minSdkVersion rootProject.minSdkVersion
-        targetSdkVersion rootProject.targetSdkVersion
+        minSdk rootProject.minSdkVersion
+        targetSdk rootProject.targetSdkVersion
         versionCode 1
         versionName rootProject.libVersion
     }
@@ -61,9 +61,6 @@ dependencies {
     implementation "androidx.exifinterface:exifinterface:$androidXExifVersion"
     implementation "androidx.core:core-ktx:$androidXCoreKtxVersion"
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$androidXLifeCycleVersion"
-
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
 
@@ -71,7 +68,5 @@ dependencies {
     testImplementation "androidx.test.ext:junit:$androidXJunitVersion"
     testImplementation "androidx.test:core:$androidXTestVersion"
     testImplementation "androidx.test:runner:$androidXTestVersion"
-    debugImplementation "androidx.fragment:fragment-testing:$androidXFragmentVersion"
-    testImplementation "org.robolectric:robolectric:$robolectricVersion"
     testImplementation "io.mockk:mockk:$mockkVersion"
 }

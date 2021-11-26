@@ -23,16 +23,11 @@ ext {
     androidXAppCompatVersion = '1.3.1'
     androidXExifVersion = '1.3.3'
     androidXCoreKtxVersion = '1.6.0'
-    androidXLifeCycleVersion = '2.3.1'
     androidXJunitVersion = '1.1.3'
-    androidXFragmentVersion = '1.3.5'
     androidXTestVersion = '1.4.0' // when update to android 12, please uncomment PickImageContractTest && CropImageContractTest
 
     // JUnit
     junitVersion = '4.13.2'
-
-    // Robolectric
-    robolectricVersion = '4.5.1'
 
     // Mockk
     mockkVersion = '1.12.0'
