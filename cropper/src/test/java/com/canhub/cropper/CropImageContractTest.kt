@@ -174,7 +174,6 @@ package com.canhub.cropper
 //        // THEN
 //        assertEquals(expectedClassName, cropImageIntent?.component?.className)
 //        assertEquals(expectedSource, bundle?.getParcelable(CropImage.CROP_IMAGE_EXTRA_SOURCE))
-//        assertEquals(options.options, bundle?.getParcelable(CropImage.CROP_IMAGE_EXTRA_OPTIONS))
 //    }
 //
 //    @Test

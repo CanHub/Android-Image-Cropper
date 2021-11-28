@@ -20,10 +20,6 @@ import com.canhub.cropper.databinding.CropImageActivityBinding
 import com.canhub.cropper.utils.getUriForFile
 import java.io.File
 
-/**
- * Built-in activity for image cropping.<br></br>
- * Use [CropImage.activity] to create a builder to start this activity.
- */
 open class CropImageActivity :
     AppCompatActivity(),
     OnSetImageUriCompleteListener,
@@ -69,10 +65,10 @@ open class CropImageActivity :
                         cropImageOptions.imageSourceIncludeCamera ->
                         showImageSourceDialog(
                             openCamera = { openCamera() },
-                            openGallery = { pickImageGallery.launch("/image/*") },
+                            openGallery = { pickImageGallery.launch("image/*") },
                         )
                     cropImageOptions.imageSourceIncludeGallery ->
-                        pickImageGallery.launch("/image/*")
+                        pickImageGallery.launch("image/*")
                     cropImageOptions.imageSourceIncludeCamera ->
                         openCamera()
                     else -> finish()
@@ -111,10 +107,12 @@ open class CropImageActivity :
      * and customised with the app layout if need.
      */
     open fun showImageSourceDialog(openCamera: () -> Unit, openGallery: () -> Unit) {
+        // TODO improve layout
         AlertDialog.Builder(this)
             .setTitle(R.string.pick_image_chooser_title)
             .setNegativeButton(R.string.pick_image_camera) { _, _ -> openCamera() }
             .setPositiveButton(R.string.pick_image_gallery) { _, _ -> openGallery() }
+            .show()
     }
 
     public override fun onStart() {

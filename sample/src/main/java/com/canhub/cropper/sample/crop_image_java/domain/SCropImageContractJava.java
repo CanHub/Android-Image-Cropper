@@ -12,42 +12,16 @@ import com.canhub.cropper.CropImageView;
 public interface SCropImageContractJava {
 
     interface View {
-        void startCropImage(SCropImageEnumDomainJava option);
-
         void showErrorMessage(String message);
-
-        void startTakePicture();
-
-        void cameraPermissionLaunch();
-
-        void showDialog();
-
         void handleCropImageResult(String uri);
+        void startCameraWithUri();
     }
 
     interface Presenter {
         void bind(View view);
-
         void unbind();
-
-        void onPermissionResult(boolean granted);
-
         void onCreate(FragmentActivity activity, Context context);
-
-        void onOk();
-
-        void onCancel();
-
         void onCropImageResult(@NonNull CropImageView.CropResult result);
-
-        void onPickImageResult(@Nullable Uri resultUri);
-
         void onTakePictureResult(boolean success);
-
-        void startWithUriClicked();
-
-        void startWithoutUriClicked();
-
-        void startPickImageActivityClicked();
     }
 }

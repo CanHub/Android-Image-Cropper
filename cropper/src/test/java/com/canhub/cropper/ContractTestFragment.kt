@@ -16,19 +16,11 @@ class ContractTestFragment(
         this.cropResult = result
     }
 
-    val pickImage = registerForActivityResult(PickImageContract(), registry) { result ->
-        this.pickResult = result
-    }
-
     fun cropImage(input: CropImageContractOptions) {
         cropImage.launch(input)
     }
 
     fun cropImageIntent(input: CropImageContractOptions): Intent {
         return cropImage.contract.createIntent(requireContext(), input)
-    }
-
-    fun pickImageIntent(input: PickImageContractOptions): Intent {
-        return pickImage.contract.createIntent(requireContext(), input)
     }
 }

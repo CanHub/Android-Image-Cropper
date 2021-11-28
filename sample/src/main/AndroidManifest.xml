@@ -23,14 +23,5 @@
             android:name="com.canhub.cropper.sample.extend_activity.app.SExtendActivity"
             android:theme="@style/Theme.SampleNoActionBar" />
 
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_file_paths" />
-        </provider>
     </application>
 </manifest>
