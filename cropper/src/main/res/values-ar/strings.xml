@@ -9,7 +9,7 @@
     <string name="ic_flip_24_horizontally">اقلب أفقيًا</string>
     <string name="ic_flip_24_vertically">اقلب رأسيًا</string>
 
-    <string name="pick_image_intent_chooser_title">اختر مصدرًا</string>
+    <string name="pick_image_chooser_title">اختر مصدرًا</string>
 
     <string name="crop_image_activity_no_permissions">إلغاء؛ الأذونات المطلوبة غير ممنوحة</string>
 

@@ -9,7 +9,7 @@
     <string name="ic_flip_24_horizontally">Vänd horisontellt</string>
     <string name="ic_flip_24_vertically">Vänd vertikalt</string>
 
-    <string name="pick_image_intent_chooser_title">Välj bild</string>
+    <string name="pick_image_chooser_title">Välj bild</string>
 
     <string name="crop_image_activity_no_permissions">Avbryter, nödvändiga behörigheter beviljas inte</string>
 

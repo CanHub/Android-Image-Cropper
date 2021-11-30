@@ -29,6 +29,6 @@ Path: `.idea/codeStyles/` Please never change anything inside this folders
 - After changes you can run `./gradlew ktlintFormat` or the shortcuts in your touched files.
 
 ### General code library rules
-- We do not use reflection without need, so avoid any `::` kotlint reflection without need.
-- Documentation should alwways reflect the latest and best way of using the library, if is not let's fix.
+- We do not use reflection without need, so avoid any `::` kotlin reflection without need.
+- Documentation should always reflect the latest and best way of using the library, if is not let's fix.
 - For tests we use GIVEN/WHEN/THEN pattern

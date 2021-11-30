@@ -9,7 +9,7 @@
     <string name="ic_flip_24_horizontally">horizontal spiegeln</string>
     <string name="ic_flip_24_vertically">vertikal spiegeln</string>
 
-    <string name="pick_image_intent_chooser_title">Quelle wählen</string>
+    <string name="pick_image_chooser_title">Quelle wählen</string>
 
     <string name="crop_image_activity_no_permissions">Vorgang wird abgebrochen, benötigte Berechtigungen wurden nicht erteilt.</string>
 

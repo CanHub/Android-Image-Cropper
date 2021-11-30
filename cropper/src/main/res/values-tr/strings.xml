@@ -7,6 +7,6 @@
     <string name="ic_flip_24">çevir</string>
     <string name="ic_flip_24_horizontally">Yatay olarak çevir</string>
     <string name="ic_flip_24_vertically">Dikey olarak çevir</string>
-    <string name="pick_image_intent_chooser_title">Kaynağı seçin</string>
+    <string name="pick_image_chooser_title">Kaynağı seçin</string>
     <string name="crop_image_activity_no_permissions">İptal ediliyor, gerekli izinler verilmiyor</string>
 </resources>

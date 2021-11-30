@@ -81,8 +81,10 @@
     <string name="cancel">cancel</string>
     <string name="missing_camera_permission_title">Camera Permission Need</string>
     <string name="missing_camera_permission_body">We need camera permission to take image and crop it</string>
-    <string name="startWithUri_text">Outside camera and start(uri)</string>
-    <string name="startWithoutUri_text">Library camera, start(), custom option</string>
+    <string name="takePictureBeforeCallLibraryWithUri_text">Take camera picture before calling library with uri</string>
+    <string name="callLibraryWithoutUri_text">Call library directly without uri</string>
+    <string name="callLibraryWithoutUriCameraOnly_text">Call library directly without uri. Camera only</string>
+    <string name="callLibraryWithoutUriGalleryOnly_text">Call library directly without uri. Gallery only</string>
     <string name="startPickImageActivity_text">Library show pick option, startPickImageActivity</string>
     <string name="startActivityForResult_text">Custom selector title, include documents, custom requestCode</string>
     <string name="save">Save</string>

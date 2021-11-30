@@ -7,6 +7,6 @@
     <string name="ic_flip_24">फ्लिप</string>
     <string name="ic_flip_24_horizontally">क्षैतिज फ्लिप</string>
     <string name="ic_flip_24_vertically">लंबवत फ्लिप करें</string>
-    <string name="pick_image_intent_chooser_title">सोर्स चुनें</string>
+    <string name="pick_image_chooser_title">सोर्स चुनें</string>
     <string name="crop_image_activity_no_permissions">रद्द करना, आवश्यक अनुमतियां नहीं दी गई हैं</string>
 </resources>

@@ -7,6 +7,6 @@
     <string name="ic_flip_24">Pööra ümber</string>
     <string name="ic_flip_24_horizontally">Peegelda horisontaalselt</string>
     <string name="ic_flip_24_vertically">Peegelda vertikaalselt</string>
-    <string name="pick_image_intent_chooser_title">Valige allikas</string>
+    <string name="pick_image_chooser_title">Valige allikas</string>
     <string name="crop_image_activity_no_permissions">Tühistamine, nõutavaid õiguseid ei antud</string>
 </resources>

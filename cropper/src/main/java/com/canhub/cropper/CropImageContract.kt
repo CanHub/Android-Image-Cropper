@@ -24,7 +24,6 @@ class CropImageContract :
             val bundle = Bundle()
             bundle.putParcelable(CropImage.CROP_IMAGE_EXTRA_SOURCE, input.uri)
             bundle.putParcelable(CropImage.CROP_IMAGE_EXTRA_OPTIONS, input.cropImageOptions)
-            bundle.putParcelable(CropImage.PICK_IMAGE_SOURCE_OPTIONS, input.pickImageOptions)
             putExtra(CropImage.CROP_IMAGE_EXTRA_BUNDLE, bundle)
         }
     }
@@ -34,10 +33,9 @@ class CropImageContract :
         intent: Intent?
     ): CropImageView.CropResult {
         val result = intent?.getParcelableExtra<Parcelable>(CropImage.CROP_IMAGE_EXTRA_RESULT) as? CropImage.ActivityResult?
-        return if (result == null || resultCode == Activity.RESULT_CANCELED) {
+
+        return if (result == null || resultCode == Activity.RESULT_CANCELED)
             CropImage.CancelledResult
-        } else {
-            result
-        }
+        else result
     }
 }

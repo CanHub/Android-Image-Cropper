@@ -9,7 +9,7 @@
     <string name="ic_flip_24_horizontally">Překlopit vodorovně</string>
     <string name="ic_flip_24_vertically">Překlopit svisle</string>
 
-    <string name="pick_image_intent_chooser_title">Vybrat zdroj</string>
+    <string name="pick_image_chooser_title">Vybrat zdroj</string>
 
     <string name="crop_image_activity_no_permissions">Probíhá storno, požadovaná povolení nejsou udělena</string>
 

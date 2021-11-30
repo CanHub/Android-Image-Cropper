@@ -7,6 +7,6 @@
     <string name="ic_flip_24">Flip</string>
     <string name="ic_flip_24_horizontally">Flip melintang</string>
     <string name="ic_flip_24_vertically">Flip menegak</string>
-    <string name="pick_image_intent_chooser_title">Pilih sumber</string>
+    <string name="pick_image_chooser_title">Pilih sumber</string>
     <string name="crop_image_activity_no_permissions">Membatal, tidak mendapat kebenaran yang diperlukan</string>
 </resources>
