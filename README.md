@@ -168,8 +168,8 @@ override fun onCreate(savedInstanceState: Bundle?) {
 When calling crop directly the library will prompt a dialog for the user choose between gallery or camera (If you keep both enable).
 We use the Android default AlertDialog for this. If you wanna customised it with your app theme you need to override the method `showImageSourceDialog(..)` when extending the activity _(above)_
 ```kotlin 
-override fun showImageSourceDialog(openCamera: () -> Unit, openGallery: () -> Unit) {
-     super.showImageSourceDialog(openCamera, openGallery)
+override fun showImageSourceDialog(openSource: (Source) -> Unit) {
+     super.showImageSourceDialog(openCamera)
 }
 ```
 

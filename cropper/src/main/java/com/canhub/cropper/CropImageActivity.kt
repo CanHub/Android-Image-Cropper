@@ -63,10 +63,7 @@ open class CropImageActivity :
                 when {
                     cropImageOptions.imageSourceIncludeGallery &&
                         cropImageOptions.imageSourceIncludeCamera ->
-                        showImageSourceDialog(
-                            openCamera = { openCamera() },
-                            openGallery = { pickImageGallery.launch("image/*") },
-                        )
+                        showImageSourceDialog(::openSource)
                     cropImageOptions.imageSourceIncludeGallery ->
                         pickImageGallery.launch("image/*")
                     cropImageOptions.imageSourceIncludeCamera ->
@@ -83,6 +80,13 @@ open class CropImageActivity :
                 else
                     resources.getString(R.string.crop_image_activity_title)
             it.setDisplayHomeAsUpEnabled(true)
+        }
+    }
+
+    private fun openSource(source: Source) {
+        when (source) {
+            Source.CAMERA -> openCamera()
+            Source.GALLERY -> pickImageGallery.launch("image/*")
         }
     }
 
@@ -106,12 +110,15 @@ open class CropImageActivity :
      * This method show the dialog for user source choice, it is an open function so can be override
      * and customised with the app layout if need.
      */
-    open fun showImageSourceDialog(openCamera: () -> Unit, openGallery: () -> Unit) {
-        // TODO improve layout
+    open fun showImageSourceDialog(openSource: (Source) -> Unit) {
         AlertDialog.Builder(this)
             .setTitle(R.string.pick_image_chooser_title)
-            .setNegativeButton(R.string.pick_image_camera) { _, _ -> openCamera() }
-            .setPositiveButton(R.string.pick_image_gallery) { _, _ -> openGallery() }
+            .setItems(
+                arrayOf(
+                    getString(R.string.pick_image_camera),
+                    getString(R.string.pick_image_gallery),
+                )
+            ) { _, position -> openSource(if (position == 0) Source.CAMERA else Source.GALLERY) }
             .show()
     }
 
@@ -209,7 +216,7 @@ open class CropImageActivity :
             if (cropImageOptions.initialCropWindowRectangle != null)
                 cropImageView?.cropRect = cropImageOptions.initialCropWindowRectangle
 
-            if (cropImageOptions.initialRotation > -1)
+            if (cropImageOptions.initialRotation > 0)
                 cropImageView?.rotatedDegrees = cropImageOptions.initialRotation
         } else setResult(null, error, 1)
     }
@@ -309,4 +316,6 @@ open class CropImageActivity :
             }
         }
     }
+
+    enum class Source { CAMERA, GALLERY }
 }

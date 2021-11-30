@@ -49,9 +49,9 @@ internal class SExtendActivity : CropImageActivity(), SExtendContract.View {
         setCropImageView(binding.cropImageView)
     }
 
-    override fun showImageSourceDialog(openCamera: () -> Unit, openGallery: () -> Unit) {
+    override fun showImageSourceDialog(openSource: (Source) -> Unit) {
         // Override this if you wanna a custom dialog layout
-        super.showImageSourceDialog(openCamera, openGallery)
+        super.showImageSourceDialog(openSource)
     }
 
     override fun setContentView(view: View) {
