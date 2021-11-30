@@ -9,14 +9,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - `Fixed` for any bug fixes.
 - `Security` in case of vulnerabilities.
 
-## [unreleased 4.0.0] - 28/11/21
+## [4.0.0] - 30/11/21
 ### Fixed
 - Issue where some devices based on MIUI would not retrieve image from gallery [#253](https://github.com/CanHub/Android-Image-Cropper/issues/253)
 
 ### Changed
 - `minSdkVersion = 16`, previous versions have been deprecated by Google.
 
-## [3.3.6] - 05/11/21
 ### Added
 - Added option to enable users specify image source [#226](https://github.com/CanHub/Android-Image-Cropper/issues/226)
 
