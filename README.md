@@ -51,19 +51,22 @@ Only need if you run on devices under OS10 (SDK 29)
 </manifest>
  ```
 
-### Step 4. Set source compatibility version to Java 8
+### Step 4. Set source compatibility version to Java 11
+- The library is up to date with the latest releases, if you are not using Java 11 yet please check the release page for previous working versions.
 
 - Go to app level `build.gradle` file
-
-- Add this line inside ```android``` in build.gradle (Android Gradle Plugin < 4.2)
+- Add this line inside ```android``` in build.gradle
 	```gradle
 	compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+ 
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_11.toString()
     }
 	```
-	
-- This will set the java version to 8
+ - This expects Gradle 7.0+
 
 # Using the Library
 There is 3 ways of using the library:
