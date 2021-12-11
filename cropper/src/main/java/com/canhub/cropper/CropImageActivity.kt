@@ -44,7 +44,7 @@ open class CropImageActivity :
             onPickImageResult(uri)
         }
     private val takePicture = registerForActivityResult(ActivityResultContracts.TakePicture()) {
-        if (it) onPickImageResult(latestTmpUri)
+        if (it) onPickImageResult(latestTmpUri) else onPickImageResult(null)
     }
 
     public override fun onCreate(savedInstanceState: Bundle?) {
