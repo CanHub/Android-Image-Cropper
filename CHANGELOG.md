@@ -9,9 +9,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - `Fixed` for any bug fixes.
 - `Security` in case of vulnerabilities.
 
-## [4.0.1] - 13/12/21
+## [4.0.1] - unreleased
 ### Fixed
-- Handle a case where TakePictureContarct returns false or null .In this case ,back button should redirect us to the main screen instead of CropActivity. 
+- When TakePictureContract returns false or null return null result.  [#287](https://github.com/CanHub/Android-Image-Cropper/issues/287)
 
 
 ## [4.0.0] - 30/11/21
