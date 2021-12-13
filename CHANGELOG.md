@@ -9,6 +9,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - `Fixed` for any bug fixes.
 - `Security` in case of vulnerabilities.
 
+## [4.0.1] - unreleased
+### Fixed
+- When TakePictureContract returns false or null return null result.  [#287](https://github.com/CanHub/Android-Image-Cropper/issues/287)
+
+
 ## [4.0.0] - 30/11/21
 ### Fixed
 - Issue where some devices based on MIUI would not retrieve image from gallery [#253](https://github.com/CanHub/Android-Image-Cropper/issues/253)
