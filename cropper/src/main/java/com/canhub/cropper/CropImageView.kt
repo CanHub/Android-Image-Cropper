@@ -18,11 +18,13 @@ import android.view.LayoutInflater
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.ProgressBar
+import androidx.annotation.WorkerThread
 import androidx.core.util.component1
 import androidx.core.util.component2
 import androidx.exifinterface.media.ExifInterface
 import com.canhub.cropper.CropOverlayView.CropWindowChangeListener
 import com.canhub.cropper.utils.getFilePathFromUri
+import java.io.File
 import java.lang.ref.WeakReference
 import java.util.UUID
 import kotlin.math.max
@@ -131,6 +133,9 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
 
     /** callback to be invoked when image async loading is complete.  */
     private var mOnSetImageUriCompleteListener: OnSetImageUriCompleteListener? = null
+
+    /** callback to be invoked when crop window animates  */
+    private var mOnCropImageAnimationUpdateListener: OnCropImageAnimationUpdateListener? = null
 
     /** callback to be invoked when image async cropping is complete.  */
     private var mOnCropImageCompleteListener: OnCropImageCompleteListener? = null
@@ -468,8 +473,14 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
      *
      * @return a Rect instance containing cropped area boundaries of the source Bitmap
      */
-    val cropWindowRect: RectF?
+    var cropWindowRect: RectF? = null
         get() = mCropOverlayView?.cropWindowRect // Get crop window position relative to the displayed image.
+        set(value) {
+            if (value != null) {
+                mCropOverlayView?.cropWindowRect = value
+                field = value
+            }
+        }
 
     /**
      * Gets the 4 points of crop window's position relative to the source Bitmap (not the image
@@ -547,10 +558,17 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
      * @param options the resize method to use, see its documentation
      * @return a new Bitmap representing the cropped image
      */
-    fun getCroppedImage(reqWidth: Int, reqHeight: Int, options: RequestSizeOptions): Bitmap? {
+    fun getCroppedImage(
+        reqWidth: Int,
+        reqHeight: Int,
+        options: RequestSizeOptions,
+        clearAnimation: Boolean = true
+    ): Bitmap? {
         var croppedBitmap: Bitmap? = null
         if (originalBitmap != null) {
-            imageView.clearAnimation()
+            if (clearAnimation) {
+                imageView.clearAnimation()
+            }
             val newReqWidth = if (options != RequestSizeOptions.NONE) reqWidth else 0
             val newReqHeight = if (options != RequestSizeOptions.NONE) reqHeight else 0
             croppedBitmap = if (imageUri != null &&
@@ -593,6 +611,24 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
                 BitmapUtils.resizeBitmap(croppedBitmap, newReqWidth, newReqHeight, options)
         }
         return croppedBitmap
+    }
+
+    /**
+     * saves currently cropped bitmap into target file
+     */
+    @WorkerThread
+    fun saveCroppedImageBlocking(file: File): File {
+        val bitmap = getCroppedImage(
+            reqWidth = 0,
+            reqHeight = 0,
+            options = RequestSizeOptions.NONE,
+            clearAnimation = false
+        )
+        val uri = Uri.fromFile(file)
+        val context = context.applicationContext
+        val outputStream = context.contentResolver.openOutputStream(uri)
+        bitmap?.compress(CompressFormat.JPEG, 90, outputStream)
+        return file
     }
 
     /**
@@ -645,6 +681,11 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
      */
     fun setOnSetImageUriCompleteListener(listener: OnSetImageUriCompleteListener?) {
         mOnSetImageUriCompleteListener = listener
+    }
+
+    /** Set the callback to be invoked when crop window is animating */
+    fun setOnCropImageAnimationUpdateListener(listener: OnCropImageAnimationUpdateListener?) {
+        mOnCropImageAnimationUpdateListener = listener
     }
 
     /**
@@ -1356,7 +1397,8 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
             // set matrix to apply
             if (animate) {
                 // set the state for animation to end in, start animation now
-                mAnimation!!.setEndState(mImagePoints, mImageMatrix)
+                mAnimation?.mCropImageAnimationUpdateListener = mOnCropImageAnimationUpdateListener
+                mAnimation?.setEndState(mImagePoints, mImageMatrix)
                 imageView.startAnimation(mAnimation)
             } else imageView.imageMatrix = mImageMatrix
             // update the image rectangle in the crop overlay
@@ -1587,6 +1629,15 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
          * @param result the crop image result data (with cropped image or error)
          */
         fun onCropImageComplete(view: CropImageView, result: CropResult)
+    }
+
+    fun interface OnCropImageAnimationUpdateListener {
+
+        /**
+         * Called when a crop image view is animating itself in order to reposition
+         * crop window in center of a screen
+         */
+        fun onCropImageAnimationUpdate()
     }
 
     /** Result data of crop image.  */
