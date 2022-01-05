@@ -23,6 +23,8 @@ internal class CropImageAnimation(
     private val endCropWindowRect = RectF()
     private val startImageMatrix = FloatArray(9)
     private val endImageMatrix = FloatArray(9)
+    var mCropImageAnimationUpdateListener: CropImageView.OnCropImageAnimationUpdateListener? = null
+
 
     init {
         duration = 300
@@ -83,6 +85,7 @@ internal class CropImageAnimation(
         imageView.apply {
             imageMatrix.setValues(animMatrix)
             invalidate()
+            mCropImageAnimationUpdateListener?.onCropImageAnimationUpdate()
         }
     }
 
