@@ -9,6 +9,16 @@ group='com.canhub.cropper'
 // configure your publications using the afterEvaluate() lifecycle method.
 afterEvaluate {
     publishing {
+        repositories {
+            maven {
+                name = "BrainlyMaven"
+                url = findProperty("BRAINLY_MAVEN_URL").toString()
+                credentials {
+                    username = findProperty("BRAINLY_MAVEN_ADMIN_USER").toString()
+                    password = findProperty("BRAINLY_MAVEN_ADMIN_PASSWORD").toString()
+                }
+            }
+        }
         publications {
             // Creates a Maven publication called "release".
             release(MavenPublication) {
@@ -16,8 +26,8 @@ afterEvaluate {
                 from components.release
 
                 // You can then customize attributes of the publication as shown below.
-                groupId = 'com.github.CanHub'
-                artifactId = 'Android-Image-Cropper'
+                groupId = 'co.brainly'
+                artifactId = 'android-image-cropper'
                 version = rootProject.libVersion
             }
         }

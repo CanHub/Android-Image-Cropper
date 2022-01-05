@@ -201,6 +201,15 @@ For more information, see the [GitHub Wiki](https://github.com/CanHub/Android-Im
  - [Android Image Cropper async support and custom progress UI](http://theartofdev.com/2016/01/15/android-image-cropper-async-support-and-custom-progress-ui/)
  - [Adding auto-zoom feature to Android-Image-Cropper](https://theartofdev.com/2016/04/25/adding-auto-zoom-feature-to-android-image-cropper/)
 
+## Brainly Release Guide
+ 1. Update the version in `versions.gradle`
+ 2. `git commit -am "Update to X.Y.Z-A"` (where X.Y.Z is the current library version, A is our internal revision number)
+ 3. Please keep the naming consistent with original library release numbers (use A to increment versions)
+ 4. `git tag X.Y.Z-A"`
+ 7. `git push origin main --tags`
+ 3. `./gradlew clean publishReleasePublicationToBrainlyMavenRepository`.
+ 8. Promote new release on [releases page](https://github.com/brainly/Android-Image-Cropper/releases)
+
 ## License
 Forked from [ArthurHub](https://github.com/ArthurHub/Android-Image-Cropper)
 Originally forked from [edmodo/cropper](https://github.com/edmodo/cropper).
