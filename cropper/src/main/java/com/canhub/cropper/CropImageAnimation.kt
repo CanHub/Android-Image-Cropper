@@ -25,7 +25,6 @@ internal class CropImageAnimation(
     private val endImageMatrix = FloatArray(9)
     var mCropImageAnimationUpdateListener: CropImageView.OnCropImageAnimationUpdateListener? = null
 
-
     init {
         duration = 300
         fillAfter = true

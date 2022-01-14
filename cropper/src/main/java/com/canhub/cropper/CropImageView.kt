@@ -222,6 +222,9 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
             }
         }
 
+    /** crop overlay image options */
+    private var cropImageOptions: CropImageOptions
+
     /** Set multi touch functionality to enabled/disabled.  */
     fun setMultiTouchEnabled(multiTouchEnabled: Boolean) {
         if (mCropOverlayView!!.setMultiTouchEnabled(multiTouchEnabled)) {
@@ -1078,6 +1081,22 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
         bundle.putBoolean("CROP_FLIP_VERTICALLY", mFlipVertically)
 
         return bundle
+    }
+
+    fun getCropImageOptions(): CropImageOptions {
+        return cropImageOptions
+    }
+
+    fun setCropImageOptions(options: CropImageOptions) {
+        setCropImageOptions(options, invalidate = true)
+    }
+
+    fun setCropImageOptions(options: CropImageOptions, invalidate: Boolean) {
+        this.cropImageOptions = options
+        mCropOverlayView?.setInitialAttributeValues(options)
+        if (invalidate) {
+            mCropOverlayView?.invalidate()
+        }
     }
 
     public override fun onRestoreInstanceState(state: Parcelable) {
@@ -1940,6 +1959,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
         mCropOverlayView.setInitialAttributeValues(options)
         mProgressBar = v.findViewById(R.id.CropProgressBar)
         setProgressBarVisibility()
+        this.cropImageOptions = options
     }
 
     override fun onCropWindowChanged(inProgress: Boolean) {
