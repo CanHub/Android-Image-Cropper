@@ -45,7 +45,7 @@ public class SCropImageFragmentJava extends Fragment implements SCropImageContra
     static final String FILE_NAMING_PREFIX = "JPEG_";
     static final String FILE_NAMING_SUFFIX = "_";
     static final String FILE_FORMAT = ".jpg";
-    static final String AUTHORITY_SUFFIX = ".fileprovider";
+    static final String AUTHORITY_SUFFIX = ".cropper.fileprovider";
 
     private FragmentCameraBinding binding;
     private final SCropImageContractJava.Presenter presenter = new SCropImagePresenterJava();
