@@ -49,6 +49,30 @@ data class CropImageContractOptions @JvmOverloads constructor(
         cropImageOptions.cropShape = cropShape
         return this
     }
+    /**
+     * To set the shape of the cropper corner (RECTANGLE / OVAL)
+     * Default: RECTANGLE
+     */
+    fun setCropCornerShape(cornerShape: CropImageView.CropCornerShape): CropImageContractOptions {
+         cropImageOptions.cornerShape = cornerShape
+        return this
+    }
+
+    /**
+     * To set the fill color of the Oval crop corner
+     */
+    fun setCircleCornerFillColor(circleFillColor:Int):CropImageContractOptions{
+        cropImageOptions.circleCornerFillColor = circleFillColor
+        return this
+    }
+
+    /**
+     * To set the Oval crop corner radius
+     */
+    fun setCropCornerRadius(cornerRadius:Float): CropImageContractOptions {
+        cropImageOptions.cropCornerRadius = cornerRadius
+        return this
+    }
 
     /**
      * An edge of the crop window will snap to the corresponding edge of a specified bounding box

@@ -52,6 +52,9 @@
             <include
                 android:id="@+id/cropShape"
                 layout="@layout/chip_crop_shape" />
+            <include android:id="@+id/cornerShape"
+                layout="@layout/chip_corner_shape"
+                android:visibility="gone"/>
 
             <include
                 android:id="@+id/guidelines"

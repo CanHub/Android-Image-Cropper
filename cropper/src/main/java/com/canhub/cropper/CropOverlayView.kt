@@ -3,6 +3,7 @@ package com.canhub.cropper
 import android.annotation.TargetApi
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.Rect
@@ -49,7 +50,18 @@ class CropOverlayView
                 borderPaint.isAntiAlias = true
                 borderPaint
             } else null
+        private fun getNewPaintWithFill(color: Int): Paint? {
+            val borderPaint = Paint()
+            borderPaint.color = color
+            borderPaint.style = Paint.Style.FILL
+            // borderPaint.isAntiAlias = true
+            return borderPaint
+        }
+
     }
+    private var mCropCornerRadius:Float = 0f
+    private var mCircleCornerFillColor: Int? = null
+    private var mOptions: CropImageOptions? = null
 
     /** Gesture detector used for multi touch box scaling  */
     private var mScaleDetector: ScaleGestureDetector? = null
@@ -147,6 +159,11 @@ class CropOverlayView
     /** The shape of the cropping area - rectangle/circular.  */
     var cropShape: CropShape? = null
         private set
+    /**
+     * The shape of the crop corner
+     */
+    var cornerShape: CropImageView.CropCornerShape? = null
+        private set
 
     /** the initial crop window rectangle to set  */
     private val mInitialCropWindowRect = Rect()
@@ -229,6 +246,16 @@ class CropOverlayView
     }
 
     /**
+     * The shape of cropper corners (rectangle / oval)
+     */
+    fun setCropCornerShape(cropCornerShape: CropImageView.CropCornerShape) {
+        if (this.cornerShape != cropCornerShape) {
+            this.cornerShape = cropCornerShape
+            invalidate()
+        }
+    }
+
+    /**
      * Sets the guidelines for the CropOverlayView to be either on, off, or to show when resizing the
      * application.
      */
@@ -296,6 +323,10 @@ class CropOverlayView
      */
     fun setSnapRadius(snapRadius: Float) {
         mSnapRadius = snapRadius
+    }
+    //ToDO:Need to add documentation
+    fun setCropCornerRadius(cornerRadius:Float) {
+        mCropCornerRadius = cornerRadius
     }
 
     /** Set multi touch functionality to enabled/disabled.  */
@@ -375,7 +406,10 @@ class CropOverlayView
      * Used once at the very start to initialize the attributes.
      */
     fun setInitialAttributeValues(options: CropImageOptions) {
+        mOptions = options
         mCropWindowHandler.setInitialAttributeValues(options)
+        setCropCornerRadius(options.cropCornerRadius)
+        setCropCornerShape(options.cornerShape)
         setCropShape(options.cropShape)
         setSnapRadius(options.snapRadius)
         setGuidelines(options.guidelines)
@@ -389,6 +423,7 @@ class CropOverlayView
         mBorderPaint = getNewPaintOrNull(options.borderLineThickness, options.borderLineColor)
         mBorderCornerOffset = options.borderCornerOffset
         mBorderCornerLength = options.borderCornerLength
+        mCircleCornerFillColor = options.circleCornerFillColor
         mBorderCornerPaint =
             getNewPaintOrNull(options.borderCornerThickness, options.borderCornerColor)
         mGuidelinePaint = getNewPaintOrNull(options.guidelinesThickness, options.guidelinesColor)
@@ -531,6 +566,8 @@ class CropOverlayView
                 canvas
             )
         }
+        //To retain the changes in Paint object when the App goes background this is required
+        mBorderCornerPaint = getNewPaintOrNull(mOptions?.borderCornerThickness?:0.0f, mOptions?.borderCornerColor?: Color.WHITE)
         drawBorders(canvas)
         drawCorners(canvas)
     }
@@ -702,110 +739,200 @@ class CropOverlayView
             }
             val rect = mCropWindowHandler.getRect()
             rect.inset(w, w)
-            when (cropShape) {
-                CropShape.RECTANGLE, CropShape.OVAL -> {
-                    // Top left
-                    canvas.drawLine(
-                        rect.left - cornerOffset,
-                        rect.top - cornerExtension,
-                        rect.left - cornerOffset,
-                        rect.top + mBorderCornerLength,
-                        mBorderCornerPaint!!
-                    )
-                    canvas.drawLine(
-                        rect.left - cornerExtension,
-                        rect.top - cornerOffset,
-                        rect.left + mBorderCornerLength,
-                        rect.top - cornerOffset,
-                        mBorderCornerPaint!!
-                    )
-                    // Top right
-                    canvas.drawLine(
-                        rect.right + cornerOffset,
-                        rect.top - cornerExtension,
-                        rect.right + cornerOffset,
-                        rect.top + mBorderCornerLength,
-                        mBorderCornerPaint!!
-                    )
-                    canvas.drawLine(
-                        rect.right + cornerExtension,
-                        rect.top - cornerOffset,
-                        rect.right - mBorderCornerLength,
-                        rect.top - cornerOffset,
-                        mBorderCornerPaint!!
-                    )
-                    // Bottom left
-                    canvas.drawLine(
-                        rect.left - cornerOffset,
-                        rect.bottom + cornerExtension,
-                        rect.left - cornerOffset,
-                        rect.bottom - mBorderCornerLength,
-                        mBorderCornerPaint!!
-                    )
-                    canvas.drawLine(
-                        rect.left - cornerExtension,
-                        rect.bottom + cornerOffset,
-                        rect.left + mBorderCornerLength,
-                        rect.bottom + cornerOffset,
-                        mBorderCornerPaint!!
-                    )
-                    // Bottom right
-                    canvas.drawLine(
-                        rect.right + cornerOffset,
-                        rect.bottom + cornerExtension,
-                        rect.right + cornerOffset,
-                        rect.bottom - mBorderCornerLength,
-                        mBorderCornerPaint!!
-                    )
-                    canvas.drawLine(
-                        rect.right + cornerExtension,
-                        rect.bottom + cornerOffset,
-                        rect.right - mBorderCornerLength,
-                        rect.bottom + cornerOffset,
-                        mBorderCornerPaint!!
-                    )
-                }
-                CropShape.RECTANGLE_VERTICAL_ONLY -> {
-                    // For the vertical variant, the user can only resize the crop window up and down, so the
-                    // "corners" are in the center of the top and bottom edges of the crop window.
-                    canvas.drawLine(
-                        rect.centerX() - mBorderCornerLength,
-                        rect.top - cornerOffset,
-                        rect.centerX() + mBorderCornerLength,
-                        rect.top - cornerOffset,
-                        mBorderCornerPaint!!
-                    )
-                    canvas.drawLine(
-                        rect.centerX() - mBorderCornerLength,
-                        rect.bottom + cornerOffset,
-                        rect.centerX() + mBorderCornerLength,
-                        rect.bottom + cornerOffset,
-                        mBorderCornerPaint!!
-                    )
-                }
-                CropShape.RECTANGLE_HORIZONTAL_ONLY -> {
-                    // For the horizontal variant, the user can only resize the crop window left and right, so
-                    // the "corners" are in the center of the left and right edges of the crop window.
-                    canvas.drawLine(
-                        rect.left - cornerOffset,
-                        rect.centerY() - mBorderCornerLength,
-                        rect.left - cornerOffset,
-                        rect.centerY() + mBorderCornerLength,
-                        mBorderCornerPaint!!
-                    )
-                    canvas.drawLine(
-                        rect.right + cornerOffset,
-                        rect.centerY() - mBorderCornerLength,
-                        rect.right + cornerOffset,
-                        rect.centerY() + mBorderCornerLength,
-                        mBorderCornerPaint!!
-                    )
-                }
-                else -> throw IllegalStateException("Unrecognized crop shape")
+            drawCornerBasedOnShape(canvas, rect, cornerOffset, cornerExtension)
+            if (cornerShape == CropImageView.CropCornerShape.OVAL) {
+                //To draw fill color updated paint object is needed and the corners to be redrawn
+                mBorderCornerPaint = mCircleCornerFillColor?.let { getNewPaintWithFill(it) }
+                drawCornerBasedOnShape(canvas, rect, cornerOffset, cornerExtension)
             }
         }
     }
+    /**
+     * Draw corners of crop overlay based on crop shape.
+     * In case of RECTANGLE crop shape call [drawCornerShape], to handle the corner draw based on
+     * crop corner shape.
+     */
+    private fun drawCornerBasedOnShape(
+        canvas: Canvas,
+        rect: RectF,
+        cornerOffset: Float,
+        cornerExtension: Float
+    ) {
+        when (cropShape) {
+            CropShape.RECTANGLE -> {
+                drawCornerShape(canvas, rect, cornerOffset, cornerExtension, mCropCornerRadius)
+            }
+            CropShape.OVAL -> {
+                drawLineShape(canvas, rect, cornerOffset, cornerExtension)
+            }
+            CropShape.RECTANGLE_VERTICAL_ONLY -> {
+                // For the vertical variant, the user can only resize the crop window up and down, so the
+                // "corners" are in the center of the top and bottom edges of the crop window.
+                canvas.drawLine(
+                    rect.centerX() - mBorderCornerLength,
+                    rect.top - cornerOffset,
+                    rect.centerX() + mBorderCornerLength,
+                    rect.top - cornerOffset,
+                    mBorderCornerPaint!!
+                )
+                canvas.drawLine(
+                    rect.centerX() - mBorderCornerLength,
+                    rect.bottom + cornerOffset,
+                    rect.centerX() + mBorderCornerLength,
+                    rect.bottom + cornerOffset,
+                    mBorderCornerPaint!!
+                )
+            }
+            CropShape.RECTANGLE_HORIZONTAL_ONLY -> {
+                // For the horizontal variant, the user can only resize the crop window left and right, so
+                // the "corners" are in the center of the left and right edges of the crop window.
+                canvas.drawLine(
+                    rect.left - cornerOffset,
+                    rect.centerY() - mBorderCornerLength,
+                    rect.left - cornerOffset,
+                    rect.centerY() + mBorderCornerLength,
+                    mBorderCornerPaint!!
+                )
+                canvas.drawLine(
+                    rect.right + cornerOffset,
+                    rect.centerY() - mBorderCornerLength,
+                    rect.right + cornerOffset,
+                    rect.centerY() + mBorderCornerLength,
+                    mBorderCornerPaint!!
+                )
+            }
+            else -> throw IllegalStateException("Unrecognized crop shape")
+        }
+    }
 
+    /**
+     * Draws rectangle shape corners
+     */
+    private fun drawLineShape(
+        canvas: Canvas,
+        rect: RectF,
+        cornerOffset: Float,
+        cornerExtension: Float
+    ) {
+        // Top left
+        canvas.drawLine(
+            rect.left - cornerOffset,
+            rect.top - cornerExtension,
+            rect.left - cornerOffset,
+            rect.top + mBorderCornerLength,
+            mBorderCornerPaint!!
+        )
+        canvas.drawLine(
+            rect.left - cornerExtension,
+            rect.top - cornerOffset,
+            rect.left + mBorderCornerLength,
+            rect.top - cornerOffset,
+            mBorderCornerPaint!!
+        )
+        // Top right
+        canvas.drawLine(
+            rect.right + cornerOffset,
+            rect.top - cornerExtension,
+            rect.right + cornerOffset,
+            rect.top + mBorderCornerLength,
+            mBorderCornerPaint!!
+        )
+        canvas.drawLine(
+            rect.right + cornerExtension,
+            rect.top - cornerOffset,
+            rect.right - mBorderCornerLength,
+            rect.top - cornerOffset,
+            mBorderCornerPaint!!
+        )
+        // Bottom left
+        canvas.drawLine(
+            rect.left - cornerOffset,
+            rect.bottom + cornerExtension,
+            rect.left - cornerOffset,
+            rect.bottom - mBorderCornerLength,
+            mBorderCornerPaint!!
+        )
+        canvas.drawLine(
+            rect.left - cornerExtension,
+            rect.bottom + cornerOffset,
+            rect.left + mBorderCornerLength,
+            rect.bottom + cornerOffset,
+            mBorderCornerPaint!!
+        )
+        // Bottom right
+        canvas.drawLine(
+            rect.right + cornerOffset,
+            rect.bottom + cornerExtension,
+            rect.right + cornerOffset,
+            rect.bottom - mBorderCornerLength,
+            mBorderCornerPaint!!
+        )
+        canvas.drawLine(
+            rect.right + cornerExtension,
+            rect.bottom + cornerOffset,
+            rect.right - mBorderCornerLength,
+            rect.bottom + cornerOffset,
+            mBorderCornerPaint!!
+        )
+    }
+
+    /**
+     * Based on corner shape calls either [drawCircleShape] or [drawLineShape]
+     */
+    private fun drawCornerShape(
+        canvas: Canvas,
+        rect: RectF,
+        cornerOffset: Float,
+        cornerExtension: Float,
+        radius: Float
+    ) {
+        when(cornerShape) {
+            CropImageView.CropCornerShape.OVAL -> {
+                drawCircleShape(canvas, rect, cornerOffset, cornerExtension, radius)
+            }
+            CropImageView.CropCornerShape.RECTANGLE -> drawLineShape(canvas, rect, cornerOffset, cornerExtension)
+        }
+    }
+
+    /**
+     * Draws circle shape corners
+     */
+    private fun drawCircleShape(
+        canvas: Canvas,
+        rect: RectF,
+        cornerOffset: Float,
+        cornerExtension: Float,
+        radius: Float
+    ) {
+        // Top left
+        canvas.drawCircle(
+            rect.left,
+            (rect.top - cornerExtension),
+            radius,
+            mBorderCornerPaint!!
+        )
+        // Top right
+        canvas.drawCircle(
+            rect.right + cornerOffset,
+            rect.top - cornerExtension,
+            radius,
+            mBorderCornerPaint!!
+        )
+        // Bottom left
+        canvas.drawCircle(
+            rect.left - cornerOffset,
+            rect.bottom + cornerExtension,
+            radius,
+            mBorderCornerPaint!!
+        )
+        // Bottom right
+        canvas.drawCircle(
+            rect.right + cornerOffset,
+            rect.bottom + cornerExtension,
+            radius,
+            mBorderCornerPaint!!
+        )
+    }
     override fun onTouchEvent(event: MotionEvent): Boolean {
         // If this View is not enabled, don't allow for touch interactions.
         return if (isEnabled) {

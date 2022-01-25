@@ -40,6 +40,16 @@ open class CropImageOptions : Parcelable {
     /** The shape of the cropping window.  */
     @JvmField
     var cropShape: CropShape
+    /**
+     * The shape of cropper corners
+     */
+    @JvmField
+    var cornerShape: CropImageView.CropCornerShape
+    /**
+     * The radius of the circular crop corner
+     */
+    @JvmField
+    var cropCornerRadius: Float
 
     /**
      * An edge of the crop window will snap to the corresponding edge of a specified bounding box when
@@ -141,6 +151,11 @@ open class CropImageOptions : Parcelable {
     /** the color of the corner line  */
     @JvmField
     var borderCornerColor: Int
+    /**
+     * The fill color of circle corner
+     */
+    @JvmField
+    var circleCornerFillColor: Int
 
     /** the thickness of the guidelines lines. (in pixels)  */
     @JvmField
@@ -275,6 +290,9 @@ open class CropImageOptions : Parcelable {
         imageSourceIncludeCamera = true
         imageSourceIncludeGallery = true
         cropShape = CropShape.RECTANGLE
+        cornerShape = CropImageView.CropCornerShape.RECTANGLE
+        circleCornerFillColor = Color.MAGENTA
+        cropCornerRadius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10f, dm)
         snapRadius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 3f, dm)
         touchRadius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24f, dm)
         guidelines = Guidelines.ON_TOUCH
@@ -331,6 +349,8 @@ open class CropImageOptions : Parcelable {
         imageSourceIncludeCamera = parcel.readByte().toInt() != 0
         imageSourceIncludeGallery = parcel.readByte().toInt() != 0
         cropShape = CropShape.values()[parcel.readInt()]
+        cornerShape = CropImageView.CropCornerShape.values()[parcel.readInt()]
+        cropCornerRadius = parcel.readFloat()
         snapRadius = parcel.readFloat()
         touchRadius = parcel.readFloat()
         guidelines = Guidelines.values()[parcel.readInt()]
@@ -351,6 +371,7 @@ open class CropImageOptions : Parcelable {
         borderCornerOffset = parcel.readFloat()
         borderCornerLength = parcel.readFloat()
         borderCornerColor = parcel.readInt()
+        circleCornerFillColor = parcel.readInt()
         guidelinesThickness = parcel.readFloat()
         guidelinesColor = parcel.readInt()
         backgroundColor = parcel.readInt()
@@ -385,6 +406,8 @@ open class CropImageOptions : Parcelable {
         dest.writeByte((if (imageSourceIncludeCamera) 1 else 0).toByte())
         dest.writeByte((if (imageSourceIncludeGallery) 1 else 0).toByte())
         dest.writeInt(cropShape.ordinal)
+        dest.writeInt(cornerShape.ordinal)
+        dest.writeFloat(cropCornerRadius)
         dest.writeFloat(snapRadius)
         dest.writeFloat(touchRadius)
         dest.writeInt(guidelines.ordinal)
@@ -405,6 +428,7 @@ open class CropImageOptions : Parcelable {
         dest.writeFloat(borderCornerOffset)
         dest.writeFloat(borderCornerLength)
         dest.writeInt(borderCornerColor)
+        dest.writeInt(circleCornerFillColor)
         dest.writeFloat(guidelinesThickness)
         dest.writeInt(guidelinesColor)
         dest.writeInt(backgroundColor)

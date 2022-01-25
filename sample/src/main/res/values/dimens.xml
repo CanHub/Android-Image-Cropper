@@ -37,5 +37,6 @@
     <dimen name="navigation_drawer_width">240dp</dimen>
     <dimen name="drawer_text_size">15sp</dimen>
     <dimen name="drawer_text_padding">8dp</dimen>
-
+    <dimen name="default_crop_corner_radius">8dp</dimen>
+    <dimen name="default_crop_corner_offset">4dp</dimen>
 </resources>
