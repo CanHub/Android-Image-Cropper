@@ -155,7 +155,7 @@ open class CropImageOptions : Parcelable {
      * The fill color of circle corner
      */
     @JvmField
-    var circleCornerFillColor: Int
+    var circleCornerFillColorHexValue: Int
 
     /** the thickness of the guidelines lines. (in pixels)  */
     @JvmField
@@ -291,7 +291,7 @@ open class CropImageOptions : Parcelable {
         imageSourceIncludeGallery = true
         cropShape = CropShape.RECTANGLE
         cornerShape = CropImageView.CropCornerShape.RECTANGLE
-        circleCornerFillColor = Color.MAGENTA
+        circleCornerFillColorHexValue = Color.MAGENTA
         cropCornerRadius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10f, dm)
         snapRadius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 3f, dm)
         touchRadius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24f, dm)
@@ -371,7 +371,7 @@ open class CropImageOptions : Parcelable {
         borderCornerOffset = parcel.readFloat()
         borderCornerLength = parcel.readFloat()
         borderCornerColor = parcel.readInt()
-        circleCornerFillColor = parcel.readInt()
+        circleCornerFillColorHexValue = parcel.readInt()
         guidelinesThickness = parcel.readFloat()
         guidelinesColor = parcel.readInt()
         backgroundColor = parcel.readInt()
@@ -428,7 +428,7 @@ open class CropImageOptions : Parcelable {
         dest.writeFloat(borderCornerOffset)
         dest.writeFloat(borderCornerLength)
         dest.writeInt(borderCornerColor)
-        dest.writeInt(circleCornerFillColor)
+        dest.writeInt(circleCornerFillColorHexValue)
         dest.writeFloat(guidelinesThickness)
         dest.writeInt(guidelinesColor)
         dest.writeInt(backgroundColor)

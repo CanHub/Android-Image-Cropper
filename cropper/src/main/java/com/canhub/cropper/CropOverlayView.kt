@@ -54,7 +54,7 @@ class CropOverlayView
             val borderPaint = Paint()
             borderPaint.color = color
             borderPaint.style = Paint.Style.FILL
-            // borderPaint.isAntiAlias = true
+            borderPaint.isAntiAlias = true
             return borderPaint
         }
 
@@ -324,7 +324,10 @@ class CropOverlayView
     fun setSnapRadius(snapRadius: Float) {
         mSnapRadius = snapRadius
     }
-    //ToDO:Need to add documentation
+    /**
+     * Radius of the circular crop corner
+     * Default radius is 10
+     */
     fun setCropCornerRadius(cornerRadius:Float) {
         mCropCornerRadius = cornerRadius
     }

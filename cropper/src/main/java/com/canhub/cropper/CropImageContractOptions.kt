@@ -60,14 +60,16 @@ data class CropImageContractOptions @JvmOverloads constructor(
 
     /**
      * To set the fill color of the Oval crop corner
+     * @param circleFillColorHexValue Hex value of the color (Default is MAGENTA)
      */
-    fun setCircleCornerFillColor(circleFillColor:Int):CropImageContractOptions{
-        cropImageOptions.circleCornerFillColor = circleFillColor
+    fun setCircleCornerFillColor(circleFillColorHexValue:Int):CropImageContractOptions{
+        cropImageOptions.circleCornerFillColorHexValue = circleFillColorHexValue
         return this
     }
 
     /**
      * To set the Oval crop corner radius
+     * Default is 10
      */
     fun setCropCornerRadius(cornerRadius:Float): CropImageContractOptions {
         cropImageOptions.cropCornerRadius = cornerRadius
