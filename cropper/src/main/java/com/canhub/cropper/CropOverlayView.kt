@@ -57,9 +57,8 @@ class CropOverlayView
             borderPaint.isAntiAlias = true
             return borderPaint
         }
-
     }
-    private var mCropCornerRadius:Float = 0f
+    private var mCropCornerRadius: Float = 0f
     private var mCircleCornerFillColor: Int? = null
     private var mOptions: CropImageOptions? = null
 
@@ -328,7 +327,7 @@ class CropOverlayView
      * Radius of the circular crop corner
      * Default radius is 10
      */
-    fun setCropCornerRadius(cornerRadius:Float) {
+    fun setCropCornerRadius(cornerRadius: Float) {
         mCropCornerRadius = cornerRadius
     }
 
@@ -569,8 +568,8 @@ class CropOverlayView
                 canvas
             )
         }
-        //To retain the changes in Paint object when the App goes background this is required
-        mBorderCornerPaint = getNewPaintOrNull(mOptions?.borderCornerThickness?:0.0f, mOptions?.borderCornerColor?: Color.WHITE)
+        // To retain the changes in Paint object when the App goes background this is required
+        mBorderCornerPaint = getNewPaintOrNull(mOptions?.borderCornerThickness ?: 0.0f, mOptions?.borderCornerColor ?: Color.WHITE)
         drawBorders(canvas)
         drawCorners(canvas)
     }
@@ -744,7 +743,7 @@ class CropOverlayView
             rect.inset(w, w)
             drawCornerBasedOnShape(canvas, rect, cornerOffset, cornerExtension)
             if (cornerShape == CropImageView.CropCornerShape.OVAL) {
-                //To draw fill color updated paint object is needed and the corners to be redrawn
+                // To draw fill color updated paint object is needed and the corners to be redrawn
                 mBorderCornerPaint = mCircleCornerFillColor?.let { getNewPaintWithFill(it) }
                 drawCornerBasedOnShape(canvas, rect, cornerOffset, cornerExtension)
             }
@@ -889,7 +888,7 @@ class CropOverlayView
         cornerExtension: Float,
         radius: Float
     ) {
-        when(cornerShape) {
+        when (cornerShape) {
             CropImageView.CropCornerShape.OVAL -> {
                 drawCircleShape(canvas, rect, cornerOffset, cornerExtension, radius)
             }

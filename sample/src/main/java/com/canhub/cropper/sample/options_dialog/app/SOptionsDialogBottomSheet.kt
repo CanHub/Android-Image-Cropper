@@ -203,7 +203,7 @@ internal class SOptionsDialogBottomSheet : BottomSheetDialogFragment(), SOptions
         when (options.cropShape) {
             CropImageView.CropShape.RECTANGLE -> {
                 binding.cropShape.chipRectangle.isChecked = true
-                //ToDo: Enabling the corner shape selection functionality only for Rectangle shape cropper for now
+                // Enabling the corner shape selection functionality only for Rectangle shape cropper for now
                 // To expose to other crop shape, we will need to for necessary changes in CropOverlay class
                 binding.cornerShape.root.visibility = View.VISIBLE
             }

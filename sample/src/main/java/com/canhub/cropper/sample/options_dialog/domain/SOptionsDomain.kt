@@ -9,7 +9,7 @@ import kotlinx.parcelize.RawValue
 internal data class SOptionsDomain(
     val scaleType: CropImageView.ScaleType,
     val cropShape: CropImageView.CropShape,
-    val cornerShape:CropImageView.CropCornerShape,
+    val cornerShape: CropImageView.CropCornerShape,
     val guidelines: CropImageView.Guidelines,
     val ratio: @RawValue Pair<Int, Int>?,
     val maxZoomLvl: Int,
