@@ -425,7 +425,7 @@ class CropOverlayView
         mBorderPaint = getNewPaintOrNull(options.borderLineThickness, options.borderLineColor)
         mBorderCornerOffset = options.borderCornerOffset
         mBorderCornerLength = options.borderCornerLength
-        mCircleCornerFillColor = options.circleCornerFillColor
+        mCircleCornerFillColor = options.circleCornerFillColorHexValue
         mBorderCornerPaint =
             getNewPaintOrNull(options.borderCornerThickness, options.borderCornerColor)
         mGuidelinePaint = getNewPaintOrNull(options.guidelinesThickness, options.guidelinesColor)
