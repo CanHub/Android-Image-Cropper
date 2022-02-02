@@ -1780,6 +1780,10 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
                             options.cornerShape.ordinal
                         )
                     ]
+                    options.cropCornerRadius = ta.getDimension(
+                        R.styleable.CropImageView_cropCornerRadius,
+                        options.cropCornerRadius
+                    )
                     options.guidelines = Guidelines.values()[
                         ta.getInt(
                             R.styleable.CropImageView_cropGuidelines, options.guidelines.ordinal
