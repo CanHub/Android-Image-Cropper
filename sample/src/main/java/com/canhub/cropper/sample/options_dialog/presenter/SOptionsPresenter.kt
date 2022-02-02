@@ -73,10 +73,14 @@ internal class SOptionsPresenter : SOptionsContract.Presenter {
     override fun onFlipVerticallySelect(enable: Boolean) {
         options = options.copy(flipVertically = enable)
     }
+    override fun onCropCornerShapeSelect(cornerShape: CropImageView.CropCornerShape) {
+        options = options.copy(cornerShape = cornerShape)
+    }
 
     private fun defaultOptions() = SOptionsDomain(
         CropImageView.ScaleType.FIT_CENTER,
         CropImageView.CropShape.RECTANGLE,
+        CropImageView.CropCornerShape.RECTANGLE,
         CropImageView.Guidelines.ON,
         Pair(1, 1),
         maxZoomLvl = 2,

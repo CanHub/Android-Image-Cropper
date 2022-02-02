@@ -95,6 +95,7 @@ internal class SCropImageViewFragment :
         this.options = options
 
         binding.cropImageView.apply {
+            cornerShape = options.cornerShape
             scaleType = options.scaleType
             cropShape = options.cropShape
             guidelines = options.guidelines

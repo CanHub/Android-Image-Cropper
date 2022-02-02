@@ -93,18 +93,28 @@ internal class SOptionsDialogBottomSheet : BottomSheetDialogFragment(), SOptions
 
         binding.cropShape.chipRectangle.setOnClickListener {
             presenter.onCropShapeSelect(CropImageView.CropShape.RECTANGLE)
+            binding.cornerShape.root.visibility = View.VISIBLE
         }
 
         binding.cropShape.chipOval.setOnClickListener {
             presenter.onCropShapeSelect(CropImageView.CropShape.OVAL)
+            binding.cornerShape.root.visibility = View.GONE
         }
 
         binding.cropShape.chipRectangleVerticalOnly.setOnClickListener {
             presenter.onCropShapeSelect(CropImageView.CropShape.RECTANGLE_VERTICAL_ONLY)
+            binding.cornerShape.root.visibility = View.GONE
         }
 
         binding.cropShape.chipRectangleHorizontalOnly.setOnClickListener {
             presenter.onCropShapeSelect(CropImageView.CropShape.RECTANGLE_HORIZONTAL_ONLY)
+            binding.cornerShape.root.visibility = View.GONE
+        }
+        binding.cornerShape.chipRectangle.setOnClickListener {
+            presenter.onCropCornerShapeSelect(CropImageView.CropCornerShape.RECTANGLE)
+        }
+        binding.cornerShape.chipOval.setOnClickListener {
+            presenter.onCropCornerShapeSelect(CropImageView.CropCornerShape.OVAL)
         }
 
         binding.guidelines.chipOff.setOnClickListener {
@@ -177,6 +187,7 @@ internal class SOptionsDialogBottomSheet : BottomSheetDialogFragment(), SOptions
     }
 
     override fun updateOptions(options: SOptionsDomain) {
+
         when (options.scaleType) {
             CropImageView.ScaleType.CENTER -> binding.scaleType.chipCenter.isChecked = true
             CropImageView.ScaleType.FIT_CENTER -> binding.scaleType.chipFitCenter.isChecked = true
@@ -184,10 +195,21 @@ internal class SOptionsDialogBottomSheet : BottomSheetDialogFragment(), SOptions
                 binding.scaleType.chipCenterInside.isChecked = true
             CropImageView.ScaleType.CENTER_CROP -> binding.scaleType.chipCenterCrop.isChecked = true
         }
+        when (options.cornerShape) {
+            CropImageView.CropCornerShape.RECTANGLE -> binding.cornerShape.chipRectangle.isChecked = true
+            CropImageView.CropCornerShape.OVAL -> binding.cornerShape.chipOval.isChecked = true
+        }
 
         when (options.cropShape) {
-            CropImageView.CropShape.RECTANGLE -> binding.cropShape.chipRectangle.isChecked = true
-            CropImageView.CropShape.OVAL -> binding.cropShape.chipOval.isChecked = true
+            CropImageView.CropShape.RECTANGLE -> {
+                binding.cropShape.chipRectangle.isChecked = true
+                // Enabling the corner shape selection functionality only for Rectangle shape cropper for now
+                // To expose to other crop shape, we will need to for necessary changes in CropOverlay class
+                binding.cornerShape.root.visibility = View.VISIBLE
+            }
+            CropImageView.CropShape.OVAL -> {
+                binding.cropShape.chipOval.isChecked = true
+            }
             CropImageView.CropShape.RECTANGLE_VERTICAL_ONLY ->
                 binding.cropShape.chipRectangleVerticalOnly.isChecked = true
             CropImageView.CropShape.RECTANGLE_HORIZONTAL_ONLY ->

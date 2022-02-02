@@ -1,5 +1,6 @@
 package com.canhub.cropper.sample.options_dialog.domain
 
+import com.canhub.cropper.CropImageView
 import com.canhub.cropper.CropImageView.CropShape
 import com.canhub.cropper.CropImageView.Guidelines
 import com.canhub.cropper.CropImageView.ScaleType
@@ -18,6 +19,7 @@ internal interface SOptionsContract {
         fun onDismiss()
         fun onScaleTypeSelect(scaleType: ScaleType)
         fun onCropShapeSelect(cropShape: CropShape)
+        fun onCropCornerShapeSelect(cornerShape: CropImageView.CropCornerShape)
         fun onGuidelinesSelect(guidelines: Guidelines)
         fun onRatioSelect(ratio: Pair<Int, Int>?)
         fun onAutoZoomSelect(enable: Boolean)

@@ -205,6 +205,15 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
         set(cropShape) {
             mCropOverlayView!!.setCropShape(cropShape!!)
         }
+    /**
+     * The shape of the crop corner in the crop overlay (Rectangular / Circular)
+     */
+    var cornerShape: CropCornerShape?
+        get() = mCropOverlayView!!.cornerShape
+        set(cornerShape) {
+            mCropOverlayView!!.setCropCornerShape(cornerShape!!)
+        }
+
     /** if auto-zoom functionality is enabled. default: true.  */
     /** Set auto-zoom functionality to enabled/disabled.  */
     var isAutoZoomEnabled: Boolean
@@ -1440,6 +1449,12 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
 
         RECTANGLE, OVAL, RECTANGLE_VERTICAL_ONLY, RECTANGLE_HORIZONTAL_ONLY
     }
+    /**
+     * Possible crop corner shape
+     */
+    enum class CropCornerShape {
+        RECTANGLE, OVAL
+    }
 
     /**
      * Options for scaling the bounds of cropping image to the bounds of Crop Image View.<br></br>
@@ -1759,6 +1774,16 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
                             options.cropShape.ordinal
                         )
                     ]
+                    options.cornerShape = CropCornerShape.values()[
+                        ta.getInt(
+                            R.styleable.CropImageView_cornerShape,
+                            options.cornerShape.ordinal
+                        )
+                    ]
+                    options.cropCornerRadius = ta.getDimension(
+                        R.styleable.CropImageView_cropCornerRadius,
+                        options.cropCornerRadius
+                    )
                     options.guidelines = Guidelines.values()[
                         ta.getInt(
                             R.styleable.CropImageView_cropGuidelines, options.guidelines.ordinal
@@ -1775,6 +1800,9 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
                     options.initialCropWindowPaddingRatio = ta.getFloat(
                         R.styleable.CropImageView_cropInitialCropWindowPaddingRatio,
                         options.initialCropWindowPaddingRatio
+                    )
+                    options.circleCornerFillColorHexValue = ta.getInteger(
+                        R.styleable.CropImageView_cropCornerCircleFillColor, options.circleCornerFillColorHexValue
                     )
                     options.borderLineThickness = ta.getDimension(
                         R.styleable.CropImageView_cropBorderLineThickness,
