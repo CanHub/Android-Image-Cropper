@@ -908,28 +908,28 @@ class CropOverlayView
     ) {
         // Top left
         canvas.drawCircle(
-            rect.left,
+            rect.left - cornerExtension,
             (rect.top - cornerExtension),
             radius,
             mBorderCornerPaint!!
         )
         // Top right
         canvas.drawCircle(
-            rect.right + cornerOffset,
+            rect.right + cornerExtension,
             rect.top - cornerExtension,
             radius,
             mBorderCornerPaint!!
         )
         // Bottom left
         canvas.drawCircle(
-            rect.left - cornerOffset,
+            rect.left - cornerExtension,
             rect.bottom + cornerExtension,
             radius,
             mBorderCornerPaint!!
         )
         // Bottom right
         canvas.drawCircle(
-            rect.right + cornerOffset,
+            rect.right + cornerExtension,
             rect.bottom + cornerExtension,
             radius,
             mBorderCornerPaint!!

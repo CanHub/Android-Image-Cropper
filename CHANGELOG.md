@@ -9,6 +9,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - `Fixed` for any bug fixes.
 - `Security` in case of vulnerabilities.
 
+## [unreleased 4.0.2]
+### Added
+- Added provision to add Oval crop corners when the crop style is Rectangle [#305](https://github.com/CanHub/Android-Image-Cropper/issues/305)
+
 ## [4.0.1] - unreleased
 ### Fixed
 - When TakePictureContract returns false or null return null result.  [#287](https://github.com/CanHub/Android-Image-Cropper/issues/287)
