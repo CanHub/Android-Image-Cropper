@@ -291,7 +291,7 @@ open class CropImageOptions : Parcelable {
         imageSourceIncludeGallery = true
         cropShape = CropShape.RECTANGLE
         cornerShape = CropImageView.CropCornerShape.RECTANGLE
-        circleCornerFillColorHexValue = Color.MAGENTA
+        circleCornerFillColorHexValue = Color.WHITE
         cropCornerRadius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10f, dm)
         snapRadius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 3f, dm)
         touchRadius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24f, dm)
