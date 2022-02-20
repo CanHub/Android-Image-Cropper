@@ -559,7 +559,6 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
     fun getCroppedImage(reqWidth: Int, reqHeight: Int, options: RequestSizeOptions): Bitmap? {
         var croppedBitmap: Bitmap? = null
         if (originalBitmap != null) {
-            imageView.clearAnimation()
             val newReqWidth = if (options != RequestSizeOptions.NONE) reqWidth else 0
             val newReqHeight = if (options != RequestSizeOptions.NONE) reqHeight else 0
             croppedBitmap = if (imageUri != null &&
@@ -894,7 +893,6 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
         degreesRotated: Int
     ) {
         if (originalBitmap == null || originalBitmap != bitmap) {
-            imageView.clearAnimation()
             clearImageInt()
             originalBitmap = bitmap
             imageView.setImageBitmap(originalBitmap)
@@ -967,7 +965,6 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
     ) {
         val bitmap = originalBitmap
         if (bitmap != null) {
-            imageView.clearAnimation()
             val currentTask =
                 if (bitmapCroppingWorkerJob != null) bitmapCroppingWorkerJob!!.get() else null
             currentTask?.cancel()
