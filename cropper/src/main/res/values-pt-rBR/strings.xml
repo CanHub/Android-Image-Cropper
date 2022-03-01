@@ -8,5 +8,7 @@
     <string name="ic_flip_24_horizontally">Espelhar na horizontal</string>
     <string name="ic_flip_24_vertically">Espelhar na vertifcal</string>
     <string name="pick_image_chooser_title">Escolher foto a partir de</string>
-    <string name="crop_image_activity_no_permissions">Cancelando, permissões negadas mano</string>
+    <string name="pick_image_camera">Câmera</string>
+    <string name="pick_image_gallery">Galeria</string>
+    <string name="crop_image_activity_no_permissions">Cancelando, as permissões necessárias não foram concedidas</string>
 </resources>
