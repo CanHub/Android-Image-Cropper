@@ -1303,6 +1303,11 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
                     BitmapUtils.getRectCenterY(mImagePoints)
                 )
                 mapImagePointsByImageMatrix()
+            } else if (mScaleType == ScaleType.CENTER_CROP) {
+                mZoom = max(
+                    getWidth() / BitmapUtils.getRectWidth(mImagePoints),
+                    getHeight() / BitmapUtils.getRectHeight(mImagePoints)
+                );
             }
             // scale by the current zoom level
             val scaleX = if (mFlipHorizontally) -mZoom else mZoom
@@ -1315,7 +1320,11 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
             )
             mapImagePointsByImageMatrix()
             mImageMatrix.mapRect(cropRect)
-            if (center) {
+
+            if (mScaleType == ScaleType.CENTER_CROP && center && !animate) {
+                mZoomOffsetX = 0f
+                mZoomOffsetY = 0f
+            } else if (center) {
                 // set the zoomed area to be as to the center of cropping window as possible
                 mZoomOffsetX =
                     if (width > BitmapUtils.getRectWidth(mImagePoints)) 0f
