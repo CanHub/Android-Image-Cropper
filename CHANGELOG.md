@@ -10,6 +10,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - `Security` in case of vulnerabilities.
 
 ## [4.2.0] - unreleased
+### Fixed
+- Added missing support for `ScaleType.CENTER_CROP` https://github.com/CanHub/Android-Image-Cropper/issues/220
 
 ## [4.1.0] - 02/02/2022
 ### Fixed
