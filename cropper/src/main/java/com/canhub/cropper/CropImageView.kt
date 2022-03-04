@@ -1307,7 +1307,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
                 mZoom = max(
                     getWidth() / BitmapUtils.getRectWidth(mImagePoints),
                     getHeight() / BitmapUtils.getRectHeight(mImagePoints)
-                );
+                )
             }
             // scale by the current zoom level
             val scaleX = if (mFlipHorizontally) -mZoom else mZoom
