@@ -490,6 +490,16 @@ data class CropImageContractOptions @JvmOverloads constructor(
         cropImageOptions.cropMenuCropButtonIcon = drawableResource
         return this
     }
+
+    /**
+     * Set whether the cropping option should be allowed or skipped entirely.<br></br>
+     * *Default: false*
+     */
+    fun setSkipEditing(skipEditing: Boolean): CropImageContractOptions {
+        cropImageOptions.skipEditing = skipEditing
+        cropImageOptions.showCropOverlay = !skipEditing
+        return this
+    }
 }
 
 fun options(
