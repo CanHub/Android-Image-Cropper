@@ -190,7 +190,7 @@ internal class SCropImageFragment : Fragment(), SCropImageContract.View {
 //                setAllowRotation(false)
 //                setNoOutputImage(false)
 //                setFixAspectRatio(true)
-//                setSkipCropping(true)
+//                setSkipEditing(true)
             }
         )
     }

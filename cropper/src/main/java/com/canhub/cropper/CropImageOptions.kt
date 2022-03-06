@@ -285,8 +285,8 @@ open class CropImageOptions : Parcelable {
     var cropMenuCropButtonIcon: Int
 
     /**
-     * Allows you to skip the cropping option.
-     * This returns the entire image
+     * Allows you to skip the editing (cropping, flipping or rotating) option.
+     * This returns the entire selected image directly
      */
     @JvmField
     var skipEditing: Boolean
