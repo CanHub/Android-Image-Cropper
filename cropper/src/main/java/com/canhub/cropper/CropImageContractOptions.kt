@@ -490,6 +490,13 @@ data class CropImageContractOptions @JvmOverloads constructor(
         cropImageOptions.cropMenuCropButtonIcon = drawableResource
         return this
     }
+    /**
+     * Shows an intent chooser instead of the alert dialog when choosing an image source.
+     * *Default: false*
+     */
+    fun setShowIntentChooser(showIntentChooser: Boolean) = cropImageOptions.apply {
+        this.showIntentChooser = showIntentChooser
+    }
 }
 
 fun options(

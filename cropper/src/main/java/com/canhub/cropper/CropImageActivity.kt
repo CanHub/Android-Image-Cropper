@@ -76,23 +76,25 @@ open class CropImageActivity :
 
         if (savedInstanceState == null) {
             if (cropImageUri == null || cropImageUri == Uri.EMPTY) {
-                /*// TODO:: Alternate to the alert dialog used below. Let me know what you think.
-                val appPicker = getPickImageChooserIntent(
-                    this, getString(R.string.pick_image_chooser_title),
-                    includeCamera = cropImageOptions.imageSourceIncludeCamera,
-                    includeGallery = cropImageOptions.imageSourceIncludeGallery,
-                    includeDocuments = false
-                )
-                intentChooser.launch(appPicker)*/
-                when {
-                    cropImageOptions.imageSourceIncludeGallery &&
+                if (cropImageOptions.showIntentChooser) {
+                    val appPicker = getPickImageChooserIntent(
+                        this, getString(R.string.pick_image_chooser_title),
+                        includeCamera = cropImageOptions.imageSourceIncludeCamera,
+                        includeGallery = cropImageOptions.imageSourceIncludeGallery,
+                        includeDocuments = false
+                    )
+                    intentChooser.launch(appPicker)
+                } else {
+                    when {
+                        cropImageOptions.imageSourceIncludeGallery &&
+                            cropImageOptions.imageSourceIncludeCamera ->
+                            showImageSourceDialog(::openSource)
+                        cropImageOptions.imageSourceIncludeGallery ->
+                            pickImageGallery.launch("image/*")
                         cropImageOptions.imageSourceIncludeCamera ->
-                        showImageSourceDialog(::openSource)
-                    cropImageOptions.imageSourceIncludeGallery ->
-                        pickImageGallery.launch("image/*")
-                    cropImageOptions.imageSourceIncludeCamera ->
-                        openCamera()
-                    else -> finish()
+                            openCamera()
+                        else -> finish()
+                    }
                 }
             } else cropImageView?.setImageUriAsync(cropImageUri)
         }
@@ -384,7 +386,6 @@ open class CropImageActivity :
                 target.action = Intent.ACTION_PICK
                 target.type = "image/*"
             }
-
         }
         // Create a chooser from the main  intent
         val chooserIntent = Intent.createChooser(target, title)
@@ -478,10 +479,9 @@ open class CropImageActivity :
      * question](http://stackoverflow.com/questions/32789027/android-m-camera-intent-permission-bug).
      */
     private fun isExplicitCameraPermissionRequired(context: Context): Boolean {
-        return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
             && hasPermissionInManifest(context, "android.permission.CAMERA")
-            && (context.checkSelfPermission(Manifest.permission.CAMERA)
-            != PackageManager.PERMISSION_GRANTED))
+            && context.checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
     }
 
     /**
