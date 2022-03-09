@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Fixed
 - Added missing support for `ScaleType.CENTER_CROP` [#220](https://github.com/CanHub/Android-Image-Cropper/issues/220)
 ### Added
+- Added an option to skip manual editing and return entire image when required [#324](https://github.com/CanHub/Android-Image-Cropper/pull/324)
 - Added support for optionally displaying an intent chooser when selecting image source. [#325](https://github.com/CanHub/Android-Image-Cropper/issues/325)
 
 ## [4.1.0] - 02/02/2022

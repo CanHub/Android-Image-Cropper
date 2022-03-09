@@ -161,6 +161,7 @@ open class CropImageActivity :
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        if (cropImageOptions.skipEditing) return true
         menuInflater.inflate(R.menu.crop_image_menu, menu)
 
         if (!cropImageOptions.allowRotation) {
@@ -244,6 +245,10 @@ open class CropImageActivity :
 
             if (cropImageOptions.initialRotation > 0)
                 cropImageView?.rotatedDegrees = cropImageOptions.initialRotation
+
+            if (cropImageOptions.skipEditing) {
+                cropImage()
+            }
         } else setResult(null, error, 1)
     }
 
