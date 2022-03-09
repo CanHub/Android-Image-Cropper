@@ -363,7 +363,8 @@ open class CropImageActivity :
      * @param includeDocuments if to include KitKat documents activity containing all sources
      */
     private fun getPickImageChooserIntent(
-        context: Context, title: CharSequence?,
+        context: Context,
+        title: CharSequence?,
         includeCamera: Boolean,
         includeGallery: Boolean,
         includeDocuments: Boolean
