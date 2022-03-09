@@ -364,7 +364,9 @@ open class CropImageActivity :
      */
     private fun getPickImageChooserIntent(
         context: Context, title: CharSequence?,
-        includeCamera: Boolean, includeGallery: Boolean, includeDocuments: Boolean
+        includeCamera: Boolean,
+        includeGallery: Boolean,
+        includeDocuments: Boolean
     ): Intent {
         val allIntents: MutableList<Intent> = ArrayList()
         val packageManager = context.packageManager
@@ -442,7 +444,9 @@ open class CropImageActivity :
      * how to get multiple camera apps to pick from (if available)
      */
     private fun getGalleryIntents(
-        packageManager: PackageManager, action: String, includeDocuments: Boolean
+        packageManager: PackageManager,
+        action: String,
+        includeDocuments: Boolean
     ): List<Intent> {
         val intents: MutableList<Intent> = ArrayList()
         val galleryIntent = if (action == Intent.ACTION_GET_CONTENT) Intent(action)
@@ -484,9 +488,9 @@ open class CropImageActivity :
      * question](http://stackoverflow.com/questions/32789027/android-m-camera-intent-permission-bug).
      */
     private fun isExplicitCameraPermissionRequired(context: Context): Boolean {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-            && hasPermissionInManifest(context, "android.permission.CAMERA")
-            && context.checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
+            hasPermissionInManifest(context, "android.permission.CAMERA") &&
+            context.checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
     }
 
     /**
