@@ -284,6 +284,13 @@ open class CropImageOptions : Parcelable {
     @JvmField
     var cropMenuCropButtonIcon: Int
 
+    /**
+     * Allows you to skip the editing (cropping, flipping or rotating) option.
+     * This returns the entire selected image directly
+     */
+    @JvmField
+    var skipEditing: Boolean
+
     /** Init options with defaults.  */
     constructor() {
         val dm = Resources.getSystem().displayMetrics
@@ -342,6 +349,7 @@ open class CropImageOptions : Parcelable {
         flipVertically = false
         cropMenuCropButtonTitle = null
         cropMenuCropButtonIcon = 0
+        skipEditing = false
     }
 
     /** Create object from parcel.  */
@@ -400,6 +408,7 @@ open class CropImageOptions : Parcelable {
         flipVertically = parcel.readByte().toInt() != 0
         cropMenuCropButtonTitle = TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(parcel)
         cropMenuCropButtonIcon = parcel.readInt()
+        skipEditing = parcel.readByte().toInt() != 0
     }
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
@@ -457,6 +466,7 @@ open class CropImageOptions : Parcelable {
         dest.writeByte((if (flipVertically) 1 else 0).toByte())
         TextUtils.writeToParcel(cropMenuCropButtonTitle, dest, flags)
         dest.writeInt(cropMenuCropButtonIcon)
+        dest.writeByte((if (skipEditing) 1 else 0).toByte())
     }
 
     override fun describeContents(): Int {
