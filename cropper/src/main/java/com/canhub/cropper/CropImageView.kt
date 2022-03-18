@@ -162,12 +162,6 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
      */
     private var mSizeChanged = false
 
-    /**
-     * Temp URI used to save bitmap image to disk to preserve for instance state in case cropped was
-     * set with bitmap
-     */
-    private var saveInstanceStateBitmapUri: Uri? = null
-
     /** Task used to load bitmap async from UI thread  */
     private var bitmapLoadingWorkerJob: WeakReference<BitmapLoadingWorkerJob>? = null
 
@@ -933,7 +927,6 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
         mZoomOffsetX = 0f
         mZoomOffsetY = 0f
         mImageMatrix.reset()
-        saveInstanceStateBitmapUri = null
         mRestoreCropWindowRect = null
         mRestoreDegreesRotated = 0
         imageView.setImageBitmap(null)
@@ -1008,14 +1001,17 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
             return super.onSaveInstanceState()
         }
         val bundle = Bundle()
-        if (isSaveBitmapToInstanceState && saveInstanceStateBitmapUri == null && mImageResource < 1) {
-            saveInstanceStateBitmapUri = BitmapUtils.writeTempStateStoreBitmap(
-                context = context,
-                bitmap = originalBitmap,
-                customOutputUri = customOutputUri
-            )
-        }
-        if (saveInstanceStateBitmapUri != null && originalBitmap != null) {
+        val loadedImageUri =
+            if (isSaveBitmapToInstanceState && imageUri == null && mImageResource < 1) {
+                BitmapUtils.writeTempStateStoreBitmap(
+                    context = context,
+                    bitmap = originalBitmap,
+                    customOutputUri = customOutputUri
+                )
+            } else {
+                imageUri
+            }
+        if (loadedImageUri != null && originalBitmap != null) {
             val key = UUID.randomUUID().toString()
             BitmapUtils.mStateBitmap = Pair(key, WeakReference(originalBitmap))
             bundle.putString("LOADED_IMAGE_STATE_BITMAP_KEY", key)
@@ -1027,7 +1023,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
             }
         }
         bundle.putParcelable("instanceState", super.onSaveInstanceState())
-        bundle.putParcelable("LOADED_IMAGE_URI", saveInstanceStateBitmapUri)
+        bundle.putParcelable("LOADED_IMAGE_URI", loadedImageUri)
         bundle.putInt("LOADED_IMAGE_RESOURCE", mImageResource)
         bundle.putInt("LOADED_SAMPLE_SIZE", loadedSampleSize)
         bundle.putInt("DEGREES_ROTATED", mDegreesRotated)
