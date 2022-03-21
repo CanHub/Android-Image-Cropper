@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ## [4.2.0] - unreleased
 ### Fixed
 - Added missing support for `ScaleType.CENTER_CROP` [#220](https://github.com/CanHub/Android-Image-Cropper/issues/220)
+- State is now preserved across configuration changes [#296](https://github.com/CanHub/Android-Image-Cropper/issues/296)
 ### Added
 - Added an option to skip manual editing and return entire image when required [#324](https://github.com/CanHub/Android-Image-Cropper/pull/324)
 
