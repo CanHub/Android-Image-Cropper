@@ -9,12 +9,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - `Fixed` for any bug fixes.
 - `Security` in case of vulnerabilities.
 
-## [4.2.0] - unreleased
+## [x.x.x] - unreleased
+
+## [4.2.0] - 21/03/2022
+### Added
+- Added an option to skip manual editing and return entire image when required [#324](https://github.com/CanHub/Android-Image-Cropper/pull/324)
 ### Fixed
 - Added missing support for `ScaleType.CENTER_CROP` [#220](https://github.com/CanHub/Android-Image-Cropper/issues/220)
 - State is now preserved across configuration changes [#296](https://github.com/CanHub/Android-Image-Cropper/issues/296)
-### Added
-- Added an option to skip manual editing and return entire image when required [#324](https://github.com/CanHub/Android-Image-Cropper/pull/324)
+- Fix shadow bug [#261](https://github.com/CanHub/Android-Image-Cropper/issues/261)
+### Changed
+- Update portuguese strings [#321](https://github.com/CanHub/Android-Image-Cropper/issues/321)
 
 ## [4.1.0] - 02/02/2022
 ### Fixed
