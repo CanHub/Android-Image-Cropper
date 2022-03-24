@@ -508,6 +508,25 @@ data class CropImageContractOptions @JvmOverloads constructor(
     fun setShowIntentChooser(showIntentChooser: Boolean) = cropImageOptions.apply {
         this.showIntentChooser = showIntentChooser
     }
+
+    /**
+     * Sets a custom title for the intent chooser
+     */
+    fun setIntentChooserTitle(intentChooserTitle: String) = cropImageOptions.apply {
+        this.intentChooserTitle = intentChooserTitle
+    }
+
+    /**
+     * This takes the given app package list (list of app package names)
+     * and displays them first among the list of apps available
+     *
+     * @param priorityAppPackages accepts a list of strings of app package names
+     * Apps are displayed in the order you pass them if they are available on your device
+     */
+    fun setIntentChooserPriorityList(priorityAppPackages: List<String>) = cropImageOptions.apply {
+        this.intentChooserPriorityList = priorityAppPackages
+    }
+
 }
 
 fun options(

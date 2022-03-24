@@ -54,14 +54,6 @@ open class CropImageActivity :
     private val takePicture = registerForActivityResult(ActivityResultContracts.TakePicture()) {
         if (it) onPickImageResult(latestTmpUri) else onPickImageResult(null)
     }
-    private val intentChooser =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityRes ->
-            if (activityRes.resultCode == Activity.RESULT_OK) {
-                (activityRes.data?.data ?: latestTmpUri)?.let { uri ->
-                    onPickImageResult(uri)
-                }
-            } else setResultCancel()
-        }
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,13 +69,34 @@ open class CropImageActivity :
         if (savedInstanceState == null) {
             if (cropImageUri == null || cropImageUri == Uri.EMPTY) {
                 if (cropImageOptions.showIntentChooser) {
-                    val appPicker = getPickImageChooserIntent(
-                        this, getString(R.string.pick_image_chooser_title),
-                        includeCamera = cropImageOptions.imageSourceIncludeCamera,
-                        includeGallery = cropImageOptions.imageSourceIncludeGallery,
-                        includeDocuments = false
+                    val ciIntentChooser = CropImageIntentChooser(
+                        activity = this,
+                        callback = object : CropImageIntentChooser.ResultCallback {
+                            override fun onSuccess(uri: Uri?) {
+                                onPickImageResult(uri)
+                            }
+
+                            override fun onCancelled() {
+                                setResultCancel()
+                            }
+                        }
                     )
-                    intentChooser.launch(appPicker)
+                    with (cropImageOptions) {
+                        intentChooserTitle?.takeIf { it.isNotBlank() }?.let { icTitle ->
+                                ciIntentChooser.setIntentChooserTitle(icTitle)
+                            }
+                        intentChooserPriorityList?.takeIf { it.isNotEmpty() }?.let { appsList ->
+                                ciIntentChooser.setupPriorityAppsList(appsList)
+                            }
+                        val cameraUri: Uri? = if (imageSourceIncludeCamera) getTmpFileUri()
+                        else null
+                        ciIntentChooser.showChooserIntent(
+                            includeCamera = imageSourceIncludeCamera,
+                            includeGallery = imageSourceIncludeGallery,
+                            cameraUri
+                        )
+                    }
+
                 } else {
                     when {
                         cropImageOptions.imageSourceIncludeGallery &&
@@ -350,167 +363,4 @@ open class CropImageActivity :
 
     enum class Source { CAMERA, GALLERY }
 
-    /**
-     * Create a chooser intent to select the source to get image from.<br></br>
-     * The source can be camera's (ACTION_IMAGE_CAPTURE) or gallery's (ACTION_GET_CONTENT).<br></br>
-     * All possible sources are added to the intent chooser.
-     *
-     * @param context          used to access Android APIs, like content resolve, it is your
-     * activity/fragment/widget.
-     * @param title            the title to use for the chooser UI
-     * @param includeCamera    if to include camera intents
-     * @param includeGallery if to include Gallery app intents
-     * @param includeDocuments if to include KitKat documents activity containing all sources
-     */
-    private fun getPickImageChooserIntent(
-        context: Context,
-        title: CharSequence?,
-        includeCamera: Boolean,
-        includeGallery: Boolean,
-        includeDocuments: Boolean
-    ): Intent {
-        val allIntents: MutableList<Intent> = ArrayList()
-        val packageManager = context.packageManager
-        // collect all camera intents if Camera permission is available
-        if (!isExplicitCameraPermissionRequired(context) && includeCamera) {
-            allIntents.addAll(getCameraIntents(context, packageManager))
-        }
-        if (includeGallery) {
-            var galleryIntents =
-                getGalleryIntents(packageManager, Intent.ACTION_GET_CONTENT, includeDocuments)
-            if (galleryIntents.isEmpty()) {
-                // if no intents found for get-content try pick intent action (Huawei P9).
-                galleryIntents =
-                    getGalleryIntents(packageManager, Intent.ACTION_PICK, includeDocuments)
-            }
-            allIntents.addAll(galleryIntents)
-        }
-        val target: Intent
-        if (allIntents.isEmpty()) {
-            target = Intent()
-        } else {
-            target = Intent(Intent.ACTION_CHOOSER, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            if (includeGallery) {
-                target.action = Intent.ACTION_PICK
-                target.type = "image/*"
-            }
-        }
-        // Create a chooser from the main  intent
-        val chooserIntent = Intent.createChooser(target, title)
-        // Add all other intents
-        chooserIntent.putExtra(
-            Intent.EXTRA_INITIAL_INTENTS, allIntents.toTypedArray<Parcelable>()
-        )
-        return chooserIntent
-    }
-
-    /**
-     * Get all Camera intents for capturing image using device camera apps.
-     */
-    private fun getCameraIntents(context: Context, packageManager: PackageManager): List<Intent> {
-        val allIntents: MutableList<Intent> = ArrayList()
-        // Determine Uri of camera image to  save.
-        val outputFileUri = getTmpFileUri()
-        latestTmpUri = outputFileUri
-        val captureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        val listCam = packageManager.queryIntentActivities(captureIntent, 0)
-        for (res in listCam) {
-            val intent = Intent(captureIntent)
-            intent.component = ComponentName(res.activityInfo.packageName, res.activityInfo.name)
-            intent.setPackage(res.activityInfo.packageName)
-            if (context is Activity) {
-                context.grantUriPermission(
-                    res.activityInfo.packageName, outputFileUri,
-                    Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION
-                )
-            }
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri)
-            allIntents.add(intent)
-        }
-        return allIntents
-    }
-
-    private val famousGalleryPackages = listOf(
-        "com.google.android.apps.photos", // Google Photos
-        "com.google.android.apps.photosgo", // Google Photos Gallery Go
-        "com.sec.android.gallery3d", // Samsung Gallery
-        "com.oneplus.gallery", // One Plus Gallery
-        "com.miui.gallery", // MIUI Gallery
-    )
-
-    /**
-     * Get all Gallery intents for getting image from one of the apps of the device that handle
-     * images.
-     * Note: It currently get only the main camera app intent. Still have to figure out
-     * how to get multiple camera apps to pick from (if available)
-     */
-    private fun getGalleryIntents(
-        packageManager: PackageManager,
-        action: String,
-        includeDocuments: Boolean
-    ): List<Intent> {
-        val intents: MutableList<Intent> = ArrayList()
-        val galleryIntent = if (action == Intent.ACTION_GET_CONTENT) Intent(action)
-        else Intent(action, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        galleryIntent.type = "image/*"
-        val listGallery = packageManager.queryIntentActivities(galleryIntent, 0)
-        for (res in listGallery) {
-            val intent = Intent(galleryIntent)
-            intent.component = ComponentName(res.activityInfo.packageName, res.activityInfo.name)
-            intent.setPackage(res.activityInfo.packageName)
-            intents.add(intent)
-        }
-        // remove documents intent
-        if (!includeDocuments) {
-            for (intent in intents) {
-                if (intent.component?.className == "com.android.documentsui.DocumentsActivity") {
-                    intents.remove(intent)
-                    break
-                }
-            }
-        }
-        // sort intents
-        val priorityIntents = mutableListOf<Intent>()
-        for (pkgName in famousGalleryPackages) {
-            intents.firstOrNull { it.`package` == pkgName }?.let {
-                intents.remove(it)
-                priorityIntents.add(it)
-            }
-        }
-        intents.addAll(0, priorityIntents)
-        return intents
-    }
-
-    /**
-     * Check if explicetly requesting camera permission is required.<br></br>
-     * It is required in Android Marshmellow and above if "CAMERA" permission is requested in the
-     * manifest.<br></br>
-     * See [StackOverflow
-     * question](http://stackoverflow.com/questions/32789027/android-m-camera-intent-permission-bug).
-     */
-    private fun isExplicitCameraPermissionRequired(context: Context): Boolean {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
-            hasPermissionInManifest(context, "android.permission.CAMERA") &&
-            context.checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
-    }
-
-    /**
-     * Check if the app requests a specific permission in the manifest.
-     *
-     * @param permissionName the permission to check
-     * @return true - the permission in requested in manifest, false - not.
-     */
-    private fun hasPermissionInManifest(context: Context, permissionName: String): Boolean {
-        val packageName = context.packageName
-        try {
-            val packageInfo =
-                context.packageManager.getPackageInfo(packageName, PackageManager.GET_PERMISSIONS)
-            val declaredPermisisons = packageInfo.requestedPermissions
-            if (declaredPermisisons?.any { it?.equals(permissionName, true) == true } == true) {
-                return true
-            }
-        } catch (e: PackageManager.NameNotFoundException) {
-        }
-        return false
-    }
 }
