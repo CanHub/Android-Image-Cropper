@@ -194,7 +194,8 @@ internal class SCropImageFragment : Fragment(), SCropImageContract.View {
 //                setShowIntentChooser(true)
 //                setIntentChooserTitle("My Intent Chooser")
 /*                setIntentChooserPriorityList(listOf(
-                    "com.miui.gallery"
+                    "com.miui.gallery",
+                    "com.google.android.apps.photos"
                 ))
 */
             }
