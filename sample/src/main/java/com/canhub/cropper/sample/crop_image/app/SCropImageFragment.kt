@@ -192,7 +192,7 @@ internal class SCropImageFragment : Fragment(), SCropImageContract.View {
 //                setFixAspectRatio(true)
 //                setSkipEditing(true)
 //                setShowIntentChooser(true)
-//                setIntentChooserTitle("Waka Waka")
+//                setIntentChooserTitle("My Intent Chooser")
 /*                setIntentChooserPriorityList(listOf(
                     "com.miui.gallery"
                 ))
