@@ -1,17 +1,9 @@
 package com.canhub.cropper
 
-import android.Manifest
-import android.app.Activity
-import android.content.ComponentName
-import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.os.Parcelable
-import android.provider.MediaStore
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -21,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.BlendModeColorFilterCompat
 import androidx.core.graphics.BlendModeCompat
+import androidx.core.net.toUri
 import com.canhub.cropper.CropImageView.CropResult
 import com.canhub.cropper.CropImageView.OnCropImageCompleteListener
 import com.canhub.cropper.CropImageView.OnSetImageUriCompleteListener
@@ -110,6 +103,8 @@ open class CropImageActivity :
                     }
                 }
             } else cropImageView?.setImageUriAsync(cropImageUri)
+        } else {
+            latestTmpUri = savedInstanceState.getString(BUNDLE_KEY_TMP_URI)?.toUri()
         }
 
         supportActionBar?.let {
@@ -171,6 +166,11 @@ open class CropImageActivity :
         super.onStop()
         cropImageView?.setOnSetImageUriCompleteListener(null)
         cropImageView?.setOnCropImageCompleteListener(null)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(BUNDLE_KEY_TMP_URI, latestTmpUri.toString())
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -363,4 +363,7 @@ open class CropImageActivity :
 
     enum class Source { CAMERA, GALLERY }
 
+    private companion object {
+        const val BUNDLE_KEY_TMP_URI = "bundle_key_tmp_uri"
+    }
 }
