@@ -74,13 +74,13 @@ open class CropImageActivity :
                             }
                         }
                     )
-                    with (cropImageOptions) {
+                    cropImageOptions.apply {
                         intentChooserTitle?.takeIf { it.isNotBlank() }?.let { icTitle ->
-                                ciIntentChooser.setIntentChooserTitle(icTitle)
-                            }
+                            ciIntentChooser.setIntentChooserTitle(icTitle)
+                        }
                         intentChooserPriorityList?.takeIf { it.isNotEmpty() }?.let { appsList ->
-                                ciIntentChooser.setupPriorityAppsList(appsList)
-                            }
+                            ciIntentChooser.setupPriorityAppsList(appsList)
+                        }
                         val cameraUri: Uri? = if (imageSourceIncludeCamera) getTmpFileUri()
                         else null
                         ciIntentChooser.showChooserIntent(
@@ -89,7 +89,6 @@ open class CropImageActivity :
                             cameraUri
                         )
                     }
-
                 } else {
                     when {
                         cropImageOptions.imageSourceIncludeGallery &&
@@ -364,6 +363,7 @@ open class CropImageActivity :
     enum class Source { CAMERA, GALLERY }
 
     private companion object {
+
         const val BUNDLE_KEY_TMP_URI = "bundle_key_tmp_uri"
     }
 }

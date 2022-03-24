@@ -175,9 +175,12 @@ class CropImageIntentChooser(
             val packageInfo =
                 context.packageManager.getPackageInfo(packageName, PackageManager.GET_PERMISSIONS)
             val declaredPermissions = packageInfo.requestedPermissions
-            if (declaredPermissions?.any {
-                    it?.equals("android.permission.CAMERA", true) == true
-                } == true) {
+            if (
+                declaredPermissions
+                    ?.any {
+                        it?.equals("android.permission.CAMERA", true) == true
+                    } == true
+            ) {
                 return true
             }
         } catch (e: PackageManager.NameNotFoundException) {

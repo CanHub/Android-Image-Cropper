@@ -49,6 +49,7 @@ data class CropImageContractOptions @JvmOverloads constructor(
         cropImageOptions.cropShape = cropShape
         return this
     }
+
     /**
      * To set the shape of the cropper corner (RECTANGLE / OVAL)
      * Default: RECTANGLE
@@ -526,7 +527,6 @@ data class CropImageContractOptions @JvmOverloads constructor(
     fun setIntentChooserPriorityList(priorityAppPackages: List<String>) = cropImageOptions.apply {
         this.intentChooserPriorityList = priorityAppPackages
     }
-
 }
 
 fun options(
