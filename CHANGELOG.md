@@ -10,7 +10,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - `Security` in case of vulnerabilities.
 
 ## [x.x.x] - unreleased
-
+### Fixed
+- Fix disable closing AlertDialog when touching outside the dialog [#334](https://github.com/CanHub/Android-Image-Cropper/issues/334)
 ## [4.2.0] - 21/03/2022
 ### Added
 - Added an option to skip manual editing and return entire image when required [#324](https://github.com/CanHub/Android-Image-Cropper/pull/324)
