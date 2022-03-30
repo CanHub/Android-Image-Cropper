@@ -504,7 +504,11 @@ data class CropImageContractOptions @JvmOverloads constructor(
 
     /**
      * Shows an intent chooser instead of the alert dialog when choosing an image source.
+     *
      * *Default: false*
+     *
+     * Note: To show the camera app as an option in Intent chooser you will need to add
+     * the camera permission ("android.permission.CAMERA") to your manifest file.
      */
     fun setShowIntentChooser(showIntentChooser: Boolean) = cropImageOptions.apply {
         this.showIntentChooser = showIntentChooser
@@ -523,6 +527,11 @@ data class CropImageContractOptions @JvmOverloads constructor(
      *
      * @param priorityAppPackages accepts a list of strings of app package names
      * Apps are displayed in the order you pass them if they are available on your device
+     *
+     * Note: If you pass an empty list here there will be no sorting of the apps list
+     * shown in the intent chooser.
+     * By default, the library sorts the list putting a few common
+     * apps like Google Photos and Google Photos Go at the start of the list.
      */
     fun setIntentChooserPriorityList(priorityAppPackages: List<String>) = cropImageOptions.apply {
         this.intentChooserPriorityList = priorityAppPackages

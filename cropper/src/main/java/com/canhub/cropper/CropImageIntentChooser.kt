@@ -18,13 +18,29 @@ class CropImageIntentChooser(
     private val callback: ResultCallback
 ) {
 
+    interface ResultCallback {
+
+        fun onSuccess(uri: Uri?)
+
+        fun onCancelled()
+    }
+
+    companion object {
+
+        const val GOOGLE_PHOTOS = "com.google.android.apps.photos"
+        const val GOOGLE_PHOTOS_GO = "com.google.android.apps.photosgo"
+        const val SAMSUNG_GALLERY = "com.sec.android.gallery3d"
+        const val ONEPLUS_GALLERY = "com.oneplus.gallery"
+        const val MIUI_GALLERY = "com.miui.gallery"
+    }
+
     private var title: String = activity.getString(R.string.pick_image_chooser_title)
     private var priorityIntentList = listOf(
-        "com.google.android.apps.photos", // Google Photos
-        "com.google.android.apps.photosgo", // Google Photos Gallery Go
-        "com.sec.android.gallery3d", // Samsung Gallery
-        "com.oneplus.gallery", // One Plus Gallery
-        "com.miui.gallery", // MIUI Gallery
+        GOOGLE_PHOTOS,
+        GOOGLE_PHOTOS_GO,
+        SAMSUNG_GALLERY,
+        ONEPLUS_GALLERY,
+        MIUI_GALLERY
     )
     private var cameraImgUri: Uri? = null
     private val intentChooser =
@@ -74,14 +90,12 @@ class CropImageIntentChooser(
             }
             allIntents.addAll(galleryIntents)
         }
-        val target: Intent
-        if (allIntents.isEmpty()) {
-            target = Intent()
-        } else {
-            target = Intent(Intent.ACTION_CHOOSER, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            if (includeGallery) {
-                target.action = Intent.ACTION_PICK
-                target.type = "image/*"
+        val target = if (allIntents.isEmpty()) Intent() else {
+            Intent(Intent.ACTION_CHOOSER, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply {
+                if (includeGallery) {
+                    action = Intent.ACTION_PICK
+                    type = "image/*"
+                }
             }
         }
         // Create a chooser from the main  intent
@@ -175,14 +189,8 @@ class CropImageIntentChooser(
             val packageInfo =
                 context.packageManager.getPackageInfo(packageName, PackageManager.GET_PERMISSIONS)
             val declaredPermissions = packageInfo.requestedPermissions
-            if (
-                declaredPermissions
-                    ?.any {
-                        it?.equals("android.permission.CAMERA", true) == true
-                    } == true
-            ) {
-                return true
-            }
+            return declaredPermissions
+                ?.any { it?.equals("android.permission.CAMERA", true) == true } == true
         } catch (e: PackageManager.NameNotFoundException) {
             // Since the package name cannot be found we return false below
             // because this means that the camera permission hasn't been declared
@@ -212,12 +220,5 @@ class CropImageIntentChooser(
      */
     fun setIntentChooserTitle(title: String): CropImageIntentChooser = apply {
         this.title = title
-    }
-
-    interface ResultCallback {
-
-        fun onSuccess(uri: Uri?)
-
-        fun onCancelled()
     }
 }

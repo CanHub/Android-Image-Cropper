@@ -61,44 +61,19 @@ open class CropImageActivity :
 
         if (savedInstanceState == null) {
             if (cropImageUri == null || cropImageUri == Uri.EMPTY) {
-                if (cropImageOptions.showIntentChooser) {
-                    val ciIntentChooser = CropImageIntentChooser(
-                        activity = this,
-                        callback = object : CropImageIntentChooser.ResultCallback {
-                            override fun onSuccess(uri: Uri?) {
-                                onPickImageResult(uri)
-                            }
-
-                            override fun onCancelled() {
-                                setResultCancel()
-                            }
-                        }
-                    )
-                    cropImageOptions.apply {
-                        intentChooserTitle?.takeIf { it.isNotBlank() }?.let { icTitle ->
-                            ciIntentChooser.setIntentChooserTitle(icTitle)
-                        }
-                        intentChooserPriorityList?.takeIf { it.isNotEmpty() }?.let { appsList ->
-                            ciIntentChooser.setupPriorityAppsList(appsList)
-                        }
-                        val cameraUri: Uri? = if (imageSourceIncludeCamera) getTmpFileUri()
-                        else null
-                        ciIntentChooser.showChooserIntent(
-                            includeCamera = imageSourceIncludeCamera,
-                            includeGallery = imageSourceIncludeGallery,
-                            cameraUri
-                        )
-                    }
-                } else {
-                    when {
-                        cropImageOptions.imageSourceIncludeGallery &&
+                when {
+                    cropImageOptions.showIntentChooser -> showIntentChooser()
+                    else -> {
+                        when {
+                            cropImageOptions.imageSourceIncludeGallery &&
+                                cropImageOptions.imageSourceIncludeCamera ->
+                                showImageSourceDialog(::openSource)
+                            cropImageOptions.imageSourceIncludeGallery ->
+                                pickImageGallery.launch("image/*")
                             cropImageOptions.imageSourceIncludeCamera ->
-                            showImageSourceDialog(::openSource)
-                        cropImageOptions.imageSourceIncludeGallery ->
-                            pickImageGallery.launch("image/*")
-                        cropImageOptions.imageSourceIncludeCamera ->
-                            openCamera()
-                        else -> finish()
+                                openCamera()
+                            else -> finish()
+                        }
                     }
                 }
             } else cropImageView?.setImageUriAsync(cropImageUri)
@@ -113,6 +88,40 @@ open class CropImageActivity :
                 else
                     resources.getString(R.string.crop_image_activity_title)
             it.setDisplayHomeAsUpEnabled(true)
+        }
+    }
+
+    private fun showIntentChooser() {
+        val ciIntentChooser = CropImageIntentChooser(
+            activity = this,
+            callback = object : CropImageIntentChooser.ResultCallback {
+                override fun onSuccess(uri: Uri?) {
+                    onPickImageResult(uri)
+                }
+
+                override fun onCancelled() {
+                    setResultCancel()
+                }
+            }
+        )
+        cropImageOptions.let { options ->
+            options.intentChooserTitle
+                ?.takeIf { title -> title.isNotBlank() }
+                ?.let { icTitle ->
+                    ciIntentChooser.setIntentChooserTitle(icTitle)
+                }
+            options.intentChooserPriorityList
+                ?.takeIf { appPriorityList -> appPriorityList.isNotEmpty() }
+                ?.let { appsList ->
+                    ciIntentChooser.setupPriorityAppsList(appsList)
+                }
+            val cameraUri: Uri? = if (options.imageSourceIncludeCamera) getTmpFileUri()
+            else null
+            ciIntentChooser.showChooserIntent(
+                includeCamera = options.imageSourceIncludeCamera,
+                includeGallery = options.imageSourceIncludeGallery,
+                cameraUri
+            )
         }
     }
 
