@@ -154,6 +154,7 @@ open class CropImageActivity :
      */
     open fun showImageSourceDialog(openSource: (Source) -> Unit) {
         AlertDialog.Builder(this)
+            .setCancelable(false)
             .setTitle(R.string.pick_image_chooser_title)
             .setItems(
                 arrayOf(
