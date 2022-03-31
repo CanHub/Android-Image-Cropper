@@ -254,7 +254,7 @@ object CropImage {
         originalUri = null,
         bitmap = null,
         uriContent = null,
-        error = CropException.CancellationException(),
+        error = CropException.Cancellation(),
         cropPoints = floatArrayOf(),
         cropRect = null,
         wholeImageRect = null,

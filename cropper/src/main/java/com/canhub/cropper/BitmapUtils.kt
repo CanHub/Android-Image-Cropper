@@ -132,9 +132,7 @@ internal object BitmapUtils {
             val bitmap = decodeImage(resolver, uri, options)
             BitmapSampled(bitmap, options.inSampleSize)
         } catch (e: Exception) {
-            throw CropException.FailedToLoadBitmapException(
-                uri, e.message
-            )
+            throw CropException.FailedToLoadBitmap(uri, e.message)
         }
     }
 
@@ -658,7 +656,7 @@ internal object BitmapUtils {
             result?.recycle()
             throw e
         } catch (e: Exception) {
-            throw CropException.FailedToLoadBitmapException(loadedImageUri, e.message)
+            throw CropException.FailedToLoadBitmap(loadedImageUri, e.message)
         }
         return BitmapSampled(result, sampleSize)
     }
@@ -702,7 +700,7 @@ internal object BitmapUtils {
                 closeSafe(stream)
             }
         } while (options.inSampleSize <= 512)
-        throw CropException.FailedToDecodeImageException(uri)
+        throw CropException.FailedToDecodeImage(uri)
     }
 
     /**
@@ -743,7 +741,7 @@ internal object BitmapUtils {
             closeSafe(stream)
             decoder?.recycle()
         } catch (e: Exception) {
-            throw CropException.FailedToLoadBitmapException(uri, e.message)
+            throw CropException.FailedToLoadBitmap(uri, e.message)
         }
         return BitmapSampled(null, 1)
     }
