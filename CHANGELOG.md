@@ -10,6 +10,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - `Security` in case of vulnerabilities.
 
 ## [x.x.x] - unreleased
+### Changed
+- CropException sealed class with cancellation and Image exceptions  [#332](https://github.com/CanHub/Android-Image-Cropper/issues/332)
 ### Fixed
 - Fix disable closing AlertDialog when touching outside the dialog [#334](https://github.com/CanHub/Android-Image-Cropper/issues/334)
 ## [4.2.0] - 21/03/2022
