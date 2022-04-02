@@ -254,7 +254,7 @@ object CropImage {
         originalUri = null,
         bitmap = null,
         uriContent = null,
-        error = Exception("cropping has been cancelled by the user"),
+        error = CropException.Cancellation(),
         cropPoints = floatArrayOf(),
         cropRect = null,
         wholeImageRect = null,
