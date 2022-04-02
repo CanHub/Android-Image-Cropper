@@ -63,18 +63,14 @@ open class CropImageActivity :
             if (cropImageUri == null || cropImageUri == Uri.EMPTY) {
                 when {
                     cropImageOptions.showIntentChooser -> showIntentChooser()
-                    else -> {
-                        when {
-                            cropImageOptions.imageSourceIncludeGallery &&
-                                cropImageOptions.imageSourceIncludeCamera ->
-                                showImageSourceDialog(::openSource)
-                            cropImageOptions.imageSourceIncludeGallery ->
-                                pickImageGallery.launch("image/*")
-                            cropImageOptions.imageSourceIncludeCamera ->
-                                openCamera()
-                            else -> finish()
-                        }
-                    }
+                    cropImageOptions.imageSourceIncludeGallery &&
+                        cropImageOptions.imageSourceIncludeCamera ->
+                        showImageSourceDialog(::openSource)
+                    cropImageOptions.imageSourceIncludeGallery ->
+                        pickImageGallery.launch("image/*")
+                    cropImageOptions.imageSourceIncludeCamera ->
+                        openCamera()
+                    else -> finish()
                 }
             } else cropImageView?.setImageUriAsync(cropImageUri)
         } else {
@@ -115,12 +111,11 @@ open class CropImageActivity :
                 ?.let { appsList ->
                     ciIntentChooser.setupPriorityAppsList(appsList)
                 }
-            val cameraUri: Uri? = if (options.imageSourceIncludeCamera) getTmpFileUri()
-            else null
+            val cameraUri: Uri? = if (options.imageSourceIncludeCamera) getTmpFileUri() else null
             ciIntentChooser.showChooserIntent(
                 includeCamera = options.imageSourceIncludeCamera,
                 includeGallery = options.imageSourceIncludeGallery,
-                cameraUri
+                cameraImgUri = cameraUri
             )
         }
     }

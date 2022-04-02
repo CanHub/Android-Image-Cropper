@@ -98,7 +98,7 @@ class CropImageIntentChooser(
                 }
             }
         }
-        // Create a chooser from the main  intent
+        // Create a chooser from the main intent
         val chooserIntent = Intent.createChooser(target, title)
         // Add all other intents
         chooserIntent.putExtra(
