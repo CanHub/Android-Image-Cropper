@@ -291,6 +291,26 @@ open class CropImageOptions : Parcelable {
     @JvmField
     var skipEditing: Boolean
 
+    /**
+     * Enabling this option replaces the current AlertDialog to choose the image source
+     * with an Intent chooser
+     */
+    @JvmField
+    var showIntentChooser: Boolean
+
+    /**
+     * optional, Sets a custom title for the intent chooser
+     */
+    @JvmField
+    var intentChooserTitle: String?
+
+    /**
+     * optional, reorders intent list displayed with the app package names
+     * passed here in order
+     */
+    @JvmField
+    var intentChooserPriorityList: List<String>?
+
     /** Init options with defaults.  */
     constructor() {
         val dm = Resources.getSystem().displayMetrics
@@ -350,6 +370,9 @@ open class CropImageOptions : Parcelable {
         cropMenuCropButtonTitle = null
         cropMenuCropButtonIcon = 0
         skipEditing = false
+        showIntentChooser = false
+        intentChooserTitle = null
+        intentChooserPriorityList = listOf()
     }
 
     /** Create object from parcel.  */
@@ -409,6 +432,9 @@ open class CropImageOptions : Parcelable {
         cropMenuCropButtonTitle = TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(parcel)
         cropMenuCropButtonIcon = parcel.readInt()
         skipEditing = parcel.readByte().toInt() != 0
+        showIntentChooser = parcel.readByte().toInt() != 0
+        intentChooserTitle = parcel.readString()
+        intentChooserPriorityList = parcel.createStringArrayList()
     }
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
@@ -467,6 +493,9 @@ open class CropImageOptions : Parcelable {
         TextUtils.writeToParcel(cropMenuCropButtonTitle, dest, flags)
         dest.writeInt(cropMenuCropButtonIcon)
         dest.writeByte((if (skipEditing) 1 else 0).toByte())
+        dest.writeByte((if (showIntentChooser) 1 else 0).toByte())
+        dest.writeString(intentChooserTitle)
+        dest.writeStringList(intentChooserPriorityList)
     }
 
     override fun describeContents(): Int {
