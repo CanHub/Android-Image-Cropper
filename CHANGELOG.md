@@ -10,10 +10,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - `Security` in case of vulnerabilities.
 
 ## [x.x.x] - unreleased
+
+## [4.2.1] - 04/04/2022
+### Added
+- Added support for optionally displaying an intent chooser when selecting image source. [#325](https://github.com/CanHub/Android-Image-Cropper/issues/325)
 ### Changed
 - CropException sealed class with cancellation and Image exceptions  [#332](https://github.com/CanHub/Android-Image-Cropper/issues/332)
 ### Fixed
 - Fix disable closing AlertDialog when touching outside the dialog [#334](https://github.com/CanHub/Android-Image-Cropper/issues/334)
+
 ## [4.2.0] - 21/03/2022
 ### Added
 - Added an option to skip manual editing and return entire image when required [#324](https://github.com/CanHub/Android-Image-Cropper/pull/324)

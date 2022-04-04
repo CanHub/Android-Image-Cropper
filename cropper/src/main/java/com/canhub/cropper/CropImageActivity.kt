@@ -62,6 +62,7 @@ open class CropImageActivity :
         if (savedInstanceState == null) {
             if (cropImageUri == null || cropImageUri == Uri.EMPTY) {
                 when {
+                    cropImageOptions.showIntentChooser -> showIntentChooser()
                     cropImageOptions.imageSourceIncludeGallery &&
                         cropImageOptions.imageSourceIncludeCamera ->
                         showImageSourceDialog(::openSource)
@@ -83,6 +84,39 @@ open class CropImageActivity :
                 else
                     resources.getString(R.string.crop_image_activity_title)
             it.setDisplayHomeAsUpEnabled(true)
+        }
+    }
+
+    private fun showIntentChooser() {
+        val ciIntentChooser = CropImageIntentChooser(
+            activity = this,
+            callback = object : CropImageIntentChooser.ResultCallback {
+                override fun onSuccess(uri: Uri?) {
+                    onPickImageResult(uri)
+                }
+
+                override fun onCancelled() {
+                    setResultCancel()
+                }
+            }
+        )
+        cropImageOptions.let { options ->
+            options.intentChooserTitle
+                ?.takeIf { title -> title.isNotBlank() }
+                ?.let { icTitle ->
+                    ciIntentChooser.setIntentChooserTitle(icTitle)
+                }
+            options.intentChooserPriorityList
+                ?.takeIf { appPriorityList -> appPriorityList.isNotEmpty() }
+                ?.let { appsList ->
+                    ciIntentChooser.setupPriorityAppsList(appsList)
+                }
+            val cameraUri: Uri? = if (options.imageSourceIncludeCamera) getTmpFileUri() else null
+            ciIntentChooser.showChooserIntent(
+                includeCamera = options.imageSourceIncludeCamera,
+                includeGallery = options.imageSourceIncludeGallery,
+                cameraImgUri = cameraUri
+            )
         }
     }
 
@@ -334,6 +368,7 @@ open class CropImageActivity :
     enum class Source { CAMERA, GALLERY }
 
     private companion object {
+
         const val BUNDLE_KEY_TMP_URI = "bundle_key_tmp_uri"
     }
 }
