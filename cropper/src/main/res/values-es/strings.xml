@@ -5,8 +5,10 @@
     <string name="ic_rotate_right_24">Rotar a la derecha</string>
     <string name="crop_image_menu_crop">Cortar</string>
     <string name="ic_flip_24">Dar la vuelta</string>
-    <string name="ic_flip_24_horizontally">Voltear horizontalmente</string>
-    <string name="ic_flip_24_vertically">Voltear verticalmente</string>
+    <string name="ic_flip_24_horizontally">Girar horizontalmente</string>
+    <string name="ic_flip_24_vertically">Girar verticalmente</string>
     <string name="pick_image_chooser_title">Seleccionar fuente</string>
+    <string name="pick_image_camera">Cámara</string>
+    <string name="pick_image_gallery">Galería</string>
     <string name="crop_image_activity_no_permissions">Cancelando, los permisos requeridos no han sido otorgados</string>
 </resources>
