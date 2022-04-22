@@ -10,6 +10,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - `Security` in case of vulnerabilities.
 
 ## [x.x.x] - unreleased
+### Fixed
+- The translation of `Camera` and `Gallery` does not exist in some languages.
 
 ## [4.2.1] - 04/04/2022
 ### Added

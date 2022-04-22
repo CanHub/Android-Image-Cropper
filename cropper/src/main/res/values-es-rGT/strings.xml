@@ -8,5 +8,7 @@
     <string name="ic_flip_24_horizontally">Voltear horizontalmente</string>
     <string name="ic_flip_24_vertically">Voltear verticalmente</string>
     <string name="pick_image_chooser_title">Seleccionar fuente</string>
+    <string name="pick_image_camera">Cámara</string>
+    <string name="pick_image_gallery">Galería</string>
     <string name="crop_image_activity_no_permissions">Cancelando, los permisos requeridos no se otorgaron</string>
 </resources>

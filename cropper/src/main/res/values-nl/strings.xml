@@ -8,9 +8,9 @@
     <string name="ic_flip_24">Spiegelen</string>
     <string name="ic_flip_24_horizontally">Horizontaal spiegelen</string>
     <string name="ic_flip_24_vertically">Verticaal spiegelen</string>
-
     <string name="pick_image_chooser_title">Bron selecteren</string>
-
+    <string name="pick_image_camera">Camera</string>
+    <string name="pick_image_gallery">Galerij</string>
     <string name="crop_image_activity_no_permissions">Wordt geannuleerd, vereiste machtigingen zijn niet toegekend</string>
 
 </resources>
