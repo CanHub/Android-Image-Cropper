@@ -6,6 +6,10 @@
 
 [Java Sample Code](https://github.com/CanHub/Android-Image-Cropper/tree/main/sample/src/main/java/com/canhub/cropper/sample/crop_image_java)
 
+Still stuck? Try This Discussion here to a **Plug and Play** Solution to get you started. 
+
+[🚨 Calling an Activity Directly To Handle this using Java](https://github.com/CanHub/Android-Image-Cropper/discussions/236)
+
 Wanna help the project? Amazing!
 - [Contributing Guide](https://github.com/CanHub/Android-Image-Cropper/blob/main/CONTRIBUTING.md)
 
