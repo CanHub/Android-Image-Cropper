@@ -1,21 +1,76 @@
-## Features
-- Built-in `CropImageActivity`.
-- Set cropping image as Bitmap, Resource or Android URI (Gallery, Camera, Dropbox, etc.).
-- Image rotation/flipping during cropping.
-- Auto zoom-in/out to relevant cropping area.
-- Auto rotate bitmap by image Exif data.
-- Set result image min/max limits in pixels.
-- Set initial crop window size/location.
-- Request cropped image resize to specific size.
-- Bitmap memory optimization, OOM handling (should never occur)!
-- API Level 14.
-- More..
+# Features
 
+## Optional initial URI
+Crop library can be called with or without image uri
+```kt
+cropImage.launch(
+    options(outputUri) { ... }
+)
+//OR
+cropImage.launch(
+    options { ... }
+)
+```
 
-## Customizations
-- Cropping window shape: Rectangular, Oval (square/circle by fixing aspect ratio), as well as
-  rectangular modes which only allow vertical or horizontal cropping.
-- Cropping window aspect ratio: Free, 1:1, 4:3, 16:9 or Custom.
-- Guidelines appearance: Off / Always On / Show on Touch.
-- Cropping window Border line, border corner and guidelines thickness and color.
-- Cropping background color.
+## Image source
+```kt
+cropImage.launch(
+    options { 
+      setImageSource(
+        includeGallery = true,
+        includeCamera = true,
+      )
+    }
+)
+```
+ 
+### List of options
+```kt
+cropImage.launch(
+    options { 
+      setScaleType(CropImageView.ScaleType.FIT_CENTER)
+      setCropShape(CropImageView.CropShape.RECTANGLE)
+      setGuidelines(CropImageView.Guidelines.ON_TOUCH)
+      setAspectRatio(1, 1)
+      setMaxZoom(4)
+      setAutoZoomEnabled(true)
+      setMultiTouchEnabled(true)
+      setCenterMoveEnabled(true)
+      setShowCropOverlay(true)
+      setAllowFlipping(true)
+      setSnapRadius(3f)
+      setTouchRadius(48f)
+      setInitialCropWindowPaddingRatio(0.1f)
+      setBorderLineThickness(3f)
+      setBorderLineColor(Color.argb(170, 255, 255, 255))
+      setBorderCornerThickness(2f)
+      setBorderCornerOffset(5f)
+      setBorderCornerLength(14f)
+      setBorderCornerColor(WHITE)
+      setGuidelinesThickness(1f)
+      setGuidelinesColor(R.color.white)
+      setBackgroundColor(Color.argb(119, 0, 0, 0))
+      setMinCropWindowSize(24, 24)
+      setMinCropResultSize(20, 20)
+      setMaxCropResultSize(99999, 99999)
+      setActivityTitle("")
+      setActivityMenuIconColor(0)
+      setOutputUri(outputUri)
+      setOutputCompressFormat(Bitmap.CompressFormat.JPEG)
+      setOutputCompressQuality(90)
+      setRequestedSize(0, 0)
+      setRequestedSize(0, 0, CropImageView.RequestSizeOptions.RESIZE_INSIDE)
+      setInitialCropWindowRectangle(null)
+      setInitialRotation(0)
+      setAllowCounterRotation(false)
+      setFlipHorizontally(false)
+      setFlipVertically(false)
+      setCropMenuCropButtonTitle(null)
+      setCropMenuCropButtonIcon(0)
+      setAllowRotation(true)
+      setNoOutputImage(false)
+      setFixAspectRatio(false)
+      setIntentChooserPriorityList(listOf("com.miui.gallery", "com.google.android.apps.photos"))
+    }
+)
+```
