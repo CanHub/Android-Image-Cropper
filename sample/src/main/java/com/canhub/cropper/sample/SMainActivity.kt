@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import com.canhub.cropper.sample.crop_image.SCropImageFragment
 import com.canhub.cropper.sample.crop_image_java.SCropImageFragmentJava
 import com.canhub.cropper.sample.crop_image_view.SCropImageViewFragment
-import com.canhub.cropper.sample.extend_activity.app.SExtendActivity
+import com.canhub.cropper.sample.extend_activity.SExtendActivity
 import com.example.croppersample.databinding.ActivityMainBinding
 
 internal class SMainActivity : AppCompatActivity() {
