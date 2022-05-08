@@ -1,4 +1,4 @@
-[![CanHub](https://github.com/CanHub/Android-Image-Cropper/blob/main/art/canhub_logo_horizontal_transparent.png?raw=true)](https://github.com/canhub)
+[![CanHub](https://github.com/CanHub/Android-Image-Cropper/blob/main/.documentation/art/canhub_logo_horizontal_transparent.png?raw=true)](https://github.com/canhub)
 
 [![](https://jitpack.io/v/CanHub/Android-Image-Cropper.svg)](https://jitpack.io/#CanHub/Android-Image-Cropper)
 
@@ -12,7 +12,7 @@ Android Image Cropper
 - **Simple** image cropping library for Android.
 [Features List](https://github.com/CanHub/Android-Image-Cropper/blob/main/.documentation/features.md)
 
-![Crop](https://github.com/CanHub/Android-Image-Cropper/blob/main/art/demo.gif?raw=true)
+![Crop](https://github.com/CanHub/Android-Image-Cropper/blob/main/.documentation/art/demo.gif?raw=true)
 
 # Add to your project
 ### Step 1. Add the JitPack repository to your root build.gradle
