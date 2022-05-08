@@ -3,13 +3,9 @@ package com.canhub.cropper.sample
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.canhub.cropper.sample.crop_image.SCropImageFragment
-import com.canhub.cropper.sample.crop_image_java.SCropImageFragmentJava
-import com.canhub.cropper.sample.crop_image_view.SCropImageViewFragment
-import com.canhub.cropper.sample.extend_activity.SExtendActivity
 import com.example.croppersample.databinding.ActivityMainBinding
 
-internal class SMainActivity : AppCompatActivity() {
+internal class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -19,21 +15,10 @@ internal class SMainActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
-        binding.sampleCropImageView.setOnClickListener {
-            SCropImageViewFragment.newInstance().show()
-        }
-
-        binding.sampleCustomActivity.setOnClickListener {
-            SExtendActivity.start(this)
-        }
-
-        binding.sampleCropImage.setOnClickListener {
-            SCropImageFragment.newInstance().show()
-        }
-
-        binding.sampleCropImageJava.setOnClickListener {
-            SCropImageFragmentJava.newInstance().show()
-        }
+        binding.sampleCropImageView.setOnClickListener { SampleUsingImageView.newInstance().show() }
+        binding.sampleCustomActivity.setOnClickListener { SampleCustomActivity.start(this) }
+        binding.sampleCropImage.setOnClickListener { SampleCrop.newInstance().show() }
+        binding.sampleCropImageJava.setOnClickListener { SampleCropJava.newInstance().show() }
     }
 
     private fun Fragment.show() {

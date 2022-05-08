@@ -1,4 +1,4 @@
-package com.canhub.cropper.sample.crop_image_view
+package com.canhub.cropper.sample
 
 import android.graphics.Rect
 import android.net.Uri
@@ -18,13 +18,12 @@ import com.canhub.cropper.CropImageView
 import com.canhub.cropper.CropImageView.CropResult
 import com.canhub.cropper.CropImageView.OnCropImageCompleteListener
 import com.canhub.cropper.CropImageView.OnSetImageUriCompleteListener
-import com.canhub.cropper.sample.SCropResultActivity
 import com.canhub.cropper.sample.options_dialog.app.SOptionsDialogBottomSheet
 import com.canhub.cropper.sample.options_dialog.domain.SOptionsDomain
 import com.example.croppersample.R
 import com.example.croppersample.databinding.FragmentCropImageViewBinding
 
-internal class SCropImageViewFragment :
+internal class SampleUsingImageView :
     Fragment(),
     SOptionsDialogBottomSheet.Listener,
     OnSetImageUriCompleteListener,
@@ -32,7 +31,7 @@ internal class SCropImageViewFragment :
 
     companion object {
 
-        fun newInstance() = SCropImageViewFragment()
+        fun newInstance() = SampleUsingImageView()
     }
 
     private lateinit var binding: FragmentCropImageViewBinding
@@ -165,7 +164,7 @@ internal class SCropImageViewFragment :
                     result.bitmap?.let { CropImage.toOvalBitmap(it) }
                 else result.bitmap
             context?.let { Log.v("File Path", result.getUriFilePath(it).toString()) }
-            SCropResultActivity.start(this, imageBitmap, result.uriContent, result.sampleSize)
+            SampleResultScreen.start(this, imageBitmap, result.uriContent, result.sampleSize)
         } else {
             Log.e("AIC", "Failed to crop image", result?.error)
             Toast

@@ -1,4 +1,4 @@
-package com.canhub.cropper.sample.extend_activity
+package com.canhub.cropper.sample
 
 import android.app.Activity
 import android.content.Intent
@@ -13,13 +13,13 @@ import com.canhub.cropper.CropImageActivity
 import com.example.croppersample.R
 import com.example.croppersample.databinding.ExtendedActivityBinding
 
-internal class SExtendActivity : CropImageActivity() {
+internal class SampleCustomActivity : CropImageActivity() {
 
     companion object {
         fun start(activity: Activity) {
             ActivityCompat.startActivity(
                 activity,
-                Intent(activity, SExtendActivity::class.java),
+                Intent(activity, SampleCustomActivity::class.java),
                 null
             )
         }

@@ -1,4 +1,4 @@
-package com.canhub.cropper.sample.crop_image_java;
+package com.canhub.cropper.sample;
 
 import static android.graphics.Color.RED;
 import static android.graphics.Color.WHITE;
@@ -25,7 +25,6 @@ import com.canhub.cropper.CropImageContract;
 import com.canhub.cropper.CropImageContractOptions;
 import com.canhub.cropper.CropImageOptions;
 import com.canhub.cropper.CropImageView;
-import com.canhub.cropper.sample.SCropResultActivity;
 import com.example.croppersample.R;
 import com.example.croppersample.databinding.FragmentCameraBinding;
 import org.jetbrains.annotations.NotNull;
@@ -35,7 +34,7 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.Objects;
 
-public class SCropImageFragmentJava extends Fragment {
+public class SampleCropJava extends Fragment {
 
     static final String DATE_FORMAT = "yyyyMMdd_HHmmss";
     static final String FILE_NAMING_PREFIX = "JPEG_";
@@ -53,8 +52,8 @@ public class SCropImageFragmentJava extends Fragment {
             registerForActivityResult(new CropImageContract(), this::onCropImageResult);
 
 
-    public static SCropImageFragmentJava newInstance() {
-        return new SCropImageFragmentJava();
+    public static SampleCropJava newInstance() {
+        return new SampleCropJava();
     }
 
     @Nullable
@@ -190,7 +189,7 @@ public class SCropImageFragmentJava extends Fragment {
     }
 
     public void handleCropImageResult(@NotNull String uri) {
-        SCropResultActivity.Companion.start(this, null, Uri.parse(uri), null);
+        SampleResultScreen.Companion.start(this, null, Uri.parse(uri), null);
     }
 
     private File createImageFile() throws IOException {

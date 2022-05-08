@@ -1,4 +1,4 @@
-package com.canhub.cropper.sample.crop_image
+package com.canhub.cropper.sample
 
 import android.graphics.Bitmap
 import android.graphics.Color
@@ -18,7 +18,6 @@ import com.canhub.cropper.CropImage
 import com.canhub.cropper.CropImageContract
 import com.canhub.cropper.CropImageView
 import com.canhub.cropper.options
-import com.canhub.cropper.sample.SCropResultActivity
 import com.example.croppersample.R
 import com.example.croppersample.databinding.FragmentCameraBinding
 import java.io.File
@@ -26,11 +25,11 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-internal class SCropImageFragment : Fragment() {
+internal class SampleCrop : Fragment() {
 
     companion object {
 
-        fun newInstance() = SCropImageFragment()
+        fun newInstance() = SampleCrop()
 
         const val DATE_FORMAT = "yyyyMMdd_HHmmss"
         const val FILE_NAMING_PREFIX = "JPEG_"
@@ -249,7 +248,7 @@ internal class SCropImageFragment : Fragment() {
     }
 
     private fun handleCropImageResult(uri: String) {
-        SCropResultActivity.start(this, null, Uri.parse(uri.replace("file:", "")), null)
+        SampleResultScreen.start(this, null, Uri.parse(uri.replace("file:", "")), null)
     }
 
     private fun setupOutputUri() {
