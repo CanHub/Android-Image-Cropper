@@ -2,23 +2,20 @@
 
 [![](https://jitpack.io/v/CanHub/Android-Image-Cropper.svg)](https://jitpack.io/#CanHub/Android-Image-Cropper)
 
-☕ [Using the library in Java](https://github.com/CanHub/Android-Image-Cropper/blob/main/README_JAVA.md)
+☕ [Using the library in Java](https://github.com/CanHub/Android-Image-Cropper/blob/main/.documentation/java_usage.md)
 
 Android Image Cropper
 =======
-**Powerful** (Zoom, Rotation, Multi-Source);
-**Customizable** (Shape, Limits, Style);
-**Optimized** (Async, Sampling, Matrix);
-**Simple** image cropping library for Android.
+- **Powerful** (Zoom, Rotation, Multi-Source);
+- **Customizable** (Shape, Limits, Style);
+- **Optimized** (Async, Sampling, Matrix);
+- **Simple** image cropping library for Android.
+[Features List](https://github.com/CanHub/Android-Image-Cropper/blob/main/.documentation/features.md)
 
 ![Crop](https://github.com/CanHub/Android-Image-Cropper/blob/main/art/demo.gif?raw=true)
 
 # Add to your project
-
-[See GitHub Wiki for more info.](https://github.com/CanHub/Android-Image-Cropper/wiki)
-
 ### Step 1. Add the JitPack repository to your root build.gradle
-
 ```gradle
   allprojects {
      repositories {
@@ -29,7 +26,6 @@ Android Image Cropper
 ```
 
 ### Step 2. Add the dependency
-
 ```gradle
   dependencies {
        implementation 'com.github.CanHub:Android-Image-Cropper:${version}'
@@ -37,10 +33,8 @@ Android Image Cropper
 ```
 [Latest Release Version](https://github.com/CanHub/Android-Image-Cropper/releases)
 
-### Step 3. Add permissions to manifest 
-
+### Step 3. Add permissions to manifest
 Only need if you run on devices under OS10 (SDK 29)
-
  ```xml
 <manifest>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
@@ -50,7 +44,6 @@ Only need if you run on devices under OS10 (SDK 29)
 
 ### Step 4. Set source compatibility version to Java 11
 - The library is up to date with the latest releases, if you are not using Java 11 yet please check the release page for previous working versions.
-
 - Go to app level `build.gradle` file
 - Add this line inside ```android``` in build.gradle
 	```gradle
@@ -67,12 +60,14 @@ Only need if you run on devices under OS10 (SDK 29)
 
 # Using the Library
 There is 3 ways of using the library:
-- Calling crop directly (Sample code: `sample/SampleCrop.kt`)
-- Using the CropView (Sample code: `sample/SampleUsingImageView.kt`)
-- Extending the activity (Sample code: `sample/SampleCustomActivity.kt`)
+- Calling crop directly [Below]
+- [Using the CropView](https://github.com/CanHub/Android-Image-Cropper/blob/main/.documentation/crop_view.md)
+- [Extending the activity](https://github.com/CanHub/Android-Image-Cropper/blob/main/.documentation/custom_activity.md)
 Your choice depends on how you want your layout to look.
 
 ## Calling crop directly
+[Sample code](https://github.com/CanHub/Android-Image-Cropper/tree/main/sample/src/main/java/com/canhub/cropper/sample/SampleCrop)
+
 - Register for activity result with `CropImageContract`
  ```kotlin
 class MainActivity {
@@ -115,81 +110,6 @@ class MainActivity {
     }
 }
  ```
-
-## Using CropView
-2. Add `CropImageView` into your activity
- ```xml
- <!-- Image Cropper fill the remaining available height -->
- <com.canhub.cropper.CropImageView
-   android:id="@+id/cropImageView"
-   android:layout_width="match_parent"
-   android:layout_height="0dp"
-   android:layout_weight="1"/>
- ```
-
-3. Set image to crop
- ```kotlin
- cropImageView.setImageUriAsync(uri)
- // or (prefer using uri for performance and better user experience)
- cropImageView.setImageBitmap(bitmap)
- ```
-
-4. Get cropped image
- ```kotlin
- // subscribe to async event using cropImageView.setOnCropImageCompleteListener(listener)
- cropImageView.getCroppedImageAsync()
- // or
- val cropped: Bitmap = cropImageView.getCroppedImage()
- ```
-
-## Extend to make a custom activity
-If you want to extend the `CropImageActivity` please be aware you will need to setup your `CropImageView`
-You can check a sample code in this project `com.canhub.cropper.sample.extend_activity.app.SExtendActivity`
-
-- Add `CropImageActivity` into your AndroidManifest.xml
- ```xml
- <activity android:name="com.canhub.cropper.CropImageActivity"
-   android:theme="@style/Base.Theme.AppCompat"/> <!-- optional (needed if default theme has no action bar) -->
- ```
-- Setup your `CropImageView` after call `super.onCreate(savedInstanceState)`
- ```kotlin
-override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    setCropImageView(binding.cropImageView)
-}
- ```
-
-### Custom dialog for image source pick
-When calling crop directly the library will prompt a dialog for the user choose between gallery or camera (If you keep both enable).
-We use the Android default AlertDialog for this. If you wanna customised it with your app theme you need to override the method `showImageSourceDialog(..)` when extending the activity _(above)_
-```kotlin 
-override fun showImageSourceDialog(openSource: (Source) -> Unit) {
-     super.showImageSourceDialog(openCamera)
-}
-```
-
-## Features
-- Built-in `CropImageActivity`.
-- Set cropping image as Bitmap, Resource or Android URI (Gallery, Camera, Dropbox, etc.).
-- Image rotation/flipping during cropping.
-- Auto zoom-in/out to relevant cropping area.
-- Auto rotate bitmap by image Exif data.
-- Set result image min/max limits in pixels.
-- Set initial crop window size/location.
-- Request cropped image resize to specific size.
-- Bitmap memory optimization, OOM handling (should never occur)!
-- API Level 14.
-- More..
-
-## Customizations
-- Cropping window shape: Rectangular, Oval (square/circle by fixing aspect ratio), as well as
- rectangular modes which only allow vertical or horizontal cropping.
-- Cropping window aspect ratio: Free, 1:1, 4:3, 16:9 or Custom.
-- Guidelines appearance: Off / Always On / Show on Touch.
-- Cropping window Border line, border corner and guidelines thickness and color.
-- Cropping background color.
-
-For more information, see the [GitHub Wiki](https://github.com/CanHub/Android-Image-Cropper/wiki).
 
 ## Posts
  - [Android cropping image from camera or gallery](http://theartofdev.com/2015/02/15/android-cropping-image-from-camera-or-gallery/)
