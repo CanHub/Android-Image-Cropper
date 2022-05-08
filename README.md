@@ -2,16 +2,7 @@
 
 [![](https://jitpack.io/v/CanHub/Android-Image-Cropper.svg)](https://jitpack.io/#CanHub/Android-Image-Cropper)
 
-[🚨How to migrate from ArthurHub/Android-Image-Cropper🚨](https://github.com/CanHub/Android-Image-Cropper/wiki/🚨-How-to-migrate-Android-Image-Cropper--🚨)
-
-[Java Sample Code](https://github.com/CanHub/Android-Image-Cropper/tree/main/sample/src/main/java/com/canhub/cropper/sample/crop_image_java)
-
-Still stuck? Try This Discussion here to a **Plug and Play** Solution to get you started. 
-
-[🚨 Calling an Activity Directly To Handle this using Java](https://github.com/CanHub/Android-Image-Cropper/discussions/236)
-
-Wanna help the project? Amazing!
-- [Contributing Guide](https://github.com/CanHub/Android-Image-Cropper/blob/main/CONTRIBUTING.md)
+☕ [Using the library in Java](https://github.com/CanHub/Android-Image-Cropper/blob/main/README_JAVA.md)
 
 Android Image Cropper
 =======
@@ -76,12 +67,10 @@ Only need if you run on devices under OS10 (SDK 29)
 
 # Using the Library
 There is 3 ways of using the library:
-- Calling crop directly (Sample code: `sample/crop_image`)
-- Using the CropView (Sample code: `sample/crop_image_view`)
-- Extending the activity (Sample code: `sample/extend_activity`)
+- Calling crop directly (Sample code: `sample/SampleCrop.kt`)
+- Using the CropView (Sample code: `sample/SampleUsingImageView.kt`)
+- Extending the activity (Sample code: `sample/SampleCustomActivity.kt`)
 Your choice depends on how you want your layout to look.
-
-Obs: The library has a public pick image contract, more on wiki.
 
 ## Calling crop directly
 - Register for activity result with `CropImageContract`
@@ -206,6 +195,9 @@ For more information, see the [GitHub Wiki](https://github.com/CanHub/Android-Im
  - [Android cropping image from camera or gallery](http://theartofdev.com/2015/02/15/android-cropping-image-from-camera-or-gallery/)
  - [Android Image Cropper async support and custom progress UI](http://theartofdev.com/2016/01/15/android-image-cropper-async-support-and-custom-progress-ui/)
  - [Adding auto-zoom feature to Android-Image-Cropper](https://theartofdev.com/2016/04/25/adding-auto-zoom-feature-to-android-image-cropper/)
+
+## Wanna help the project? Amazing!
+- [Contributing Guide](https://github.com/CanHub/Android-Image-Cropper/blob/main/CONTRIBUTING.md)
 
 ## License
 Forked from [ArthurHub](https://github.com/ArthurHub/Android-Image-Cropper)
