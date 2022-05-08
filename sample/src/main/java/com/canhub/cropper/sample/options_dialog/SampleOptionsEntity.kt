@@ -1,4 +1,4 @@
-package com.canhub.cropper.sample.options_dialog.domain
+package com.canhub.cropper.sample.options_dialog
 
 import android.os.Parcelable
 import com.canhub.cropper.CropImageView
@@ -6,7 +6,7 @@ import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.RawValue
 
 @Parcelize
-internal data class SOptionsDomain(
+internal data class SampleOptionsEntity(
     val scaleType: CropImageView.ScaleType,
     val cropShape: CropImageView.CropShape,
     val cornerShape: CropImageView.CropCornerShape,

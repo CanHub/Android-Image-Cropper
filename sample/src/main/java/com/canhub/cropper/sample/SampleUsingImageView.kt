@@ -18,14 +18,14 @@ import com.canhub.cropper.CropImageView
 import com.canhub.cropper.CropImageView.CropResult
 import com.canhub.cropper.CropImageView.OnCropImageCompleteListener
 import com.canhub.cropper.CropImageView.OnSetImageUriCompleteListener
-import com.canhub.cropper.sample.options_dialog.app.SOptionsDialogBottomSheet
-import com.canhub.cropper.sample.options_dialog.domain.SOptionsDomain
+import com.canhub.cropper.sample.options_dialog.SampleOptionsBottomSheet
+import com.canhub.cropper.sample.options_dialog.SampleOptionsEntity
 import com.example.croppersample.R
 import com.example.croppersample.databinding.FragmentCropImageViewBinding
 
 internal class SampleUsingImageView :
     Fragment(),
-    SOptionsDialogBottomSheet.Listener,
+    SampleOptionsBottomSheet.Listener,
     OnSetImageUriCompleteListener,
     OnCropImageCompleteListener {
 
@@ -35,7 +35,7 @@ internal class SampleUsingImageView :
     }
 
     private lateinit var binding: FragmentCropImageViewBinding
-    private var options: SOptionsDomain? = null
+    private var options: SampleOptionsEntity? = null
     private val openPicker =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             binding.cropImageView.setImageUriAsync(uri)
@@ -63,7 +63,7 @@ internal class SampleUsingImageView :
         }
 
         binding.settings.setOnClickListener {
-            SOptionsDialogBottomSheet.show(childFragmentManager, options, this)
+            SampleOptionsBottomSheet.show(childFragmentManager, options, this)
         }
 
         binding.searchImage.setOnClickListener {
@@ -85,7 +85,7 @@ internal class SampleUsingImageView :
         }
     }
 
-    override fun onOptionsApplySelected(options: SOptionsDomain) {
+    override fun onOptionsApplySelected(options: SampleOptionsEntity) {
         this.options = options
 
         binding.cropImageView.apply {
@@ -178,7 +178,7 @@ internal class SampleUsingImageView :
         onOptionsApplySelected(defaultOptions)
     }
 
-    private val defaultOptions: SOptionsDomain = SOptionsDomain(
+    private val defaultOptions: SampleOptionsEntity = SampleOptionsEntity(
         scaleType = CropImageView.ScaleType.FIT_CENTER,
         cropShape = CropImageView.CropShape.RECTANGLE,
         cornerShape = CropImageView.CropCornerShape.RECTANGLE,
