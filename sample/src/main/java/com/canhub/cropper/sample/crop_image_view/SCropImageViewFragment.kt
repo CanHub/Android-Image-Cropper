@@ -1,4 +1,4 @@
-package com.canhub.cropper.sample.crop_image_view.app
+package com.canhub.cropper.sample.crop_image_view
 
 import android.graphics.Rect
 import android.net.Uri
@@ -19,8 +19,6 @@ import com.canhub.cropper.CropImageView.CropResult
 import com.canhub.cropper.CropImageView.OnCropImageCompleteListener
 import com.canhub.cropper.CropImageView.OnSetImageUriCompleteListener
 import com.canhub.cropper.sample.SCropResultActivity
-import com.canhub.cropper.sample.crop_image_view.domain.SCropImageViewContract
-import com.canhub.cropper.sample.crop_image_view.presenter.SCropImageViewPresenter
 import com.canhub.cropper.sample.options_dialog.app.SOptionsDialogBottomSheet
 import com.canhub.cropper.sample.options_dialog.domain.SOptionsDomain
 import com.example.croppersample.R
@@ -28,7 +26,6 @@ import com.example.croppersample.databinding.FragmentCropImageViewBinding
 
 internal class SCropImageViewFragment :
     Fragment(),
-    SCropImageViewContract.View,
     SOptionsDialogBottomSheet.Listener,
     OnSetImageUriCompleteListener,
     OnCropImageCompleteListener {
@@ -39,7 +36,6 @@ internal class SCropImageViewFragment :
     }
 
     private lateinit var binding: FragmentCropImageViewBinding
-    private val presenter = SCropImageViewPresenter()
     private var options: SOptionsDomain? = null
     private val openPicker =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
@@ -59,8 +55,7 @@ internal class SCropImageViewFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        presenter.bind(this)
-        presenter.onViewCreated()
+        setOptions()
 
         binding.cropImageView.let {
             it.setOnSetImageUriCompleteListener(this)
@@ -179,8 +174,24 @@ internal class SCropImageViewFragment :
         }
     }
 
-    override fun setOptions(options: SOptionsDomain) {
+     private fun setOptions() {
         binding.cropImageView.cropRect = Rect(100, 300, 500, 1200)
-        onOptionsApplySelected(options)
+        onOptionsApplySelected(defaultOptions)
     }
+
+    private val defaultOptions: SOptionsDomain = SOptionsDomain(
+        scaleType = CropImageView.ScaleType.FIT_CENTER,
+        cropShape = CropImageView.CropShape.RECTANGLE,
+        cornerShape = CropImageView.CropCornerShape.RECTANGLE,
+        guidelines = CropImageView.Guidelines.ON,
+        ratio = Pair(1, 1),
+        autoZoom = true,
+        maxZoomLvl = 2,
+        multiTouch = true,
+        centerMove = true,
+        showCropOverlay = true,
+        showProgressBar = true,
+        flipHorizontal = false,
+        flipVertically = false
+    )
 }

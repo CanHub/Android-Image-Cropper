@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.canhub.cropper.sample.crop_image.SCropImageFragment
-import com.canhub.cropper.sample.crop_image_java.app.SCropImageFragmentJava
-import com.canhub.cropper.sample.crop_image_view.app.SCropImageViewFragment
+import com.canhub.cropper.sample.crop_image_java.SCropImageFragmentJava
+import com.canhub.cropper.sample.crop_image_view.SCropImageViewFragment
 import com.canhub.cropper.sample.extend_activity.app.SExtendActivity
 import com.example.croppersample.databinding.ActivityMainBinding
 
