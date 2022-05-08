@@ -1,8 +1,8 @@
-[![CanHub](https://github.com/CanHub/Android-Image-Cropper/blob/main/.documentation/art/canhub_logo_horizontal_transparent.png?raw=true)](https://github.com/canhub)
+[![CanHub](.documentation/art/canhub_logo_horizontal_transparent.png?raw=true)](https://github.com/canhub)
 
 [![](https://jitpack.io/v/CanHub/Android-Image-Cropper.svg)](https://jitpack.io/#CanHub/Android-Image-Cropper)
 
-☕ [Using the library in Java](https://github.com/CanHub/Android-Image-Cropper/blob/main/.documentation/java_usage.md)
+☕ [Using the library in Java](.documentation/java_usage.md)
 
 Android Image Cropper
 =======
@@ -10,9 +10,10 @@ Android Image Cropper
 - **Customizable** (Shape, Limits, Style);
 - **Optimized** (Async, Sampling, Matrix);
 - **Simple** image cropping library for Android.
-[Features List](https://github.com/CanHub/Android-Image-Cropper/blob/main/.documentation/features.md)
 
-![Crop](https://github.com/CanHub/Android-Image-Cropper/blob/main/.documentation/art/demo.gif?raw=true)
+[Features List](.documentation/features.md)
+
+![Crop](.documentation/art/demo.gif?raw=true)
 
 # Add to your project
 ### Step 1. Add the JitPack repository to your root build.gradle
@@ -61,8 +62,9 @@ Only need if you run on devices under OS10 (SDK 29)
 # Using the Library
 There is 3 ways of using the library:
 - Calling crop directly [Below]
-- [Using the CropView](https://github.com/CanHub/Android-Image-Cropper/blob/main/.documentation/crop_view.md)
-- [Extending the activity](https://github.com/CanHub/Android-Image-Cropper/blob/main/.documentation/custom_activity.md)
+- [Using the CropView](.documentation/crop_view.md)
+- [Extending the activity](.documentation/custom_activity.md)
+
 Your choice depends on how you want your layout to look.
 
 ## Calling crop directly

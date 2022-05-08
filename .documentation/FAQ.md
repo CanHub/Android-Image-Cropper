@@ -8,7 +8,8 @@ Does your app theme has no action bar? If yes, you should add this to your manif
 ```
 
 ## Can I use this library in Java project?
-Yes! Check [Using the library in Java](https://github.com/CanHub/Android-Image-Cropper/blob/main/.documentation/java_usage.md)
+Yes! Check [Using the library in Java](
+.documentation/java_usage.md)
 
 ## Bad class file error : class file has wrong version xx.0, should be yy.0
 It means your Java runtime version is different from your compiler version (javac).
