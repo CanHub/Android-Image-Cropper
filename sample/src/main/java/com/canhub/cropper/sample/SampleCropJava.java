@@ -1,4 +1,4 @@
-package com.canhub.cropper.sample.crop_image_java.app;
+package com.canhub.cropper.sample;
 
 import static android.graphics.Color.RED;
 import static android.graphics.Color.WHITE;
@@ -14,32 +14,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
-
+import com.canhub.cropper.CropImage;
 import com.canhub.cropper.CropImageContract;
 import com.canhub.cropper.CropImageContractOptions;
 import com.canhub.cropper.CropImageOptions;
 import com.canhub.cropper.CropImageView;
-import com.canhub.cropper.sample.SCropResultActivity;
-import com.canhub.cropper.sample.crop_image_java.domain.SCropImageContractJava;
-import com.canhub.cropper.sample.crop_image_java.presenter.SCropImagePresenterJava;
 import com.example.croppersample.R;
 import com.example.croppersample.databinding.FragmentCameraBinding;
-
 import org.jetbrains.annotations.NotNull;
-
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
+import java.util.Objects;
 
-public class SCropImageFragmentJava extends Fragment implements SCropImageContractJava.View {
+public class SampleCropJava extends Fragment {
 
     static final String DATE_FORMAT = "yyyyMMdd_HHmmss";
     static final String FILE_NAMING_PREFIX = "JPEG_";
@@ -48,18 +43,17 @@ public class SCropImageFragmentJava extends Fragment implements SCropImageContra
     static final String AUTHORITY_SUFFIX = ".cropper.fileprovider";
 
     private FragmentCameraBinding binding;
-    private final SCropImageContractJava.Presenter presenter = new SCropImagePresenterJava();
     private Uri outputUri;
 
     private final ActivityResultLauncher<Uri> takePicture =
-            registerForActivityResult(new ActivityResultContracts.TakePicture(), presenter::onTakePictureResult);
+            registerForActivityResult(new ActivityResultContracts.TakePicture(), this::onTakePictureResult);
 
     private final ActivityResultLauncher<CropImageContractOptions> cropImage =
-            registerForActivityResult(new CropImageContract(), presenter::onCropImageResult);
+            registerForActivityResult(new CropImageContract(), this::onCropImageResult);
 
 
-    public static SCropImageFragmentJava newInstance() {
-        return new SCropImageFragmentJava();
+    public static SampleCropJava newInstance() {
+        return new SampleCropJava();
     }
 
     @Nullable
@@ -73,17 +67,13 @@ public class SCropImageFragmentJava extends Fragment implements SCropImageContra
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        presenter.bind(this);
 
         binding.takePictureBeforeCallLibraryWithUri.setOnClickListener(v -> startTakePicture());
         binding.callLibraryWithoutUri.setOnClickListener(v -> startCameraWithoutUri());
-
-        presenter.onCreate(getActivity(), getContext());
     }
 
     @Override
     public void onDestroyView() {
-        presenter.unbind();
         super.onDestroyView();
     }
 
@@ -135,7 +125,6 @@ public class SCropImageFragmentJava extends Fragment implements SCropImageContra
         cropImage.launch(options);
     }
 
-    @Override
     public void startCameraWithUri() {
         CropImageContractOptions options = new CropImageContractOptions(outputUri, new CropImageOptions())
                 .setScaleType(CropImageView.ScaleType.FIT_CENTER)
@@ -183,7 +172,6 @@ public class SCropImageFragmentJava extends Fragment implements SCropImageContra
         cropImage.launch(options);
     }
 
-    @Override
     public void showErrorMessage(@NotNull String message) {
         Log.e("Camera Error:", message);
         Toast.makeText(getActivity(), "Crop failed: " + message, Toast.LENGTH_SHORT).show();
@@ -200,9 +188,8 @@ public class SCropImageFragmentJava extends Fragment implements SCropImageContra
         }
     }
 
-    @Override
     public void handleCropImageResult(@NotNull String uri) {
-        SCropResultActivity.Companion.start(this, null, Uri.parse(uri), null);
+        SampleResultScreen.Companion.start(this, null, Uri.parse(uri), null);
     }
 
     private File createImageFile() throws IOException {
@@ -213,5 +200,22 @@ public class SCropImageFragmentJava extends Fragment implements SCropImageContra
                 FILE_FORMAT,
                 storageDir
         );
+    }
+
+    public void onCropImageResult(@NonNull CropImageView.CropResult result) {
+        if (result.isSuccessful()) {
+            handleCropImageResult(Objects.requireNonNull(result.getUriContent())
+                    .toString()
+                    .replace("file:", ""));
+        } else if (result.equals(CropImage.CancelledResult.INSTANCE)) {
+            showErrorMessage("cropping image was cancelled by the user");
+        } else {
+            showErrorMessage("cropping image failed");
+        }
+    }
+
+    public void onTakePictureResult(boolean success) {
+        if (success) { startCameraWithUri(); }
+        else { showErrorMessage("taking picture failed"); }
     }
 }

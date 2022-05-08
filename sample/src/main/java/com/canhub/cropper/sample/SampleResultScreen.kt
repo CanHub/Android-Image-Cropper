@@ -11,11 +11,11 @@ import androidx.fragment.app.Fragment
 import com.example.croppersample.R
 import com.example.croppersample.databinding.ActivityCropResultBinding
 
-class SCropResultActivity : Activity() {
+class SampleResultScreen : Activity() {
 
     companion object {
         fun start(fragment: Fragment, imageBitmap: Bitmap?, uri: Uri?, sampleSize: Int?) {
-            val intent = Intent(fragment.context, SCropResultActivity::class.java)
+            val intent = Intent(fragment.context, SampleResultScreen::class.java)
                 .putExtra(SAMPLE_SIZE, sampleSize)
                 .putExtra(URI, uri)
 
