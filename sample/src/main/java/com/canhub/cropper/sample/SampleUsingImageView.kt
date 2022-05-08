@@ -173,7 +173,7 @@ internal class SampleUsingImageView :
         }
     }
 
-     private fun setOptions() {
+    private fun setOptions() {
         binding.cropImageView.cropRect = Rect(100, 300, 500, 1200)
         onOptionsApplySelected(defaultOptions)
     }

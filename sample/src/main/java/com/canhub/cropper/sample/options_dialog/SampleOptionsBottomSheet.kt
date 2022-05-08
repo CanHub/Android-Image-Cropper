@@ -66,8 +66,9 @@ internal class SampleOptionsBottomSheet : BottomSheetDialogFragment() {
             CropImageView.ScaleType.CENTER_CROP -> binding.scaleType.chipCenterCrop.isChecked = true
         }
         when (options.cornerShape) {
-            CropImageView.CropCornerShape.RECTANGLE -> binding.cornerShape.chipRectangle.isChecked =
-                true
+            CropImageView.CropCornerShape.RECTANGLE ->
+                binding.cornerShape.chipRectangle.isChecked =
+                    true
             CropImageView.CropCornerShape.OVAL -> binding.cornerShape.chipOval.isChecked = true
         }
 

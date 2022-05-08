@@ -35,7 +35,7 @@ internal class SampleCustomActivity : CropImageActivity() {
         updateRotationCounter(counter.toString())
 
         binding.saveBtn.setOnClickListener { cropImage() } // CropImageActivity.cropImage()
-        binding.backBtn.setOnClickListener { onBackPressed() }  // CropImageActivity.onBackPressed()
+        binding.backBtn.setOnClickListener { onBackPressed() } // CropImageActivity.onBackPressed()
         binding.rotateText.setOnClickListener { onRotateClick() }
 
         setCropImageView(binding.cropImageView)
