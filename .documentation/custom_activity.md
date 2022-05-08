@@ -1,5 +1,5 @@
 ## Extend to make a custom activity
-[Sample code](https://github.com/CanHub/Android-Image-Cropper/tree/main/sample/src/main/java/com/canhub/cropper/sample/SampleCustomActivity)
+[Sample code](https://github.com/CanHub/Android-Image-Cropper/tree/main/sample/src/main/java/com/canhub/cropper/sample/SampleCustomActivity.kt)
 
 If you want to extend the `CropImageActivity` please be aware you will need to setup your `CropImageView`
 

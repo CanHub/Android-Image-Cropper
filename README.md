@@ -68,7 +68,7 @@ There is 3 ways of using the library:
 Your choice depends on how you want your layout to look.
 
 ## Calling crop directly
-[Sample code](https://github.com/CanHub/Android-Image-Cropper/tree/main/sample/src/main/java/com/canhub/cropper/sample/SampleCrop)
+[Sample code](https://github.com/CanHub/Android-Image-Cropper/tree/main/sample/src/main/java/com/canhub/cropper/sample/SampleCrop.kt)
 
 - Register for activity result with `CropImageContract`
  ```kotlin

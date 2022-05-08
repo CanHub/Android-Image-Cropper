@@ -1,5 +1,5 @@
 ## Using CropView
-[Sample code](https://github.com/CanHub/Android-Image-Cropper/tree/main/sample/src/main/java/com/canhub/cropper/sample/SampleUsingImageView)
+[Sample code](https://github.com/CanHub/Android-Image-Cropper/tree/main/sample/src/main/java/com/canhub/cropper/sample/SampleUsingImageView.kt)
 
 1. Add `CropImageView` into your activity
  ```xml
