@@ -3,6 +3,7 @@
 [![](https://jitpack.io/v/CanHub/Android-Image-Cropper.svg)](https://jitpack.io/#CanHub/Android-Image-Cropper)
 
 ☕ [Using the library in Java](.documentation/java_usage.md)
+❓ [FAQ - frequently asked question](.documentation/FAQ.md)
 
 Android Image Cropper
 =======
