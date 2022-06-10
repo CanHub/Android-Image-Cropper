@@ -95,6 +95,9 @@
             <include
                 android:id="@+id/progressBar"
                 layout="@layout/switch_progress_bar" />
+            <include
+                android:id="@+id/cropLabelText"
+                layout="@layout/switch_crop_text_label"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

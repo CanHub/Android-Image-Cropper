@@ -114,6 +114,7 @@ internal class SampleOptionsBottomSheet : BottomSheetDialogFragment() {
         binding.progressBar.toggle.isChecked = options.showProgressBar
         binding.flipHorizontal.toggle.isChecked = options.flipHorizontal
         binding.flipVertical.toggle.isChecked = options.flipVertically
+        binding.cropLabelText.toggle.isChecked = options.showCropLabel
     }
 
     override fun onDismiss(dialog: DialogInterface) {
@@ -134,7 +135,8 @@ internal class SampleOptionsBottomSheet : BottomSheetDialogFragment() {
         showCropOverlay = true,
         showProgressBar = true,
         flipHorizontal = false,
-        flipVertically = false
+        flipVertically = false,
+        showCropLabel = true
     )
 
     private fun bindingActions() {
@@ -252,6 +254,9 @@ internal class SampleOptionsBottomSheet : BottomSheetDialogFragment() {
 
         binding.progressBar.toggle.setOnCheckedChangeListener { _, isChecked ->
             options = options.copy(showProgressBar = isChecked)
+        }
+        binding.cropLabelText.toggle.setOnCheckedChangeListener { _, isChecked ->
+            options = options.copy(showCropLabel = isChecked)
         }
     }
 }

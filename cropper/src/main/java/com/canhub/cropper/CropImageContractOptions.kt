@@ -127,6 +127,11 @@ data class CropImageContractOptions @JvmOverloads constructor(
         return this
     }
 
+    fun setShowCropLabel(showCropLabel: Boolean): CropImageContractOptions {
+        cropImageOptions.showCropLabel = showCropLabel
+        return this
+    }
+
     /**
      * if auto-zoom functionality is enabled.<br></br>
      * default: true.
