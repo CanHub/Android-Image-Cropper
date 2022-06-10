@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/keyline_x2"
+    android:background="@color/white"
+    android:elevation="@dimen/elevation_card_resting"
+    android:orientation="vertical">
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/toggle"
+        style="@style/OptionSwitch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/keyline_x2"
+        android:text="@string/show_crop_label_text"
+        android:textColor="@color/black" />
+
+</LinearLayout>

@@ -13,6 +13,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Fixed
 - The translation of `Camera` and `Gallery` does not exist in some languages.
 
+## [unreleased 4.2.2]
+### Added
+- Added a helper text on top of crop overlay which moves along with it. [#381](https://github.com/CanHub/Android-Image-Cropper/issues/381)
+### Fixed
+- Crash on click of Sample of CustomActivity option over sample App, added the missing activity declaration on Manifest.xml
+
 ## [4.2.1] - 04/04/2022
 ### Added
 - Added support for optionally displaying an intent chooser when selecting image source. [#325](https://github.com/CanHub/Android-Image-Cropper/issues/325)

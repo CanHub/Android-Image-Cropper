@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Bitmap.CompressFormat
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.graphics.Matrix
 import android.graphics.Rect
 import android.graphics.RectF
@@ -104,6 +105,29 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
      * default: true, may disable for animation or frame transition.
      */
     private var mShowCropOverlay = true
+
+    /** If true, shows a helper text label over crop overlay UI
+     *  default: false
+     */
+    private var mShowCropLabel = false
+
+    /**
+     * Helper text label over crop overlay UI
+     * default: empty string
+     */
+    private var mCropTextLabel = ""
+
+    /**
+     * Text size for text label over crop overlay UI
+     * default: 20sp
+     */
+    private var mCropLabelTextSize = 20f
+
+    /**
+     * Text color for text label over crop overlay UI
+     * default: White
+     */
+    private var mCropLabelTextColor = Color.WHITE
 
     /**
      * if to show progress bar when image async loading/cropping is in progress.<br></br>
@@ -402,6 +426,35 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
                 mShowCropOverlay = showCropOverlay
                 setCropOverlayVisibility()
             }
+        }
+    /**
+     * If enabled, show a text label on top of crop overlay UI, which gets moved along with the cropper
+     */
+    var isShowCropLabel: Boolean
+        get() = mShowCropLabel
+        set(showCropLabel) {
+            if (mShowCropLabel != showCropLabel) {
+                mShowCropLabel = showCropLabel
+                mCropOverlayView?.setCropperTextLabelVisibility(mShowCropLabel)
+            }
+        }
+    var cropLabelText: String
+        get() = mCropTextLabel
+        set(cropLabelText) {
+            mCropTextLabel = cropLabelText
+            mCropOverlayView?.setCropLabelText(cropLabelText)
+        }
+    var cropLabelTextSize: Float
+        get() = mCropLabelTextSize
+        set(textSize) {
+            mCropLabelTextSize = cropLabelTextSize
+            mCropOverlayView?.setCropLabelTextSize(textSize)
+        }
+    var cropLabelTextColor: Int
+        get() = mCropLabelTextColor
+        set(cropLabelTextColor) {
+            mCropLabelTextColor = cropLabelTextColor
+            mCropOverlayView?.setCropLabelTextColor(cropLabelTextColor)
         }
     /** Returns the integer of the imageResource  */
     /**
@@ -1037,7 +1090,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
         bundle.putInt("CROP_MAX_ZOOM", mMaxZoom)
         bundle.putBoolean("CROP_FLIP_HORIZONTALLY", mFlipHorizontally)
         bundle.putBoolean("CROP_FLIP_VERTICALLY", mFlipVertically)
-
+        bundle.putBoolean("SHOW_CROP_LABEL", mShowCropLabel)
         return bundle
     }
 
@@ -1088,6 +1141,8 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
                 mMaxZoom = state.getInt("CROP_MAX_ZOOM")
                 mFlipHorizontally = state.getBoolean("CROP_FLIP_HORIZONTALLY")
                 mFlipVertically = state.getBoolean("CROP_FLIP_VERTICALLY")
+                mShowCropLabel = state.getBoolean("SHOW_CROP_LABEL")
+                mCropOverlayView.setCropperTextLabelVisibility(mShowCropLabel)
             }
             super.onRestoreInstanceState(state.getParcelable("instanceState"))
         } else {
@@ -1882,6 +1937,21 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
                         R.styleable.CropImageView_cropFlipHorizontally,
                         options.flipVertically
                     )
+                    options.cropperLabelTextSize = ta.getDimension(
+                        R.styleable.CropImageView_cropperLabelTextSize,
+                        options.cropperLabelTextSize
+                    )
+                    options.cropperLabelTextColor = ta.getInteger(
+                        R.styleable.CropImageView_cropperLabelTextColor,
+                        options.cropperLabelTextColor
+                    )
+                    options.cropperLabelText = ta.getString(
+                        R.styleable.CropImageView_cropperLabelText
+                    )
+                    options.showCropLabel = ta.getBoolean(
+                        R.styleable.CropImageView_cropShowLabel,
+                        options.showCropLabel
+                    )
                     isSaveBitmapToInstanceState = ta.getBoolean(
                         R.styleable.CropImageView_cropSaveBitmapToInstanceState,
                         isSaveBitmapToInstanceState
@@ -1902,6 +1972,8 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
         mScaleType = options.scaleType
         mAutoZoomEnabled = options.autoZoomEnabled
         mMaxZoom = options.maxZoom
+        mCropLabelTextSize = options.cropperLabelTextSize
+        mShowCropLabel = options.showCropLabel
         mShowCropOverlay = options.showCropOverlay
         mShowProgressBar = options.showProgressBar
         mFlipHorizontally = options.flipHorizontally

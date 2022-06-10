@@ -34,6 +34,16 @@ class CropOverlayView
 
     companion object {
 
+        /**
+         * Creates the paint object for drawing text label over crop overlay */
+        private fun getTextPaint(options: CropImageOptions): Paint =
+            Paint().apply {
+                strokeWidth = 1f
+                textSize = options.cropperLabelTextSize
+                style = Paint.Style.FILL
+                textAlign = Paint.Align.CENTER
+                this.color = options.cropperLabelTextColor
+            }
         /** Creates the Paint object for drawing.  */
         private fun getNewPaint(color: Int): Paint =
             Paint().apply {
@@ -91,6 +101,8 @@ class CropOverlayView
 
     /** The Paint used to darken the surrounding areas outside the crop area.  */
     private var mBackgroundPaint: Paint? = null
+
+    private var textLabelPaint: Paint? = null
 
     /** Used for oval crop window shape or non-straight rotation drawing.  */
     private val mPath = Path()
@@ -164,6 +176,14 @@ class CropOverlayView
     var cornerShape: CropImageView.CropCornerShape? = null
         private set
 
+    /** To show the text label over crop overlay **/
+    private var isCropLabelEnabled: Boolean = false
+    /** Text to show over text label over crop overlay */
+    private var cropLabelText: String = ""
+    /** Text color to apply over text label over crop overlay */
+    private var cropLabelTextSize: Float = 20f
+    /** Text color to apply over text label over crop overlay */
+    private var cropLabelTextColor = Color.WHITE
     /** the initial crop window rectangle to set  */
     private val mInitialCropWindowRect = Rect()
 
@@ -253,7 +273,37 @@ class CropOverlayView
             invalidate()
         }
     }
+    /**
+     * Sets the cropper label if it is enabled
+     */
+    fun setCropperTextLabelVisibility(isEnabled: Boolean) {
+        this.isCropLabelEnabled = isEnabled
+        invalidate()
+    }
 
+    /**
+     * Sets the copy text for cropper text
+     */
+    fun setCropLabelText(textLabel: String?) {
+        textLabel?.let {
+            this.cropLabelText = it
+        }
+    }
+
+    /**
+     * Sets the text size for cropper text
+     */
+    fun setCropLabelTextSize(textSize: Float) {
+        this.cropLabelTextSize = textSize
+        invalidate()
+    }
+    /**
+     * Sets the text color for cropper text
+     */
+    fun setCropLabelTextColor(textColor: Int) {
+        this.cropLabelTextColor = textColor
+        invalidate()
+    }
     /**
      * Sets the guidelines for the CropOverlayView to be either on, off, or to show when resizing the
      * application.
@@ -410,6 +460,10 @@ class CropOverlayView
     fun setInitialAttributeValues(options: CropImageOptions) {
         mOptions = options
         mCropWindowHandler.setInitialAttributeValues(options)
+        setCropLabelTextColor(options.cropperLabelTextColor)
+        setCropLabelTextSize(options.cropperLabelTextSize)
+        setCropLabelText(options.cropperLabelText)
+        setCropperTextLabelVisibility(options.showCropLabel)
         setCropCornerRadius(options.cropCornerRadius)
         setCropCornerShape(options.cornerShape)
         setCropShape(options.cropShape)
@@ -430,6 +484,7 @@ class CropOverlayView
             getNewPaintOrNull(options.borderCornerThickness, options.borderCornerColor)
         mGuidelinePaint = getNewPaintOrNull(options.guidelinesThickness, options.guidelinesColor)
         mBackgroundPaint = getNewPaint(options.backgroundColor)
+        textLabelPaint = getTextPaint(options)
     }
 
     /**
@@ -570,8 +625,24 @@ class CropOverlayView
         }
         // To retain the changes in Paint object when the App goes background this is required
         mBorderCornerPaint = getNewPaintOrNull(mOptions?.borderCornerThickness ?: 0.0f, mOptions?.borderCornerColor ?: Color.WHITE)
+        drawCropLabelText(canvas)
         drawBorders(canvas)
         drawCorners(canvas)
+    }
+
+    /** Draws a text label (which can acts an helper text) on top of crop overlay **/
+    private fun drawCropLabelText(canvas: Canvas) {
+        if (isCropLabelEnabled) {
+            val rect = mCropWindowHandler.getRect()
+            var xCoordinate = (rect.left + rect.right) / 2
+            var yCoordinate = rect.top - 50
+            textLabelPaint?.apply {
+                textSize = cropLabelTextSize
+                color = cropLabelTextColor
+            }
+            canvas.drawText(cropLabelText, xCoordinate, yCoordinate, textLabelPaint!!)
+            canvas.save()
+        }
     }
 
     /** Draw shadow background over the image not including the crop area.  */

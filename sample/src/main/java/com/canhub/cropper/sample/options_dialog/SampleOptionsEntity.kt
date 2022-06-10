@@ -20,4 +20,5 @@ internal data class SampleOptionsEntity(
     val showProgressBar: Boolean,
     val flipHorizontal: Boolean,
     val flipVertically: Boolean,
+    val showCropLabel: Boolean
 ) : Parcelable

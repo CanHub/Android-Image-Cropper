@@ -106,6 +106,7 @@ internal class SampleUsingImageView :
             maxZoom = options.maxZoomLvl
             isFlippedHorizontally = options.flipHorizontal
             isFlippedVertically = options.flipVertically
+            isShowCropLabel = options.showCropLabel
         }
 
         if (options.scaleType == CropImageView.ScaleType.CENTER_INSIDE)
@@ -191,6 +192,7 @@ internal class SampleUsingImageView :
         showCropOverlay = true,
         showProgressBar = true,
         flipHorizontal = false,
-        flipVertically = false
+        flipVertically = false,
+        showCropLabel = false
     )
 }

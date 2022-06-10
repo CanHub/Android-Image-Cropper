@@ -84,6 +84,12 @@ open class CropImageOptions : Parcelable {
     var showCropOverlay: Boolean
 
     /**
+     * If enabled, show a text label on top of crop overlay UI, which gets moved along with the cropper
+     */
+    @JvmField
+    var showCropLabel: Boolean
+
+    /**
      * if to show progress bar when image async loading/cropping is in progress.<br></br>
      * default: true, disable to provide custom progress bar UI.
      */
@@ -311,6 +317,18 @@ open class CropImageOptions : Parcelable {
     @JvmField
     var intentChooserPriorityList: List<String>?
 
+    /** The initial text size of cropper label **/
+    @JvmField
+    var cropperLabelTextSize: Float
+
+    /** The default cropper label text color **/
+    @JvmField
+    var cropperLabelTextColor: Int
+
+    /** The default cropper label text **/
+    @JvmField
+    var cropperLabelText: String? = ""
+
     /** Init options with defaults.  */
     constructor() {
         val dm = Resources.getSystem().displayMetrics
@@ -373,6 +391,9 @@ open class CropImageOptions : Parcelable {
         showIntentChooser = false
         intentChooserTitle = null
         intentChooserPriorityList = listOf()
+        cropperLabelTextSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 20f, dm)
+        cropperLabelTextColor = Color.WHITE
+        showCropLabel = false
     }
 
     /** Create object from parcel.  */
@@ -435,6 +456,10 @@ open class CropImageOptions : Parcelable {
         showIntentChooser = parcel.readByte().toInt() != 0
         intentChooserTitle = parcel.readString()
         intentChooserPriorityList = parcel.createStringArrayList()
+        cropperLabelTextSize = parcel.readFloat()
+        cropperLabelTextColor = parcel.readInt()
+        cropperLabelText = parcel.readString()!!
+        showCropLabel = parcel.readByte().toInt() != 0
     }
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
@@ -496,6 +521,10 @@ open class CropImageOptions : Parcelable {
         dest.writeByte((if (showIntentChooser) 1 else 0).toByte())
         dest.writeString(intentChooserTitle)
         dest.writeStringList(intentChooserPriorityList)
+        dest.writeFloat(cropperLabelTextSize)
+        dest.writeInt(cropperLabelTextColor)
+        dest.writeString(cropperLabelText)
+        dest.writeByte((if (showCropLabel) 1 else 0).toByte())
     }
 
     override fun describeContents(): Int {

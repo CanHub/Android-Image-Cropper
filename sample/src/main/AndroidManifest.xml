@@ -20,7 +20,7 @@
         <activity android:name="com.canhub.cropper.sample.SampleResultScreen" />
         <activity android:name="com.canhub.cropper.CropImageActivity" />
         <activity
-            android:name="com.canhub.cropper.sample.extend_activity.app.SExtendActivity"
+            android:name="com.canhub.cropper.sample.SampleCustomActivity"
             android:theme="@style/Theme.SampleNoActionBar" />
 
     </application>
