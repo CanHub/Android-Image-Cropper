@@ -35,17 +35,15 @@ class CropOverlayView
     companion object {
 
         /**
-         * Creates the paint object for drawing text label over crop overlay
-         */
-        private fun getTextPaint(options: CropImageOptions): Paint {
-            return Paint().apply {
+         * Creates the paint object for drawing text label over crop overlay */
+        private fun getTextPaint(options: CropImageOptions): Paint =
+            Paint().apply {
                 strokeWidth = 1f
                 textSize = options.cropperLabelTextSize
                 style = Paint.Style.FILL
                 textAlign = Paint.Align.CENTER
                 this.color = options.cropperLabelTextColor
             }
-        }
         /** Creates the Paint object for drawing.  */
         private fun getNewPaint(color: Int): Paint =
             Paint().apply {
@@ -104,7 +102,7 @@ class CropOverlayView
     /** The Paint used to darken the surrounding areas outside the crop area.  */
     private var mBackgroundPaint: Paint? = null
 
-    private var mTextLabelPaint: Paint? = null
+    private var textLabelPaint: Paint? = null
 
     /** Used for oval crop window shape or non-straight rotation drawing.  */
     private val mPath = Path()
@@ -486,7 +484,7 @@ class CropOverlayView
             getNewPaintOrNull(options.borderCornerThickness, options.borderCornerColor)
         mGuidelinePaint = getNewPaintOrNull(options.guidelinesThickness, options.guidelinesColor)
         mBackgroundPaint = getNewPaint(options.backgroundColor)
-        mTextLabelPaint = getTextPaint(options)
+        textLabelPaint = getTextPaint(options)
     }
 
     /**
@@ -638,11 +636,11 @@ class CropOverlayView
             val rect = mCropWindowHandler.getRect()
             var xCoordinate = (rect.left + rect.right) / 2
             var yCoordinate = rect.top - 50
-            mTextLabelPaint?.apply {
+            textLabelPaint?.apply {
                 textSize = cropLabelTextSize
                 color = cropLabelTextColor
             }
-            canvas.drawText(cropLabelText, xCoordinate, yCoordinate, mTextLabelPaint!!)
+            canvas.drawText(cropLabelText, xCoordinate, yCoordinate, textLabelPaint!!)
             canvas.save()
         }
     }
