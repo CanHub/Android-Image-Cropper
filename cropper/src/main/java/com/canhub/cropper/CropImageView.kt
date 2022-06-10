@@ -430,12 +430,11 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
     /**
      * If enabled, show a text label on top of crop overlay UI, which gets moved along with the cropper
      */
-     var isShowCropLabel: Boolean
+    var isShowCropLabel: Boolean
         get() = mShowCropLabel
         set(showCropLabel) {
             if (mShowCropLabel != showCropLabel) {
                 mShowCropLabel = showCropLabel
-                //set crop label visibility
                 mCropOverlayView?.setCropperTextLabelVisibility(mShowCropLabel)
             }
         }
@@ -1938,7 +1937,6 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
                         R.styleable.CropImageView_cropFlipHorizontally,
                         options.flipVertically
                     )
-                    //crop label
                     options.cropperLabelTextSize = ta.getDimension(
                         R.styleable.CropImageView_cropperLabelTextSize,
                         options.cropperLabelTextSize
@@ -1948,7 +1946,8 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
                         options.cropperLabelTextColor
                     )
                     options.cropperLabelText = ta.getString(
-                        R.styleable.CropImageView_cropperLabelText)
+                        R.styleable.CropImageView_cropperLabelText
+                    )
                     options.showCropLabel = ta.getBoolean(
                         R.styleable.CropImageView_cropShowLabel,
                         options.showCropLabel

@@ -38,13 +38,13 @@ class CropOverlayView
          * Creates the paint object for drawing text label over crop overlay
          */
         private fun getTextPaint(options: CropImageOptions): Paint {
-           return Paint().apply {
-               strokeWidth = 1f
-               textSize = options.cropperLabelTextSize
-               style = Paint.Style.FILL
-               textAlign = Paint.Align.CENTER
-               this.color = options.cropperLabelTextColor
-           }
+            return Paint().apply {
+                strokeWidth = 1f
+                textSize = options.cropperLabelTextSize
+                style = Paint.Style.FILL
+                textAlign = Paint.Align.CENTER
+                this.color = options.cropperLabelTextColor
+            }
         }
         /** Creates the Paint object for drawing.  */
         private fun getNewPaint(color: Int): Paint =
@@ -278,10 +278,10 @@ class CropOverlayView
     /**
      * Sets the cropper label if it is enabled
      */
-     fun setCropperTextLabelVisibility(isEnabled: Boolean) {
-         this.isCropLabelEnabled = isEnabled
-         invalidate()
-     }
+    fun setCropperTextLabelVisibility(isEnabled: Boolean) {
+        this.isCropLabelEnabled = isEnabled
+        invalidate()
+    }
 
     /**
      * Sets the copy text for cropper text

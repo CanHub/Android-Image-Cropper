@@ -4,7 +4,6 @@ import android.content.res.Resources
 import android.graphics.Bitmap.CompressFormat
 import android.graphics.Color
 import android.graphics.Rect
-import android.graphics.Typeface
 import android.net.Uri
 import android.os.Parcel
 import android.os.Parcelable
@@ -330,7 +329,6 @@ open class CropImageOptions : Parcelable {
     @JvmField
     var cropperLabelText: String? = ""
 
-
     /** Init options with defaults.  */
     constructor() {
         val dm = Resources.getSystem().displayMetrics
@@ -393,7 +391,7 @@ open class CropImageOptions : Parcelable {
         showIntentChooser = false
         intentChooserTitle = null
         intentChooserPriorityList = listOf()
-        cropperLabelTextSize =  TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 20f, dm)
+        cropperLabelTextSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 20f, dm)
         cropperLabelTextColor = Color.WHITE
         showCropLabel = false
     }
