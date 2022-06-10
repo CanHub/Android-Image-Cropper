@@ -10,14 +10,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - `Security` in case of vulnerabilities.
 
 ## [x.x.x] - unreleased
-### Fixed
-- The translation of `Camera` and `Gallery` does not exist in some languages.
 
-## [unreleased 4.2.2]
+## [4.3.0] - 10/06/2022
 ### Added
 - Added a helper text on top of crop overlay which moves along with it. [#381](https://github.com/CanHub/Android-Image-Cropper/issues/381)
+
 ### Fixed
-- Crash on click of Sample of CustomActivity option over sample App, added the missing activity declaration on Manifest.xml
+- The translation of `Camera` and `Gallery` does not exist in some languages.[#358](https://github.com/CanHub/Android-Image-Cropper/issues/358)
 
 ## [4.2.1] - 04/04/2022
 ### Added
