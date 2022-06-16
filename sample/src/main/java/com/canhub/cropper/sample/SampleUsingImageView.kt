@@ -75,7 +75,7 @@ internal class SampleUsingImageView :
                 resetCropRect()
                 options = options?.copy(
                     scaleType = CropImageView.ScaleType.FIT_CENTER,
-                    flipHorizontal = false,
+                    flipHorizontally = false,
                     flipVertically = false,
                     autoZoom = true,
                     maxZoomLvl = 2
@@ -104,7 +104,7 @@ internal class SampleUsingImageView :
             isShowProgressBar = options.showProgressBar
             isAutoZoomEnabled = options.autoZoom
             maxZoom = options.maxZoomLvl
-            isFlippedHorizontally = options.flipHorizontal
+            isFlippedHorizontally = options.flipHorizontally
             isFlippedVertically = options.flipVertically
             isShowCropLabel = options.showCropLabel
         }
@@ -191,7 +191,7 @@ internal class SampleUsingImageView :
         centerMove = true,
         showCropOverlay = true,
         showProgressBar = true,
-        flipHorizontal = false,
+        flipHorizontally = false,
         flipVertically = false,
         showCropLabel = false
     )
