@@ -43,6 +43,13 @@
                 android:text="@string/ratio_1_1" />
 
             <com.google.android.material.chip.Chip
+                android:id="@+id/chipTwoOne"
+                style="@style/OptionChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ratio_2_1" />
+
+            <com.google.android.material.chip.Chip
                 android:id="@+id/chipFourThree"
                 style="@style/OptionChip"
                 android:layout_width="wrap_content"

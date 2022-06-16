@@ -97,6 +97,7 @@ internal class SampleOptionsBottomSheet : BottomSheetDialogFragment() {
         when (options.ratio) {
             Pair(1, 1) -> binding.ratio.chipOneOne.isChecked = true
             Pair(4, 3) -> binding.ratio.chipFourThree.isChecked = true
+            Pair(2, 1) -> binding.ratio.chipTwoOne.isChecked = true
             Pair(16, 9) -> binding.ratio.chipSixteenNine.isChecked = true
             else -> binding.ratio.chipFree.isChecked = true
         }
@@ -208,12 +209,16 @@ internal class SampleOptionsBottomSheet : BottomSheetDialogFragment() {
             options = options.copy(ratio = Pair(1, 1))
         }
 
+        binding.ratio.chipTwoOne.setOnClickListener {
+            options = options.copy(ratio = Pair(2, 1))
+        }
+
         binding.ratio.chipFourThree.setOnClickListener {
-            options = options.copy(ratio = Pair(16, 9))
+            options = options.copy(ratio = Pair(4, 3))
         }
 
         binding.ratio.chipSixteenNine.setOnClickListener {
-            options = options.copy(ratio = Pair(9, 16))
+            options = options.copy(ratio = Pair(16, 9))
         }
 
         binding.maxZoom.chipTwo.setOnClickListener {
