@@ -107,7 +107,7 @@ open class CropImageOptions : Parcelable {
     @JvmField
     var multiTouchEnabled: Boolean
 
-    /** if the the crop window can be moved by dragging the center; default: true  */
+    /** if the crop window can be moved by dragging the center; default: true  */
     @JvmField
     var centerMoveEnabled: Boolean
 
