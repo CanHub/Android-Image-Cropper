@@ -79,18 +79,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
 
     /** The initial scale type of the image in the crop image view  */
     private var mScaleType: ScaleType
-    /**
-     * if to save bitmap on save instance state.<br></br>
-     * It is best to avoid it by using URI in setting image for cropping.<br></br>
-     * If false the bitmap is not saved and if restore is required to view will be empty, storing the
-     * bitmap requires saving it to file which can be expensive. default: false.
-     */
-    /**
-     * if to save bitmap on save instance state.<br></br>
-     * It is best to avoid it by using URI in setting image for cropping.<br></br>
-     * If false the bitmap is not saved and if restore is required to view will be empty, storing the
-     * bitmap requires saving it to file which can be expensive. default: false.
-     */
+
     /**
      * if to save bitmap on save instance state.<br></br>
      * It is best to avoid it by using URI in setting image for cropping.<br></br>
@@ -191,8 +180,8 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
 
     /** Task used to crop bitmap async from UI thread  */
     private var bitmapCroppingWorkerJob: WeakReference<BitmapCroppingWorkerJob>? = null
-    /** Get the scale type of the image in the crop view.  */
-    /** Set the scale type of the image in the crop view  */
+
+    /** Get / set the scale type of the image in the crop view.  */
     var scaleType: ScaleType
         get() = mScaleType
         set(scaleType) {
@@ -205,7 +194,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
                 requestLayout()
             }
         }
-    /** The shape of the cropping area - rectangle/circular.  */
+
     /**
      * The shape of the cropping area - rectangle/circular.<br></br>
      * To set square/circle crop shape set aspect ratio to 1:1.
@@ -223,6 +212,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
         set(cropShape) {
             mCropOverlayView!!.setCropShape(cropShape!!)
         }
+
     /**
      * The shape of the crop corner in the crop overlay (Rectangular / Circular)
      */
@@ -232,7 +222,6 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
             mCropOverlayView!!.setCropCornerShape(cornerShape!!)
         }
 
-    /** if auto-zoom functionality is enabled. default: true.  */
     /** Set auto-zoom functionality to enabled/disabled.  */
     var isAutoZoomEnabled: Boolean
         get() = mAutoZoomEnabled
@@ -244,7 +233,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
             }
         }
 
-    /** Set multi touch functionality to enabled/disabled.  */
+    /** Set multi-touch functionality to enabled/disabled.  */
     fun setMultiTouchEnabled(multiTouchEnabled: Boolean) {
         if (mCropOverlayView!!.setMultiTouchEnabled(multiTouchEnabled)) {
             handleCropWindowChanged(inProgress = false, animate = false)
@@ -259,7 +248,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
             mCropOverlayView.invalidate()
         }
     }
-    /** The max zoom allowed during cropping.  */
+
     /** The max zoom allowed during cropping.  */
     var maxZoom: Int
         get() = mMaxZoom
@@ -286,15 +275,9 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
     fun setMaxCropResultSize(maxCropResultWidth: Int, maxCropResultHeight: Int) {
         mCropOverlayView!!.setMaxCropResultSize(maxCropResultWidth, maxCropResultHeight)
     }
+
     /**
-     * Get the amount of degrees the cropping image is rotated clockwise.<br></br>
-     *
-     * @return 0-360
-     */
-    /**
-     * Set the amount of degrees the cropping image is rotated clockwise.<br></br>
-     *
-     * degrees 0-360
+     * Set / Get the amount of degrees (between 0 and 360) the cropping image is rotated clockwise.<br></br>
      */
     var rotatedDegrees: Int
         get() = mDegreesRotated
@@ -318,7 +301,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
     fun setFixedAspectRatio(fixAspectRatio: Boolean) {
         mCropOverlayView!!.setFixedAspectRatio(fixAspectRatio)
     }
-    /** whether the image should be flipped horizontally  */
+
     /** Sets whether the image should be flipped horizontally  */
     var isFlippedHorizontally: Boolean
         get() = mFlipHorizontally
@@ -335,7 +318,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
         }
     /** the Android Uri to save the cropped image to  */
     var customOutputUri: Uri? = null
-    /** whether the image should be flipped vertically  */
+
     /** Sets whether the image should be flipped vertically  */
     var isFlippedVertically: Boolean
         get() = mFlipVertically
@@ -393,10 +376,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
     fun setSnapRadius(snapRadius: Float) {
         if (snapRadius >= 0) mCropOverlayView!!.setSnapRadius(snapRadius)
     }
-    /**
-     * if to show progress bar when image async loading/cropping is in progress.<br></br>
-     * default: true, disable to provide custom progress bar UI.
-     */
+
     /**
      * if to show progress bar when image async loading/cropping is in progress.<br></br>
      * default: true, disable to provide custom progress bar UI.
@@ -409,11 +389,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
                 setProgressBarVisibility()
             }
         }
-    /**
-     * if to show crop overlay UI what contains the crop window UI surrounded by background over the
-     * cropping image.<br></br>
-     * default: true, may disable for animation or frame transition.
-     */
+
     /**
      * if to show crop overlay UI what contains the crop window UI surrounded by background over the
      * cropping image.<br></br>
