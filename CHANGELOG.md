@@ -11,6 +11,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [x.x.x] - unreleased
 
+- CropImageOptions: Option to change progress bar color. [#390](https://github.com/CanHub/Android-Image-Cropper/issues/390)
+
 ## [4.3.0] - 10/06/2022
 ### Added
 - Added a helper text on top of crop overlay which moves along with it. [#381](https://github.com/CanHub/Android-Image-Cropper/issues/381)
@@ -128,7 +130,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ### Fixed
 - ENOENT (no such file or directory) [#99](https://github.com/CanHub/Android-Image-Cropper/issues/99)
-- `content://` instead of `file://` [#83](https://github.com/CanHub/Android-Image-Cropper/issues/83) [#84](https://github.com/CanHub/Android-Image-Cropper/issues/84) 
+- `content://` instead of `file://` [#83](https://github.com/CanHub/Android-Image-Cropper/issues/83) [#84](https://github.com/CanHub/Android-Image-Cropper/issues/84)
 
 ## [2.3.2-alpha] - 12/04/21
 ### Added
