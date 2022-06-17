@@ -14,6 +14,8 @@ import com.canhub.cropper.CropImageView.CropShape
 import com.canhub.cropper.CropImageView.Guidelines
 import com.canhub.cropper.CropImageView.RequestSizeOptions
 
+private val COLOR_PURPLE = Color.rgb(153, 51, 153)
+
 /**
  * All the possible options that can be set to customize crop image.<br></br>
  * Initialized with default values.
@@ -356,7 +358,7 @@ open class CropImageOptions : Parcelable {
         scaleType = CropImageView.ScaleType.FIT_CENTER
         showCropOverlay = true
         showProgressBar = true
-        progressBarColor = Color.rgb(153, 51, 153)
+        progressBarColor = COLOR_PURPLE
         autoZoomEnabled = true
         multiTouchEnabled = false
         centerMoveEnabled = true
