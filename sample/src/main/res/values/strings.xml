@@ -51,6 +51,7 @@
     <string name="on">ON</string>
     <string name="ratio_16_9">16,9</string>
     <string name="ratio_4_3">4,3</string>
+    <string name="ratio_2_1">2,1</string>
     <string name="ratio_1_1">1,1</string>
     <string name="free">Free</string>
     <string name="activity_type">Activity Type</string>
