@@ -4,7 +4,6 @@ import android.graphics.Bitmap
 import android.graphics.Rect
 import android.net.Uri
 import androidx.annotation.DrawableRes
-import com.canhub.cropper.CropImageOptions.Companion.DEGREES_360
 import com.canhub.cropper.CropImageView.CropShape
 import com.canhub.cropper.CropImageView.Guidelines
 import com.canhub.cropper.CropImageView.RequestSizeOptions
@@ -18,6 +17,8 @@ data class CropImageContractOptions @JvmOverloads constructor(
     val cropImageOptions: CropImageOptions,
 ) {
 
+    // All of these functions below would be removed, they are no longer necessary.
+    
     /**
      * When library is responsible for fetching the image you can decide which source you wanna
      * let the user choose. Both or just one of them
