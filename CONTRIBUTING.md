@@ -7,13 +7,13 @@
 
 ## Doing some code
 1. If there is no issue yet: Submit an issue describing your proposed change.
-1. The repo owner will respond to your issue promptly. (This is important to keep the discussion split of the code review, but you can already start you code if you think will be accept)
-1. Fork the repo, develop and test your code changes.
-1. Don't forget to the Project [CodeStyle](#code-style). CI will break if you don't.
-1. Please always check the provided templates for Issues and Pull Requests, deleting what is not needed.
-1. Update the `CHANGELOG.md`, like [illustrated below](#updating-changelog.md).
-1. If needed add tests and README/WIKI sessions.
-1. Submit your Pull Request
+2. The repo owner will respond to your issue promptly. (This is important to keep the discussion split of the code review, but you can already start you code if you think will be accept)
+3. Fork the repo, develop and test your code changes.
+4. Don't forget to the Project [CodeStyle](#code-style). CI will break if you don't.
+5. Please always check the provided templates for Issues and Pull Requests, deleting what is not needed.
+6. Update the `CHANGELOG.md`, like [illustrated below](#updating-changelog.md).
+7. If needed add tests and README/WIKI sessions.
+8. Submit your Pull Request
 
 ### Updating CHANGELOG.md
 - Check the file `CHANGELOG.md`
