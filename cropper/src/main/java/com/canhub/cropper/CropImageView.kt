@@ -1773,163 +1773,48 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
             if (attrs != null) {
                 val ta = context.obtainStyledAttributes(attrs, R.styleable.CropImageView, 0, 0)
                 try {
-                    options.fixAspectRatio = ta.getBoolean(
-                        R.styleable.CropImageView_cropFixAspectRatio,
-                        options.fixAspectRatio
+                    options = options.copy(
+                      fixAspectRatio = ta.getBoolean(R.styleable.CropImageView_cropFixAspectRatio, options.fixAspectRatio),
+                      aspectRatioX = ta.getInteger(R.styleable.CropImageView_cropAspectRatioX, options.aspectRatioX),
+                      aspectRatioY = ta.getInteger(R.styleable.CropImageView_cropAspectRatioY, options.aspectRatioY),
+                      scaleType = ScaleType.values()[ta.getInt(R.styleable.CropImageView_cropScaleType, options.scaleType.ordinal)],
+                      autoZoomEnabled = ta.getBoolean(R.styleable.CropImageView_cropAutoZoomEnabled, options.autoZoomEnabled),
+                      multiTouchEnabled = ta.getBoolean(R.styleable.CropImageView_cropMultiTouchEnabled, options.multiTouchEnabled),
+                      centerMoveEnabled = ta.getBoolean(R.styleable.CropImageView_cropCenterMoveEnabled, options.centerMoveEnabled),
+                      maxZoom = ta.getInteger(R.styleable.CropImageView_cropMaxZoom, options.maxZoom),
+                      cropShape = CropShape.values()[ta.getInt(R.styleable.CropImageView_cropShape, options.cropShape.ordinal)],
+                      cornerShape = CropCornerShape.values()[ta.getInt(R.styleable.CropImageView_cornerShape, options.cornerShape.ordinal)],
+                      cropCornerRadius = ta.getDimension(R.styleable.CropImageView_cropCornerRadius, options.cropCornerRadius),
+                      guidelines = Guidelines.values()[ta.getInt(R.styleable.CropImageView_cropGuidelines, options.guidelines.ordinal)],
+                      snapRadius = ta.getDimension(R.styleable.CropImageView_cropSnapRadius, options.snapRadius),
+                      touchRadius = ta.getDimension(R.styleable.CropImageView_cropTouchRadius, options.touchRadius),
+                      initialCropWindowPaddingRatio = ta.getFloat(R.styleable.CropImageView_cropInitialCropWindowPaddingRatio, options.initialCropWindowPaddingRatio),
+                      circleCornerFillColorHexValue = ta.getInteger(R.styleable.CropImageView_cropCornerCircleFillColor, options.circleCornerFillColorHexValue),
+                      borderLineThickness = ta.getDimension(R.styleable.CropImageView_cropBorderLineThickness, options.borderLineThickness),
+                      borderLineColor = ta.getInteger(R.styleable.CropImageView_cropBorderLineColor, options.borderLineColor),
+                      borderCornerThickness = ta.getDimension(R.styleable.CropImageView_cropBorderCornerThickness, options.borderCornerThickness),
+                      borderCornerOffset = ta.getDimension(R.styleable.CropImageView_cropBorderCornerOffset, options.borderCornerOffset),
+                      borderCornerLength = ta.getDimension(R.styleable.CropImageView_cropBorderCornerLength, options.borderCornerLength),
+                      borderCornerColor = ta.getInteger(R.styleable.CropImageView_cropBorderCornerColor, options.borderCornerColor),
+                      guidelinesThickness = ta.getDimension(R.styleable.CropImageView_cropGuidelinesThickness, options.guidelinesThickness),
+                      guidelinesColor = ta.getInteger(R.styleable.CropImageView_cropGuidelinesColor, options.guidelinesColor),
+                      backgroundColor = ta.getInteger(R.styleable.CropImageView_cropBackgroundColor, options.backgroundColor),
+                      showCropOverlay = ta.getBoolean(R.styleable.CropImageView_cropShowCropOverlay, mShowCropOverlay),
+                      showProgressBar = ta.getBoolean(R.styleable.CropImageView_cropShowProgressBar, mShowProgressBar),
+                      minCropWindowWidth = ta.getDimension(R.styleable.CropImageView_cropMinCropWindowWidth, options.minCropWindowWidth.toFloat()).toInt(),
+                      minCropWindowHeight = ta.getDimension(R.styleable.CropImageView_cropMinCropWindowHeight, options.minCropWindowHeight.toFloat()).toInt(),
+                      minCropResultWidth = ta.getFloat(R.styleable.CropImageView_cropMinCropResultWidthPX, options.minCropResultWidth.toFloat()).toInt(),
+                      minCropResultHeight = ta.getFloat(R.styleable.CropImageView_cropMinCropResultHeightPX, options.minCropResultHeight.toFloat()).toInt(),
+                      maxCropResultWidth = ta.getFloat(R.styleable.CropImageView_cropMaxCropResultWidthPX, options.maxCropResultWidth.toFloat()).toInt(),
+                      maxCropResultHeight = ta.getFloat(R.styleable.CropImageView_cropMaxCropResultHeightPX, options.maxCropResultHeight.toFloat()).toInt(),
+                      flipHorizontally = ta.getBoolean(R.styleable.CropImageView_cropFlipHorizontally, options.flipHorizontally),
+                      flipVertically = ta.getBoolean(R.styleable.CropImageView_cropFlipHorizontally, options.flipVertically),
+                      cropperLabelTextSize = ta.getDimension(R.styleable.CropImageView_cropperLabelTextSize, options.cropperLabelTextSize),
+                      cropperLabelTextColor = ta.getInteger(R.styleable.CropImageView_cropperLabelTextColor, options.cropperLabelTextColor),
+                      cropperLabelText = ta.getString(R.styleable.CropImageView_cropperLabelText),
+                      showCropLabel = ta.getBoolean(R.styleable.CropImageView_cropShowLabel, options.showCropLabel),
                     )
-                    options.aspectRatioX = ta.getInteger(
-                        R.styleable.CropImageView_cropAspectRatioX,
-                        options.aspectRatioX
-                    )
-                    options.aspectRatioY = ta.getInteger(
-                        R.styleable.CropImageView_cropAspectRatioY,
-                        options.aspectRatioY
-                    )
-                    options.scaleType = ScaleType.values()[
-                        ta.getInt(
-                            R.styleable.CropImageView_cropScaleType,
-                            options.scaleType.ordinal
-                        )
-                    ]
-                    options.autoZoomEnabled = ta.getBoolean(
-                        R.styleable.CropImageView_cropAutoZoomEnabled,
-                        options.autoZoomEnabled
-                    )
-                    options.multiTouchEnabled = ta.getBoolean(
-                        R.styleable.CropImageView_cropMultiTouchEnabled, options.multiTouchEnabled
-                    )
-                    options.centerMoveEnabled = ta.getBoolean(
-                        R.styleable.CropImageView_cropCenterMoveEnabled, options.centerMoveEnabled
-                    )
-                    options.maxZoom =
-                        ta.getInteger(R.styleable.CropImageView_cropMaxZoom, options.maxZoom)
-                    options.cropShape = CropShape.values()[
-                        ta.getInt(
-                            R.styleable.CropImageView_cropShape,
-                            options.cropShape.ordinal
-                        )
-                    ]
-                    options.cornerShape = CropCornerShape.values()[
-                        ta.getInt(
-                            R.styleable.CropImageView_cornerShape,
-                            options.cornerShape.ordinal
-                        )
-                    ]
-                    options.cropCornerRadius = ta.getDimension(
-                        R.styleable.CropImageView_cropCornerRadius,
-                        options.cropCornerRadius
-                    )
-                    options.guidelines = Guidelines.values()[
-                        ta.getInt(
-                            R.styleable.CropImageView_cropGuidelines, options.guidelines.ordinal
-                        )
-                    ]
-                    options.snapRadius = ta.getDimension(
-                        R.styleable.CropImageView_cropSnapRadius,
-                        options.snapRadius
-                    )
-                    options.touchRadius = ta.getDimension(
-                        R.styleable.CropImageView_cropTouchRadius,
-                        options.touchRadius
-                    )
-                    options.initialCropWindowPaddingRatio = ta.getFloat(
-                        R.styleable.CropImageView_cropInitialCropWindowPaddingRatio,
-                        options.initialCropWindowPaddingRatio
-                    )
-                    options.circleCornerFillColorHexValue = ta.getInteger(
-                        R.styleable.CropImageView_cropCornerCircleFillColor, options.circleCornerFillColorHexValue
-                    )
-                    options.borderLineThickness = ta.getDimension(
-                        R.styleable.CropImageView_cropBorderLineThickness,
-                        options.borderLineThickness
-                    )
-                    options.borderLineColor = ta.getInteger(
-                        R.styleable.CropImageView_cropBorderLineColor,
-                        options.borderLineColor
-                    )
-                    options.borderCornerThickness = ta.getDimension(
-                        R.styleable.CropImageView_cropBorderCornerThickness,
-                        options.borderCornerThickness
-                    )
-                    options.borderCornerOffset = ta.getDimension(
-                        R.styleable.CropImageView_cropBorderCornerOffset, options.borderCornerOffset
-                    )
-                    options.borderCornerLength = ta.getDimension(
-                        R.styleable.CropImageView_cropBorderCornerLength, options.borderCornerLength
-                    )
-                    options.borderCornerColor = ta.getInteger(
-                        R.styleable.CropImageView_cropBorderCornerColor, options.borderCornerColor
-                    )
-                    options.guidelinesThickness = ta.getDimension(
-                        R.styleable.CropImageView_cropGuidelinesThickness,
-                        options.guidelinesThickness
-                    )
-                    options.guidelinesColor = ta.getInteger(
-                        R.styleable.CropImageView_cropGuidelinesColor,
-                        options.guidelinesColor
-                    )
-                    options.backgroundColor = ta.getInteger(
-                        R.styleable.CropImageView_cropBackgroundColor,
-                        options.backgroundColor
-                    )
-                    options.showCropOverlay = ta.getBoolean(
-                        R.styleable.CropImageView_cropShowCropOverlay,
-                        mShowCropOverlay
-                    )
-                    options.showProgressBar = ta.getBoolean(
-                        R.styleable.CropImageView_cropShowProgressBar,
-                        mShowProgressBar
-                    )
-                    options.borderCornerThickness = ta.getDimension(
-                        R.styleable.CropImageView_cropBorderCornerThickness,
-                        options.borderCornerThickness
-                    )
-                    options.minCropWindowWidth = ta.getDimension(
-                        R.styleable.CropImageView_cropMinCropWindowWidth,
-                        options.minCropWindowWidth.toFloat()
-                    ).toInt()
-                    options.minCropWindowHeight = ta.getDimension(
-                        R.styleable.CropImageView_cropMinCropWindowHeight,
-                        options.minCropWindowHeight.toFloat()
-                    ).toInt()
-                    options.minCropResultWidth = ta.getFloat(
-                        R.styleable.CropImageView_cropMinCropResultWidthPX,
-                        options.minCropResultWidth.toFloat()
-                    ).toInt()
-                    options.minCropResultHeight = ta.getFloat(
-                        R.styleable.CropImageView_cropMinCropResultHeightPX,
-                        options.minCropResultHeight.toFloat()
-                    ).toInt()
-                    options.maxCropResultWidth = ta.getFloat(
-                        R.styleable.CropImageView_cropMaxCropResultWidthPX,
-                        options.maxCropResultWidth.toFloat()
-                    ).toInt()
-                    options.maxCropResultHeight = ta.getFloat(
-                        R.styleable.CropImageView_cropMaxCropResultHeightPX,
-                        options.maxCropResultHeight.toFloat()
-                    ).toInt()
-                    options.flipHorizontally = ta.getBoolean(
-                        R.styleable.CropImageView_cropFlipHorizontally, options.flipHorizontally
-                    )
-                    options.flipVertically = ta.getBoolean(
-                        R.styleable.CropImageView_cropFlipHorizontally,
-                        options.flipVertically
-                    )
-                    options.cropperLabelTextSize = ta.getDimension(
-                        R.styleable.CropImageView_cropperLabelTextSize,
-                        options.cropperLabelTextSize
-                    )
-                    options.cropperLabelTextColor = ta.getInteger(
-                        R.styleable.CropImageView_cropperLabelTextColor,
-                        options.cropperLabelTextColor
-                    )
-                    options.cropperLabelText = ta.getString(
-                        R.styleable.CropImageView_cropperLabelText
-                    )
-                    options.showCropLabel = ta.getBoolean(
-                        R.styleable.CropImageView_cropShowLabel,
-                        options.showCropLabel
-                    )
+
                     isSaveBitmapToInstanceState = ta.getBoolean(
                         R.styleable.CropImageView_cropSaveBitmapToInstanceState,
                         isSaveBitmapToInstanceState
@@ -1939,14 +1824,15 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
                         ta.hasValue(R.styleable.CropImageView_cropAspectRatioX) &&
                         !ta.hasValue(R.styleable.CropImageView_cropFixAspectRatio)
                     ) {
-                        options.fixAspectRatio = true
+                        options = options.copy(
+                            fixAspectRatio = true,
+                        )
                     }
                 } finally {
                     ta.recycle()
                 }
             }
         }
-        options.validate()
         mScaleType = options.scaleType
         mAutoZoomEnabled = options.autoZoomEnabled
         mMaxZoom = options.maxZoom

@@ -14,12 +14,10 @@ import androidx.activity.result.contract.ActivityResultContract
  *
  * If you do not provide an uri in the input the user will be asked to pick an image before cropping.
  */
-
 class CropImageContract :
     ActivityResultContract<CropImageContractOptions, CropImageView.CropResult>() {
 
     override fun createIntent(context: Context, input: CropImageContractOptions): Intent {
-        input.cropImageOptions.validate()
         return Intent(context, CropImageActivity::class.java).apply {
             val bundle = Bundle()
             bundle.putParcelable(CropImage.CROP_IMAGE_EXTRA_SOURCE, input.uri)

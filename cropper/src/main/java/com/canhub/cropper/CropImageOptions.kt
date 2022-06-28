@@ -14,6 +14,9 @@ import com.canhub.cropper.CropImageView.RequestSizeOptions
 import kotlinx.parcelize.Parcelize
 
 private val COLOR_PURPLE = Color.rgb(153, 51, 153)
+private val COLOR_WHITE_170 = Color.argb(170, 255, 255, 255)
+private val COLOR_BLACK_119 = Color.argb(119, 0, 0, 0)
+private const val COLOR_WHITE = Color.WHITE
 
 internal const val DEGREES_360 = 360
 
@@ -21,7 +24,7 @@ internal const val DEGREES_360 = 360
  * All the possible options that can be set to customize crop image.<br></br>
  * Initialized with default values.
  */
-@Parcelize data class CropImageOptions(
+@Parcelize data class CropImageOptions @JvmOverloads constructor(
     /**
      * When library picking and image if this value is true user will be prompt with option to
      * retrieve the image from gallery. The rule used is "image/<*>"
@@ -111,7 +114,7 @@ internal const val DEGREES_360 = 360
     @JvmField
     val autoZoomEnabled: Boolean = true,
 
-    /** if multi-touch should be enabled on the crop box default: false  */
+    /** if multitouch should be enabled on the crop box default: false  */
     @JvmField
     val multiTouchEnabled: Boolean = false,
 
@@ -149,7 +152,7 @@ internal const val DEGREES_360 = 360
     /** the color of the guidelines lines  */
     @JvmField
     @ColorInt
-    val borderLineColor: Int = Color.argb(170, 255, 255, 255),
+    val borderLineColor: Int = COLOR_WHITE_170,
 
     /** thickness of the corner line. (in pixels)  */
     @JvmField
@@ -166,12 +169,12 @@ internal const val DEGREES_360 = 360
     /** the color of the corner line  */
     @JvmField
     @ColorInt
-    val borderCornerColor: Int = Color.WHITE,
+    val borderCornerColor: Int = COLOR_WHITE,
     /**
      * The fill color of circle corner
      */
     @JvmField
-    val circleCornerFillColorHexValue: Int = Color.WHITE,
+    val circleCornerFillColorHexValue: Int = COLOR_WHITE,
 
     /** the thickness of the guidelines lines. (in pixels)  */
     @JvmField
@@ -180,7 +183,7 @@ internal const val DEGREES_360 = 360
     /** the color of the guidelines lines  */
     @JvmField
     @ColorInt
-    val guidelinesColor: Int = Color.argb(170, 255, 255, 255),
+    val guidelinesColor: Int = COLOR_WHITE_170,
 
     /**
      * the color of the overlay background around the crop window cover the image parts not in the
@@ -188,7 +191,7 @@ internal const val DEGREES_360 = 360
      */
     @JvmField
     @ColorInt
-    val backgroundColor: Int = Color.argb(119, 0, 0, 0),
+    val backgroundColor: Int = COLOR_BLACK_119,
 
     /** the min width the crop window is allowed to be. (in pixels)  */
     @JvmField
@@ -337,7 +340,7 @@ internal const val DEGREES_360 = 360
     /** The default cropper label text color **/
     @JvmField
     @ColorInt
-    val cropperLabelTextColor: Int = Color.WHITE,
+    val cropperLabelTextColor: Int = COLOR_WHITE,
 
     /** The default cropper label text **/
     @JvmField

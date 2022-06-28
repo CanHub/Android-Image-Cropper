@@ -12,12 +12,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import com.canhub.cropper.CropImage
 import com.canhub.cropper.CropImageContract
+import com.canhub.cropper.CropImageContractOptions
+import com.canhub.cropper.CropImageOptions
 import com.canhub.cropper.CropImageView
-import com.canhub.cropper.options
 import com.example.croppersample.R
 import com.example.croppersample.databinding.FragmentCameraBinding
 import java.io.File
@@ -91,154 +93,112 @@ internal class SampleCrop : Fragment() {
 
     private fun startCameraWithoutUri(includeCamera: Boolean, includeGallery: Boolean) {
         customCropImage.launch(
-            options {
-                setImageSource(
-                    includeGallery = includeGallery,
-                    includeCamera = includeCamera,
-                )
+            CropImageContractOptions(uri = null, CropImageOptions(
+                imageSourceIncludeGallery = includeGallery,
+                imageSourceIncludeCamera = includeCamera,
+
                 // Normal Settings
-                setScaleType(CropImageView.ScaleType.FIT_CENTER)
-                setCropShape(CropImageView.CropShape.RECTANGLE)
-                setGuidelines(CropImageView.Guidelines.ON_TOUCH)
-                setAspectRatio(1, 1)
-                setMaxZoom(4)
-                setAutoZoomEnabled(true)
-                setMultiTouchEnabled(true)
-                setCenterMoveEnabled(true)
-                setShowCropOverlay(true)
-                setAllowFlipping(true)
-                setSnapRadius(3f)
-                setTouchRadius(48f)
-                setInitialCropWindowPaddingRatio(0.1f)
-                setBorderLineThickness(3f)
-                setBorderLineColor(Color.argb(170, 255, 255, 255))
-                setBorderCornerThickness(2f)
-                setBorderCornerOffset(5f)
-                setBorderCornerLength(14f)
-                setBorderCornerColor(WHITE)
-                setGuidelinesThickness(1f)
-                setGuidelinesColor(R.color.white)
-                setBackgroundColor(Color.argb(119, 0, 0, 0))
-                setMinCropWindowSize(24, 24)
-                setMinCropResultSize(20, 20)
-                setMaxCropResultSize(99999, 99999)
-                setActivityTitle("")
-                setActivityMenuIconColor(0)
-                setOutputCompressFormat(Bitmap.CompressFormat.JPEG)
-                setOutputCompressQuality(90)
-                setRequestedSize(0, 0)
-                setRequestedSize(0, 0, CropImageView.RequestSizeOptions.RESIZE_INSIDE)
-                setInitialCropWindowRectangle(null)
-                setInitialRotation(0)
-                setAllowCounterRotation(false)
-                setFlipHorizontally(false)
-                setFlipVertically(false)
-                setCropMenuCropButtonTitle(null)
-                setCropMenuCropButtonIcon(0)
-                setAllowRotation(true)
-                setNoOutputImage(false)
-                setFixAspectRatio(false)
-                // Odd Settings
-//                setScaleType(CropImageView.ScaleType.CENTER)
-//                setCropShape(CropImageView.CropShape.OVAL)
-//                setGuidelines(CropImageView.Guidelines.ON)
-//                setAspectRatio(4, 16)
-//                setMaxZoom(8)
-//                setAutoZoomEnabled(false)
-//                setMultiTouchEnabled(false)
-//                setCenterMoveEnabled(true)
-//                setShowCropOverlay(false)
-//                setAllowFlipping(false)
-//                setSnapRadius(10f)
-//                setTouchRadius(30f)
-//                setInitialCropWindowPaddingRatio(0.3f)
-//                setBorderLineThickness(5f)
-//                setBorderLineColor(R.color.black)
-//                setBorderCornerThickness(6f)
-//                setBorderCornerOffset(2f)
-//                setBorderCornerLength(20f)
-//                setBorderCornerColor(RED)
-//                setGuidelinesThickness(5f)
-//                setGuidelinesColor(RED)
-//                setBackgroundColor(Color.argb(119, 30, 60, 90))
-//                setMinCropWindowSize(20, 20)
-//                setMinCropResultSize(16, 16)
-//                setMaxCropResultSize(999, 999)
-//                setActivityTitle("CUSTOM title")
-//                setActivityMenuIconColor(RED)
-//                setOutputUri(outputUri)
-//                setOutputCompressFormat(Bitmap.CompressFormat.PNG)
-//                setOutputCompressQuality(50)
-//                setRequestedSize(100, 100)
-//                setRequestedSize(100, 100, CropImageView.RequestSizeOptions.RESIZE_FIT)
-//                setInitialCropWindowRectangle(null)
-//                setInitialRotation(180)
-//                setAllowCounterRotation(true)
-//                setFlipHorizontally(true)
-//                setFlipVertically(true)
-//                setCropMenuCropButtonTitle("Custom name")
-//                setCropMenuCropButtonIcon(R.drawable.ic_gear_24)
-//                setAllowRotation(false)
-//                setNoOutputImage(false)
-//                setFixAspectRatio(true)
-//                setSkipEditing(true)
-//                setShowIntentChooser(true)
-//                setIntentChooserTitle("My Intent Chooser")
-/*                setIntentChooserPriorityList(listOf(
-                    "com.miui.gallery",
-                    "com.google.android.apps.photos"
-                ))
-*/
-            }
+                scaleType = CropImageView.ScaleType.FIT_CENTER,
+                cropShape = CropImageView.CropShape.RECTANGLE,
+                guidelines = CropImageView.Guidelines.ON_TOUCH,
+                aspectRatioX = 1,
+                aspectRatioY = 1,
+                maxZoom = 4,
+                autoZoomEnabled = true,
+                multiTouchEnabled = true,
+                centerMoveEnabled = true,
+                showCropOverlay = true,
+                allowFlipping = true,
+                snapRadius = 3f,
+                touchRadius = 48f,
+                initialCropWindowPaddingRatio = 0.1f,
+                borderLineThickness = 3f,
+                borderLineColor = Color.argb(170, 255, 255, 255),
+                borderCornerThickness = 2f,
+                borderCornerOffset = 5f,
+                borderCornerLength = 14f,
+                borderCornerColor = WHITE,
+                guidelinesThickness = 1f,
+                guidelinesColor = ContextCompat.getColor(requireContext(), R.color.white),
+                backgroundColor = Color.argb(119, 0, 0, 0),
+                minCropWindowHeight = 24,
+                minCropWindowWidth = 24,
+                minCropResultHeight = 20,
+                minCropResultWidth = 20,
+                maxCropResultHeight = 99999,
+                maxCropResultWidth = 99999,
+                activityTitle = "",
+                activityMenuIconColor = 0,
+                outputCompressFormat = Bitmap.CompressFormat.JPEG,
+                outputCompressQuality = 90,
+                outputRequestWidth = 0,
+                outputRequestHeight = 0,
+                outputRequestSizeOptions = CropImageView.RequestSizeOptions.RESIZE_INSIDE,
+                initialCropWindowRectangle = null,
+                initialRotation = 0,
+                allowCounterRotation = false,
+                flipHorizontally = false,
+                flipVertically = false,
+                cropMenuCropButtonTitle = null,
+                cropMenuCropButtonIcon = 0,
+                allowRotation = true,
+                noOutputImage = false,
+                fixAspectRatio = false,
+            ))
         )
     }
 
     private fun startCameraWithUri() {
         cropImage.launch(
-            options(outputUri) {
-                setScaleType(CropImageView.ScaleType.FIT_CENTER)
-                setCropShape(CropImageView.CropShape.RECTANGLE)
-                setGuidelines(CropImageView.Guidelines.ON_TOUCH)
-                setAspectRatio(1, 1)
-                setMaxZoom(4)
-                setAutoZoomEnabled(true)
-                setMultiTouchEnabled(true)
-                setCenterMoveEnabled(true)
-                setShowCropOverlay(true)
-                setAllowFlipping(true)
-                setSnapRadius(3f)
-                setTouchRadius(48f)
-                setInitialCropWindowPaddingRatio(0.1f)
-                setBorderLineThickness(3f)
-                setBorderLineColor(Color.argb(170, 255, 255, 255))
-                setBorderCornerThickness(2f)
-                setBorderCornerOffset(5f)
-                setBorderCornerLength(14f)
-                setBorderCornerColor(WHITE)
-                setGuidelinesThickness(1f)
-                setGuidelinesColor(R.color.white)
-                setBackgroundColor(Color.argb(119, 0, 0, 0))
-                setMinCropWindowSize(24, 24)
-                setMinCropResultSize(20, 20)
-                setMaxCropResultSize(99999, 99999)
-                setActivityTitle("")
-                setActivityMenuIconColor(0)
-                setOutputUri(null)
-                setOutputCompressFormat(Bitmap.CompressFormat.JPEG)
-                setOutputCompressQuality(90)
-                setRequestedSize(0, 0)
-                setRequestedSize(0, 0, CropImageView.RequestSizeOptions.RESIZE_INSIDE)
-                setInitialCropWindowRectangle(null)
-                setInitialRotation(0)
-                setAllowCounterRotation(false)
-                setFlipHorizontally(false)
-                setFlipVertically(false)
-                setCropMenuCropButtonTitle(null)
-                setCropMenuCropButtonIcon(0)
-                setAllowRotation(true)
-                setNoOutputImage(false)
-                setFixAspectRatio(false)
-            }
+            CropImageContractOptions(outputUri, CropImageOptions(
+                scaleType = CropImageView.ScaleType.FIT_CENTER,
+                cropShape = CropImageView.CropShape.RECTANGLE,
+                guidelines = CropImageView.Guidelines.ON_TOUCH,
+                aspectRatioX = 1,
+                aspectRatioY = 1,
+                maxZoom = 4,
+                autoZoomEnabled = true,
+                multiTouchEnabled = true,
+                centerMoveEnabled = true,
+                showCropOverlay = true,
+                allowFlipping = true,
+                snapRadius = 3f,
+                touchRadius = 48f,
+                initialCropWindowPaddingRatio = 0.1f,
+                borderLineThickness = 3f,
+                borderLineColor = Color.argb(170, 255, 255, 255),
+                borderCornerThickness = 2f,
+                borderCornerOffset = 5f,
+                borderCornerLength = 14f,
+                borderCornerColor = WHITE,
+                guidelinesThickness = 1f,
+                guidelinesColor = ContextCompat.getColor(requireContext(), R.color.white),
+                backgroundColor = Color.argb(119, 0, 0, 0),
+                minCropWindowHeight = 24,
+                minCropWindowWidth = 24,
+                minCropResultHeight = 20,
+                minCropResultWidth = 20,
+                maxCropResultHeight = 99999,
+                maxCropResultWidth = 99999,
+                activityTitle = "",
+                activityMenuIconColor = 0,
+                customOutputUri = null,
+                outputCompressFormat = Bitmap.CompressFormat.JPEG,
+                outputCompressQuality = 90,
+                outputRequestWidth = 0,
+                outputRequestHeight = 0,
+                outputRequestSizeOptions = CropImageView.RequestSizeOptions.RESIZE_INSIDE,
+                initialCropWindowRectangle = null,
+                initialRotation = 0,
+                allowCounterRotation = false,
+                flipHorizontally = false,
+                flipVertically = false,
+                cropMenuCropButtonTitle = null,
+                cropMenuCropButtonIcon = 0,
+                allowRotation = true,
+                noOutputImage = false,
+                fixAspectRatio = false,
+            ))
         )
     }
 
