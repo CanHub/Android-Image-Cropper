@@ -964,6 +964,7 @@ class CropOverlayView
                 drawCircleShape(canvas, rect, cornerOffset, cornerExtension, radius)
             }
             CropImageView.CropCornerShape.RECTANGLE -> drawLineShape(canvas, rect, cornerOffset, cornerExtension)
+            null -> Unit
         }
     }
 
