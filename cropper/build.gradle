@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-parcelize'
 apply plugin: 'maven-publish'
 
-group='com.canhub.cropper'
+group = 'com.canhub.cropper'
 
 // Because the components are created only during the afterEvaluate phase, you must
 // configure your publications using the afterEvaluate() lifecycle method.
@@ -69,4 +69,7 @@ dependencies {
     testImplementation "androidx.test:core:$androidXTestVersion"
     testImplementation "androidx.test:runner:$androidXTestVersion"
     testImplementation "io.mockk:mockk:$mockkVersion"
+
+    testImplementation "androidx.fragment:fragment-testing:$androidXFragmentTestingVersion"
+    testImplementation "org.robolectric:robolectric:$robolectricVersion"
 }
