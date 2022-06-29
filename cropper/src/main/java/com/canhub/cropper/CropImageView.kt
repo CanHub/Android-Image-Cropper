@@ -653,7 +653,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
             options = options,
             saveCompressFormat = saveCompressFormat,
             saveCompressQuality = saveCompressQuality,
-            customOutputUri = customOutputUri
+            customOutputUri = customOutputUri,
         )
     }
 
@@ -1018,7 +1018,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
                     options = options,
                     saveCompressFormat = saveCompressFormat,
                     saveCompressQuality = saveCompressQuality,
-                    customOutputUri = customOutputUri,
+                    customOutputUri = customOutputUri ?: this.customOutputUri,
                 )
             )
 
