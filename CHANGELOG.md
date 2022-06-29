@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [x.x.x] - unreleased
 
+- CropImageView: Use customOutputUri instance property as a fallback in startCropWorkerTask. [#401](https://github.com/CanHub/Android-Image-Cropper/issues/401)
 - CropImageOptions: Option to change progress bar color. [#390](https://github.com/CanHub/Android-Image-Cropper/issues/390)
 - Sample: Showcase 2:1 aspect ratio. [#386](https://github.com/CanHub/Android-Image-Cropper/issues/386)
 - Update dependencies [#387](https://github.com/CanHub/Android-Image-Cropper/issues/387)
