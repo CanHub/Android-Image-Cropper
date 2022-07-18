@@ -89,7 +89,6 @@ class BitmapLoadingWorkerJob internal constructor(
     companion object
     class Result {
 
-
         /**
          * The Android URI of the image to load.
          * NOT a file path, for it use [getUriFilePath]
