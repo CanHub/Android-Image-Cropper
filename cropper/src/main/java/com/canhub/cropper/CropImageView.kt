@@ -711,9 +711,11 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
         val setBitmap: Bitmap?
         var degreesRotated = 0
         if (bitmap != null && exif != null) {
-            val result = BitmapUtils.rotateBitmapByExif(bitmap, exif)
+            val result = BitmapUtils.orientateBitmapByExif(bitmap, exif)
             setBitmap = result.bitmap
             degreesRotated = result.degrees
+            mFlipHorizontally = result.flipHorizontally
+            mFlipVertically = result.flipVertically
             mInitialDegreesRotated = result.degrees
         } else setBitmap = bitmap
 
@@ -866,6 +868,8 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
         setProgressBarVisibility()
         if (result.error == null) {
             mInitialDegreesRotated = result.degreesRotated
+            mFlipHorizontally = result.flipHorizontally
+            mFlipVertically = result.flipVertically
             setBitmap(
                 result.bitmap,
                 0,
