@@ -3,7 +3,7 @@
     <string name="crop_image_activity_title"></string>
     <string name="ic_rotate_left_24">घड़ी की सुई के विपरीत दिशा में घुमाइए</string>
     <string name="ic_rotate_right_24">घुमाएँ</string>
-    <string name="crop_image_menu_crop">फ़सल</string>
+    <string name="crop_image_menu_crop">काटे</string>
     <string name="ic_flip_24">फ्लिप</string>
     <string name="ic_flip_24_horizontally">क्षैतिज फ्लिप</string>
     <string name="ic_flip_24_vertically">लंबवत फ्लिप करें</string>
