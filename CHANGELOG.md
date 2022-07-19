@@ -226,3 +226,8 @@ Versions `2.0.1` and `2.0.2` are similar, issues with jitpack.
 
 ## [1.0.0] - 21/11/20
 - Copy from previous repo [ArthurHub](https://github.com/ArthurHub/Android-Image-Cropper/)
+
+## [4.3.0] - 20/07/22
+### Fixed
+- Fixed the mistake in hindi conversion of "Crop" [#402](https://github.com/CanHub/Android-Image-Cropper/issues/402)
+
