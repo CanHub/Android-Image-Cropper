@@ -10,6 +10,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - `Security` in case of vulnerabilities.
 
 ## [x.x.x] - unreleased
+### Fixed
+- Fixed the mistake in hindi conversion of "Crop" [#402](https://github.com/CanHub/Android-Image-Cropper/issues/402)
 
 ## [4.3.1] - 20/07/2022
 ### Fix
@@ -18,10 +20,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ### Added
 - CropImageOptions: Option to change progress bar color. [#390](https://github.com/CanHub/Android-Image-Cropper/issues/390)
-
-## [4.3.0] - 20/07/22
-### Fixed
-- Fixed the mistake in hindi conversion of "Crop" [#402](https://github.com/CanHub/Android-Image-Cropper/issues/402)
 
 ## [4.3.0] - 10/06/2022
 ### Added
