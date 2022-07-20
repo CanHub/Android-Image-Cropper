@@ -124,8 +124,14 @@ class BitmapLoadingWorkerJob internal constructor(
         fun getUriFilePath(context: Context, uniqueName: Boolean = false): String =
             getFilePathFromUri(context, uriContent, uniqueName)
 
-        internal constructor(uri: Uri, bitmap: Bitmap?, loadSampleSize: Int, degreesRotated: Int,
-                             flipHorizontally: Boolean, flipVertically: Boolean) {
+        internal constructor(
+            uri: Uri,
+            bitmap: Bitmap?,
+            loadSampleSize: Int,
+            degreesRotated: Int,
+            flipHorizontally: Boolean,
+            flipVertically: Boolean
+        ) {
             uriContent = uri
             this.bitmap = bitmap
             this.loadSampleSize = loadSampleSize

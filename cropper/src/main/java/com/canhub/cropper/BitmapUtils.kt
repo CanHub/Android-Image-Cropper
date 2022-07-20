@@ -102,10 +102,10 @@ internal object BitmapUtils {
             ExifInterface.ORIENTATION_ROTATE_270 -> 270
             else -> 0
         }
-        val flipHorizontally = orientationAttributeInt == ExifInterface.ORIENTATION_FLIP_HORIZONTAL
-            || orientationAttributeInt == ExifInterface.ORIENTATION_TRANSPOSE
-        val flipVertically = orientationAttributeInt == ExifInterface.ORIENTATION_FLIP_VERTICAL
-            || orientationAttributeInt == ExifInterface.ORIENTATION_TRANSVERSE
+        val flipHorizontally = orientationAttributeInt == ExifInterface.ORIENTATION_FLIP_HORIZONTAL ||
+            orientationAttributeInt == ExifInterface.ORIENTATION_TRANSPOSE
+        val flipVertically = orientationAttributeInt == ExifInterface.ORIENTATION_FLIP_VERTICAL ||
+            orientationAttributeInt == ExifInterface.ORIENTATION_TRANSVERSE
         return RotateBitmapResult(bitmap, degrees, flipHorizontally, flipVertically)
     }
 
@@ -724,8 +724,8 @@ internal object BitmapUtils {
             options.inSampleSize = (
                 sampleMulti
                     * calculateInSampleSizeByReqestedSize(
-                    rect.width(), rect.height(), reqWidth, reqHeight
-                )
+                        rect.width(), rect.height(), reqWidth, reqHeight
+                    )
                 )
             val stream = context.contentResolver.openInputStream(uri)
             val decoder = BitmapRegionDecoder.newInstance(stream!!, false)
