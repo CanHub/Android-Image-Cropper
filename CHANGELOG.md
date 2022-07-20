@@ -10,6 +10,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - `Security` in case of vulnerabilities.
 
 ## [x.x.x] - unreleased
+### Fixed
+- Fixed the mistake in hindi conversion of "Crop" [#402](https://github.com/CanHub/Android-Image-Cropper/issues/402)
 
 ## [4.3.1] - 20/07/2022
 ### Fix
@@ -226,3 +228,4 @@ Versions `2.0.1` and `2.0.2` are similar, issues with jitpack.
 
 ## [1.0.0] - 21/11/20
 - Copy from previous repo [ArthurHub](https://github.com/ArthurHub/Android-Image-Cropper/)
+- 
