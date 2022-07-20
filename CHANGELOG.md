@@ -11,11 +11,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [x.x.x] - unreleased
 
+## [4.3.1] - 20/07/2022
+### Fix
 - CropImageView: Added support for handling all EXIF orientation values. [#408](https://github.com/CanHub/Android-Image-Cropper/issues/408)
 - CropImageView: Use customOutputUri instance property as a fallback in startCropWorkerTask. [#401](https://github.com/CanHub/Android-Image-Cropper/issues/401)
+
+### Added
 - CropImageOptions: Option to change progress bar color. [#390](https://github.com/CanHub/Android-Image-Cropper/issues/390)
-- Sample: Showcase 2:1 aspect ratio. [#386](https://github.com/CanHub/Android-Image-Cropper/issues/386)
-- Update dependencies [#387](https://github.com/CanHub/Android-Image-Cropper/issues/387)
 
 ## [4.3.0] - 10/06/2022
 ### Added
