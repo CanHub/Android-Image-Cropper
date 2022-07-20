@@ -19,6 +19,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Added
 - CropImageOptions: Option to change progress bar color. [#390](https://github.com/CanHub/Android-Image-Cropper/issues/390)
 
+## [4.3.0] - 20/07/22
+### Fixed
+- Fixed the mistake in hindi conversion of "Crop" [#402](https://github.com/CanHub/Android-Image-Cropper/issues/402)
+
 ## [4.3.0] - 10/06/2022
 ### Added
 - Added a helper text on top of crop overlay which moves along with it. [#381](https://github.com/CanHub/Android-Image-Cropper/issues/381)
@@ -226,8 +230,4 @@ Versions `2.0.1` and `2.0.2` are similar, issues with jitpack.
 
 ## [1.0.0] - 21/11/20
 - Copy from previous repo [ArthurHub](https://github.com/ArthurHub/Android-Image-Cropper/)
-
-## [4.3.0] - 20/07/22
-### Fixed
-- Fixed the mistake in hindi conversion of "Crop" [#402](https://github.com/CanHub/Android-Image-Cropper/issues/402)
-
+- 
