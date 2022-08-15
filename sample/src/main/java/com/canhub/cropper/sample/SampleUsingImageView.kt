@@ -1,4 +1,4 @@
-package com.canhub.cropper.sample.crop_image_view.app
+package com.canhub.cropper.sample
 
 import android.graphics.Rect
 import android.net.Uri
@@ -18,29 +18,24 @@ import com.canhub.cropper.CropImageView
 import com.canhub.cropper.CropImageView.CropResult
 import com.canhub.cropper.CropImageView.OnCropImageCompleteListener
 import com.canhub.cropper.CropImageView.OnSetImageUriCompleteListener
-import com.canhub.cropper.sample.SCropResultActivity
-import com.canhub.cropper.sample.crop_image_view.domain.SCropImageViewContract
-import com.canhub.cropper.sample.crop_image_view.presenter.SCropImageViewPresenter
-import com.canhub.cropper.sample.options_dialog.app.SOptionsDialogBottomSheet
-import com.canhub.cropper.sample.options_dialog.domain.SOptionsDomain
+import com.canhub.cropper.sample.options_dialog.SampleOptionsBottomSheet
+import com.canhub.cropper.sample.options_dialog.SampleOptionsEntity
 import com.example.croppersample.R
 import com.example.croppersample.databinding.FragmentCropImageViewBinding
 
-internal class SCropImageViewFragment :
+internal class SampleUsingImageView :
     Fragment(),
-    SCropImageViewContract.View,
-    SOptionsDialogBottomSheet.Listener,
+    SampleOptionsBottomSheet.Listener,
     OnSetImageUriCompleteListener,
     OnCropImageCompleteListener {
 
     companion object {
 
-        fun newInstance() = SCropImageViewFragment()
+        fun newInstance() = SampleUsingImageView()
     }
 
     private lateinit var binding: FragmentCropImageViewBinding
-    private val presenter = SCropImageViewPresenter()
-    private var options: SOptionsDomain? = null
+    private var options: SampleOptionsEntity? = null
     private val openPicker =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             binding.cropImageView.setImageUriAsync(uri)
@@ -59,8 +54,7 @@ internal class SCropImageViewFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        presenter.bind(this)
-        presenter.onViewCreated()
+        setOptions()
 
         binding.cropImageView.let {
             it.setOnSetImageUriCompleteListener(this)
@@ -69,7 +63,7 @@ internal class SCropImageViewFragment :
         }
 
         binding.settings.setOnClickListener {
-            SOptionsDialogBottomSheet.show(childFragmentManager, options, this)
+            SampleOptionsBottomSheet.show(childFragmentManager, options, this)
         }
 
         binding.searchImage.setOnClickListener {
@@ -81,7 +75,7 @@ internal class SCropImageViewFragment :
                 resetCropRect()
                 options = options?.copy(
                     scaleType = CropImageView.ScaleType.FIT_CENTER,
-                    flipHorizontal = false,
+                    flipHorizontally = false,
                     flipVertically = false,
                     autoZoom = true,
                     maxZoomLvl = 2
@@ -91,7 +85,7 @@ internal class SCropImageViewFragment :
         }
     }
 
-    override fun onOptionsApplySelected(options: SOptionsDomain) {
+    override fun onOptionsApplySelected(options: SampleOptionsEntity) {
         this.options = options
 
         binding.cropImageView.apply {
@@ -110,8 +104,9 @@ internal class SCropImageViewFragment :
             isShowProgressBar = options.showProgressBar
             isAutoZoomEnabled = options.autoZoom
             maxZoom = options.maxZoomLvl
-            isFlippedHorizontally = options.flipHorizontal
+            isFlippedHorizontally = options.flipHorizontally
             isFlippedVertically = options.flipVertically
+            isShowCropLabel = options.showCropLabel
         }
 
         if (options.scaleType == CropImageView.ScaleType.CENTER_INSIDE)
@@ -170,7 +165,7 @@ internal class SCropImageViewFragment :
                     result.bitmap?.let { CropImage.toOvalBitmap(it) }
                 else result.bitmap
             context?.let { Log.v("File Path", result.getUriFilePath(it).toString()) }
-            SCropResultActivity.start(this, imageBitmap, result.uriContent, result.sampleSize)
+            SampleResultScreen.start(this, imageBitmap, result.uriContent, result.sampleSize)
         } else {
             Log.e("AIC", "Failed to crop image", result?.error)
             Toast
@@ -179,8 +174,25 @@ internal class SCropImageViewFragment :
         }
     }
 
-    override fun setOptions(options: SOptionsDomain) {
+    private fun setOptions() {
         binding.cropImageView.cropRect = Rect(100, 300, 500, 1200)
-        onOptionsApplySelected(options)
+        onOptionsApplySelected(defaultOptions)
     }
+
+    private val defaultOptions: SampleOptionsEntity = SampleOptionsEntity(
+        scaleType = CropImageView.ScaleType.FIT_CENTER,
+        cropShape = CropImageView.CropShape.RECTANGLE,
+        cornerShape = CropImageView.CropCornerShape.RECTANGLE,
+        guidelines = CropImageView.Guidelines.ON,
+        ratio = Pair(1, 1),
+        autoZoom = true,
+        maxZoomLvl = 2,
+        multiTouch = true,
+        centerMove = true,
+        showCropOverlay = true,
+        showProgressBar = true,
+        flipHorizontally = false,
+        flipVertically = false,
+        showCropLabel = false
+    )
 }

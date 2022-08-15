@@ -40,14 +40,16 @@ class BitmapLoadingWorkerJob internal constructor(
                     val decodeResult =
                         BitmapUtils.decodeSampledBitmap(context, uri, width, height)
                     if (isActive) {
-                        val rotateResult =
-                            BitmapUtils.rotateBitmapByExif(decodeResult.bitmap, context, uri)
+                        val orientateResult =
+                            BitmapUtils.orientateBitmapByExif(decodeResult.bitmap, context, uri)
                         onPostExecute(
                             Result(
                                 uri = uri,
-                                bitmap = rotateResult.bitmap,
+                                bitmap = orientateResult.bitmap,
                                 loadSampleSize = decodeResult.sampleSize,
-                                degreesRotated = rotateResult.degrees
+                                degreesRotated = orientateResult.degrees,
+                                flipHorizontally = orientateResult.flipHorizontally,
+                                flipVertically = orientateResult.flipVertically
                             )
                         )
                     }
@@ -102,6 +104,12 @@ class BitmapLoadingWorkerJob internal constructor(
         /** The degrees the image was rotated  */
         val degreesRotated: Int
 
+        /** If the image was flipped horizontally */
+        var flipHorizontally: Boolean = false
+
+        /** If the image was flipped vertically */
+        var flipVertically: Boolean = false
+
         /** The error that occurred during async bitmap loading.  */
         val error: Exception?
 
@@ -116,11 +124,20 @@ class BitmapLoadingWorkerJob internal constructor(
         fun getUriFilePath(context: Context, uniqueName: Boolean = false): String =
             getFilePathFromUri(context, uriContent, uniqueName)
 
-        internal constructor(uri: Uri, bitmap: Bitmap?, loadSampleSize: Int, degreesRotated: Int) {
+        internal constructor(
+            uri: Uri,
+            bitmap: Bitmap?,
+            loadSampleSize: Int,
+            degreesRotated: Int,
+            flipHorizontally: Boolean,
+            flipVertically: Boolean
+        ) {
             uriContent = uri
             this.bitmap = bitmap
             this.loadSampleSize = loadSampleSize
             this.degreesRotated = degreesRotated
+            this.flipHorizontally = flipHorizontally
+            this.flipVertically = flipVertically
             error = null
         }
 

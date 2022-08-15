@@ -1,4 +1,4 @@
-package com.canhub.cropper.sample.crop_image.app
+package com.canhub.cropper.sample
 
 import android.graphics.Bitmap
 import android.graphics.Color
@@ -14,12 +14,10 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
+import com.canhub.cropper.CropImage
 import com.canhub.cropper.CropImageContract
 import com.canhub.cropper.CropImageView
 import com.canhub.cropper.options
-import com.canhub.cropper.sample.SCropResultActivity
-import com.canhub.cropper.sample.crop_image.domain.SCropImageContract
-import com.canhub.cropper.sample.crop_image.presenter.SCropImagePresenter
 import com.example.croppersample.R
 import com.example.croppersample.databinding.FragmentCameraBinding
 import java.io.File
@@ -27,11 +25,11 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-internal class SCropImageFragment : Fragment(), SCropImageContract.View {
+internal class SampleCrop : Fragment() {
 
     companion object {
 
-        fun newInstance() = SCropImageFragment()
+        fun newInstance() = SampleCrop()
 
         const val DATE_FORMAT = "yyyyMMdd_HHmmss"
         const val FILE_NAMING_PREFIX = "JPEG_"
@@ -41,16 +39,27 @@ internal class SCropImageFragment : Fragment(), SCropImageContract.View {
     }
 
     private lateinit var binding: FragmentCameraBinding
-    private val presenter: SCropImageContract.Presenter = SCropImagePresenter()
     private var outputUri: Uri? = null
     private val takePicture = registerForActivityResult(ActivityResultContracts.TakePicture()) {
-        presenter.onTakePictureResult(it)
+        if (it) startCameraWithUri() else showErrorMessage("taking picture failed")
     }
-    private val cropImage = registerForActivityResult(CropImageContract()) {
-        presenter.onCropImageResult(it)
+    private val cropImage = registerForActivityResult(CropImageContract()) { result ->
+        when {
+            result.isSuccessful -> {
+                Log.v("Bitmap", result.bitmap.toString())
+                Log.v("File Path", context?.let { result.getUriFilePath(it) }.toString())
+                handleCropImageResult(result.uriContent.toString())
+            }
+            result is CropImage.CancelledResult -> {
+                showErrorMessage("cropping image was cancelled by the user")
+            }
+            else -> {
+                showErrorMessage("cropping image failed")
+            }
+        }
     }
     private val customCropImage = registerForActivityResult(CropImageContract()) {
-        presenter.onCustomCropImageResult(outputUri)
+        handleCropImageResult(it.uriContent.toString())
     }
 
     override fun onCreateView(
@@ -64,39 +73,23 @@ internal class SCropImageFragment : Fragment(), SCropImageContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.bind(this)
 
-        binding.takePictureBeforeCallLibraryWithUri.setOnClickListener { startTakePicture() }
+        binding.takePictureBeforeCallLibraryWithUri.setOnClickListener {
+            setupOutputUri()
+            takePicture.launch(outputUri)
+        }
         binding.callLibraryWithoutUri.setOnClickListener {
-            startCameraWithoutUri(
-                includeCamera = true,
-                includeGallery = true,
-            )
+            startCameraWithoutUri(includeCamera = true, includeGallery = true)
         }
         binding.callLibraryWithoutUriCameraOnly.setOnClickListener {
-            startCameraWithoutUri(
-                includeCamera = true,
-                includeGallery = false,
-            )
+            startCameraWithoutUri(includeCamera = true, includeGallery = false)
         }
         binding.callLibraryWithoutUriGalleryOnly.setOnClickListener {
-            startCameraWithoutUri(
-                includeCamera = false,
-                includeGallery = true,
-            )
+            startCameraWithoutUri(includeCamera = false, includeGallery = true)
         }
-
-        presenter.onCreate(activity, context)
-    }
-
-    override fun onDestroyView() {
-        presenter.unbind()
-        super.onDestroyView()
     }
 
     private fun startCameraWithoutUri(includeCamera: Boolean, includeGallery: Boolean) {
-        setupOutputUri()
-
         customCropImage.launch(
             options {
                 setImageSource(
@@ -131,7 +124,6 @@ internal class SCropImageFragment : Fragment(), SCropImageContract.View {
                 setMaxCropResultSize(99999, 99999)
                 setActivityTitle("")
                 setActivityMenuIconColor(0)
-                setOutputUri(outputUri)
                 setOutputCompressFormat(Bitmap.CompressFormat.JPEG)
                 setOutputCompressQuality(90)
                 setRequestedSize(0, 0)
@@ -146,7 +138,6 @@ internal class SCropImageFragment : Fragment(), SCropImageContract.View {
                 setAllowRotation(true)
                 setNoOutputImage(false)
                 setFixAspectRatio(false)
-
                 // Odd Settings
 //                setScaleType(CropImageView.ScaleType.CENTER)
 //                setCropShape(CropImageView.CropShape.OVAL)
@@ -202,7 +193,7 @@ internal class SCropImageFragment : Fragment(), SCropImageContract.View {
         )
     }
 
-    override fun startCameraWithUri() {
+    private fun startCameraWithUri() {
         cropImage.launch(
             options(outputUri) {
                 setScaleType(CropImageView.ScaleType.FIT_CENTER)
@@ -251,18 +242,13 @@ internal class SCropImageFragment : Fragment(), SCropImageContract.View {
         )
     }
 
-    override fun showErrorMessage(message: String) {
+    private fun showErrorMessage(message: String) {
         Log.e("Camera Error:", message)
         Toast.makeText(activity, "Crop failed: $message", Toast.LENGTH_SHORT).show()
     }
 
-    private fun startTakePicture() {
-        setupOutputUri()
-        takePicture.launch(outputUri)
-    }
-
-    override fun handleCropImageResult(uri: String) {
-        SCropResultActivity.start(this, null, Uri.parse(uri), null)
+    private fun handleCropImageResult(uri: String) {
+        SampleResultScreen.start(this, null, Uri.parse(uri.replace("file:", "")), null)
     }
 
     private fun setupOutputUri() {

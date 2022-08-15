@@ -8,5 +8,7 @@
     <string name="ic_flip_24_horizontally">Retourner horizontalement</string>
     <string name="ic_flip_24_vertically">Retourner verticalement</string>
     <string name="pick_image_chooser_title">Sélectionner la source</string>
+    <string name="pick_image_camera">Appareil photo</string>
+    <string name="pick_image_gallery">Galerie</string>
     <string name="crop_image_activity_no_permissions">Annulation, il manque des permissions requises</string>
 </resources>

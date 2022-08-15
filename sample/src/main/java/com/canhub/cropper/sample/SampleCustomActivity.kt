@@ -1,4 +1,4 @@
-package com.canhub.cropper.sample.extend_activity.app
+package com.canhub.cropper.sample
 
 import android.app.Activity
 import android.content.Intent
@@ -10,41 +10,33 @@ import android.view.View
 import androidx.core.app.ActivityCompat
 import com.canhub.cropper.CropImage
 import com.canhub.cropper.CropImageActivity
-import com.canhub.cropper.sample.extend_activity.domain.SExtendContract
-import com.canhub.cropper.sample.extend_activity.presenter.SExtendPresenter
 import com.example.croppersample.R
 import com.example.croppersample.databinding.ExtendedActivityBinding
 
-internal class SExtendActivity : CropImageActivity(), SExtendContract.View {
+internal class SampleCustomActivity : CropImageActivity() {
 
     companion object {
         fun start(activity: Activity) {
             ActivityCompat.startActivity(
                 activity,
-                Intent(activity, SExtendActivity::class.java),
+                Intent(activity, SampleCustomActivity::class.java),
                 null
             )
         }
     }
 
     private lateinit var binding: ExtendedActivityBinding
-    private val presenter: SExtendContract.Presenter = SExtendPresenter()
+    private var counter = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ExtendedActivityBinding.inflate(layoutInflater)
 
         super.onCreate(savedInstanceState)
-        presenter.bindView(this)
+        updateRotationCounter(counter.toString())
 
-        binding.saveBtn.setOnClickListener {
-            cropImage() // CropImageActivity.cropImage()
-        }
-        binding.backBtn.setOnClickListener {
-            onBackPressed() // CropImageActivity.onBackPressed()
-        }
-        binding.rotateText.setOnClickListener {
-            presenter.onRotateClick()
-        }
+        binding.saveBtn.setOnClickListener { cropImage() } // CropImageActivity.cropImage()
+        binding.backBtn.setOnClickListener { onBackPressed() } // CropImageActivity.onBackPressed()
+        binding.rotateText.setOnClickListener { onRotateClick() }
 
         setCropImageView(binding.cropImageView)
     }
@@ -59,25 +51,14 @@ internal class SExtendActivity : CropImageActivity(), SExtendContract.View {
         super.setContentView(binding.root)
     }
 
-    override fun onDestroy() {
-        presenter.unbindView()
-        super.onDestroy()
-    }
-
-    override fun rotate(counter: Int) {
-        binding.cropImageView.rotateImage(counter)
-    }
-
-    override fun updateRotationCounter(counter: String) {
+    private fun updateRotationCounter(counter: String) {
         binding.rotateText.text = getString(R.string.rotation_value, counter)
     }
 
     override fun onPickImageResult(resultUri: Uri?) {
         super.onPickImageResult(resultUri)
 
-        if (resultUri != null) {
-            binding.cropImageView.setImageUriAsync(resultUri)
-        }
+        if (resultUri != null) binding.cropImageView.setImageUriAsync(resultUri)
     }
 
     // Override this to add more information into the intent
@@ -88,14 +69,14 @@ internal class SExtendActivity : CropImageActivity(), SExtendContract.View {
 
     override fun setResult(uri: Uri?, error: Exception?, sampleSize: Int) {
         val result = CropImage.ActivityResult(
-            binding.cropImageView.imageUri,
-            uri,
-            error,
-            binding.cropImageView.cropPoints,
-            binding.cropImageView.cropRect,
-            binding.cropImageView.rotatedDegrees,
-            binding.cropImageView.wholeImageRect,
-            sampleSize
+            originalUri = binding.cropImageView.imageUri,
+            uriContent = uri,
+            error = error,
+            cropPoints = binding.cropImageView.cropPoints,
+            cropRect = binding.cropImageView.cropRect,
+            rotation = binding.cropImageView.rotatedDegrees,
+            wholeImageRect = binding.cropImageView.wholeImageRect,
+            sampleSize = sampleSize
         )
 
         Log.v("File Path", result.getUriFilePath(this).toString())
@@ -113,5 +94,12 @@ internal class SExtendActivity : CropImageActivity(), SExtendContract.View {
             "If not using your layout, this can be one option to change colours. Check README and wiki for more"
         )
         super.updateMenuItemIconColor(menu, itemId, color)
+    }
+
+    private fun onRotateClick() {
+        counter += 90
+        binding.cropImageView.rotateImage(90)
+        if (counter == 360) counter = 0
+        updateRotationCounter(counter.toString())
     }
 }

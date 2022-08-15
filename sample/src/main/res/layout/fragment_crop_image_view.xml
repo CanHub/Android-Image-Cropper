@@ -6,7 +6,7 @@
     android:focusable="true"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/black">
@@ -24,6 +24,10 @@
             app:cropCornerRadius="@dimen/default_crop_corner_radius"
             app:cropBorderCornerOffset="@dimen/default_crop_corner_offset"
             app:cropBorderCornerThickness="@dimen/default_crop_corner_offset"
+            app:cropShowLabel="true"
+            app:cropperLabelText="@string/default_crop_label_text"
+            app:cropperLabelTextSize="@dimen/default_crop_text_size"
+            app:cropBorderCornerColor="@color/cardview_shadow_start_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

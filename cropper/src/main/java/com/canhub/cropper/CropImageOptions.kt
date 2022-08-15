@@ -9,9 +9,12 @@ import android.os.Parcel
 import android.os.Parcelable
 import android.text.TextUtils
 import android.util.TypedValue
+import androidx.annotation.ColorInt
 import com.canhub.cropper.CropImageView.CropShape
 import com.canhub.cropper.CropImageView.Guidelines
 import com.canhub.cropper.CropImageView.RequestSizeOptions
+
+private val COLOR_PURPLE = Color.rgb(153, 51, 153)
 
 /**
  * All the possible options that can be set to customize crop image.<br></br>
@@ -84,11 +87,22 @@ open class CropImageOptions : Parcelable {
     var showCropOverlay: Boolean
 
     /**
+     * If enabled, show a text label on top of crop overlay UI, which gets moved along with the cropper
+     */
+    @JvmField
+    var showCropLabel: Boolean
+
+    /**
      * if to show progress bar when image async loading/cropping is in progress.<br></br>
      * default: true, disable to provide custom progress bar UI.
      */
     @JvmField
     var showProgressBar: Boolean
+
+    /** The color of the progress bar. Only works on API level 21 and upwards. */
+    @JvmField
+    @ColorInt
+    var progressBarColor: Int
 
     /**
      * if auto-zoom functionality is enabled.<br></br>
@@ -101,7 +115,7 @@ open class CropImageOptions : Parcelable {
     @JvmField
     var multiTouchEnabled: Boolean
 
-    /** if the the crop window can be moved by dragging the center; default: true  */
+    /** if the crop window can be moved by dragging the center; default: true  */
     @JvmField
     var centerMoveEnabled: Boolean
 
@@ -134,6 +148,7 @@ open class CropImageOptions : Parcelable {
 
     /** the color of the guidelines lines  */
     @JvmField
+    @ColorInt
     var borderLineColor: Int
 
     /** thickness of the corner line. (in pixels)  */
@@ -150,6 +165,7 @@ open class CropImageOptions : Parcelable {
 
     /** the color of the corner line  */
     @JvmField
+    @ColorInt
     var borderCornerColor: Int
     /**
      * The fill color of circle corner
@@ -163,6 +179,7 @@ open class CropImageOptions : Parcelable {
 
     /** the color of the guidelines lines  */
     @JvmField
+    @ColorInt
     var guidelinesColor: Int
 
     /**
@@ -170,6 +187,7 @@ open class CropImageOptions : Parcelable {
      * crop window.
      */
     @JvmField
+    @ColorInt
     var backgroundColor: Int
 
     /** the min width the crop window is allowed to be. (in pixels)  */
@@ -214,6 +232,7 @@ open class CropImageOptions : Parcelable {
 
     /** the color to use for action bar items icons  */
     @JvmField
+    @ColorInt
     var activityMenuIconColor: Int
 
     /** the Android Uri to save the cropped image to  */
@@ -311,6 +330,19 @@ open class CropImageOptions : Parcelable {
     @JvmField
     var intentChooserPriorityList: List<String>?
 
+    /** The initial text size of cropper label **/
+    @JvmField
+    var cropperLabelTextSize: Float
+
+    /** The default cropper label text color **/
+    @JvmField
+    @ColorInt
+    var cropperLabelTextColor: Int
+
+    /** The default cropper label text **/
+    @JvmField
+    var cropperLabelText: String? = ""
+
     /** Init options with defaults.  */
     constructor() {
         val dm = Resources.getSystem().displayMetrics
@@ -326,6 +358,7 @@ open class CropImageOptions : Parcelable {
         scaleType = CropImageView.ScaleType.FIT_CENTER
         showCropOverlay = true
         showProgressBar = true
+        progressBarColor = COLOR_PURPLE
         autoZoomEnabled = true
         multiTouchEnabled = false
         centerMoveEnabled = true
@@ -373,6 +406,9 @@ open class CropImageOptions : Parcelable {
         showIntentChooser = false
         intentChooserTitle = null
         intentChooserPriorityList = listOf()
+        cropperLabelTextSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 20f, dm)
+        cropperLabelTextColor = Color.WHITE
+        showCropLabel = false
     }
 
     /** Create object from parcel.  */
@@ -388,6 +424,7 @@ open class CropImageOptions : Parcelable {
         scaleType = CropImageView.ScaleType.values()[parcel.readInt()]
         showCropOverlay = parcel.readByte().toInt() != 0
         showProgressBar = parcel.readByte().toInt() != 0
+        progressBarColor = parcel.readInt()
         autoZoomEnabled = parcel.readByte().toInt() != 0
         multiTouchEnabled = parcel.readByte().toInt() != 0
         centerMoveEnabled = parcel.readByte().toInt() != 0
@@ -435,6 +472,10 @@ open class CropImageOptions : Parcelable {
         showIntentChooser = parcel.readByte().toInt() != 0
         intentChooserTitle = parcel.readString()
         intentChooserPriorityList = parcel.createStringArrayList()
+        cropperLabelTextSize = parcel.readFloat()
+        cropperLabelTextColor = parcel.readInt()
+        cropperLabelText = parcel.readString()!!
+        showCropLabel = parcel.readByte().toInt() != 0
     }
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
@@ -449,6 +490,7 @@ open class CropImageOptions : Parcelable {
         dest.writeInt(scaleType.ordinal)
         dest.writeByte((if (showCropOverlay) 1 else 0).toByte())
         dest.writeByte((if (showProgressBar) 1 else 0).toByte())
+        dest.writeInt(progressBarColor)
         dest.writeByte((if (autoZoomEnabled) 1 else 0).toByte())
         dest.writeByte((if (multiTouchEnabled) 1 else 0).toByte())
         dest.writeByte((if (centerMoveEnabled) 1 else 0).toByte())
@@ -496,6 +538,10 @@ open class CropImageOptions : Parcelable {
         dest.writeByte((if (showIntentChooser) 1 else 0).toByte())
         dest.writeString(intentChooserTitle)
         dest.writeStringList(intentChooserPriorityList)
+        dest.writeFloat(cropperLabelTextSize)
+        dest.writeInt(cropperLabelTextColor)
+        dest.writeString(cropperLabelText)
+        dest.writeByte((if (showCropLabel) 1 else 0).toByte())
     }
 
     override fun describeContents(): Int {

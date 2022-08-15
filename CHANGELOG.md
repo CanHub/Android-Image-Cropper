@@ -10,6 +10,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - `Security` in case of vulnerabilities.
 
 ## [x.x.x] - unreleased
+### Fixed
+- Fixed the mistake in hindi conversion of "Crop" [#402](https://github.com/CanHub/Android-Image-Cropper/issues/402)
+
+## [4.3.1] - 20/07/2022
+### Fix
+- CropImageView: Added support for handling all EXIF orientation values. [#408](https://github.com/CanHub/Android-Image-Cropper/issues/408)
+- CropImageView: Use customOutputUri instance property as a fallback in startCropWorkerTask. [#401](https://github.com/CanHub/Android-Image-Cropper/issues/401)
+
+### Added
+- CropImageOptions: Option to change progress bar color. [#390](https://github.com/CanHub/Android-Image-Cropper/issues/390)
+
+## [4.3.0] - 10/06/2022
+### Added
+- Added a helper text on top of crop overlay which moves along with it. [#381](https://github.com/CanHub/Android-Image-Cropper/issues/381)
+
+### Fixed
+- The translation of `Camera` and `Gallery` does not exist in some languages.[#358](https://github.com/CanHub/Android-Image-Cropper/issues/358)
 
 ## [4.2.1] - 04/04/2022
 ### Added
@@ -121,7 +138,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ### Fixed
 - ENOENT (no such file or directory) [#99](https://github.com/CanHub/Android-Image-Cropper/issues/99)
-- `content://` instead of `file://` [#83](https://github.com/CanHub/Android-Image-Cropper/issues/83) [#84](https://github.com/CanHub/Android-Image-Cropper/issues/84) 
+- `content://` instead of `file://` [#83](https://github.com/CanHub/Android-Image-Cropper/issues/83) [#84](https://github.com/CanHub/Android-Image-Cropper/issues/84)
 
 ## [2.3.2-alpha] - 12/04/21
 ### Added
@@ -211,3 +228,4 @@ Versions `2.0.1` and `2.0.2` are similar, issues with jitpack.
 
 ## [1.0.0] - 21/11/20
 - Copy from previous repo [ArthurHub](https://github.com/ArthurHub/Android-Image-Cropper/)
+- 

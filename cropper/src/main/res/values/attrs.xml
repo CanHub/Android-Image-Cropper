@@ -54,6 +54,10 @@
         <attr name="cropFlipVertically" format="boolean"/>
         <attr name="cropCornerCircleFillColor" format="color"/>
         <attr name="cropCornerRadius" format="dimension"/>
+        <attr name="cropperLabelTextSize" format="float"/>
+        <attr name="cropperLabelTextColor" format="color"/>
+        <attr name="cropperLabelText" format="string"/>
+        <attr name="cropShowLabel" format="boolean"/>
     </declare-styleable>
 
 </resources>
