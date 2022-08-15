@@ -343,6 +343,14 @@ open class CropImageOptions : Parcelable {
     @JvmField
     var cropperLabelText: String? = ""
 
+    /** Crop Image background color **/
+    @JvmField
+    var activityBackgroundColor: Int = -1
+
+    /** Toolbar color **/
+    @JvmField
+    var toolbarColor: Int = -1
+
     /** Init options with defaults.  */
     constructor() {
         val dm = Resources.getSystem().displayMetrics
@@ -409,6 +417,8 @@ open class CropImageOptions : Parcelable {
         cropperLabelTextSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 20f, dm)
         cropperLabelTextColor = Color.WHITE
         showCropLabel = false
+        activityBackgroundColor = -1
+        toolbarColor = -1
     }
 
     /** Create object from parcel.  */
@@ -476,6 +486,8 @@ open class CropImageOptions : Parcelable {
         cropperLabelTextColor = parcel.readInt()
         cropperLabelText = parcel.readString()!!
         showCropLabel = parcel.readByte().toInt() != 0
+        activityBackgroundColor = parcel.readInt()
+        toolbarColor = parcel.readInt()
     }
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
@@ -542,6 +554,8 @@ open class CropImageOptions : Parcelable {
         dest.writeInt(cropperLabelTextColor)
         dest.writeString(cropperLabelText)
         dest.writeByte((if (showCropLabel) 1 else 0).toByte())
+        dest.writeInt(activityBackgroundColor)
+        dest.writeInt(toolbarColor)
     }
 
     override fun describeContents(): Int {

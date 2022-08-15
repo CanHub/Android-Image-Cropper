@@ -3,6 +3,7 @@ package com.canhub.cropper
 import android.graphics.Bitmap
 import android.graphics.Rect
 import android.net.Uri
+import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import com.canhub.cropper.CropImageOptions.Companion.DEGREES_360
 import com.canhub.cropper.CropImageView.CropShape
@@ -540,6 +541,20 @@ data class CropImageContractOptions @JvmOverloads constructor(
      */
     fun setIntentChooserPriorityList(priorityAppPackages: List<String>) = cropImageOptions.apply {
         this.intentChooserPriorityList = priorityAppPackages
+    }
+
+    /**
+     * Sets the background color of the Crop Image Activity screen.
+     */
+    fun setActivityBackgroundColor(@ColorInt color: Int) = cropImageOptions.apply {
+        this.activityBackgroundColor = color
+    }
+
+    /**
+     * Sets the toolbar color of the Crop Image Activity screen.
+     */
+    fun setToolbarColor(@ColorInt color: Int) = cropImageOptions.apply {
+        this.toolbarColor = color
     }
 }
 

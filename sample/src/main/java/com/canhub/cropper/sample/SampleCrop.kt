@@ -187,8 +187,10 @@ internal class SampleCrop : Fragment() {
 /*                setIntentChooserPriorityList(listOf(
                     "com.miui.gallery",
                     "com.google.android.apps.photos"
-                ))
+                  ))
 */
+//                setActivityBackgroundColor(Color.BLACK)
+//                setToolbarColor(Color.GRAY)
             }
         )
     }

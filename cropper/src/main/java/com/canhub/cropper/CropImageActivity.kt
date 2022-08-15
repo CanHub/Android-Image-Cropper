@@ -1,6 +1,7 @@
 package com.canhub.cropper
 
 import android.content.Intent
+import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
@@ -77,6 +78,10 @@ open class CropImageActivity :
             latestTmpUri = savedInstanceState.getString(BUNDLE_KEY_TMP_URI)?.toUri()
         }
 
+        cropImageOptions.activityBackgroundColor.takeIf { it!= -1 }?.let { activityBackgroundColor ->
+            binding.root.setBackgroundColor(activityBackgroundColor)
+        }
+
         supportActionBar?.let {
             title =
                 if (cropImageOptions.activityTitle.isNotEmpty())
@@ -84,6 +89,9 @@ open class CropImageActivity :
                 else
                     resources.getString(R.string.crop_image_activity_title)
             it.setDisplayHomeAsUpEnabled(true)
+            cropImageOptions.toolbarColor.takeIf { color -> color != -1 }?.let { toolbarColor ->
+                it.setBackgroundDrawable(ColorDrawable(toolbarColor))
+            }
         }
     }
 
