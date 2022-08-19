@@ -345,7 +345,7 @@ open class CropImageOptions : Parcelable {
 
     /** Crop Image background color **/
     @JvmField
-    var activityBackgroundColor: Int = -1
+    var activityBackgroundColor: Int
 
     /** Toolbar color **/
     @JvmField
@@ -417,7 +417,7 @@ open class CropImageOptions : Parcelable {
         cropperLabelTextSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 20f, dm)
         cropperLabelTextColor = Color.WHITE
         showCropLabel = false
-        activityBackgroundColor = -1
+        activityBackgroundColor = Color.WHITE
         toolbarColor = -1
     }
 

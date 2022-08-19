@@ -71,6 +71,8 @@ cropImage.launch(
       setNoOutputImage(false)
       setFixAspectRatio(false)
       setIntentChooserPriorityList(listOf("com.miui.gallery", "com.google.android.apps.photos"))
+      setActivityBackgroundColor(Color.BLACK)
+      setToolbarColor(Color.GRAY)
     }
 )
 ```
