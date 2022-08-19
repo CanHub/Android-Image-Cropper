@@ -78,7 +78,7 @@ open class CropImageActivity :
             latestTmpUri = savedInstanceState.getString(BUNDLE_KEY_TMP_URI)?.toUri()
         }
 
-        cropImageOptions.activityBackgroundColor.takeIf { it != -1 }?.let { activityBackgroundColor ->
+        cropImageOptions.activityBackgroundColor.let { activityBackgroundColor ->
             binding.root.setBackgroundColor(activityBackgroundColor)
         }
 
