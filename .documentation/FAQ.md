@@ -82,3 +82,13 @@ Tested on Android Studio Chipmunk | 2021.2.1
 Android API 31 Platform
 android_image_cropper_version = "4.2.1"
 
+## App is crashing when trying to start the library using `CropImageContract()` due to missing CAMERA permission
+Basically the library does not need the CAMERA permission to work. It uses the `ActivityResultContracts.TakePicture()` contract which does not require the permission to take a single picture. There is one single drawback utilizing this way:
+
+When you have `<uses-permission android:name="android.permission.CAMERA" />` in your `AndroidManifest.xml` because some other feature in your app needs it (and you can't use the `TakePicture()` contract) and you don't handle the permission request at runtime yourself, you will experience a crash like the following one:
+
+`java.lang.SecurityException: Permission Denial: starting Intent { act=android.media.action.IMAGE_CAPTURE flg=0x3 cmp=com.android.camera2/com.android.camera.CaptureActivity clip={text/uri-list hasLabel(0) {U(content)}} (has extras) } from ProcessRecord{5163a5b 17423:<package>/u0a253} (pid=17423, uid=10253) with revoked permission android.permission.CAMERA`
+
+This behaviour is also described in the official [Android Documentation](https://developer.android.com/reference/android/provider/MediaStore#ACTION_IMAGE_CAPTURE) and discussed in the following issue: [[BUG] - Crash when camera permission is present in manifest #417](https://github.com/CanHub/Android-Image-Cropper/issues/417).
+
+**Solution:** Make sure to check for granted CAMERA runtime permission before trying to start the image cropper library or remove the permission from the `AndroidManifest.xml` and make sure the rest of your app does not need it.
