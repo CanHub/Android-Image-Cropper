@@ -649,24 +649,24 @@ class CropOverlayView
     @RequiresApi(Build.VERSION_CODES.Q)
     private fun setSystemGestureExclusionRects() {
         val cropWindowRect = mCropWindowHandler.getRect()
-        val rectTop     = systemGestureExclusionRects.getOrElse(0) { Rect() }
-        val rectMiddle  = systemGestureExclusionRects.getOrElse(1) { Rect() }
-        val rectBottom  = systemGestureExclusionRects.getOrElse(2) { Rect() }
+        val rectTop = systemGestureExclusionRects.getOrElse(0) { Rect() }
+        val rectMiddle = systemGestureExclusionRects.getOrElse(1) { Rect() }
+        val rectBottom = systemGestureExclusionRects.getOrElse(2) { Rect() }
 
-        rectTop.left  = (cropWindowRect.left  - mTouchRadius).toInt()
+        rectTop.left = (cropWindowRect.left - mTouchRadius).toInt()
         rectTop.right = (cropWindowRect.right + mTouchRadius).toInt()
-        rectTop.top   = (cropWindowRect.top   - mTouchRadius).toInt()
-        rectTop.bottom= (rectTop.top + (maxVerticalGestureExclusion * 0.3f)).toInt()
+        rectTop.top = (cropWindowRect.top - mTouchRadius).toInt()
+        rectTop.bottom = (rectTop.top + (maxVerticalGestureExclusion * 0.3f)).toInt()
 
-        rectMiddle.left  = rectTop.left
+        rectMiddle.left = rectTop.left
         rectMiddle.right = rectTop.right
-        rectMiddle.top   = ((cropWindowRect.top + cropWindowRect.bottom)/2.0f - (maxVerticalGestureExclusion * 0.2f)).toInt()
-        rectMiddle.bottom= (rectMiddle.top + (maxVerticalGestureExclusion * 0.4f)).toInt()
+        rectMiddle.top = ((cropWindowRect.top + cropWindowRect.bottom)/2.0f - (maxVerticalGestureExclusion * 0.2f)).toInt()
+        rectMiddle.bottom = (rectMiddle.top + (maxVerticalGestureExclusion * 0.4f)).toInt()
 
-        rectBottom.left  = rectTop.left
+        rectBottom.left = rectTop.left
         rectBottom.right = rectTop.right
-        rectBottom.bottom= (cropWindowRect.bottom + mTouchRadius).toInt()
-        rectBottom.top   = (rectBottom.bottom - (maxVerticalGestureExclusion * 0.3f)).toInt()
+        rectBottom.bottom = (cropWindowRect.bottom + mTouchRadius).toInt()
+        rectBottom.top = (rectBottom.bottom - (maxVerticalGestureExclusion * 0.3f)).toInt()
 
         systemGestureExclusionRects = listOf(rectTop, rectMiddle, rectBottom)
     }
