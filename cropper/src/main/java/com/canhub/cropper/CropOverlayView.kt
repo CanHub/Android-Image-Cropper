@@ -660,7 +660,7 @@ class CropOverlayView
 
         rectMiddle.left = rectTop.left
         rectMiddle.right = rectTop.right
-        rectMiddle.top = ((cropWindowRect.top + cropWindowRect.bottom)/2.0f - (maxVerticalGestureExclusion * 0.2f)).toInt()
+        rectMiddle.top = ((cropWindowRect.top + cropWindowRect.bottom) / 2.0f - (maxVerticalGestureExclusion * 0.2f)).toInt()
         rectMiddle.bottom = (rectMiddle.top + (maxVerticalGestureExclusion * 0.4f)).toInt()
 
         rectBottom.left = rectTop.left
