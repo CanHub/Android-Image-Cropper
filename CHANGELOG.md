@@ -15,6 +15,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - Added the option to set custom color to toolbar of CropImageActivity [#421](https://github.com/CanHub/Android-Image-Cropper/issues/421)
 - Added the option to set custom background color to activity of CropImageActivity [#421](https://github.com/CanHub/Android-Image-Cropper/issues/421)
 - Fixed accidentally swiping back on newer Android devices when trying to resize the crop window [#423](https://github.com/CanHub/Android-Image-Cropper/issues/423)
+- Fixed an issue on sample project where back button would not work when dialog is shown [#427](https://github.com/CanHub/Android-Image-Cropper/issues/427)
+- Fixed an issue on sample project where cancelling/going back would go to a screen with empty image [#427](https://github.com/CanHub/Android-Image-Cropper/issues/427)
 
 ## [4.3.1] - 20/07/2022
 ### Fix
