@@ -2,6 +2,7 @@ package com.canhub.cropper
 
 import android.annotation.TargetApi
 import android.content.Context
+import android.content.res.Resources
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
@@ -12,10 +13,12 @@ import android.graphics.Region
 import android.os.Build
 import android.util.AttributeSet
 import android.util.Log
+import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.ScaleGestureDetector
 import android.view.ScaleGestureDetector.SimpleOnScaleGestureListener
 import android.view.View
+import androidx.annotation.RequiresApi
 import com.canhub.cropper.CropImageView.CropShape
 import com.canhub.cropper.CropImageView.Guidelines
 import com.canhub.cropper.common.CommonVersionCheck
@@ -192,6 +195,9 @@ class CropOverlayView
 
     /** Used to set back LayerType after changing to software.  */
     private var mOriginalLayerType: Int? = null
+
+    /** The maximum vertical gesture exclusion allowed by Android (200dp) in px. **/
+    private val maxVerticalGestureExclusion = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200f, Resources.getSystem().displayMetrics)
 
     /** Set the crop window change listener.  */
     fun setCropWindowChangeListener(listener: CropWindowChangeListener?) {
@@ -628,6 +634,41 @@ class CropOverlayView
         drawCropLabelText(canvas)
         drawBorders(canvas)
         drawCorners(canvas)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            setSystemGestureExclusionRects()
+        }
+    }
+
+    /**
+     *  Newer Android phones let you go back by swiping from the left or right edge of the screen inwards.
+     *  When the crop window is near the edge it's easy to accidentally swipe back when trying to resize it.
+     *  This can be prevented by setting systemGestureExclusionRects. However Android lets you only exclude max 200dp in total vertically.
+     *  Therefore a top, middle and bottom strip are used so at least the corners and the vertical middle of the crop window are covered.
+     * **/
+    @RequiresApi(Build.VERSION_CODES.Q)
+    private fun setSystemGestureExclusionRects() {
+        val cropWindowRect = mCropWindowHandler.getRect()
+        val rectTop = systemGestureExclusionRects.getOrElse(0) { Rect() }
+        val rectMiddle = systemGestureExclusionRects.getOrElse(1) { Rect() }
+        val rectBottom = systemGestureExclusionRects.getOrElse(2) { Rect() }
+
+        rectTop.left = (cropWindowRect.left - mTouchRadius).toInt()
+        rectTop.right = (cropWindowRect.right + mTouchRadius).toInt()
+        rectTop.top = (cropWindowRect.top - mTouchRadius).toInt()
+        rectTop.bottom = (rectTop.top + (maxVerticalGestureExclusion * 0.3f)).toInt()
+
+        rectMiddle.left = rectTop.left
+        rectMiddle.right = rectTop.right
+        rectMiddle.top = ((cropWindowRect.top + cropWindowRect.bottom) / 2.0f - (maxVerticalGestureExclusion * 0.2f)).toInt()
+        rectMiddle.bottom = (rectMiddle.top + (maxVerticalGestureExclusion * 0.4f)).toInt()
+
+        rectBottom.left = rectTop.left
+        rectBottom.right = rectTop.right
+        rectBottom.bottom = (cropWindowRect.bottom + mTouchRadius).toInt()
+        rectBottom.top = (rectBottom.bottom - (maxVerticalGestureExclusion * 0.3f)).toInt()
+
+        systemGestureExclusionRects = listOf(rectTop, rectMiddle, rectBottom)
     }
 
     /** Draws a text label (which can acts an helper text) on top of crop overlay **/
