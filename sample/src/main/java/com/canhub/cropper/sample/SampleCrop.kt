@@ -59,6 +59,9 @@ internal class SampleCrop : Fragment() {
         }
     }
     private val customCropImage = registerForActivityResult(CropImageContract()) {
+        if (it is CropImage.CancelledResult) {
+            return@registerForActivityResult
+        }
         handleCropImageResult(it.uriContent.toString())
     }
 
