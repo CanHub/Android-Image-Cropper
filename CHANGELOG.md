@@ -10,6 +10,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - `Security` in case of vulnerabilities.
 
 ## [x.x.x] - unreleased
+
+## [4.3.2] - 08/09/2022
 ### Fixed
 - Fixed the mistake in hindi conversion of "Crop" [#402](https://github.com/CanHub/Android-Image-Cropper/issues/402)
 - Added the option to set custom color to toolbar of CropImageActivity [#421](https://github.com/CanHub/Android-Image-Cropper/issues/421)
