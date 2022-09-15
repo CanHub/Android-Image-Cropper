@@ -55,6 +55,7 @@ cropImage.launch(
       setMaxCropResultSize(99999, 99999)
       setActivityTitle("")
       setActivityMenuIconColor(0)
+      setActivityMenuTextColor(Color.BLACK)
       setOutputUri(outputUri)
       setOutputCompressFormat(Bitmap.CompressFormat.JPEG)
       setOutputCompressQuality(90)
@@ -73,6 +74,10 @@ cropImage.launch(
       setIntentChooserPriorityList(listOf("com.miui.gallery", "com.google.android.apps.photos"))
       setActivityBackgroundColor(Color.BLACK)
       setToolbarColor(Color.GRAY)
+      setToolbarColor(Color.WHITE)
+      setToolbarTitleColor(Color.BLACK)
+      setToolbarBackButtonColor(Color.BLACK)
+      setToolbarTintColor(Color.BLACK)
     }
 )
 ```

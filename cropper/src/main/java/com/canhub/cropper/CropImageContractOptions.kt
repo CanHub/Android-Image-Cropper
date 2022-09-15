@@ -345,6 +345,15 @@ data class CropImageContractOptions @JvmOverloads constructor(
     }
 
     /**
+     * the color to use for action bar items texts.<br></br>
+     * *Default: NONE*
+     */
+    fun setActivityMenuTextColor(activityMenuTextColor: Int): CropImageContractOptions {
+        cropImageOptions.activityMenuTextColor = activityMenuTextColor
+        return this
+    }
+
+    /**
      * the Android Uri to save the cropped image to.<br></br>
      * *Default: NONE, will create a temp file*
      */
@@ -555,6 +564,35 @@ data class CropImageContractOptions @JvmOverloads constructor(
      */
     fun setToolbarColor(@ColorInt color: Int) = cropImageOptions.apply {
         this.toolbarColor = color
+    }
+
+    /**
+     * Sets the toolbar color of the Crop Image Activity screen.
+     */
+    fun setToolbarTitleColor(@ColorInt color: Int) = cropImageOptions.apply {
+        this.toolbarTitleColor = color
+    }
+
+    /**
+     * Sets the toolbar back button color of the Crop Image Activity screen.
+     */
+    fun setToolbarBackButtonColor(@ColorInt color: Int) = cropImageOptions.apply {
+        this.toolbarBackButtonColor = color
+    }
+
+    /**
+     * Sets the tint color for all items on the toolbar of the Crop Image Activity screen.
+     * This includes setting the colors of the following together
+     * 1. Toolbar back button
+     * 2. Toolbar text
+     * 3. Toolbar menu icon color
+     * 4. Toolbar menu text color
+     */
+    fun setToolbarTintColor(@ColorInt color: Int) = cropImageOptions.apply {
+        this.activityMenuTextColor = color
+        this.activityMenuIconColor = color
+        this.toolbarTitleColor = color
+        this.toolbarBackButtonColor = color
     }
 }
 

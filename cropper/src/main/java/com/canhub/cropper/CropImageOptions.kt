@@ -238,6 +238,11 @@ open class CropImageOptions : Parcelable {
     @ColorInt
     var activityMenuIconColor: Int
 
+    /** the color to use for action bar items texts  */
+    @JvmField
+    @ColorInt
+    var activityMenuTextColor: Int? = null
+
     /** the Android Uri to save the cropped image to  */
     @JvmField
     var customOutputUri: Uri?
@@ -354,6 +359,18 @@ open class CropImageOptions : Parcelable {
     @JvmField
     var toolbarColor: Int? = null
 
+    /** Toolbar color **/
+    @JvmField
+    var toolbarTitleColor: Int? = null
+
+    /** Toolbar color **/
+    @JvmField
+    var toolbarBackButtonColor: Int? = null
+
+    /** Toolbar tint color **/
+    @JvmField
+    var toolbarTintColor: Int? = null
+
     /** Init options with defaults.  */
     constructor() {
         val dm = Resources.getSystem().displayMetrics
@@ -396,6 +413,7 @@ open class CropImageOptions : Parcelable {
         maxCropResultHeight = 99999
         activityTitle = ""
         activityMenuIconColor = 0
+        activityMenuTextColor = null
         customOutputUri = null
         outputCompressFormat = CompressFormat.JPEG
         outputCompressQuality = 90
@@ -422,6 +440,9 @@ open class CropImageOptions : Parcelable {
         showCropLabel = false
         activityBackgroundColor = Color.WHITE
         toolbarColor = null
+        toolbarTitleColor = null
+        toolbarBackButtonColor = null
+        toolbarTintColor = null
     }
 
     /** Create object from parcel.  */
@@ -464,6 +485,7 @@ open class CropImageOptions : Parcelable {
         maxCropResultHeight = parcel.readInt()
         activityTitle = TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(parcel)
         activityMenuIconColor = parcel.readInt()
+        activityMenuTextColor = parcel.readValue(Int::class.java.classLoader) as Int?
         customOutputUri = parcel.readParcelable(Uri::class.java.classLoader)
         outputCompressFormat = CompressFormat.valueOf(parcel.readString()!!)
         outputCompressQuality = parcel.readInt()
@@ -491,6 +513,9 @@ open class CropImageOptions : Parcelable {
         showCropLabel = parcel.readByte().toInt() != 0
         activityBackgroundColor = parcel.readInt()
         toolbarColor = parcel.readValue(Int::class.java.classLoader) as Int?
+        toolbarTitleColor = parcel.readValue(Int::class.java.classLoader) as Int?
+        toolbarBackButtonColor = parcel.readValue(Int::class.java.classLoader) as Int?
+        toolbarTintColor = parcel.readValue(Int::class.java.classLoader) as Int?
     }
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
@@ -532,6 +557,7 @@ open class CropImageOptions : Parcelable {
         dest.writeInt(maxCropResultHeight)
         TextUtils.writeToParcel(activityTitle, dest, flags)
         dest.writeInt(activityMenuIconColor)
+        dest.writeValue(activityMenuTextColor)
         dest.writeParcelable(customOutputUri, flags)
         dest.writeString(outputCompressFormat.name)
         dest.writeInt(outputCompressQuality)
@@ -559,6 +585,9 @@ open class CropImageOptions : Parcelable {
         dest.writeByte((if (showCropLabel) 1 else 0).toByte())
         dest.writeInt(activityBackgroundColor)
         dest.writeValue(toolbarColor)
+        dest.writeValue(toolbarTitleColor)
+        dest.writeValue(toolbarBackButtonColor)
+        dest.writeValue(toolbarTintColor)
     }
 
     override fun describeContents(): Int {
