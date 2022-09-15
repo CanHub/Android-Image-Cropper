@@ -90,7 +90,7 @@ open class CropImageActivity :
                 else
                     resources.getString(R.string.crop_image_activity_title)
             it.setDisplayHomeAsUpEnabled(true)
-            cropImageOptions.toolbarColor.takeIf { color -> color != -1 }?.let { toolbarColor ->
+            cropImageOptions.toolbarColor?.let { toolbarColor ->
                 it.setBackgroundDrawable(ColorDrawable(toolbarColor))
             }
         }

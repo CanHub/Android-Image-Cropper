@@ -43,11 +43,13 @@ open class CropImageOptions : Parcelable {
     /** The shape of the cropping window.  */
     @JvmField
     var cropShape: CropShape
+
     /**
      * The shape of cropper corners
      */
     @JvmField
     var cornerShape: CropImageView.CropCornerShape
+
     /**
      * The radius of the circular crop corner
      */
@@ -167,6 +169,7 @@ open class CropImageOptions : Parcelable {
     @JvmField
     @ColorInt
     var borderCornerColor: Int
+
     /**
      * The fill color of circle corner
      */
@@ -349,7 +352,7 @@ open class CropImageOptions : Parcelable {
 
     /** Toolbar color **/
     @JvmField
-    var toolbarColor: Int = -1
+    var toolbarColor: Int? = null
 
     /** Init options with defaults.  */
     constructor() {
@@ -418,7 +421,7 @@ open class CropImageOptions : Parcelable {
         cropperLabelTextColor = Color.WHITE
         showCropLabel = false
         activityBackgroundColor = Color.WHITE
-        toolbarColor = -1
+        toolbarColor = null
     }
 
     /** Create object from parcel.  */
@@ -487,7 +490,7 @@ open class CropImageOptions : Parcelable {
         cropperLabelText = parcel.readString()!!
         showCropLabel = parcel.readByte().toInt() != 0
         activityBackgroundColor = parcel.readInt()
-        toolbarColor = parcel.readInt()
+        toolbarColor = parcel.readValue(Int::class.java.classLoader) as Int?
     }
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
@@ -555,7 +558,7 @@ open class CropImageOptions : Parcelable {
         dest.writeString(cropperLabelText)
         dest.writeByte((if (showCropLabel) 1 else 0).toByte())
         dest.writeInt(activityBackgroundColor)
-        dest.writeInt(toolbarColor)
+        dest.writeValue(toolbarColor)
     }
 
     override fun describeContents(): Int {
