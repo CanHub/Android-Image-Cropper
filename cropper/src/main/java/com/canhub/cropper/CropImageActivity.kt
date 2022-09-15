@@ -84,6 +84,10 @@ open class CropImageActivity :
             latestTmpUri = savedInstanceState.getString(BUNDLE_KEY_TMP_URI)?.toUri()
         }
 
+        setCustomizations()
+    }
+
+    private fun setCustomizations() {
         cropImageOptions.activityBackgroundColor.let { activityBackgroundColor ->
             binding.root.setBackgroundColor(activityBackgroundColor)
         }
@@ -136,7 +140,9 @@ open class CropImageActivity :
         )
         cropImageOptions.let { options ->
             options.intentChooserTitle
-                ?.takeIf { title -> title.isNotBlank() }
+                ?.takeIf { title ->
+                    title.isNotBlank()
+                }
                 ?.let { icTitle ->
                     ciIntentChooser.setIntentChooserTitle(icTitle)
                 }
