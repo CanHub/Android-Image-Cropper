@@ -115,7 +115,9 @@ open class CropImageActivity :
             cropImageOptions.toolbarBackButtonColor?.let { backBtnColor ->
                 try {
                     val upArrow = ContextCompat.getDrawable(
-                        this, androidx.appcompat.R.drawable.abc_ic_ab_back_material)
+                        this,
+                        androidx.appcompat.R.drawable.abc_ic_ab_back_material
+                    )
                     upArrow?.colorFilter = PorterDuffColorFilter(backBtnColor, PorterDuff.Mode.SRC_ATOP)
                     it.setHomeAsUpIndicator(upArrow)
                 } catch (e: Exception) {
