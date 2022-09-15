@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.result.contract.ActivityResultContracts
@@ -158,6 +159,12 @@ open class CropImageActivity :
     open fun showImageSourceDialog(openSource: (Source) -> Unit) {
         AlertDialog.Builder(this)
             .setCancelable(false)
+            .setOnKeyListener { _, keyCode, keyEvent ->
+                if (keyCode == KeyEvent.KEYCODE_BACK && keyEvent.action == KeyEvent.ACTION_UP) {
+                    onBackPressed()
+                }
+                true
+            }
             .setTitle(R.string.pick_image_chooser_title)
             .setItems(
                 arrayOf(
