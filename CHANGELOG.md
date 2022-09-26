@@ -10,6 +10,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - `Security` in case of vulnerabilities.
 
 ## [x.x.x] - unreleased
+### Added
+- Added options to customize colors of toolbar back button, title and menu texts. [#437](https://github.com/CanHub/Android-Image-Cropper/issues/437)
+### Fixed
+- Fixed and issue where setting toolbar color to white would do nothing. [#437](https://github.com/CanHub/Android-Image-Cropper/issues/437)
 
 ## [4.3.2] - 08/09/2022
 ### Fixed

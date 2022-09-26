@@ -169,6 +169,7 @@ internal class SampleCrop : Fragment() {
 //                setMaxCropResultSize(999, 999)
 //                setActivityTitle("CUSTOM title")
 //                setActivityMenuIconColor(RED)
+//                setActivityMenuTextColor(Color.BLACK)
 //                setOutputUri(outputUri)
 //                setOutputCompressFormat(Bitmap.CompressFormat.PNG)
 //                setOutputCompressQuality(50)
@@ -193,7 +194,10 @@ internal class SampleCrop : Fragment() {
                   ))
 */
 //                setActivityBackgroundColor(Color.BLACK)
-//                setToolbarColor(Color.GRAY)
+//                setToolbarColor(Color.WHITE)
+//                setToolbarTitleColor(Color.BLACK)
+//                setToolbarBackButtonColor(Color.BLACK)
+//                setToolbarTintColor(Color.BLACK)
             }
         )
     }

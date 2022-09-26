@@ -1,10 +1,15 @@
 package com.canhub.cropper
 
 import android.content.Intent
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.KeyEvent
 import android.view.Menu
@@ -79,6 +84,10 @@ open class CropImageActivity :
             latestTmpUri = savedInstanceState.getString(BUNDLE_KEY_TMP_URI)?.toUri()
         }
 
+        setCustomizations()
+    }
+
+    private fun setCustomizations() {
         cropImageOptions.activityBackgroundColor.let { activityBackgroundColor ->
             binding.root.setBackgroundColor(activityBackgroundColor)
         }
@@ -90,8 +99,30 @@ open class CropImageActivity :
                 else
                     resources.getString(R.string.crop_image_activity_title)
             it.setDisplayHomeAsUpEnabled(true)
-            cropImageOptions.toolbarColor.takeIf { color -> color != -1 }?.let { toolbarColor ->
+            cropImageOptions.toolbarColor?.let { toolbarColor ->
                 it.setBackgroundDrawable(ColorDrawable(toolbarColor))
+            }
+            cropImageOptions.toolbarTitleColor?.let { toolbarTitleColor ->
+                val spannableTitle: Spannable = SpannableString(title)
+                spannableTitle.setSpan(
+                    ForegroundColorSpan(toolbarTitleColor),
+                    0,
+                    spannableTitle.length,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+                title = spannableTitle
+            }
+            cropImageOptions.toolbarBackButtonColor?.let { backBtnColor ->
+                try {
+                    val upArrow = ContextCompat.getDrawable(
+                        this,
+                        androidx.appcompat.R.drawable.abc_ic_ab_back_material
+                    )
+                    upArrow?.colorFilter = PorterDuffColorFilter(backBtnColor, PorterDuff.Mode.SRC_ATOP)
+                    it.setHomeAsUpIndicator(upArrow)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
             }
         }
     }
@@ -111,7 +142,9 @@ open class CropImageActivity :
         )
         cropImageOptions.let { options ->
             options.intentChooserTitle
-                ?.takeIf { title -> title.isNotBlank() }
+                ?.takeIf { title ->
+                    title.isNotBlank()
+                }
                 ?.let { icTitle ->
                     ciIntentChooser.setIntentChooserTitle(icTitle)
                 }
@@ -237,6 +270,19 @@ open class CropImageActivity :
                     R.id.crop_image_menu_crop,
                     cropImageOptions.activityMenuIconColor
                 )
+            }
+        }
+        cropImageOptions.activityMenuTextColor?.let { menuItemsTextColor ->
+            val menuItemIds = listOf(
+                R.id.ic_rotate_left_24,
+                R.id.ic_rotate_right_24,
+                R.id.ic_flip_24,
+                R.id.ic_flip_24_horizontally,
+                R.id.ic_flip_24_vertically,
+                R.id.crop_image_menu_crop
+            )
+            for (itemId in menuItemIds) {
+                updateMenuItemTextColor(menu, itemId, menuItemsTextColor)
             }
         }
         return true
@@ -376,6 +422,28 @@ open class CropImageActivity :
                 } catch (e: Exception) {
                     Log.w("AIC", "Failed to update menu item color", e)
                 }
+            }
+        }
+    }
+
+    /**
+     * Update the color of a specific menu item to the given color.
+     */
+    open fun updateMenuItemTextColor(menu: Menu, itemId: Int, color: Int) {
+        val menuItem = menu.findItem(itemId)
+        val menuTitle = menuItem.title
+        if (menuTitle?.isNotBlank() == true) {
+            try {
+                val spannableTitle: Spannable = SpannableString(menuTitle)
+                spannableTitle.setSpan(
+                    ForegroundColorSpan(color),
+                    0,
+                    spannableTitle.length,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+                menuItem.title = spannableTitle
+            } catch (e: Exception) {
+                Log.w("AIC", "Failed to update menu item color", e)
             }
         }
     }
