@@ -149,7 +149,7 @@ class BitmapCroppingWorkerJob(
             this.sampleSize = sampleSize
         }
 
-        constructor(uri: Uri?, sampleSize: Int) {
+        constructor(uri: Uri, sampleSize: Int) {
             bitmap = null
             this.uri = uri
             error = null

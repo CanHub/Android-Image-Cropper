@@ -423,10 +423,10 @@ internal object BitmapUtils {
         compressFormat: CompressFormat,
         compressQuality: Int,
         customOutputUri: Uri?,
-    ): Uri? {
+    ): Uri {
         val newUri = customOutputUri ?: buildUri(context, compressFormat)
 
-        return context.contentResolver.openOutputStream(newUri!!, WRITE_AND_TRUNCATE).use {
+        return context.contentResolver.openOutputStream(newUri, WRITE_AND_TRUNCATE).use {
             bitmap.compress(compressFormat, compressQuality, it)
             newUri
         }
@@ -435,7 +435,7 @@ internal object BitmapUtils {
     private fun buildUri(
         context: Context,
         compressFormat: CompressFormat
-    ): Uri? =
+    ): Uri =
         try {
             val ext = when (compressFormat) {
                 CompressFormat.JPEG -> ".jpg"
