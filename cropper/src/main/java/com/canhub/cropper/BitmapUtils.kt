@@ -17,12 +17,9 @@ import androidx.exifinterface.media.ExifInterface
 import com.canhub.cropper.CropImageView.RequestSizeOptions
 import com.canhub.cropper.common.CommonVersionCheck.isAtLeastQ29
 import com.canhub.cropper.utils.getUriForFile
-import java.io.Closeable
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
-import java.io.InputStream
-import java.io.OutputStream
 import java.lang.ref.WeakReference
 import javax.microedition.khronos.egl.EGL10
 import javax.microedition.khronos.egl.EGLConfig
@@ -428,15 +425,11 @@ internal object BitmapUtils {
         customOutputUri: Uri?,
     ): Uri? {
         val newUri = customOutputUri ?: buildUri(context, compressFormat)
-        var outputStream: OutputStream? = null
-        try {
-            outputStream = context.contentResolver.openOutputStream(newUri!!, WRITE_AND_TRUNCATE)
 
-            bitmap.compress(compressFormat, compressQuality, outputStream)
-        } finally {
-            closeSafe(outputStream)
+        return context.contentResolver.openOutputStream(newUri!!, WRITE_AND_TRUNCATE).use {
+            bitmap.compress(compressFormat, compressQuality, it)
+            newUri
         }
-        return newUri
     }
 
     private fun buildUri(
@@ -668,16 +661,12 @@ internal object BitmapUtils {
      */
     @Throws(FileNotFoundException::class)
     private fun decodeImageForOption(resolver: ContentResolver, uri: Uri): BitmapFactory.Options {
-        var stream: InputStream? = null
-        return try {
-            stream = resolver.openInputStream(uri)
+        return resolver.openInputStream(uri).use {
             val options = BitmapFactory.Options()
             options.inJustDecodeBounds = true
-            BitmapFactory.decodeStream(stream, EMPTY_RECT, options)
+            BitmapFactory.decodeStream(it, EMPTY_RECT, options)
             options.inJustDecodeBounds = false
             options
-        } finally {
-            closeSafe(stream)
         }
     }
 
@@ -692,14 +681,12 @@ internal object BitmapUtils {
         options: BitmapFactory.Options
     ): Bitmap? {
         do {
-            var stream: InputStream? = null
-            try {
-                stream = resolver.openInputStream(uri)
-                return BitmapFactory.decodeStream(stream, EMPTY_RECT, options)
-            } catch (e: OutOfMemoryError) {
-                options.inSampleSize *= 2
-            } finally {
-                closeSafe(stream)
+            resolver.openInputStream(uri).use {
+                try {
+                    return BitmapFactory.decodeStream(it, EMPTY_RECT, options)
+                } catch (e: OutOfMemoryError) {
+                    options.inSampleSize *= 2
+                }
             }
         } while (options.inSampleSize <= 512)
         throw CropException.FailedToDecodeImage(uri)
@@ -727,21 +714,25 @@ internal object BitmapUtils {
                         rect.width(), rect.height(), reqWidth, reqHeight
                     )
                 )
-            val stream = context.contentResolver.openInputStream(uri)
-            val decoder = BitmapRegionDecoder.newInstance(stream!!, false)
-            do {
-                try {
-                    return BitmapSampled(
-                        decoder!!.decodeRegion(rect, options),
-                        options.inSampleSize
-                    )
-                } catch (e: OutOfMemoryError) {
-                    options.inSampleSize *= 2
-                }
-            } while (options.inSampleSize <= 512)
 
-            closeSafe(stream)
-            decoder?.recycle()
+            context.contentResolver.openInputStream(uri).use {
+                val decoder = BitmapRegionDecoder.newInstance(it!!, false)
+
+                try {
+                    do {
+                        try {
+                            return BitmapSampled(
+                                decoder!!.decodeRegion(rect, options),
+                                options.inSampleSize
+                            )
+                        } catch (e: OutOfMemoryError) {
+                            options.inSampleSize *= 2
+                        }
+                    } while (options.inSampleSize <= 512)
+                } finally {
+                    decoder?.recycle()
+                }
+            }
         } catch (e: Exception) {
             throw CropException.FailedToLoadBitmap(uri, e.message)
         }
@@ -933,19 +924,6 @@ internal object BitmapUtils {
                 IMAGE_MAX_BITMAP_DIMENSION
             }
         }
-
-    /**
-     * Close the given closeable object (Stream) in a safe way: check if it is null and catch-log
-     * exception thrown.
-     *
-     * @param closeable the closable object to close
-     */
-    private fun closeSafe(closeable: Closeable?) {
-        try {
-            closeable?.close()
-        } catch (ignored: IOException) {
-        }
-    }
 
     /**
      * Holds bitmap instance and the sample size that the bitmap was loaded/cropped with.
