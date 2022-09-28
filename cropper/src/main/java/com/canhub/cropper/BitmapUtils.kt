@@ -74,17 +74,12 @@ internal object BitmapUtils {
      * If no rotation is required the image will not be rotated.<br></br>
      * New bitmap is created and the old one is recycled.
      */
-    fun orientateBitmapByExif(bitmap: Bitmap?, context: Context, uri: Uri?): RotateBitmapResult {
-        var ei: ExifInterface? = null
-        try {
-            val `is` = context.contentResolver.openInputStream(uri!!)
-            if (`is` != null) {
-                ei = ExifInterface(`is`)
-                `is`.close()
-            }
-        } catch (ignored: Exception) {
+    fun orientateBitmapByExif(bitmap: Bitmap?, context: Context, uri: Uri): RotateBitmapResult {
+        val exifInterface = context.contentResolver.openInputStream(uri)?.use { ExifInterface(it) }
+        return when {
+            exifInterface != null -> orientateBitmapByExif(bitmap, exifInterface)
+            else -> RotateBitmapResult(bitmap, 0)
         }
-        return if (ei != null) orientateBitmapByExif(bitmap, ei) else RotateBitmapResult(bitmap, 0)
     }
 
     /**
@@ -95,7 +90,8 @@ internal object BitmapUtils {
     fun orientateBitmapByExif(bitmap: Bitmap?, exif: ExifInterface): RotateBitmapResult {
         val orientationAttributeInt =
             exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
-        val degrees: Int = when (orientationAttributeInt) {
+
+        val degrees = when (orientationAttributeInt) {
             ExifInterface.ORIENTATION_ROTATE_90, ExifInterface.ORIENTATION_TRANSVERSE,
             ExifInterface.ORIENTATION_TRANSPOSE -> 90
             ExifInterface.ORIENTATION_ROTATE_180 -> 180
@@ -106,7 +102,11 @@ internal object BitmapUtils {
             orientationAttributeInt == ExifInterface.ORIENTATION_TRANSPOSE
         val flipVertically = orientationAttributeInt == ExifInterface.ORIENTATION_FLIP_VERTICAL ||
             orientationAttributeInt == ExifInterface.ORIENTATION_TRANSVERSE
-        return RotateBitmapResult(bitmap, degrees, flipHorizontally, flipVertically)
+
+        return when (bitmap) {
+            null -> RotateBitmapResult(null, degrees, flipHorizontally, flipVertically)
+            else -> RotateBitmapResult(rotateAndFlipBitmapInt(bitmap, degrees, flipHorizontally, flipVertically), 0, false, false)
+        }
     }
 
     /**
@@ -862,8 +862,8 @@ internal object BitmapUtils {
             val matrix = Matrix()
             matrix.setRotate(degrees.toFloat())
             matrix.postScale(
-                (if (flipHorizontally) -1 else 1).toFloat(),
-                (if (flipVertically) -1 else 1).toFloat()
+                (if (flipHorizontally) -1f else 1f),
+                (if (flipVertically) -1f else 1f),
             )
             val newBitmap =
                 Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, false)
