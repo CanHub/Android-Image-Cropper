@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-    <string name="ic_rotate_left_24">Otočit proti směru hodinových ručiček</string>
-    <string name="ic_rotate_right_24">Otočit</string>
-    <string name="crop_image_menu_crop">Oříznout</string>
-    <string name="ic_flip_24">Překlopit</string>
-    <string name="ic_flip_24_horizontally">Překlopit vodorovně</string>
-    <string name="ic_flip_24_vertically">Překlopit svisle</string>
-    <string name="pick_image_chooser_title">Vybrat zdroj</string>
+  <string name="ic_rotate_left_24">Otočit proti směru hodinových ručiček</string>
+  <string name="ic_rotate_right_24">Otočit</string>
+  <string name="crop_image_menu_crop">Oříznout</string>
+  <string name="ic_flip_24">Překlopit</string>
+  <string name="ic_flip_24_horizontally">Překlopit vodorovně</string>
+  <string name="ic_flip_24_vertically">Překlopit svisle</string>
+  <string name="pick_image_chooser_title">Vybrat zdroj</string>
 </resources>

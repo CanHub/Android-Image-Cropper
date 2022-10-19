@@ -1,26 +1,26 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-    <queries>
-        <intent>
-            <action android:name="android.intent.action.GET_CONTENT" />
-            <category android:name="android.intent.category.OPENABLE" />
-            <data android:mimeType="*/*" />
-        </intent>
-        <intent>
-            <action android:name="android.media.action.IMAGE_CAPTURE" />
-        </intent>
-    </queries>
-    <application>
-        <provider
-            android:name="com.canhub.cropper.CropFileProvider"
-            android:authorities="${applicationId}.cropper.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/library_file_paths" />
-        </provider>
-        <activity
-            android:name="com.canhub.cropper.CropImageActivity"
-            android:exported="true" />
-    </application>
+  <queries>
+    <intent>
+      <action android:name="android.intent.action.GET_CONTENT"/>
+      <category android:name="android.intent.category.OPENABLE"/>
+      <data android:mimeType="*/*"/>
+    </intent>
+    <intent>
+      <action android:name="android.media.action.IMAGE_CAPTURE"/>
+    </intent>
+  </queries>
+  <application>
+    <provider
+        android:name="com.canhub.cropper.CropFileProvider"
+        android:authorities="${applicationId}.cropper.fileprovider"
+        android:exported="false"
+        android:grantUriPermissions="true">
+      <meta-data
+          android:name="android.support.FILE_PROVIDER_PATHS"
+          android:resource="@xml/library_file_paths"/>
+    </provider>
+    <activity
+        android:name="com.canhub.cropper.CropImageActivity"
+        android:exported="true"/>
+  </application>
 </manifest>

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="ic_rotate_left_24">סובב נגד כיוון השעון</string>
-    <string name="ic_rotate_right_24">סובב</string>
-    <string name="crop_image_menu_crop">חתוך</string>
-    <string name="ic_flip_24">הפוך</string>
-    <string name="ic_flip_24_horizontally">הפוך אופקית</string>
-    <string name="ic_flip_24_vertically">הפוך אנכית</string>
-    <string name="pick_image_chooser_title">בחר מקור</string>
+  <string name="ic_rotate_left_24">סובב נגד כיוון השעון</string>
+  <string name="ic_rotate_right_24">סובב</string>
+  <string name="crop_image_menu_crop">חתוך</string>
+  <string name="ic_flip_24">הפוך</string>
+  <string name="ic_flip_24_horizontally">הפוך אופקית</string>
+  <string name="ic_flip_24_vertically">הפוך אנכית</string>
+  <string name="pick_image_chooser_title">בחר מקור</string>
 </resources>

@@ -1,14 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
 <paths>
-    <files-path
-        name="cropper"
-        path="cropper-internal/" />
-    <external-files-path
-        name="my_images"
-        path="/" />
-    <cache-path
-        name="cached_files"
-        path="." />
-    <files-path
-        name="images"
-        path="." />
+  <files-path
+      name="cropper"
+      path="cropper-internal/"/>
+  <external-files-path
+      name="my_images"
+      path="/"/>
+  <cache-path
+      name="cached_files"
+      path="."/>
+  <files-path
+      name="images"
+      path="."/>
 </paths>
