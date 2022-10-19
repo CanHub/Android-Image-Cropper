@@ -4,15 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_purple_gradient">
-
-
     <ImageView
+        android:importantForAccessibility="no"
         android:id="@+id/backBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="?android:attr/selectableItemBackground"
         android:padding="@dimen/keyline_x4"
-        android:src="@drawable/ic_arrow_back_24"
+        app:srcCompat="@drawable/ic_arrow_back_24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,10 +28,11 @@
         app:layout_constraintTop_toTopOf="@id/backBtn" />
 
     <ImageView
+        android:importantForAccessibility="no"
         android:id="@+id/canhubLogo"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@drawable/canhub_logo_white"
+        app:srcCompat="@drawable/canhub_logo_white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/backBtn" />
 

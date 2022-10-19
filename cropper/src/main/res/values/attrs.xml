@@ -1,5 +1,4 @@
 <resources>
-
     <declare-styleable name="CropImageView">
         <attr name="cropGuidelines">
             <enum name="off" value="0"/>

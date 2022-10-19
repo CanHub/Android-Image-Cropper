@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="crop_image_activity_title"></string>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="ic_rotate_left_24">Rotate counter clockwise</string>
     <string name="ic_rotate_right_24">Rotate</string>
     <string name="crop_image_menu_crop">Crop</string>
@@ -8,7 +7,6 @@
     <string name="ic_flip_24_horizontally">Flip horizontally</string>
     <string name="ic_flip_24_vertically">Flip vertically</string>
     <string name="pick_image_chooser_title">Select source</string>
-    <string name="pick_image_camera">Camera</string>
-    <string name="pick_image_gallery">Gallery</string>
-    <string name="crop_image_activity_no_permissions">Cancelling, required permissions are not granted</string>
+    <string name="pick_image_camera" tools:ignore="MissingTranslation">Camera</string>
+    <string name="pick_image_gallery" tools:ignore="MissingTranslation">Gallery</string>
 </resources>

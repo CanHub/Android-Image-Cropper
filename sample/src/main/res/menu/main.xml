@@ -9,15 +9,15 @@
     <item
         android:id="@+id/main_action_flip"
         android:icon="@drawable/ic_flip_24"
-        android:title="@string/main_action_flip"
+        android:title="@string/ic_flip_24"
         app:showAsAction="ifRoom">
         <menu>
             <item
                 android:id="@+id/main_action_flip_horizontally"
-                android:title="@string/main_action_flip_horizontally" />
+                android:title="@string/ic_flip_24_horizontally" />
             <item
                 android:id="@+id/main_action_flip_vertically"
-                android:title="@string/main_action_flip_vertically" />
+                android:title="@string/ic_flip_24_vertically" />
         </menu>
     </item>
 

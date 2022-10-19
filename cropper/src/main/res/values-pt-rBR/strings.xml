@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="crop_image_activity_title"></string>
     <string name="ic_rotate_left_24">Girar para a esquerda</string>
     <string name="ic_rotate_right_24">Girar para a direita</string>
     <string name="crop_image_menu_crop">Cortar</string>
@@ -10,5 +9,4 @@
     <string name="pick_image_chooser_title">Escolher foto a partir de</string>
     <string name="pick_image_camera">Câmera</string>
     <string name="pick_image_gallery">Galeria</string>
-    <string name="crop_image_activity_no_permissions">Cancelando, as permissões necessárias não foram concedidas</string>
 </resources>

@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <string name="crop_image_activity_title"></string>
     <string name="ic_rotate_left_24">gegen den Uhrzeigersinn drehen</string>
     <string name="ic_rotate_right_24">drehen</string>
     <string name="crop_image_menu_crop">zuschneiden</string>
@@ -11,6 +9,4 @@
     <string name="pick_image_chooser_title">Quelle wählen</string>
     <string name="pick_image_camera">Kamera</string>
     <string name="pick_image_gallery">Galerie</string>
-    <string name="crop_image_activity_no_permissions">Vorgang wird abgebrochen, benötigte Berechtigungen wurden nicht erteilt.</string>
-
 </resources>

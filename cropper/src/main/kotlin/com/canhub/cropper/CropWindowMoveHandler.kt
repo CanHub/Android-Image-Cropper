@@ -30,7 +30,7 @@ class CropWindowMoveHandler(
   companion object {
 
     /** Calculates the aspect ratio given a rectangle.  */
-    private fun calculateAspectRatio(left: Float, top: Float, right: Float, bottom: Float) =
+    internal fun calculateAspectRatio(left: Float, top: Float, right: Float, bottom: Float) =
       (right - left) / (bottom - top)
   }
 

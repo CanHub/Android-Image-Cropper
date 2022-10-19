@@ -99,7 +99,7 @@ open class CropImageActivity :
         if (cropImageOptions.activityTitle.isNotEmpty()) {
           cropImageOptions.activityTitle
         } else {
-          resources.getString(R.string.crop_image_activity_title)
+          ""
         }
       it.setDisplayHomeAsUpEnabled(true)
       cropImageOptions.toolbarColor?.let { toolbarColor ->
@@ -119,7 +119,7 @@ open class CropImageActivity :
         try {
           val upArrow = ContextCompat.getDrawable(
             this,
-            androidx.appcompat.R.drawable.abc_ic_ab_back_material,
+            R.drawable.ic_arrow_back_24,
           )
           upArrow?.colorFilter = PorterDuffColorFilter(backBtnColor, PorterDuff.Mode.SRC_ATOP)
           it.setHomeAsUpIndicator(upArrow)

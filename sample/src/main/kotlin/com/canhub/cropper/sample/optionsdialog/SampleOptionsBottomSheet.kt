@@ -1,6 +1,8 @@
 package com.canhub.cropper.sample.optionsdialog
 
 import android.content.DialogInterface
+import android.os.Build.VERSION
+import android.os.Build.VERSION_CODES
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -142,9 +144,10 @@ internal class SampleOptionsBottomSheet : BottomSheetDialogFragment() {
 
   private fun bindingActions() {
     binding.optionsHeader.isSelected = false
-    binding.optionsItemsScroll.setOnScrollChangeListener { _, _, _, _, _ ->
-      binding.optionsHeader.isSelected =
-        binding.optionsItemsScroll.canScrollVertically(DIRECTION_UPWARDS)
+    if (VERSION.SDK_INT >= VERSION_CODES.M) {
+      binding.optionsItemsScroll.setOnScrollChangeListener { _, _, _, _, _ ->
+        binding.optionsHeader.isSelected = binding.optionsItemsScroll.canScrollVertically(DIRECTION_UPWARDS)
+      }
     }
 
     binding.scaleType.chipCenter.setOnClickListener {

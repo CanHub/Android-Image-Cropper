@@ -1,43 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">Sample</string>
-    <string name="app_title">Image Cropper</string>
     <string name="result_image_desc">crop result</string>
-
-    <string name="main_drawer_load">Load Image for cropping</string>
-    <string name="main_drawer_open">Open navigation drawer</string>
-    <string name="main_drawer_close">Close navigation drawer</string>
-
     <string name="main_action_crop">CROP</string>
     <string name="main_action_rotate">Rotate 90 degrees clockwise</string>
-    <string name="main_action_flip">Flip</string>
-    <string name="main_action_flip_horizontally">Flip horizontally</string>
-    <string name="main_action_flip_vertically">Flip vertically</string>
-    <string name="drawer_option_title">Crop View Presets</string>
-    <string name="drawer_option_oval">Circular</string>
-    <string name="drawer_option_rect">Rectangular</string>
-    <string name="drawer_option_min_max">Min/Max limits override</string>
-    <string name="drawer_option_customized_overlay">Customized Overlay</string>
-    <string name="drawer_option_scale_center">Scale Center Inside</string>
-    <string name="drawer_option_title2">Customization Toggles</string>
-    <string name="drawer_option_toggle_scale">Image Scale: %1s</string>
-    <string name="drawer_option_toggle_shape">Crop Shape: %1s</string>
-    <string name="drawer_option_toggle_guidelines">Guidelines: %1s</string>
-    <string name="drawer_option_toggle_aspect_ratio">Aspect Ratio: %1s</string>
-    <string name="drawer_option_toggle_auto_zoom">Auto zoom: %1s</string>
-    <string name="drawer_option_toggle_max_zoom">Max zoom level: %1s</string>
-    <string name="drawer_option_set_initial_crop_rect">Set initial crop rectangle</string>
-    <string name="drawer_option_reset_crop_rect">Reset crop rectangle to initial</string>
-    <string name="drawer_option_toggle_multitouch">Multitouch: %1s</string>
-    <string name="drawer_option_toggle_center_move">Center move enabled: %1s</string>
-    <string name="drawer_option_toggle_show_overlay">Show Overlay: %1s</string>
-    <string name="drawer_option_toggle_show_progress_bar">Show Progress Bar: %1s</string>
-
-
     <string name="options_dialog_title">Options</string>
-    <string name="options_default">Default</string>
-    <string name="options_custom">Custom</string>
     <string name="fit_center">Fit Center</string>
     <string name="center">Center</string>
     <string name="center_crop">Center Crop</string>
@@ -54,7 +21,6 @@
     <string name="ratio_2_1">2,1</string>
     <string name="ratio_1_1">1,1</string>
     <string name="free">Free</string>
-    <string name="activity_type">Activity Type</string>
     <string name="ratio">Ratio</string>
     <string name="guidelines">Guidelines</string>
     <string name="crop_shape">Crop Shape</string>
@@ -64,7 +30,6 @@
     <string name="zoom_4">4</string>
     <string name="zoom_8">8</string>
     <string name="auto_zoom">Auto Zoom</string>
-    <string name="fix_aspect_ratio">Fix Aspect Ratio</string>
     <string name="multi_touch">Multi Touch</string>
     <string name="center_move">Enable movement by dragging center</string>
     <string name="show_crop_overlay">Show Crop Overlay</string>
@@ -75,18 +40,10 @@
     <string name="sample_using_cropimageview">Sample using CropImageView</string>
     <string name="sample_of_customactivity">Sample of CustomActivity</string>
     <string name="sample_calling_cropimage">Sample calling CropImage</string>
-    <string name="take_picture">Take Picture</string>
-    <string name="crop_settings">Crop Settings</string>
-    <string name="ok">ok</string>
-    <string name="cancel">cancel</string>
-    <string name="missing_camera_permission_title">Camera Permission Need</string>
-    <string name="missing_camera_permission_body">We need camera permission to take image and crop it</string>
     <string name="takePictureBeforeCallLibraryWithUri_text">Take camera picture before calling library with uri</string>
     <string name="callLibraryWithoutUri_text">Call library directly without uri</string>
     <string name="callLibraryWithoutUriCameraOnly_text">Call library directly without uri. Camera only</string>
     <string name="callLibraryWithoutUriGalleryOnly_text">Call library directly without uri. Gallery only</string>
-    <string name="startPickImageActivity_text">Library show pick option, startPickImageActivity</string>
-    <string name="startActivityForResult_text">Custom selector title, include documents, custom requestCode</string>
     <string name="save">Save</string>
     <string name="extend_body">This is a sample code using the library. The sample here is for extend CropImageActivity, to be about to custom build your personal view around it. For that we need to use CropImageView.</string>
     <string name="rotation_value">Click to change rotation: %1$s</string>

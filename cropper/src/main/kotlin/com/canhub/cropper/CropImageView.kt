@@ -1775,7 +1775,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
      * @param desiredSize The desired size of the measured width or height.
      * @return The final size of the width or height.
      */
-    private fun getOnMeasureSpec(
+    internal fun getOnMeasureSpec(
       measureSpecMode: Int,
       measureSpecSize: Int,
       desiredSize: Int,
