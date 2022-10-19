@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-    <string name="ic_rotate_left_24">أدر عكس اتجاه عقارب الساعة</string>
-    <string name="ic_rotate_right_24">أدر</string>
-    <string name="crop_image_menu_crop">قُصّ</string>
-    <string name="ic_flip_24">اقلب</string>
-    <string name="ic_flip_24_horizontally">اقلب أفقيًا</string>
-    <string name="ic_flip_24_vertically">اقلب رأسيًا</string>
-    <string name="pick_image_chooser_title">اختر مصدرًا</string>
-    <string name="pick_image_camera">الة تصوير</string>
-    <string name="pick_image_gallery">صالة عرض</string>
+  <string name="ic_rotate_left_24">أدر عكس اتجاه عقارب الساعة</string>
+  <string name="ic_rotate_right_24">أدر</string>
+  <string name="crop_image_menu_crop">قُصّ</string>
+  <string name="ic_flip_24">اقلب</string>
+  <string name="ic_flip_24_horizontally">اقلب أفقيًا</string>
+  <string name="ic_flip_24_vertically">اقلب رأسيًا</string>
+  <string name="pick_image_chooser_title">اختر مصدرًا</string>
+  <string name="pick_image_camera">الة تصوير</string>
+  <string name="pick_image_gallery">صالة عرض</string>
 </resources>

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="ic_rotate_left_24">左回転</string>
-    <string name="ic_rotate_right_24">右回転</string>
-    <string name="crop_image_menu_crop">切り取り</string>
-    <string name="ic_flip_24">反転</string>
-    <string name="ic_flip_24_horizontally">左右反転</string>
-    <string name="ic_flip_24_vertically">上下反転</string>
-    <string name="pick_image_chooser_title">画像を選択</string>
+  <string name="ic_rotate_left_24">左回転</string>
+  <string name="ic_rotate_right_24">右回転</string>
+  <string name="crop_image_menu_crop">切り取り</string>
+  <string name="ic_flip_24">反転</string>
+  <string name="ic_flip_24_horizontally">左右反転</string>
+  <string name="ic_flip_24_vertically">上下反転</string>
+  <string name="pick_image_chooser_title">画像を選択</string>
 </resources>

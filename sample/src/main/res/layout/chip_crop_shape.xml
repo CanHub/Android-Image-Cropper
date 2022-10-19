@@ -10,55 +10,56 @@
     tools:ignore="Overdraw"
     android:orientation="vertical"
     >
+  <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/keyline_x2"
+      android:text="@string/crop_shape"
+      android:textColor="@color/black"
+      />
 
-    <TextView
+
+  <HorizontalScrollView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:scrollbars="none"
+      >
+    <com.google.android.material.chip.ChipGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/keyline_x2"
-        android:text="@string/crop_shape"
-        android:textColor="@color/black" />
-
-
-    <HorizontalScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="none">
-
-        <com.google.android.material.chip.ChipGroup
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingStart="@dimen/keyline_x2"
-            android:paddingEnd="@dimen/keyline_x2"
-            app:singleLine="true"
-            app:singleSelection="true">
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipRectangle"
-                style="@style/OptionChip"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/rectangle" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipOval"
-                style="@style/OptionChip"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/oval" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipRectangleVerticalOnly"
-                style="@style/OptionChip"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/rectangleVerticalOnly" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipRectangleHorizontalOnly"
-                style="@style/OptionChip"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/rectangleHorizontalOnly" />
-        </com.google.android.material.chip.ChipGroup>
-    </HorizontalScrollView>
+        android:paddingStart="@dimen/keyline_x2"
+        android:paddingEnd="@dimen/keyline_x2"
+        app:singleLine="true"
+        app:singleSelection="true"
+        >
+      <com.google.android.material.chip.Chip
+          android:id="@+id/chipRectangle"
+          style="@style/OptionChip"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/rectangle"
+          />
+      <com.google.android.material.chip.Chip
+          android:id="@+id/chipOval"
+          style="@style/OptionChip"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/oval"
+          />
+      <com.google.android.material.chip.Chip
+          android:id="@+id/chipRectangleVerticalOnly"
+          style="@style/OptionChip"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/rectangleVerticalOnly"
+          />
+      <com.google.android.material.chip.Chip
+          android:id="@+id/chipRectangleHorizontalOnly"
+          style="@style/OptionChip"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/rectangleHorizontalOnly"
+          />
+    </com.google.android.material.chip.ChipGroup>
+  </HorizontalScrollView>
 </LinearLayout>

@@ -10,48 +10,47 @@
     tools:ignore="Overdraw"
     android:orientation="vertical"
     >
-
-    <TextView
+  <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/keyline_x2"
+      android:text="@string/guidelines"
+      android:textColor="@color/black"
+      />
+  <HorizontalScrollView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:scrollbars="none"
+      >
+    <com.google.android.material.chip.ChipGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/keyline_x2"
-        android:text="@string/guidelines"
-        android:textColor="@color/black" />
-
-    <HorizontalScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="none">
-
-        <com.google.android.material.chip.ChipGroup
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingStart="@dimen/keyline_x2"
-            android:paddingEnd="@dimen/keyline_x2"
-            app:singleLine="true"
-            app:singleSelection="true">
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipOff"
-                style="@style/OptionChip"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/off" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipOnTouch"
-                style="@style/OptionChip"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/on_touch" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipOn"
-                style="@style/OptionChip"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/on" />
-
-        </com.google.android.material.chip.ChipGroup>
-    </HorizontalScrollView>
+        android:paddingStart="@dimen/keyline_x2"
+        android:paddingEnd="@dimen/keyline_x2"
+        app:singleLine="true"
+        app:singleSelection="true"
+        >
+      <com.google.android.material.chip.Chip
+          android:id="@+id/chipOff"
+          style="@style/OptionChip"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/off"
+          />
+      <com.google.android.material.chip.Chip
+          android:id="@+id/chipOnTouch"
+          style="@style/OptionChip"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/on_touch"
+          />
+      <com.google.android.material.chip.Chip
+          android:id="@+id/chipOn"
+          style="@style/OptionChip"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/on"
+          />
+    </com.google.android.material.chip.ChipGroup>
+  </HorizontalScrollView>
 </LinearLayout>

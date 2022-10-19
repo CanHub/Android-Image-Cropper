@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="ic_rotate_left_24">Pööra vastupäeva</string>
-    <string name="ic_rotate_right_24">Pööra</string>
-    <string name="crop_image_menu_crop">Lõika</string>
-    <string name="ic_flip_24">Pööra ümber</string>
-    <string name="ic_flip_24_horizontally">Peegelda horisontaalselt</string>
-    <string name="ic_flip_24_vertically">Peegelda vertikaalselt</string>
-    <string name="pick_image_chooser_title">Valige allikas</string>
+  <string name="ic_rotate_left_24">Pööra vastupäeva</string>
+  <string name="ic_rotate_right_24">Pööra</string>
+  <string name="crop_image_menu_crop">Lõika</string>
+  <string name="ic_flip_24">Pööra ümber</string>
+  <string name="ic_flip_24_horizontally">Peegelda horisontaalselt</string>
+  <string name="ic_flip_24_vertically">Peegelda vertikaalselt</string>
+  <string name="pick_image_chooser_title">Valige allikas</string>
 </resources>

@@ -1,18 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="OptionChip" parent="@style/Widget.MaterialComponents.Chip.Choice">
-        <item name="chipBackgroundColor">@color/chip_bg_states</item>
-        <item name="checkedIconVisible">true</item>
-        <item name="android:textColor">@color/chip_text_states</item>
-    </style>
-
-    <style name="OptionSwitch">
-        <item name="trackTint">@color/switch_track_selector</item>
-        <item name="thumbTint">@color/switch_thumb_selector</item>
-    </style>
-
-    <style name="Sample.Button" parent="Widget.AppCompat.Button.Colored">
-        <item name="colorButtonNormal">@color/purpleSolid</item>
-        <item name="android:textColor">@color/white</item>
-    </style>
-
+  <style name="OptionChip" parent="@style/Widget.MaterialComponents.Chip.Choice">
+    <item name="chipBackgroundColor">@color/chip_bg_states</item>
+    <item name="checkedIconVisible">true</item>
+    <item name="android:textColor">@color/chip_text_states</item>
+  </style>
+  <style name="OptionSwitch">
+    <item name="trackTint">@color/switch_track_selector</item>
+    <item name="thumbTint">@color/switch_thumb_selector</item>
+  </style>
+  <style name="Sample.Button" parent="Widget.AppCompat.Button.Colored">
+    <item name="colorButtonNormal">@color/purpleSolid</item>
+    <item name="android:textColor">@color/white</item>
+  </style>
 </resources>

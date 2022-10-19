@@ -4,74 +4,73 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.canhub.cropper.sample.MainActivity">
-
-    <ImageView
-        android:id="@+id/image"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:src="@drawable/canhub_logo_purple"
-        android:importantForAccessibility="no"
-        app:layout_constraintBottom_toTopOf="@id/midGuideline"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/midGuideline"
+    tools:context="com.canhub.cropper.sample.MainActivity"
+    >
+  <ImageView
+      android:id="@+id/image"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:src="@drawable/canhub_logo_purple"
+      android:importantForAccessibility="no"
+      app:layout_constraintBottom_toTopOf="@id/midGuideline"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      />
+  <androidx.constraintlayout.widget.Guideline
+      android:id="@+id/midGuideline"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      app:layout_constraintGuide_percent="0.6"
+      />
+  <LinearLayout
+      android:id="@+id/buttons"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:layout_constraintTop_toTopOf="@id/midGuideline"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintBottom_toBottomOf="parent"
+      android:layout_marginBottom="@dimen/keyline_x8"
+      android:orientation="vertical"
+      >
+    <Button
+        style="@style/Sample.Button"
+        android:id="@+id/sampleCropImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.6" />
-
-    <LinearLayout
-        android:id="@+id/buttons"
-        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/keyline_x4"
+        android:text="@string/sample_using_cropimageview"
+        />
+    <Button
+        style="@style/Sample.Button"
+        android:id="@+id/sampleCustomActivity"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@id/midGuideline"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="@dimen/keyline_x8"
-        android:orientation="vertical">
-
-        <Button
-            style="@style/Sample.Button"
-            android:id="@+id/sampleCropImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/keyline_x4"
-            android:text="@string/sample_using_cropimageview" />
-
-        <Button
-            style="@style/Sample.Button"
-            android:id="@+id/sampleCustomActivity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/keyline_x4"
-            android:text="@string/sample_of_customactivity" />
-
-        <Button
-            style="@style/Sample.Button"
-            android:id="@+id/sampleCropImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/keyline_x4"
-            android:text="@string/sample_calling_cropimage"/>
-
-    </LinearLayout>
-
-    <FrameLayout
-        android:id="@+id/container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:elevation="@dimen/elevation_card_resting"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/keyline_x4"
+        android:text="@string/sample_of_customactivity"
+        />
+    <Button
+        style="@style/Sample.Button"
+        android:id="@+id/sampleCropImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/keyline_x4"
+        android:text="@string/sample_calling_cropimage"
+        />
+  </LinearLayout>
+  <FrameLayout
+      android:id="@+id/container"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:elevation="@dimen/elevation_card_resting"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      />
 </androidx.constraintlayout.widget.ConstraintLayout>
