@@ -477,7 +477,7 @@
         errorLine1="        binding.optionsItemsScroll.setOnScrollChangeListener { _, _, _, _, _ ->"
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/canhub/cropper/sample/options_dialog/SampleOptionsBottomSheet.kt"
+            file="src/main/kotlin/com/canhub/cropper/sample/options_dialog/SampleOptionsBottomSheet.kt"
             line="145"
             column="36"/>
     </issue>
@@ -500,7 +500,7 @@
         errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/layout/activity_main.xml"
-            line="77"
+            line="70"
             column="9"/>
     </issue>
 
@@ -775,7 +775,7 @@
         errorLine2="                      ^">
         <location
             file="src/main/res/values/strings.xml"
-            line="81"
+            line="80"
             column="23"/>
     </issue>
 
@@ -796,7 +796,7 @@
         errorLine1="        Log.v(&quot;File Path&quot;, result.getUriFilePath(this).toString())"
         errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/canhub/cropper/sample/SampleCustomActivity.kt"
+            file="src/main/kotlin/com/canhub/cropper/sample/SampleCustomActivity.kt"
             line="82"
             column="9"/>
     </issue>
@@ -807,7 +807,7 @@
         errorLine1="            context?.let { Log.v(&quot;File Path&quot;, result.getUriFilePath(it).toString()) }"
         errorLine2="                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/canhub/cropper/sample/SampleUsingImageView.kt"
+            file="src/main/kotlin/com/canhub/cropper/sample/SampleUsingImageView.kt"
             line="167"
             column="28"/>
     </issue>
@@ -1501,7 +1501,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="79"
+            line="78"
             column="13"/>
     </issue>
 
@@ -1512,7 +1512,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="80"
+            line="79"
             column="13"/>
     </issue>
 
@@ -1523,7 +1523,7 @@
         errorLine2="            ~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="81"
+            line="80"
             column="13"/>
     </issue>
 
@@ -1534,7 +1534,7 @@
         errorLine2="            ~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="82"
+            line="81"
             column="13"/>
     </issue>
 
@@ -1545,7 +1545,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="83"
+            line="82"
             column="13"/>
     </issue>
 
@@ -1556,7 +1556,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="84"
+            line="83"
             column="13"/>
     </issue>
 
@@ -1567,7 +1567,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="89"
+            line="88"
             column="13"/>
     </issue>
 
@@ -1578,7 +1578,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="90"
+            line="89"
             column="13"/>
     </issue>
 
@@ -1705,23 +1705,12 @@
 
     <issue
         id="UnusedIds"
-        message="The resource `R.id.sampleCropImageJava` appears to be unused"
-        errorLine1="            android:id=&quot;@+id/sampleCropImageJava&quot;"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/layout/activity_main.xml"
-            line="66"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedIds"
         message="The resource `R.id.container` appears to be unused"
         errorLine1="        android:id=&quot;@+id/container&quot;"
         errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/layout/activity_main.xml"
-            line="74"
+            line="67"
             column="9"/>
     </issue>
 
@@ -2240,7 +2229,7 @@
         errorLine2="                      ~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="81"
+            line="80"
             column="23"/>
     </issue>
 
@@ -2251,7 +2240,7 @@
         errorLine2="                          ~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="82"
+            line="81"
             column="27"/>
     </issue>
 
@@ -2286,17 +2275,6 @@
             file="src/main/res/layout/extended_activity.xml"
             line="31"
             column="6"/>
-    </issue>
-
-    <issue
-        id="UnknownNullness"
-        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://developer.android.com/kotlin/interop#nullability_annotations"
-        errorLine1="    public static SampleCropJava newInstance() {"
-        errorLine2="                  ~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/canhub/cropper/sample/SampleCropJava.java"
-            line="55"
-            column="19"/>
     </issue>
 
 </issues>

@@ -1,7 +1,5 @@
 [![CanHub](.documentation/art/canhub_logo_horizontal_transparent.png?raw=true)](https://github.com/canhub)
 
-☕[Using the library in Java](.documentation/java_usage.md)
-
 ❓[FAQ - frequently asked question](.documentation/FAQ.md)
 
 Android Image Cropper
@@ -43,7 +41,7 @@ There is 3 ways of using the library:
 Your choice depends on how you want your layout to look.
 
 ## Calling crop directly
-[Sample code](https://github.com/CanHub/Android-Image-Cropper/tree/main/sample/src/main/java/com/canhub/cropper/sample/SampleCrop.kt)
+[Sample code](https://github.com/CanHub/Android-Image-Cropper/tree/main/sample/src/main/kotlin/com/canhub/cropper/sample/SampleCrop.kt)
 
 - Register for activity result with `CropImageContract`
  ```kotlin
