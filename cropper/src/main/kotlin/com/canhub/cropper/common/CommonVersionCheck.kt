@@ -1,12 +1,10 @@
 package com.canhub.cropper.common
 
-import android.os.Build
 import android.os.Build.VERSION.SDK_INT
+import android.os.Build.VERSION_CODES
+import androidx.annotation.ChecksSdkIntAtLeast
 
 object CommonVersionCheck {
-
-  fun isAtLeastJ18() = SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2
-  fun isAtLeastM23() = SDK_INT >= Build.VERSION_CODES.M
-  fun isAtLeastO26() = SDK_INT >= Build.VERSION_CODES.O
-  fun isAtLeastQ29() = SDK_INT >= Build.VERSION_CODES.Q
+  @ChecksSdkIntAtLeast(api = VERSION_CODES.O) fun isAtLeastO26() = SDK_INT >= VERSION_CODES.O
+  @ChecksSdkIntAtLeast(api = VERSION_CODES.Q) fun isAtLeastQ29() = SDK_INT >= VERSION_CODES.Q
 }

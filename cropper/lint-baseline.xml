@@ -2,50 +2,6 @@
 <issues format="6" by="lint 7.3.1" type="baseline" client="gradle" dependencies="false" name="AGP (7.3.1)" variant="all" version="7.3.1">
 
     <issue
-        id="AnnotateVersionCheck"
-        message="This method should be annotated with `@ChecksSdkIntAtLeast(api=Build.VERSION_CODES.JELLY_BEAN_MR2)`"
-        errorLine1="  fun isAtLeastJ18() = SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2"
-        errorLine2="      ~~~~~~~~~~~~">
-        <location
-            file="src/main/kotlin/com/canhub/cropper/common/CommonVersionCheck.kt"
-            line="8"
-            column="7"/>
-    </issue>
-
-    <issue
-        id="AnnotateVersionCheck"
-        message="This method should be annotated with `@ChecksSdkIntAtLeast(api=Build.VERSION_CODES.M)`"
-        errorLine1="  fun isAtLeastM23() = SDK_INT >= Build.VERSION_CODES.M"
-        errorLine2="      ~~~~~~~~~~~~">
-        <location
-            file="src/main/kotlin/com/canhub/cropper/common/CommonVersionCheck.kt"
-            line="9"
-            column="7"/>
-    </issue>
-
-    <issue
-        id="AnnotateVersionCheck"
-        message="This method should be annotated with `@ChecksSdkIntAtLeast(api=Build.VERSION_CODES.O)`"
-        errorLine1="  fun isAtLeastO26() = SDK_INT >= Build.VERSION_CODES.O"
-        errorLine2="      ~~~~~~~~~~~~">
-        <location
-            file="src/main/kotlin/com/canhub/cropper/common/CommonVersionCheck.kt"
-            line="10"
-            column="7"/>
-    </issue>
-
-    <issue
-        id="AnnotateVersionCheck"
-        message="This method should be annotated with `@ChecksSdkIntAtLeast(api=Build.VERSION_CODES.Q)`"
-        errorLine1="  fun isAtLeastQ29() = SDK_INT >= Build.VERSION_CODES.Q"
-        errorLine2="      ~~~~~~~~~~~~">
-        <location
-            file="src/main/kotlin/com/canhub/cropper/common/CommonVersionCheck.kt"
-            line="11"
-            column="7"/>
-    </issue>
-
-    <issue
         id="InvalidPackage"
         message="Invalid package reference in org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm; not included in Android: `java.lang.instrument`. Referenced from `kotlinx.coroutines.debug.AgentPremain`.">
         <location
@@ -64,39 +20,6 @@
         message="The locale folder &quot;`id`&quot; should be called &quot;`in`&quot; instead; see the `java.util.Locale` documentation">
         <location
             file="src/main/res/values-id"/>
-    </issue>
-
-    <issue
-        id="VectorRaster"
-        message="Resource references will not work correctly in images generated for this vector icon for API &lt; 21; check generated icon to make sure it looks acceptable"
-        errorLine1="        android:fillColor=&quot;@android:color/white&quot;"
-        errorLine2="                           ~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/drawable/ic_flip_24.xml"
-            line="8"
-            column="28"/>
-    </issue>
-
-    <issue
-        id="VectorRaster"
-        message="Resource references will not work correctly in images generated for this vector icon for API &lt; 21; check generated icon to make sure it looks acceptable"
-        errorLine1="        android:fillColor=&quot;@android:color/white&quot;"
-        errorLine2="                           ~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/drawable/ic_rotate_left_24.xml"
-            line="8"
-            column="28"/>
-    </issue>
-
-    <issue
-        id="VectorRaster"
-        message="Resource references will not work correctly in images generated for this vector icon for API &lt; 21; check generated icon to make sure it looks acceptable"
-        errorLine1="        android:fillColor=&quot;@android:color/white&quot;"
-        errorLine2="                           ~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/drawable/ic_rotate_right_24.xml"
-            line="8"
-            column="28"/>
     </issue>
 
     <issue
@@ -133,17 +56,6 @@
     </issue>
 
     <issue
-        id="ObsoleteSdkInt"
-        message="Unnecessary; SDK_INT is always >= 11"
-        errorLine1="    @TargetApi(Build.VERSION_CODES.HONEYCOMB)"
-        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/kotlin/com/canhub/cropper/CropOverlayView.kt"
-            line="1281"
-            column="5"/>
-    </issue>
-
-    <issue
         id="UnusedResources"
         message="The resource `R.string.crop_image_activity_no_permissions` appears to be unused"
         errorLine1="    &lt;string name=&quot;crop_image_activity_no_permissions&quot;>Cancelling, required permissions are not granted&lt;/string>"
@@ -161,7 +73,7 @@
         errorLine2="                  ~~~~~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/com/canhub/cropper/CropImageView.kt"
-            line="1183"
+            line="1182"
             column="19"/>
     </issue>
 
@@ -172,7 +84,7 @@
         errorLine2="                   ~~~~~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/com/canhub/cropper/CropImageView.kt"
-            line="1184"
+            line="1183"
             column="20"/>
     </issue>
 
@@ -183,7 +95,7 @@
         errorLine2="                   ~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/com/canhub/cropper/CropOverlayView.kt"
-            line="503"
+            line="484"
             column="20"/>
     </issue>
 
@@ -194,7 +106,7 @@
         errorLine2="      ~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/com/canhub/cropper/CropOverlayView.kt"
-            line="508"
+            line="489"
             column="7"/>
     </issue>
 
@@ -205,7 +117,7 @@
         errorLine2="                      ~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/com/canhub/cropper/CropOverlayView.kt"
-            line="509"
+            line="490"
             column="23"/>
     </issue>
 
@@ -216,7 +128,7 @@
         errorLine2="                       ~~~~~~~~~~~">
         <location
             file="src/main/kotlin/com/canhub/cropper/CropOverlayView.kt"
-            line="510"
+            line="491"
             column="24"/>
     </issue>
 
@@ -227,7 +139,7 @@
         errorLine2="                     ~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/com/canhub/cropper/CropOverlayView.kt"
-            line="511"
+            line="492"
             column="22"/>
     </issue>
 
@@ -238,7 +150,7 @@
         errorLine2="                         ~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/com/canhub/cropper/CropOverlayView.kt"
-            line="654"
+            line="635"
             column="26"/>
     </issue>
 
@@ -249,7 +161,7 @@
         errorLine2="                                                           ~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/com/canhub/cropper/CropOverlayView.kt"
-            line="892"
+            line="869"
             column="60"/>
     </issue>
 
@@ -315,7 +227,7 @@
         errorLine2="               ~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/com/canhub/cropper/CropOverlayView.kt"
-            line="1085"
+            line="1062"
             column="16"/>
     </issue>
 

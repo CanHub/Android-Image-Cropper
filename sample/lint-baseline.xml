@@ -473,255 +473,13 @@
 
     <issue
         id="NewApi"
-        message="Call requires API level 23 (current min is 16): `android.view.View#setOnScrollChangeListener`"
+        message="Call requires API level 23 (current min is 21): `android.view.View#setOnScrollChangeListener`"
         errorLine1="    binding.optionsItemsScroll.setOnScrollChangeListener { _, _, _, _, _ ->"
         errorLine2="                               ~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/com/canhub/cropper/sample/optionsdialog/SampleOptionsBottomSheet.kt"
             line="145"
             column="32"/>
-    </issue>
-
-    <issue
-        id="NewApi"
-        message="`android:statusBarColor` requires API level 21 (current min is 16)"
-        errorLine1="        &lt;item name=&quot;android:statusBarColor&quot;>@android:color/transparent&lt;/item>"
-        errorLine2="              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/styles.xml"
-            line="33"
-            column="15"/>
-    </issue>
-
-    <issue
-        id="UnusedAttribute"
-        message="Attribute `elevation` is only used in API level 21 and higher (current min is 16)"
-        errorLine1="        android:elevation=&quot;@dimen/elevation_card_resting&quot;"
-        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/layout/activity_main.xml"
-            line="70"
-            column="9"/>
-    </issue>
-
-    <issue
-        id="UnusedAttribute"
-        message="Attribute `elevation` is only used in API level 21 and higher (current min is 16)"
-        errorLine1="    android:elevation=&quot;@dimen/elevation_card_resting&quot;"
-        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/layout/chip_corner_shape.xml"
-            line="8"
-            column="5"/>
-    </issue>
-
-    <issue
-        id="UnusedAttribute"
-        message="Attribute `elevation` is only used in API level 21 and higher (current min is 16)"
-        errorLine1="    android:elevation=&quot;@dimen/elevation_card_resting&quot;"
-        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/layout/chip_crop_shape.xml"
-            line="8"
-            column="5"/>
-    </issue>
-
-    <issue
-        id="UnusedAttribute"
-        message="Attribute `elevation` is only used in API level 21 and higher (current min is 16)"
-        errorLine1="    android:elevation=&quot;@dimen/elevation_card_resting&quot;"
-        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/layout/chip_guidelines.xml"
-            line="8"
-            column="5"/>
-    </issue>
-
-    <issue
-        id="UnusedAttribute"
-        message="Attribute `elevation` is only used in API level 21 and higher (current min is 16)"
-        errorLine1="    android:elevation=&quot;@dimen/elevation_card_resting&quot;"
-        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/layout/chip_max_zoom.xml"
-            line="8"
-            column="5"/>
-    </issue>
-
-    <issue
-        id="UnusedAttribute"
-        message="Attribute `elevation` is only used in API level 21 and higher (current min is 16)"
-        errorLine1="    android:elevation=&quot;@dimen/elevation_card_resting&quot;"
-        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/layout/chip_ratio.xml"
-            line="8"
-            column="5"/>
-    </issue>
-
-    <issue
-        id="UnusedAttribute"
-        message="Attribute `elevation` is only used in API level 21 and higher (current min is 16)"
-        errorLine1="    android:elevation=&quot;@dimen/elevation_card_resting&quot;"
-        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/layout/chip_scale_type.xml"
-            line="8"
-            column="5"/>
-    </issue>
-
-    <issue
-        id="UnusedAttribute"
-        message="Attribute `elevation` is only used in API level 21 and higher (current min is 16)"
-        errorLine1="            android:elevation=&quot;@dimen/elevation_card_resting&quot;"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/layout/fragment_crop_image_view.xml"
-            line="23"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedAttribute"
-        message="Attribute `elevation` is only used in API level 21 and higher (current min is 16)"
-        errorLine1="            android:elevation=&quot;@dimen/elevation_fab_resting_or_snackbar&quot;"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/layout/fragment_crop_image_view.xml"
-            line="54"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedAttribute"
-        message="Attribute `elevation` is only used in API level 21 and higher (current min is 16)"
-        errorLine1="            android:elevation=&quot;@dimen/elevation_fab_resting_or_snackbar&quot;"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/layout/fragment_crop_image_view.xml"
-            line="66"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedAttribute"
-        message="Attribute `stateListAnimator` is only used in API level 21 and higher (current min is 16)"
-        errorLine1="        android:stateListAnimator=&quot;@animator/toolbar_elevation&quot;"
-        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/layout/fragment_options.xml"
-            line="14"
-            column="9"/>
-    </issue>
-
-    <issue
-        id="UnusedAttribute"
-        message="Attribute `nestedScrollingEnabled` is only used in API level 21 and higher (current min is 16)"
-        errorLine1="        android:nestedScrollingEnabled=&quot;true&quot;>"
-        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/layout/fragment_options.xml"
-            line="40"
-            column="9"/>
-    </issue>
-
-    <issue
-        id="UnusedAttribute"
-        message="Attribute `autoMirrored` is only used in API level 19 and higher (current min is 16)"
-        errorLine1="    android:autoMirrored=&quot;true&quot;"
-        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/drawable/ic_arrow_back_24.xml"
-            line="4"
-            column="5"/>
-    </issue>
-
-    <issue
-        id="UnusedAttribute"
-        message="Attribute `elevation` is only used in API level 21 and higher (current min is 16)"
-        errorLine1="    android:elevation=&quot;@dimen/elevation_card_resting&quot;"
-        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/layout/switch_auto_zoom.xml"
-            line="7"
-            column="5"/>
-    </issue>
-
-    <issue
-        id="UnusedAttribute"
-        message="Attribute `elevation` is only used in API level 21 and higher (current min is 16)"
-        errorLine1="    android:elevation=&quot;@dimen/elevation_card_resting&quot;"
-        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/layout/switch_center_move.xml"
-            line="7"
-            column="5"/>
-    </issue>
-
-    <issue
-        id="UnusedAttribute"
-        message="Attribute `elevation` is only used in API level 21 and higher (current min is 16)"
-        errorLine1="    android:elevation=&quot;@dimen/elevation_card_resting&quot;"
-        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/layout/switch_crop_overlay.xml"
-            line="7"
-            column="5"/>
-    </issue>
-
-    <issue
-        id="UnusedAttribute"
-        message="Attribute `elevation` is only used in API level 21 and higher (current min is 16)"
-        errorLine1="    android:elevation=&quot;@dimen/elevation_card_resting&quot;"
-        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/layout/switch_crop_text_label.xml"
-            line="7"
-            column="5"/>
-    </issue>
-
-    <issue
-        id="UnusedAttribute"
-        message="Attribute `elevation` is only used in API level 21 and higher (current min is 16)"
-        errorLine1="    android:elevation=&quot;@dimen/elevation_card_resting&quot;"
-        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/layout/switch_flip_horizontal.xml"
-            line="7"
-            column="5"/>
-    </issue>
-
-    <issue
-        id="UnusedAttribute"
-        message="Attribute `elevation` is only used in API level 21 and higher (current min is 16)"
-        errorLine1="    android:elevation=&quot;@dimen/elevation_card_resting&quot;"
-        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/layout/switch_flip_vertical.xml"
-            line="7"
-            column="5"/>
-    </issue>
-
-    <issue
-        id="UnusedAttribute"
-        message="Attribute `elevation` is only used in API level 21 and higher (current min is 16)"
-        errorLine1="    android:elevation=&quot;@dimen/elevation_card_resting&quot;"
-        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/layout/switch_multi_touch.xml"
-            line="7"
-            column="5"/>
-    </issue>
-
-    <issue
-        id="UnusedAttribute"
-        message="Attribute `elevation` is only used in API level 21 and higher (current min is 16)"
-        errorLine1="    android:elevation=&quot;@dimen/elevation_card_resting&quot;"
-        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/layout/switch_progress_bar.xml"
-            line="7"
-            column="5"/>
     </issue>
 
     <issue
@@ -732,39 +490,6 @@
         <location
             file="src/main/AndroidManifest.xml"
             line="12"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="VectorDrawableCompat"
-        message="When using VectorDrawableCompat, you need to use `app:srcCompat`"
-        errorLine1="        android:src=&quot;@drawable/ic_arrow_back_24&quot;"
-        errorLine2="        ~~~~~~~~~~~">
-        <location
-            file="src/main/res/layout/extended_activity.xml"
-            line="15"
-            column="9"/>
-    </issue>
-
-    <issue
-        id="VectorDrawableCompat"
-        message="When using VectorDrawableCompat, you need to use `app:srcCompat`"
-        errorLine1="            android:src=&quot;@drawable/ic_gear_24&quot;"
-        errorLine2="            ~~~~~~~~~~~">
-        <location
-            file="src/main/res/layout/fragment_crop_image_view.xml"
-            line="55"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="VectorDrawableCompat"
-        message="When using VectorDrawableCompat, you need to use `app:srcCompat`"
-        errorLine1="            android:src=&quot;@drawable/ic_mage_search_24&quot;"
-        errorLine2="            ~~~~~~~~~~~">
-        <location
-            file="src/main/res/layout/fragment_crop_image_view.xml"
-            line="67"
             column="13"/>
     </issue>
 
@@ -2185,6 +1910,13 @@
             file="src/main/res/layout/switch_auto_zoom.xml"
             line="11"
             column="9"/>
+    </issue>
+
+    <issue
+        id="ConvertToWebp"
+        message="One or more images in this project can be converted to the WebP format which typically results in smaller file sizes, even for lossless conversion">
+        <location
+            file="src/main/res/drawable/cat.jpg"/>
     </issue>
 
     <issue

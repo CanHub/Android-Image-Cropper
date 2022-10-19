@@ -11,7 +11,6 @@ import android.graphics.Matrix
 import android.graphics.Rect
 import android.graphics.RectF
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
 import android.provider.MediaStore
@@ -2006,9 +2005,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
     mCropOverlayView.setCropWindowChangeListener(this)
     mCropOverlayView.setInitialAttributeValues(options)
     mProgressBar = v.findViewById(R.id.CropProgressBar)
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-      mProgressBar.indeterminateTintList = ColorStateList.valueOf(options.progressBarColor)
-    }
+    mProgressBar.indeterminateTintList = ColorStateList.valueOf(options.progressBarColor)
     setProgressBarVisibility()
   }
 
