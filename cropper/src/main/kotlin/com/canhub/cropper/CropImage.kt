@@ -162,8 +162,11 @@ object CropImage {
             val action = data.action
             isCamera = action != null && action == MediaStore.ACTION_IMAGE_CAPTURE
         }
-        return if (isCamera || uri == null) getCaptureImageOutputUriContent(context)
-        else uri
+        return if (isCamera || uri == null) {
+            getCaptureImageOutputUriContent(context)
+        } else {
+            uri
+        }
     }
 
     /**

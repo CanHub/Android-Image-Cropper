@@ -90,7 +90,9 @@ class CropImageIntentChooser(
             }
             allIntents.addAll(galleryIntents)
         }
-        val target = if (allIntents.isEmpty()) Intent() else {
+        val target = if (allIntents.isEmpty()) {
+            Intent()
+        } else {
             Intent(Intent.ACTION_CHOOSER, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply {
                 if (includeGallery) {
                     action = Intent.ACTION_PICK
@@ -102,7 +104,8 @@ class CropImageIntentChooser(
         val chooserIntent = Intent.createChooser(target, title)
         // Add all other intents
         chooserIntent.putExtra(
-            Intent.EXTRA_INITIAL_INTENTS, allIntents.toTypedArray<Parcelable>()
+            Intent.EXTRA_INITIAL_INTENTS,
+            allIntents.toTypedArray<Parcelable>()
         )
         intentChooser.launch(chooserIntent)
     }
@@ -124,7 +127,8 @@ class CropImageIntentChooser(
             intent.setPackage(resolveInfo.activityInfo.packageName)
             if (context is Activity) {
                 context.grantUriPermission(
-                    resolveInfo.activityInfo.packageName, cameraImgUri,
+                    resolveInfo.activityInfo.packageName,
+                    cameraImgUri,
                     Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION
                 )
             }
@@ -142,8 +146,11 @@ class CropImageIntentChooser(
      */
     private fun getGalleryIntents(packageManager: PackageManager, action: String): List<Intent> {
         val intents: MutableList<Intent> = ArrayList()
-        val galleryIntent = if (action == Intent.ACTION_GET_CONTENT) Intent(action)
-        else Intent(action, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        val galleryIntent = if (action == Intent.ACTION_GET_CONTENT) {
+            Intent(action)
+        } else {
+            Intent(action, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        }
         galleryIntent.type = "image/*"
         val listGallery = packageManager.queryIntentActivities(galleryIntent, 0)
         for (res in listGallery) {

@@ -57,8 +57,11 @@ class SampleResultScreen : Activity() {
         } ?: run {
             val imageUri = intent.getParcelableExtra<Uri>(URI)
 
-            if (imageUri != null) binding.resultImageView.setImageURI(imageUri)
-            else Toast.makeText(this, "No image is set to show", Toast.LENGTH_LONG).show()
+            if (imageUri != null) {
+                binding.resultImageView.setImageURI(imageUri)
+            } else {
+                Toast.makeText(this, "No image is set to show", Toast.LENGTH_LONG).show()
+            }
         }
     }
 

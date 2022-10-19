@@ -1,2 +1,5 @@
 [*.{kt,kts}]
-disabled_rules=filename
+indent_size=4
+continuation_indent_size=4
+insert_final_newline=true
+ktlint_disabled_rules=annotation,argument-list-wrapping,spacing-between-declarations-with-annotations,filename,indent

@@ -117,7 +117,7 @@ class CropWindowHandler {
         maxWidth: Float,
         maxHeight: Float,
         scaleFactorWidth: Float,
-        scaleFactorHeight: Float,
+        scaleFactorHeight: Float
     ) {
         mMaxCropWindowWidth = maxWidth
         mMaxCropWindowHeight = maxHeight
@@ -194,7 +194,6 @@ class CropWindowHandler {
         targetRadius: Float,
         isCenterMoveEnabled: Boolean
     ): CropWindowMoveHandler.Type? {
-
         // Note: corner-handles take precedence, then side-handles, then center.
         return when {
             isInCornerTargetZone(x, y, mEdges.left, mEdges.top, targetRadius) -> {
@@ -259,7 +258,7 @@ class CropWindowHandler {
              L C C C C R
              L C C C C R
             BL B B B B BR
-        */
+         */
 
         val cellLength = mEdges.width() / 6
         val leftCenter = mEdges.left + cellLength
@@ -280,7 +279,9 @@ class CropWindowHandler {
                     y < topCenter -> CropWindowMoveHandler.Type.TOP
                     y < bottomCenter -> if (isCenterMoveEnabled) {
                         CropWindowMoveHandler.Type.CENTER
-                    } else null
+                    } else {
+                        null
+                    }
                     else -> CropWindowMoveHandler.Type.BOTTOM
                 }
             }
@@ -310,7 +311,6 @@ class CropWindowHandler {
         targetRadius: Float,
         isCenterMoveEnabled: Boolean
     ): CropWindowMoveHandler.Type? {
-
         // Note: top and bottom handles take precedence, then center.
         // Note also that we ignore the focusCenter() function - if the user wants to drag the
         // window they can drag from the left and right sides.
@@ -345,7 +345,6 @@ class CropWindowHandler {
         targetRadius: Float,
         isCenterMoveEnabled: Boolean
     ): CropWindowMoveHandler.Type? {
-
         // Note: left and right handles take precedence, then center.
         // Note also that we ignore the focusCenter() function - if the user wants to drag the
         // window they can drag from the top and bottom sides.
@@ -379,7 +378,7 @@ class CropWindowHandler {
         y: Float,
         handleX: Float,
         handleY: Float,
-        targetRadius: Float,
+        targetRadius: Float
     ) = distance(x, y, handleX, handleY) <= targetRadius
 
     /**
@@ -415,7 +414,7 @@ class CropWindowHandler {
         handleXStart: Float,
         handleXEnd: Float,
         handleY: Float,
-        targetRadius: Float,
+        targetRadius: Float
     ) = x > handleXStart && x < handleXEnd && abs(y - handleY) <= targetRadius
 
     /**
@@ -435,7 +434,7 @@ class CropWindowHandler {
         handleX: Float,
         handleYStart: Float,
         handleYEnd: Float,
-        targetRadius: Float,
+        targetRadius: Float
     ) = abs(x - handleX) <= targetRadius && y > handleYStart && y < handleYEnd
 
     /**
@@ -455,7 +454,7 @@ class CropWindowHandler {
         left: Float,
         top: Float,
         right: Float,
-        bottom: Float,
+        bottom: Float
     ) = x > left && x < right && y > top && y < bottom
 
     /**

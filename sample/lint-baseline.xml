@@ -477,7 +477,7 @@
         errorLine1="        binding.optionsItemsScroll.setOnScrollChangeListener { _, _, _, _, _ ->"
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/kotlin/com/canhub/cropper/sample/options_dialog/SampleOptionsBottomSheet.kt"
+            file="src/main/kotlin/com/canhub/cropper/sample/optionsdialog/SampleOptionsBottomSheet.kt"
             line="145"
             column="36"/>
     </issue>
@@ -808,7 +808,7 @@
         errorLine2="                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/com/canhub/cropper/sample/SampleUsingImageView.kt"
-            line="167"
+            line="171"
             column="28"/>
     </issue>
 

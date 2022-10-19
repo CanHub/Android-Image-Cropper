@@ -97,7 +97,7 @@ internal class SampleCrop : Fragment() {
             options {
                 setImageSource(
                     includeGallery = includeGallery,
-                    includeCamera = includeCamera,
+                    includeCamera = includeCamera
                 )
                 // Normal Settings
                 setScaleType(CropImageView.ScaleType.FIT_CENTER)
@@ -261,9 +261,11 @@ internal class SampleCrop : Fragment() {
     }
 
     private fun setupOutputUri() {
-        if (outputUri == null) context?.let { ctx ->
+        if (outputUri == null) {
+            context?.let { ctx ->
             val authorities = "${ctx.applicationContext?.packageName}$AUTHORITY_SUFFIX"
             outputUri = FileProvider.getUriForFile(ctx, authorities, createImageFile())
+        }
         }
     }
 

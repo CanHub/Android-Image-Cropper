@@ -106,7 +106,7 @@
         errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/com/canhub/cropper/CropImageActivity.kt"
-            line="119"
+            line="122"
             column="25"/>
     </issue>
 
@@ -139,7 +139,7 @@
         errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/com/canhub/cropper/CropOverlayView.kt"
-            line="1245"
+            line="1277"
             column="9"/>
     </issue>
 
@@ -161,7 +161,7 @@
         errorLine2="                        ~~~~~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/com/canhub/cropper/CropImageView.kt"
-            line="1173"
+            line="1183"
             column="25"/>
     </issue>
 
@@ -172,7 +172,7 @@
         errorLine2="                         ~~~~~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/com/canhub/cropper/CropImageView.kt"
-            line="1174"
+            line="1184"
             column="26"/>
     </issue>
 
@@ -183,7 +183,7 @@
         errorLine2="                       ~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/com/canhub/cropper/CropOverlayView.kt"
-            line="485"
+            line="503"
             column="24"/>
     </issue>
 
@@ -194,7 +194,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/com/canhub/cropper/CropOverlayView.kt"
-            line="490"
+            line="508"
             column="13"/>
     </issue>
 
@@ -205,7 +205,7 @@
         errorLine2="                          ~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/com/canhub/cropper/CropOverlayView.kt"
-            line="491"
+            line="509"
             column="27"/>
     </issue>
 
@@ -216,7 +216,7 @@
         errorLine2="                           ~~~~~~~~~~~">
         <location
             file="src/main/kotlin/com/canhub/cropper/CropOverlayView.kt"
-            line="492"
+            line="510"
             column="28"/>
     </issue>
 
@@ -227,7 +227,7 @@
         errorLine2="                         ~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/com/canhub/cropper/CropOverlayView.kt"
-            line="493"
+            line="511"
             column="26"/>
     </issue>
 
@@ -238,7 +238,7 @@
         errorLine2="                             ~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/com/canhub/cropper/CropOverlayView.kt"
-            line="633"
+            line="654"
             column="30"/>
     </issue>
 
@@ -249,7 +249,7 @@
         errorLine2="                                                                   ~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/com/canhub/cropper/CropOverlayView.kt"
-            line="859"
+            line="888"
             column="68"/>
     </issue>
 
@@ -315,7 +315,7 @@
         errorLine2="                 ~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/com/canhub/cropper/CropOverlayView.kt"
-            line="1051"
+            line="1081"
             column="18"/>
     </issue>
 

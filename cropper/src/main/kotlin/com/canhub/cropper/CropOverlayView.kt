@@ -47,6 +47,7 @@ class CropOverlayView
                 textAlign = Paint.Align.CENTER
                 this.color = options.cropperLabelTextColor
             }
+
         /** Creates the Paint object for drawing.  */
         private fun getNewPaint(color: Int): Paint =
             Paint().apply {
@@ -62,7 +63,9 @@ class CropOverlayView
                 borderPaint.style = Paint.Style.STROKE
                 borderPaint.isAntiAlias = true
                 borderPaint
-            } else null
+            } else {
+                null
+            }
         private fun getNewPaintWithFill(color: Int): Paint? {
             val borderPaint = Paint()
             borderPaint.color = color
@@ -173,6 +176,7 @@ class CropOverlayView
     /** The shape of the cropping area - rectangle/circular.  */
     var cropShape: CropShape? = null
         private set
+
     /**
      * The shape of the crop corner
      */
@@ -181,12 +185,16 @@ class CropOverlayView
 
     /** To show the text label over crop overlay **/
     private var isCropLabelEnabled: Boolean = false
+
     /** Text to show over text label over crop overlay */
     private var cropLabelText: String = ""
+
     /** Text color to apply over text label over crop overlay */
     private var cropLabelTextSize: Float = 20f
+
     /** Text color to apply over text label over crop overlay */
     private var cropLabelTextColor = Color.WHITE
+
     /** the initial crop window rectangle to set  */
     private val mInitialCropWindowRect = Rect()
 
@@ -228,8 +236,11 @@ class CropOverlayView
      */
     fun setBounds(boundsPoints: FloatArray?, viewWidth: Int, viewHeight: Int) {
         if (boundsPoints == null || !Arrays.equals(mBoundsPoints, boundsPoints)) {
-            if (boundsPoints == null) Arrays.fill(mBoundsPoints, 0f)
-            else System.arraycopy(boundsPoints, 0, mBoundsPoints, 0, boundsPoints.size)
+            if (boundsPoints == null) {
+                Arrays.fill(mBoundsPoints, 0f)
+            } else {
+                System.arraycopy(boundsPoints, 0, mBoundsPoints, 0, boundsPoints.size)
+            }
 
             mViewWidth = viewWidth
             mViewHeight = viewHeight
@@ -255,11 +266,14 @@ class CropOverlayView
                 if (this.cropShape == CropShape.OVAL) {
                     mOriginalLayerType = layerType
 
-                    if (mOriginalLayerType != LAYER_TYPE_SOFTWARE) setLayerType(
+                    if (mOriginalLayerType != LAYER_TYPE_SOFTWARE) {
+                        setLayerType(
                         LAYER_TYPE_SOFTWARE,
                         null
                     )
-                    else mOriginalLayerType = null
+                    } else {
+                        mOriginalLayerType = null
+                    }
                 } else if (mOriginalLayerType != null) {
                     // return hardware acceleration back
                     setLayerType(mOriginalLayerType!!, null)
@@ -279,6 +293,7 @@ class CropOverlayView
             invalidate()
         }
     }
+
     /**
      * Sets the cropper label if it is enabled
      */
@@ -303,6 +318,7 @@ class CropOverlayView
         this.cropLabelTextSize = textSize
         invalidate()
     }
+
     /**
      * Sets the text color for cropper text
      */
@@ -310,6 +326,7 @@ class CropOverlayView
         this.cropLabelTextColor = textColor
         invalidate()
     }
+
     /**
      * Sets the guidelines for the CropOverlayView to be either on, off, or to show when resizing the
      * application.
@@ -379,6 +396,7 @@ class CropOverlayView
     fun setSnapRadius(snapRadius: Float) {
         mSnapRadius = snapRadius
     }
+
     /**
      * Radius of the circular crop corner
      * Default radius is 10
@@ -624,10 +642,13 @@ class CropOverlayView
         drawBackground(canvas)
         if (mCropWindowHandler.showGuidelines()) {
             // Determines whether guidelines should be drawn or not
-            if (guidelines == Guidelines.ON) drawGuidelines(canvas)
-            else if (guidelines == Guidelines.ON_TOUCH && mMoveHandler != null) drawGuidelines(
+            if (guidelines == Guidelines.ON) {
+                drawGuidelines(canvas)
+            } else if (guidelines == Guidelines.ON_TOUCH && mMoveHandler != null) {
+                drawGuidelines(
                 canvas
             )
+            }
         }
         // To retain the changes in Paint object when the App goes background this is required
         mBorderCornerPaint = getNewPaintOrNull(mOptions?.borderCornerThickness ?: 0.0f, mOptions?.borderCornerColor ?: Color.WHITE)
@@ -711,8 +732,11 @@ class CropOverlayView
                     mPath.close()
                     canvas.save()
 
-                    if (CommonVersionCheck.isAtLeastO26()) canvas.clipOutPath(mPath)
-                    else canvas.clipPath(mPath, Region.Op.INTERSECT)
+                    if (CommonVersionCheck.isAtLeastO26()) {
+                        canvas.clipOutPath(mPath)
+                    } else {
+                        canvas.clipPath(mPath, Region.Op.INTERSECT)
+                    }
 
                     canvas.clipRect(rect, Region.Op.XOR)
                     canvas.drawRect(left, top, right, bottom, mBackgroundPaint!!)
@@ -720,15 +744,20 @@ class CropOverlayView
                 }
             CropShape.OVAL -> {
                 mPath.reset()
-                if (CommonVersionCheck.isAtLeastJ18())
+                if (CommonVersionCheck.isAtLeastJ18()) {
                     mDrawRect[rect.left, rect.top, rect.right] = rect.bottom
-                else mDrawRect[rect.left + 2, rect.top + 2, rect.right - 2] = rect.bottom - 2
+                } else {
+                    mDrawRect[rect.left + 2, rect.top + 2, rect.right - 2] = rect.bottom - 2
+                }
 
                 mPath.addOval(mDrawRect, Path.Direction.CW)
                 canvas.save()
 
-                if (CommonVersionCheck.isAtLeastO26()) canvas.clipOutPath(mPath)
-                else canvas.clipPath(mPath, Region.Op.XOR)
+                if (CommonVersionCheck.isAtLeastO26()) {
+                    canvas.clipOutPath(mPath)
+                } else {
+                    canvas.clipPath(mPath, Region.Op.XOR)
+                }
 
                 canvas.drawRect(left, top, right, bottom, mBackgroundPaint!!)
                 canvas.restore()
@@ -861,6 +890,7 @@ class CropOverlayView
             }
         }
     }
+
     /**
      * Draw corners of crop overlay based on crop shape.
      * In case of RECTANGLE crop shape call [drawCornerShape], to handle the corner draw based on
@@ -1070,7 +1100,9 @@ class CropOverlayView
                 }
                 else -> false
             }
-        } else false
+        } else {
+            false
+        }
     }
 
     /**

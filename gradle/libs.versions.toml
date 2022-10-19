@@ -6,7 +6,7 @@ targetSdk = "33"
 androidgradleplugin = "7.3.1"
 kotlin = "1.7.20"
 kotlinxcoroutines = "1.6.4"
-ktlint = "0.42.1"
+ktlint = "0.47.1"
 
 [libraries]
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version = "1.6.0" }

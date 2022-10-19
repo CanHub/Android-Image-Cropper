@@ -79,7 +79,9 @@ open class CropImageActivity :
                         openCamera()
                     else -> finish()
                 }
-            } else cropImageView?.setImageUriAsync(cropImageUri)
+            } else {
+                cropImageView?.setImageUriAsync(cropImageUri)
+            }
         } else {
             latestTmpUri = savedInstanceState.getString(BUNDLE_KEY_TMP_URI)?.toUri()
         }
@@ -94,10 +96,11 @@ open class CropImageActivity :
 
         supportActionBar?.let {
             title =
-                if (cropImageOptions.activityTitle.isNotEmpty())
+                if (cropImageOptions.activityTitle.isNotEmpty()) {
                     cropImageOptions.activityTitle
-                else
+                } else {
                     resources.getString(R.string.crop_image_activity_title)
+                }
             it.setDisplayHomeAsUpEnabled(true)
             cropImageOptions.toolbarColor?.let { toolbarColor ->
                 it.setBackgroundDrawable(ColorDrawable(toolbarColor))
@@ -202,7 +205,7 @@ open class CropImageActivity :
             .setItems(
                 arrayOf(
                     getString(R.string.pick_image_camera),
-                    getString(R.string.pick_image_gallery),
+                    getString(R.string.pick_image_gallery)
                 )
             ) { _, position -> openSource(if (position == 0) Source.CAMERA else Source.GALLERY) }
             .show()
@@ -318,16 +321,20 @@ open class CropImageActivity :
 
     override fun onSetImageUriComplete(view: CropImageView, uri: Uri, error: Exception?) {
         if (error == null) {
-            if (cropImageOptions.initialCropWindowRectangle != null)
+            if (cropImageOptions.initialCropWindowRectangle != null) {
                 cropImageView?.cropRect = cropImageOptions.initialCropWindowRectangle
+            }
 
-            if (cropImageOptions.initialRotation > 0)
+            if (cropImageOptions.initialRotation > 0) {
                 cropImageView?.rotatedDegrees = cropImageOptions.initialRotation
+            }
 
             if (cropImageOptions.skipEditing) {
                 cropImage()
             }
-        } else setResult(null, error, 1)
+        } else {
+            setResult(null, error, 1)
+        }
     }
 
     override fun onCropImageComplete(view: CropImageView, result: CropResult) {
@@ -338,15 +345,18 @@ open class CropImageActivity :
      * Execute crop image and save the result tou output uri.
      */
     open fun cropImage() {
-        if (cropImageOptions.noOutputImage) setResult(null, null, 1)
-        else cropImageView?.croppedImageAsync(
+        if (cropImageOptions.noOutputImage) {
+            setResult(null, null, 1)
+        } else {
+            cropImageView?.croppedImageAsync(
             saveCompressFormat = cropImageOptions.outputCompressFormat,
             saveCompressQuality = cropImageOptions.outputCompressQuality,
             reqWidth = cropImageOptions.outputRequestWidth,
             reqHeight = cropImageOptions.outputRequestHeight,
             options = cropImageOptions.outputRequestSizeOptions,
-            customOutputUri = cropImageOptions.customOutputUri,
+            customOutputUri = cropImageOptions.customOutputUri
         )
+        }
     }
 
     /**

@@ -318,6 +318,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
                 )
             }
         }
+
     /** the Android Uri to save the cropped image to  */
     var customOutputUri: Uri? = null
 
@@ -405,6 +406,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
                 setCropOverlayVisibility()
             }
         }
+
     /**
      * If enabled, show a text label on top of crop overlay UI, which gets moved along with the cropper
      */
@@ -644,7 +646,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
         reqWidth: Int = 0,
         reqHeight: Int = 0,
         options: RequestSizeOptions = RequestSizeOptions.RESIZE_INSIDE,
-        customOutputUri: Uri? = null,
+        customOutputUri: Uri? = null
     ) {
         requireNotNull(mOnCropImageCompleteListener) { "mOnCropImageCompleteListener is not set" }
         startCropWorkerTask(
@@ -653,7 +655,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
             options = options,
             saveCompressFormat = saveCompressFormat,
             saveCompressQuality = saveCompressQuality,
-            customOutputUri = customOutputUri,
+            customOutputUri = customOutputUri
         )
     }
 
@@ -717,7 +719,9 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
             mFlipHorizontally = result.flipHorizontally
             mFlipVertically = result.flipVertically
             mInitialDegreesRotated = result.degrees
-        } else setBitmap = bitmap
+        } else {
+            setBitmap = bitmap
+        }
 
         mCropOverlayView!!.initialCropWindowRect = null
         setBitmap(setBitmap, 0, null, 1, degreesRotated)
@@ -761,8 +765,11 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
         if (originalBitmap != null) {
             // Force degrees to be a non-zero value between 0 and 360 (inclusive)
             val newDegrees =
-                if (degrees < 0) degrees % 360 + 360
-                else degrees % 360
+                if (degrees < 0) {
+                    degrees % 360 + 360
+                } else {
+                    degrees % 360
+                }
             val flipAxes = (
                 !mCropOverlayView!!.isFixAspectRatio &&
                     (newDegrees in 46..134 || newDegrees in 216..304)
@@ -989,7 +996,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
         options: RequestSizeOptions,
         saveCompressFormat: CompressFormat,
         saveCompressQuality: Int,
-        customOutputUri: Uri?,
+        customOutputUri: Uri?
     ) {
         val bitmap = originalBitmap
         if (bitmap != null) {
@@ -998,9 +1005,11 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
             currentTask?.cancel()
 
             val (orgWidth, orgHeight) =
-                if (loadedSampleSize > 1 || options == RequestSizeOptions.SAMPLING)
+                if (loadedSampleSize > 1 || options == RequestSizeOptions.SAMPLING) {
                     Pair((bitmap.width * loadedSampleSize), (bitmap.height * loadedSampleSize))
-                else Pair(0, 0)
+                } else {
+                    Pair(0, 0)
+                }
 
             bitmapCroppingWorkerJob = WeakReference(
                 BitmapCroppingWorkerJob(
@@ -1022,7 +1031,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
                     options = options,
                     saveCompressFormat = saveCompressFormat,
                     saveCompressQuality = saveCompressQuality,
-                    customOutputUri = customOutputUri ?: this.customOutputUri,
+                    customOutputUri = customOutputUri ?: this.customOutputUri
                 )
             )
 
@@ -1096,8 +1105,9 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
                 } else {
                     val resId = state.getInt("LOADED_IMAGE_RESOURCE")
 
-                    if (resId > 0) imageResource = resId
-                    else {
+                    if (resId > 0) {
+                        imageResource = resId
+                    } else {
                         uri = state.getParcelable("LOADING_IMAGE_URI")
                         uri?.let { setImageUriAsync(it) }
                     }
@@ -1175,7 +1185,9 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
             mLayoutWidth = width
             mLayoutHeight = height
             setMeasuredDimension(mLayoutWidth, mLayoutHeight)
-        } else setMeasuredDimension(widthSize, heightSize)
+        } else {
+            setMeasuredDimension(widthSize, heightSize)
+        }
     }
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
@@ -1188,7 +1200,8 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
             layoutParams = origParams
             if (originalBitmap != null) {
                 applyImageMatrix(
-                    (r - l).toFloat(), (b - t).toFloat(),
+                    (r - l).toFloat(),
+                    (b - t).toFloat(),
                     center = true,
                     animate = false
                 )
@@ -1215,8 +1228,12 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
                     mSizeChanged = false
                     handleCropWindowChanged(inProgress = false, animate = false)
                 }
-            } else updateImageBounds(true)
-        } else updateImageBounds(true)
+            } else {
+                updateImageBounds(true)
+            }
+        } else {
+            updateImageBounds(true)
+        }
     }
 
     /**
@@ -1309,7 +1326,8 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
             mImageMatrix.reset()
             // move the image to the center of the image view first so we can manipulate it from there
             mImageMatrix.postTranslate(
-                (width - bitmap.width) / 2, (height - bitmap.height) / 2
+                (width - bitmap.width) / 2,
+                (height - bitmap.height) / 2
             )
             mapImagePointsByImageMatrix()
             // rotate the image the required degrees from center of image
@@ -1360,24 +1378,30 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
             } else if (center) {
                 // set the zoomed area to be as to the center of cropping window as possible
                 mZoomOffsetX =
-                    if (width > BitmapUtils.getRectWidth(mImagePoints)) 0f
-                    else max(
+                    if (width > BitmapUtils.getRectWidth(mImagePoints)) {
+                        0f
+                    } else {
+                        max(
                         min(
                             width / 2 - cropRect.centerX(),
                             -BitmapUtils.getRectLeft(mImagePoints)
                         ),
                         getWidth() - BitmapUtils.getRectRight(mImagePoints)
                     ) / scaleX
+                    }
 
                 mZoomOffsetY =
-                    if (height > BitmapUtils.getRectHeight(mImagePoints)) 0f
-                    else max(
+                    if (height > BitmapUtils.getRectHeight(mImagePoints)) {
+                        0f
+                    } else {
+                        max(
                         min(
                             height / 2 - cropRect.centerY(),
                             -BitmapUtils.getRectTop(mImagePoints)
                         ),
                         getHeight() - BitmapUtils.getRectBottom(mImagePoints)
                     ) / scaleY
+                    }
             } else {
                 // adjust the zoomed area so the crop window rectangle will be inside the area in case it
                 // was moved outside
@@ -1406,7 +1430,9 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
                 // set the state for animation to end in, start animation now
                 mAnimation!!.setEndState(mImagePoints, mImageMatrix)
                 imageView.startAnimation(mAnimation)
-            } else imageView.imageMatrix = mImageMatrix
+            } else {
+                imageView.imageMatrix = mImageMatrix
+            }
             // update the image rectangle in the crop overlay
             updateImageBounds(false)
         }
@@ -1473,7 +1499,10 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
             val scaleFactorHeight =
                 100f * loadedSampleSize / BitmapUtils.getRectHeight(mScaleImagePoints)
             mCropOverlayView!!.setCropWindowLimits(
-                width.toFloat(), height.toFloat(), scaleFactorWidth, scaleFactorHeight
+                width.toFloat(),
+                height.toFloat(),
+                scaleFactorWidth,
+                scaleFactorHeight
             )
         }
         // set the bitmap rectangle and update the crop window after scale factor is set
@@ -1488,6 +1517,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
 
         RECTANGLE, OVAL, RECTANGLE_VERTICAL_ONLY, RECTANGLE_HORIZONTAL_ONLY
     }
+
     /**
      * Possible crop corner shape
      */
@@ -1800,10 +1830,12 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
                         options.autoZoomEnabled
                     )
                     options.multiTouchEnabled = ta.getBoolean(
-                        R.styleable.CropImageView_cropMultiTouchEnabled, options.multiTouchEnabled
+                        R.styleable.CropImageView_cropMultiTouchEnabled,
+                        options.multiTouchEnabled
                     )
                     options.centerMoveEnabled = ta.getBoolean(
-                        R.styleable.CropImageView_cropCenterMoveEnabled, options.centerMoveEnabled
+                        R.styleable.CropImageView_cropCenterMoveEnabled,
+                        options.centerMoveEnabled
                     )
                     options.maxZoom =
                         ta.getInteger(R.styleable.CropImageView_cropMaxZoom, options.maxZoom)
@@ -1825,7 +1857,8 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
                     )
                     options.guidelines = Guidelines.values()[
                         ta.getInt(
-                            R.styleable.CropImageView_cropGuidelines, options.guidelines.ordinal
+                            R.styleable.CropImageView_cropGuidelines,
+                            options.guidelines.ordinal
                         )
                     ]
                     options.snapRadius = ta.getDimension(
@@ -1841,7 +1874,8 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
                         options.initialCropWindowPaddingRatio
                     )
                     options.circleCornerFillColorHexValue = ta.getInteger(
-                        R.styleable.CropImageView_cropCornerCircleFillColor, options.circleCornerFillColorHexValue
+                        R.styleable.CropImageView_cropCornerCircleFillColor,
+                        options.circleCornerFillColorHexValue
                     )
                     options.borderLineThickness = ta.getDimension(
                         R.styleable.CropImageView_cropBorderLineThickness,
@@ -1856,13 +1890,16 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
                         options.borderCornerThickness
                     )
                     options.borderCornerOffset = ta.getDimension(
-                        R.styleable.CropImageView_cropBorderCornerOffset, options.borderCornerOffset
+                        R.styleable.CropImageView_cropBorderCornerOffset,
+                        options.borderCornerOffset
                     )
                     options.borderCornerLength = ta.getDimension(
-                        R.styleable.CropImageView_cropBorderCornerLength, options.borderCornerLength
+                        R.styleable.CropImageView_cropBorderCornerLength,
+                        options.borderCornerLength
                     )
                     options.borderCornerColor = ta.getInteger(
-                        R.styleable.CropImageView_cropBorderCornerColor, options.borderCornerColor
+                        R.styleable.CropImageView_cropBorderCornerColor,
+                        options.borderCornerColor
                     )
                     options.guidelinesThickness = ta.getDimension(
                         R.styleable.CropImageView_cropGuidelinesThickness,
@@ -1913,7 +1950,8 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
                         options.maxCropResultHeight.toFloat()
                     ).toInt()
                     options.flipHorizontally = ta.getBoolean(
-                        R.styleable.CropImageView_cropFlipHorizontally, options.flipHorizontally
+                        R.styleable.CropImageView_cropFlipHorizontally,
+                        options.flipHorizontally
                     )
                     options.flipVertically = ta.getBoolean(
                         R.styleable.CropImageView_cropFlipHorizontally,
