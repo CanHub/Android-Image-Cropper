@@ -37,6 +37,7 @@ codeQualityTools {
   }
   lint {
     lintConfig = rootProject.file("lint.xml")
+    baselineFileName = "lint-baseline.xml"
     checkAllWarnings = true
   }
   kotlin {
