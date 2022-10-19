@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="crop_image_activity_title"></string>
     <string name="ic_rotate_left_24">Putar arah berlawanan jam</string>
     <string name="ic_rotate_right_24">Putar</string>
     <string name="crop_image_menu_crop">Potong</string>
@@ -8,5 +7,4 @@
     <string name="ic_flip_24_horizontally">Flip melintang</string>
     <string name="ic_flip_24_vertically">Flip menegak</string>
     <string name="pick_image_chooser_title">Pilih sumber</string>
-    <string name="crop_image_activity_no_permissions">Membatal, tidak mendapat kebenaran yang diperlukan</string>
 </resources>

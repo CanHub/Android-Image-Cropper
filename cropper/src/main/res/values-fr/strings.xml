@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="crop_image_activity_title"></string>
     <string name="ic_rotate_left_24">Pivoter à gauche</string>
     <string name="ic_rotate_right_24">Pivoter à droite</string>
     <string name="crop_image_menu_crop">Redimensionner</string>
@@ -10,5 +9,4 @@
     <string name="pick_image_chooser_title">Sélectionner la source</string>
     <string name="pick_image_camera">Appareil photo</string>
     <string name="pick_image_gallery">Galerie</string>
-    <string name="crop_image_activity_no_permissions">Annulation, il manque des permissions requises</string>
 </resources>

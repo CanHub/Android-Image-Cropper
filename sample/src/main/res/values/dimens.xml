@@ -1,5 +1,4 @@
 <resources>
-
     <!-- App keyline -->
     <dimen name="keyline">4dp</dimen>
     <dimen name="keyline_x2">8dp</dimen>
@@ -8,35 +7,14 @@
     <dimen name="keyline_x11">44dp</dimen>
 
     <!-- Elevation https://material.io/design/environment/elevation.html#default-elevations -->
-    <dimen name="elevation_dialog">24dp</dimen>
-    <dimen name="elevation_modal_bottom_or_side_sheet">16dp</dimen>
-    <dimen name="elevation_nav_drawer">16dp</dimen>
     <dimen name="elevation_fab_pressed">12dp</dimen>
-    <dimen name="elevation_standard_bottom_sheet_or_side_sheet">8dp</dimen>
-    <dimen name="elevation_nav_bar">8dp</dimen>
-    <dimen name="elevation_bottom_app_bar">8dp</dimen>
-    <dimen name="elevation_menus">8dp</dimen>
-    <dimen name="elevation_card_pressed">8dp</dimen>
-    <dimen name="elevation_contained_button_pressed">8dp</dimen>
     <dimen name="elevation_fab_resting_or_snackbar">6dp</dimen>
     <dimen name="elevation_top_app_bar_scrolled">4dp</dimen>
     <dimen name="elevation_top_app_bar_resting">0dp</dimen>
-    <dimen name="elevation_refresh_indicator">3dp</dimen>
-    <dimen name="elevation_contained_button_resting">2dp</dimen>
     <dimen name="elevation_card_resting">1dp</dimen>
-    <dimen name="elevation_switch">1dp</dimen>
-    <dimen name="elevation_button">0dp</dimen>
-    <dimen name="elevation_standard_side_sheet">0dp</dimen>
-
-    <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">12dp</dimen>
-    <dimen name="activity_vertical_margin">12dp</dimen>
 
     <!-- Per the design guidelines, navigation drawers should be between 240dp and 320dp:
          https://developer.android.com/design/patterns/navigation-drawer.html -->
-    <dimen name="navigation_drawer_width">240dp</dimen>
-    <dimen name="drawer_text_size">15sp</dimen>
-    <dimen name="drawer_text_padding">8dp</dimen>
     <dimen name="default_crop_corner_radius">8dp</dimen>
     <dimen name="default_crop_corner_offset">4dp</dimen>
     <dimen name="default_crop_text_size">20sp</dimen>

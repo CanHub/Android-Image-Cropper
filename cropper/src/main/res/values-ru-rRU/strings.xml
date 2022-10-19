@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="crop_image_activity_title"></string>
     <string name="ic_rotate_left_24">Повернуть налево</string>
     <string name="ic_rotate_right_24">Повернуть направо</string>
     <string name="crop_image_menu_crop">Обрезать</string>
@@ -8,5 +7,4 @@
     <string name="ic_flip_24_horizontally">Отразить по горизонтали</string>
     <string name="ic_flip_24_vertically">Отразить по вертикали</string>
     <string name="pick_image_chooser_title">Выбрать источник</string>
-    <string name="crop_image_activity_no_permissions">Cancelling, required permissions are not granted</string>
 </resources>

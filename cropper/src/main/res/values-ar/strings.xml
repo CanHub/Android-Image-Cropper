@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-
-    <string name="crop_image_activity_title"></string>
     <string name="ic_rotate_left_24">أدر عكس اتجاه عقارب الساعة</string>
     <string name="ic_rotate_right_24">أدر</string>
     <string name="crop_image_menu_crop">قُصّ</string>
@@ -11,6 +9,4 @@
     <string name="pick_image_chooser_title">اختر مصدرًا</string>
     <string name="pick_image_camera">الة تصوير</string>
     <string name="pick_image_gallery">صالة عرض</string>
-    <string name="crop_image_activity_no_permissions">إلغاء؛ الأذونات المطلوبة غير ممنوحة</string>
-
 </resources>

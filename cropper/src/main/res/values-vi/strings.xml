@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-
-    <string name="crop_image_activity_title"></string>
     <string name="ic_rotate_left_24">Xoay theo chiều kim đồng hồ</string>
     <string name="ic_rotate_right_24">Xoay</string>
     <string name="crop_image_menu_crop">Cắt</string>
     <string name="ic_flip_24">Lật</string>
     <string name="ic_flip_24_horizontally">Lật theo chiều ngang</string>
     <string name="ic_flip_24_vertically">Lật theo chiều dọc</string>
-
     <string name="pick_image_chooser_title">Chọn nguồn</string>
-
-    <string name="crop_image_activity_no_permissions">Đang hủy, các quyền đã yêu cầu không được cấp</string>
-
 </resources>

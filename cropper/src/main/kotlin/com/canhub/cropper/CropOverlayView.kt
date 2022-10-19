@@ -1,5 +1,6 @@
 package com.canhub.cropper
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.Canvas
@@ -38,7 +39,7 @@ class CropOverlayView
 
     /**
      * Creates the paint object for drawing text label over crop overlay */
-    private fun getTextPaint(options: CropImageOptions): Paint =
+    internal fun getTextPaint(options: CropImageOptions): Paint =
       Paint().apply {
         strokeWidth = 1f
         textSize = options.cropperLabelTextSize
@@ -48,13 +49,13 @@ class CropOverlayView
       }
 
     /** Creates the Paint object for drawing.  */
-    private fun getNewPaint(color: Int): Paint =
+    internal fun getNewPaint(color: Int): Paint =
       Paint().apply {
         this.color = color
       }
 
     /** Creates the Paint object for given thickness and color, if thickness < 0 return null.  */
-    private fun getNewPaintOrNull(thickness: Float, color: Int): Paint? =
+    internal fun getNewPaintOrNull(thickness: Float, color: Int): Paint? =
       if (thickness > 0) {
         val borderPaint = Paint()
         borderPaint.color = color
@@ -65,7 +66,7 @@ class CropOverlayView
       } else {
         null
       }
-    private fun getNewPaintWithFill(color: Int): Paint? {
+    internal fun getNewPaintWithFill(color: Int): Paint? {
       val borderPaint = Paint()
       borderPaint.color = color
       borderPaint.style = Paint.Style.FILL
@@ -1059,6 +1060,8 @@ class CropOverlayView
       mBorderCornerPaint!!,
     )
   }
+
+  @SuppressLint("ClickableViewAccessibility")
   override fun onTouchEvent(event: MotionEvent): Boolean {
     // If this View is not enabled, don't allow for touch interactions.
     return if (isEnabled) {
