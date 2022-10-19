@@ -18,7 +18,6 @@ internal class MainActivity : AppCompatActivity() {
         binding.sampleCropImageView.setOnClickListener { SampleUsingImageView.newInstance().show() }
         binding.sampleCustomActivity.setOnClickListener { SampleCustomActivity.start(this) }
         binding.sampleCropImage.setOnClickListener { SampleCrop.newInstance().show() }
-        binding.sampleCropImageJava.setOnClickListener { SampleCropJava.newInstance().show() }
     }
 
     private fun Fragment.show() {
