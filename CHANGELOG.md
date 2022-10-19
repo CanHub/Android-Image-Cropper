@@ -1,20 +1,23 @@
-# Changelog
-All notable changes to this project will be documented in this file.
+Version 4.4.0 *(In development)*
+--------------------------------
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
-- `Added` for new features.
-- `Changed` for changes in existing functionality.
-- `Deprecated` for soon-to-be removed features.
-- `Removed` for now removed features.
-- `Fixed` for any bug fixes.
-- `Security` in case of vulnerabilities.
+Version 4.3.3 *(2022-05-28)*
+----------------------------
 
-## [x.x.x] - unreleased
-### Added
-- Added options to customize colors of toolbar back button, title and menu texts. [#437](https://github.com/CanHub/Android-Image-Cropper/issues/437)
-### Fixed
-- Fixed and issue where setting toolbar color to white would do nothing. [#437](https://github.com/CanHub/Android-Image-Cropper/issues/437)
-- Correctly close resources in BitmapUtils. [#440](https://github.com/CanHub/Android-Image-Cropper/issues/440)
+⚠️ Maven Coordinates have changed ⚠️
+
+This library will no longer be published to Jitpack. The Maven Coordinates have changed, and the library is now on Maven Central. In order to consume the new update please change:
+
+```diff
+-implementation("com.github.CanHub:Android-Image-Cropper:4.3.2")
++implementation("com.vanniktech:android-image-cropper:4.3.3")
+```
+
+For now, everything else stays the same. [vanniktech](https://github.com/vanniktech) has taken over the maintenance of this library.
+
+- Kotlin Build Script, proper Maven Publishing, new workflows, Gradle Catalogue & much more [\#450](https://github.com/CanHub/Android-Image-Cropper/pull/450) ([vanniktech](https://github.com/vanniktech))
+- Correctly close resources in BitmapUtils. [\#440](https://github.com/CanHub/Android-Image-Cropper/pull/440) ([vanniktech](https://github.com/vanniktech))
+- Bugfix/437 setting toolbar color to white does nothing [\#438](https://github.com/CanHub/Android-Image-Cropper/pull/438) ([Devenom1](https://github.com/Devenom1))
 
 ## [4.3.2] - 08/09/2022
 ### Fixed

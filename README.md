@@ -1,7 +1,5 @@
 [![CanHub](.documentation/art/canhub_logo_horizontal_transparent.png?raw=true)](https://github.com/canhub)
 
-[![](https://jitpack.io/v/CanHub/Android-Image-Cropper.svg)](https://jitpack.io/#CanHub/Android-Image-Cropper)
-
 ☕[Using the library in Java](.documentation/java_usage.md)
 
 ❓[FAQ - frequently asked question](.documentation/FAQ.md)
@@ -18,25 +16,15 @@ Android Image Cropper
 ![Crop](.documentation/art/demo.gif?raw=true)
 
 # Add to your project
-### Step 1. Add the JitPack repository to your root build.gradle
+
+### Step 1. Add the dependency
 ```gradle
-  allprojects {
-     repositories {
-       ....
-       maven { url 'https://jitpack.io' }
-     }
-  }
+dependencies {
+  implementation 'com.vanniktech:android-image-cropper:4.3.3'
+}
 ```
 
-### Step 2. Add the dependency
-```gradle
-  dependencies {
-       implementation 'com.github.CanHub:Android-Image-Cropper:${version}'
-  }
-```
-[Latest Release Version](https://github.com/CanHub/Android-Image-Cropper/releases)
-
-### Step 3. Add permissions to manifest
+### Step 2. Add permissions to manifest
 Only need if you run on devices under OS10 (SDK 29)
  ```xml
 <manifest>
@@ -45,23 +33,8 @@ Only need if you run on devices under OS10 (SDK 29)
 </manifest>
  ```
 
-### Step 4. Set source compatibility version to Java 11
-- The library is up to date with the latest releases, if you are not using Java 11 yet please check the release page for previous working versions.
-- Go to app level `build.gradle` file
-- Add this line inside ```android``` in build.gradle
-	```gradle
-	compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
-    }
- 
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString()
-    }
-	```
- - This expects Gradle 7.0+
-
 # Using the Library
+
 There is 3 ways of using the library:
 - Calling crop directly [Below]
 - [Using the CropView](.documentation/crop_view.md)
@@ -117,9 +90,6 @@ class MainActivity {
 
 ## Posts
  - [Android cropping image from camera or gallery](https://canato.medium.com/android-cropping-image-from-camera-or-gallery-fbe732800b08)
-
-## Wanna help the project? Amazing!
-- [Contributing Guide](https://github.com/CanHub/Android-Image-Cropper/blob/main/CONTRIBUTING.md)
 
 ## License
 Forked from [ArthurHub](https://github.com/ArthurHub/Android-Image-Cropper)
