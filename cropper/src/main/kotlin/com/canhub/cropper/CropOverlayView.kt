@@ -1,6 +1,5 @@
 package com.canhub.cropper
 
-import android.annotation.TargetApi
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.Canvas
@@ -262,24 +261,6 @@ class CropOverlayView
   fun setCropShape(cropShape: CropShape) {
     if (this.cropShape != cropShape) {
       this.cropShape = cropShape
-      if (!CommonVersionCheck.isAtLeastJ18()) {
-        if (this.cropShape == CropShape.OVAL) {
-          mOriginalLayerType = layerType
-
-          if (mOriginalLayerType != LAYER_TYPE_SOFTWARE) {
-            setLayerType(
-              LAYER_TYPE_SOFTWARE,
-              null,
-            )
-          } else {
-            mOriginalLayerType = null
-          }
-        } else if (mOriginalLayerType != null) {
-          // return hardware acceleration back
-          setLayerType(mOriginalLayerType!!, null)
-          mOriginalLayerType = null
-        }
-      }
       invalidate()
     }
   }
@@ -719,7 +700,7 @@ class CropOverlayView
       CropShape.RECTANGLE_VERTICAL_ONLY,
       CropShape.RECTANGLE_HORIZONTAL_ONLY,
       ->
-        if (!isNonStraightAngleRotated || !CommonVersionCheck.isAtLeastJ18()) {
+        if (!isNonStraightAngleRotated) {
           canvas.drawRect(left, top, right, rect.top, mBackgroundPaint!!)
           canvas.drawRect(left, rect.bottom, right, bottom, mBackgroundPaint!!)
           canvas.drawRect(left, rect.top, rect.left, rect.bottom, mBackgroundPaint!!)
@@ -745,11 +726,7 @@ class CropOverlayView
         }
       CropShape.OVAL -> {
         mPath.reset()
-        if (CommonVersionCheck.isAtLeastJ18()) {
-          mDrawRect[rect.left, rect.top, rect.right] = rect.bottom
-        } else {
-          mDrawRect[rect.left + 2, rect.top + 2, rect.right - 2] = rect.bottom - 2
-        }
+        mDrawRect[rect.left, rect.top, rect.right] = rect.bottom
 
         mPath.addOval(mDrawRect, Path.Direction.CW)
         canvas.save()
@@ -1278,7 +1255,6 @@ class CropOverlayView
   /** Handle scaling the rectangle based on two finger input  */
   private inner class ScaleListener : SimpleOnScaleGestureListener() {
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     override fun onScale(detector: ScaleGestureDetector): Boolean {
       val rect = mCropWindowHandler.getRect()
       val x = detector.focusX
