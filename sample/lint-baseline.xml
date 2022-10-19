@@ -474,12 +474,12 @@
     <issue
         id="NewApi"
         message="Call requires API level 23 (current min is 16): `android.view.View#setOnScrollChangeListener`"
-        errorLine1="        binding.optionsItemsScroll.setOnScrollChangeListener { _, _, _, _, _ ->"
-        errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        errorLine1="    binding.optionsItemsScroll.setOnScrollChangeListener { _, _, _, _, _ ->"
+        errorLine2="                               ~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/com/canhub/cropper/sample/optionsdialog/SampleOptionsBottomSheet.kt"
             line="145"
-            column="36"/>
+            column="32"/>
     </issue>
 
     <issue
@@ -793,23 +793,23 @@
     <issue
         id="LogConditional"
         message="The log call Log.v(...) should be conditional: surround with `if (Log.isLoggable(...))` or `if (BuildConfig.DEBUG) { ... }`"
-        errorLine1="        Log.v(&quot;File Path&quot;, result.getUriFilePath(this).toString())"
-        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        errorLine1="    Log.v(&quot;File Path&quot;, result.getUriFilePath(this).toString())"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/com/canhub/cropper/sample/SampleCustomActivity.kt"
             line="82"
-            column="9"/>
+            column="5"/>
     </issue>
 
     <issue
         id="LogConditional"
         message="The log call Log.v(...) should be conditional: surround with `if (Log.isLoggable(...))` or `if (BuildConfig.DEBUG) { ... }`"
-        errorLine1="            context?.let { Log.v(&quot;File Path&quot;, result.getUriFilePath(it).toString()) }"
-        errorLine2="                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        errorLine1="      context?.let { Log.v(&quot;File Path&quot;, result.getUriFilePath(it).toString()) }"
+        errorLine2="                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/com/canhub/cropper/sample/SampleUsingImageView.kt"
             line="171"
-            column="28"/>
+            column="22"/>
     </issue>
 
     <issue

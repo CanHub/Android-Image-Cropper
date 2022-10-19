@@ -20,115 +20,115 @@ private val LOW_RECT_POINTS: FloatArray = floatArrayOf(RECT_LEFT)
 
 class BitmapUtilsTest {
 
-    @Before
-    fun setup() {
-        mockkObject(BitmapUtils)
-    }
+  @Before
+  fun setup() {
+    mockkObject(BitmapUtils)
+  }
 
-    @After
-    fun teardown() {
-        unmockkObject(BitmapUtils)
-    }
+  @After
+  fun teardown() {
+    unmockkObject(BitmapUtils)
+  }
 
-    @Test
-    fun `WHEN float array of rectangle points is provided, THEN result should be left value of the bounding rectangle`() {
-        // WHEN
-        val rectLeft = BitmapUtils.getRectLeft(RECTANGLE_IMAGE_POINTS)
+  @Test
+  fun `WHEN float array of rectangle points is provided, THEN result should be left value of the bounding rectangle`() {
+    // WHEN
+    val rectLeft = BitmapUtils.getRectLeft(RECTANGLE_IMAGE_POINTS)
 
-        // THEN
-        assertEquals(RECT_LEFT, rectLeft)
-    }
+    // THEN
+    assertEquals(RECT_LEFT, rectLeft)
+  }
 
-    @Test
-    fun `WHEN float array of rectangle points is provided, THEN result should be right value of the bounding rectangle`() {
-        // WHEN
-        val rectRight = BitmapUtils.getRectRight(RECTANGLE_IMAGE_POINTS)
+  @Test
+  fun `WHEN float array of rectangle points is provided, THEN result should be right value of the bounding rectangle`() {
+    // WHEN
+    val rectRight = BitmapUtils.getRectRight(RECTANGLE_IMAGE_POINTS)
 
-        // THEN
-        assertEquals(RECT_RIGHT, rectRight)
-    }
+    // THEN
+    assertEquals(RECT_RIGHT, rectRight)
+  }
 
-    @Test
-    fun `WHEN float array of rectangle points is provided, THEN result should be bottom value of the bounding rectangle`() {
-        // WHEN
-        val rectBottom = BitmapUtils.getRectBottom(RECTANGLE_IMAGE_POINTS)
+  @Test
+  fun `WHEN float array of rectangle points is provided, THEN result should be bottom value of the bounding rectangle`() {
+    // WHEN
+    val rectBottom = BitmapUtils.getRectBottom(RECTANGLE_IMAGE_POINTS)
 
-        // THEN
-        assertEquals(RECT_BOTTOM, rectBottom)
-    }
+    // THEN
+    assertEquals(RECT_BOTTOM, rectBottom)
+  }
 
-    @Test
-    fun `WHEN float array of rectangle points is provided, THEN result should be top value of the bounding rectangle`() {
-        // WHEN
-        val rectTop = BitmapUtils.getRectTop(RECTANGLE_IMAGE_POINTS)
+  @Test
+  fun `WHEN float array of rectangle points is provided, THEN result should be top value of the bounding rectangle`() {
+    // WHEN
+    val rectTop = BitmapUtils.getRectTop(RECTANGLE_IMAGE_POINTS)
 
-        // THEN
-        assertEquals(RECT_TOP, rectTop)
-    }
+    // THEN
+    assertEquals(RECT_TOP, rectTop)
+  }
 
-    @Test
-    fun `WHEN float array of rectangle points is provided, THEN result should be rect height`() {
-        // WHEN
-        val rectHeight = BitmapUtils.getRectHeight(RECTANGLE_IMAGE_POINTS)
+  @Test
+  fun `WHEN float array of rectangle points is provided, THEN result should be rect height`() {
+    // WHEN
+    val rectHeight = BitmapUtils.getRectHeight(RECTANGLE_IMAGE_POINTS)
 
-        // THEN
-        assertEquals(RECT_HEIGHT, rectHeight)
-    }
+    // THEN
+    assertEquals(RECT_HEIGHT, rectHeight)
+  }
 
-    @Test
-    fun `WHEN float array of rectangle points is provided, THEN result should be rect width`() {
-        // WHEN
-        val rectWidth = BitmapUtils.getRectWidth(RECTANGLE_IMAGE_POINTS)
+  @Test
+  fun `WHEN float array of rectangle points is provided, THEN result should be rect width`() {
+    // WHEN
+    val rectWidth = BitmapUtils.getRectWidth(RECTANGLE_IMAGE_POINTS)
 
-        // THEN
-        assertEquals(RECT_WIDTH, rectWidth)
-    }
+    // THEN
+    assertEquals(RECT_WIDTH, rectWidth)
+  }
 
-    @Test
-    fun `WHEN float array of rectangle points is provided, THEN result should be rect centerX`() {
-        // WHEN
-        val rectCenterX = BitmapUtils.getRectCenterX(RECTANGLE_IMAGE_POINTS)
+  @Test
+  fun `WHEN float array of rectangle points is provided, THEN result should be rect centerX`() {
+    // WHEN
+    val rectCenterX = BitmapUtils.getRectCenterX(RECTANGLE_IMAGE_POINTS)
 
-        // THEN
-        assertEquals(RECT_CENTER_X, rectCenterX)
-    }
+    // THEN
+    assertEquals(RECT_CENTER_X, rectCenterX)
+  }
 
-    @Test
-    fun `WHEN float array of rectangle points is provided, THEN result should be rect centerY`() {
-        // WHEN
-        val rectCenterY = BitmapUtils.getRectCenterY(RECTANGLE_IMAGE_POINTS)
+  @Test
+  fun `WHEN float array of rectangle points is provided, THEN result should be rect centerY`() {
+    // WHEN
+    val rectCenterY = BitmapUtils.getRectCenterY(RECTANGLE_IMAGE_POINTS)
 
-        // THEN
-        assertEquals(RECT_CENTER_Y, rectCenterY)
-    }
+    // THEN
+    assertEquals(RECT_CENTER_Y, rectCenterY)
+  }
 
-    @Test(expected = ArrayIndexOutOfBoundsException::class)
-    fun `WHEN low rectangle points is provided to getRectCenterY, THEN resultArrayOutOfIndexException`() {
-        BitmapUtils.getRectCenterY(LOW_RECT_POINTS)
-    }
+  @Test(expected = ArrayIndexOutOfBoundsException::class)
+  fun `WHEN low rectangle points is provided to getRectCenterY, THEN resultArrayOutOfIndexException`() {
+    BitmapUtils.getRectCenterY(LOW_RECT_POINTS)
+  }
 
-    @Test(expected = ArrayIndexOutOfBoundsException::class)
-    fun `WHEN low rectangle points is provided to getRectCenterX, THEN resultArrayOutOfIndexException`() {
-        BitmapUtils.getRectCenterX(LOW_RECT_POINTS)
-    }
+  @Test(expected = ArrayIndexOutOfBoundsException::class)
+  fun `WHEN low rectangle points is provided to getRectCenterX, THEN resultArrayOutOfIndexException`() {
+    BitmapUtils.getRectCenterX(LOW_RECT_POINTS)
+  }
 
-    @Test(expected = ArrayIndexOutOfBoundsException::class)
-    fun `WHEN low rectangle points is provided to getRectLeft, THEN resultArrayOutOfIndexException`() {
-        BitmapUtils.getRectLeft(LOW_RECT_POINTS)
-    }
+  @Test(expected = ArrayIndexOutOfBoundsException::class)
+  fun `WHEN low rectangle points is provided to getRectLeft, THEN resultArrayOutOfIndexException`() {
+    BitmapUtils.getRectLeft(LOW_RECT_POINTS)
+  }
 
-    @Test(expected = ArrayIndexOutOfBoundsException::class)
-    fun `WHEN low rectangle points is provided to getRectRight, THEN resultArrayOutOfIndexException`() {
-        BitmapUtils.getRectRight(LOW_RECT_POINTS)
-    }
+  @Test(expected = ArrayIndexOutOfBoundsException::class)
+  fun `WHEN low rectangle points is provided to getRectRight, THEN resultArrayOutOfIndexException`() {
+    BitmapUtils.getRectRight(LOW_RECT_POINTS)
+  }
 
-    @Test(expected = ArrayIndexOutOfBoundsException::class)
-    fun `WHEN low rectangle points is provided getRectTop, THEN resultArrayOutOfIndexException`() {
-        BitmapUtils.getRectTop(LOW_RECT_POINTS)
-    }
+  @Test(expected = ArrayIndexOutOfBoundsException::class)
+  fun `WHEN low rectangle points is provided getRectTop, THEN resultArrayOutOfIndexException`() {
+    BitmapUtils.getRectTop(LOW_RECT_POINTS)
+  }
 
-    @Test(expected = ArrayIndexOutOfBoundsException::class)
-    fun `WHEN low rectangle points is provided getRectBottom, THEN resultArrayOutOfIndexException`() {
-        BitmapUtils.getRectBottom(LOW_RECT_POINTS)
-    }
+  @Test(expected = ArrayIndexOutOfBoundsException::class)
+  fun `WHEN low rectangle points is provided getRectBottom, THEN resultArrayOutOfIndexException`() {
+    BitmapUtils.getRectBottom(LOW_RECT_POINTS)
+  }
 }

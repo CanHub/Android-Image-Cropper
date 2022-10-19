@@ -27,121 +27,121 @@ import java.util.Locale
 
 internal class SampleCrop : Fragment() {
 
-    companion object {
+  companion object {
 
-        fun newInstance() = SampleCrop()
+    fun newInstance() = SampleCrop()
 
-        const val DATE_FORMAT = "yyyyMMdd_HHmmss"
-        const val FILE_NAMING_PREFIX = "JPEG_"
-        const val FILE_NAMING_SUFFIX = "_"
-        const val FILE_FORMAT = ".jpg"
-        const val AUTHORITY_SUFFIX = ".cropper.fileprovider"
+    const val DATE_FORMAT = "yyyyMMdd_HHmmss"
+    const val FILE_NAMING_PREFIX = "JPEG_"
+    const val FILE_NAMING_SUFFIX = "_"
+    const val FILE_FORMAT = ".jpg"
+    const val AUTHORITY_SUFFIX = ".cropper.fileprovider"
+  }
+
+  private lateinit var binding: FragmentCameraBinding
+  private var outputUri: Uri? = null
+  private val takePicture = registerForActivityResult(ActivityResultContracts.TakePicture()) {
+    if (it) startCameraWithUri() else showErrorMessage("taking picture failed")
+  }
+  private val cropImage = registerForActivityResult(CropImageContract()) { result ->
+    when {
+      result.isSuccessful -> {
+        Log.v("Bitmap", result.bitmap.toString())
+        Log.v("File Path", context?.let { result.getUriFilePath(it) }.toString())
+        handleCropImageResult(result.uriContent.toString())
+      }
+      result is CropImage.CancelledResult -> {
+        showErrorMessage("cropping image was cancelled by the user")
+      }
+      else -> {
+        showErrorMessage("cropping image failed")
+      }
     }
-
-    private lateinit var binding: FragmentCameraBinding
-    private var outputUri: Uri? = null
-    private val takePicture = registerForActivityResult(ActivityResultContracts.TakePicture()) {
-        if (it) startCameraWithUri() else showErrorMessage("taking picture failed")
+  }
+  private val customCropImage = registerForActivityResult(CropImageContract()) {
+    if (it is CropImage.CancelledResult) {
+      return@registerForActivityResult
     }
-    private val cropImage = registerForActivityResult(CropImageContract()) { result ->
-        when {
-            result.isSuccessful -> {
-                Log.v("Bitmap", result.bitmap.toString())
-                Log.v("File Path", context?.let { result.getUriFilePath(it) }.toString())
-                handleCropImageResult(result.uriContent.toString())
-            }
-            result is CropImage.CancelledResult -> {
-                showErrorMessage("cropping image was cancelled by the user")
-            }
-            else -> {
-                showErrorMessage("cropping image failed")
-            }
-        }
-    }
-    private val customCropImage = registerForActivityResult(CropImageContract()) {
-        if (it is CropImage.CancelledResult) {
-            return@registerForActivityResult
-        }
-        handleCropImageResult(it.uriContent.toString())
-    }
+    handleCropImageResult(it.uriContent.toString())
+  }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentCameraBinding.inflate(layoutInflater, container, false)
-        return binding.root
+  override fun onCreateView(
+    inflater: LayoutInflater,
+    container: ViewGroup?,
+    savedInstanceState: Bundle?,
+  ): View {
+    binding = FragmentCameraBinding.inflate(layoutInflater, container, false)
+    return binding.root
+  }
+
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+
+    binding.takePictureBeforeCallLibraryWithUri.setOnClickListener {
+      setupOutputUri()
+      takePicture.launch(outputUri)
     }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        binding.takePictureBeforeCallLibraryWithUri.setOnClickListener {
-            setupOutputUri()
-            takePicture.launch(outputUri)
-        }
-        binding.callLibraryWithoutUri.setOnClickListener {
-            startCameraWithoutUri(includeCamera = true, includeGallery = true)
-        }
-        binding.callLibraryWithoutUriCameraOnly.setOnClickListener {
-            startCameraWithoutUri(includeCamera = true, includeGallery = false)
-        }
-        binding.callLibraryWithoutUriGalleryOnly.setOnClickListener {
-            startCameraWithoutUri(includeCamera = false, includeGallery = true)
-        }
+    binding.callLibraryWithoutUri.setOnClickListener {
+      startCameraWithoutUri(includeCamera = true, includeGallery = true)
     }
+    binding.callLibraryWithoutUriCameraOnly.setOnClickListener {
+      startCameraWithoutUri(includeCamera = true, includeGallery = false)
+    }
+    binding.callLibraryWithoutUriGalleryOnly.setOnClickListener {
+      startCameraWithoutUri(includeCamera = false, includeGallery = true)
+    }
+  }
 
-    private fun startCameraWithoutUri(includeCamera: Boolean, includeGallery: Boolean) {
-        customCropImage.launch(
-            options {
-                setImageSource(
-                    includeGallery = includeGallery,
-                    includeCamera = includeCamera
-                )
-                // Normal Settings
-                setScaleType(CropImageView.ScaleType.FIT_CENTER)
-                setCropShape(CropImageView.CropShape.RECTANGLE)
-                setGuidelines(CropImageView.Guidelines.ON_TOUCH)
-                setAspectRatio(1, 1)
-                setMaxZoom(4)
-                setAutoZoomEnabled(true)
-                setMultiTouchEnabled(true)
-                setCenterMoveEnabled(true)
-                setShowCropOverlay(true)
-                setAllowFlipping(true)
-                setSnapRadius(3f)
-                setTouchRadius(48f)
-                setInitialCropWindowPaddingRatio(0.1f)
-                setBorderLineThickness(3f)
-                setBorderLineColor(Color.argb(170, 255, 255, 255))
-                setBorderCornerThickness(2f)
-                setBorderCornerOffset(5f)
-                setBorderCornerLength(14f)
-                setBorderCornerColor(WHITE)
-                setGuidelinesThickness(1f)
-                setGuidelinesColor(R.color.white)
-                setBackgroundColor(Color.argb(119, 0, 0, 0))
-                setMinCropWindowSize(24, 24)
-                setMinCropResultSize(20, 20)
-                setMaxCropResultSize(99999, 99999)
-                setActivityTitle("")
-                setActivityMenuIconColor(0)
-                setOutputCompressFormat(Bitmap.CompressFormat.JPEG)
-                setOutputCompressQuality(90)
-                setRequestedSize(0, 0)
-                setRequestedSize(0, 0, CropImageView.RequestSizeOptions.RESIZE_INSIDE)
-                setInitialCropWindowRectangle(null)
-                setInitialRotation(0)
-                setAllowCounterRotation(false)
-                setFlipHorizontally(false)
-                setFlipVertically(false)
-                setCropMenuCropButtonTitle(null)
-                setCropMenuCropButtonIcon(0)
-                setAllowRotation(true)
-                setNoOutputImage(false)
-                setFixAspectRatio(false)
-                // Odd Settings
+  private fun startCameraWithoutUri(includeCamera: Boolean, includeGallery: Boolean) {
+    customCropImage.launch(
+      options {
+        setImageSource(
+          includeGallery = includeGallery,
+          includeCamera = includeCamera,
+        )
+        // Normal Settings
+        setScaleType(CropImageView.ScaleType.FIT_CENTER)
+        setCropShape(CropImageView.CropShape.RECTANGLE)
+        setGuidelines(CropImageView.Guidelines.ON_TOUCH)
+        setAspectRatio(1, 1)
+        setMaxZoom(4)
+        setAutoZoomEnabled(true)
+        setMultiTouchEnabled(true)
+        setCenterMoveEnabled(true)
+        setShowCropOverlay(true)
+        setAllowFlipping(true)
+        setSnapRadius(3f)
+        setTouchRadius(48f)
+        setInitialCropWindowPaddingRatio(0.1f)
+        setBorderLineThickness(3f)
+        setBorderLineColor(Color.argb(170, 255, 255, 255))
+        setBorderCornerThickness(2f)
+        setBorderCornerOffset(5f)
+        setBorderCornerLength(14f)
+        setBorderCornerColor(WHITE)
+        setGuidelinesThickness(1f)
+        setGuidelinesColor(R.color.white)
+        setBackgroundColor(Color.argb(119, 0, 0, 0))
+        setMinCropWindowSize(24, 24)
+        setMinCropResultSize(20, 20)
+        setMaxCropResultSize(99999, 99999)
+        setActivityTitle("")
+        setActivityMenuIconColor(0)
+        setOutputCompressFormat(Bitmap.CompressFormat.JPEG)
+        setOutputCompressQuality(90)
+        setRequestedSize(0, 0)
+        setRequestedSize(0, 0, CropImageView.RequestSizeOptions.RESIZE_INSIDE)
+        setInitialCropWindowRectangle(null)
+        setInitialRotation(0)
+        setAllowCounterRotation(false)
+        setFlipHorizontally(false)
+        setFlipVertically(false)
+        setCropMenuCropButtonTitle(null)
+        setCropMenuCropButtonIcon(0)
+        setAllowRotation(true)
+        setNoOutputImage(false)
+        setFixAspectRatio(false)
+        // Odd Settings
 //                setScaleType(CropImageView.ScaleType.CENTER)
 //                setCropShape(CropImageView.CropShape.OVAL)
 //                setGuidelines(CropImageView.Guidelines.ON)
@@ -198,84 +198,84 @@ internal class SampleCrop : Fragment() {
 //                setToolbarTitleColor(Color.BLACK)
 //                setToolbarBackButtonColor(Color.BLACK)
 //                setToolbarTintColor(Color.BLACK)
-            }
-        )
-    }
+      },
+    )
+  }
 
-    private fun startCameraWithUri() {
-        cropImage.launch(
-            options(outputUri) {
-                setScaleType(CropImageView.ScaleType.FIT_CENTER)
-                setCropShape(CropImageView.CropShape.RECTANGLE)
-                setGuidelines(CropImageView.Guidelines.ON_TOUCH)
-                setAspectRatio(1, 1)
-                setMaxZoom(4)
-                setAutoZoomEnabled(true)
-                setMultiTouchEnabled(true)
-                setCenterMoveEnabled(true)
-                setShowCropOverlay(true)
-                setAllowFlipping(true)
-                setSnapRadius(3f)
-                setTouchRadius(48f)
-                setInitialCropWindowPaddingRatio(0.1f)
-                setBorderLineThickness(3f)
-                setBorderLineColor(Color.argb(170, 255, 255, 255))
-                setBorderCornerThickness(2f)
-                setBorderCornerOffset(5f)
-                setBorderCornerLength(14f)
-                setBorderCornerColor(WHITE)
-                setGuidelinesThickness(1f)
-                setGuidelinesColor(R.color.white)
-                setBackgroundColor(Color.argb(119, 0, 0, 0))
-                setMinCropWindowSize(24, 24)
-                setMinCropResultSize(20, 20)
-                setMaxCropResultSize(99999, 99999)
-                setActivityTitle("")
-                setActivityMenuIconColor(0)
-                setOutputUri(null)
-                setOutputCompressFormat(Bitmap.CompressFormat.JPEG)
-                setOutputCompressQuality(90)
-                setRequestedSize(0, 0)
-                setRequestedSize(0, 0, CropImageView.RequestSizeOptions.RESIZE_INSIDE)
-                setInitialCropWindowRectangle(null)
-                setInitialRotation(0)
-                setAllowCounterRotation(false)
-                setFlipHorizontally(false)
-                setFlipVertically(false)
-                setCropMenuCropButtonTitle(null)
-                setCropMenuCropButtonIcon(0)
-                setAllowRotation(true)
-                setNoOutputImage(false)
-                setFixAspectRatio(false)
-            }
-        )
-    }
+  private fun startCameraWithUri() {
+    cropImage.launch(
+      options(outputUri) {
+        setScaleType(CropImageView.ScaleType.FIT_CENTER)
+        setCropShape(CropImageView.CropShape.RECTANGLE)
+        setGuidelines(CropImageView.Guidelines.ON_TOUCH)
+        setAspectRatio(1, 1)
+        setMaxZoom(4)
+        setAutoZoomEnabled(true)
+        setMultiTouchEnabled(true)
+        setCenterMoveEnabled(true)
+        setShowCropOverlay(true)
+        setAllowFlipping(true)
+        setSnapRadius(3f)
+        setTouchRadius(48f)
+        setInitialCropWindowPaddingRatio(0.1f)
+        setBorderLineThickness(3f)
+        setBorderLineColor(Color.argb(170, 255, 255, 255))
+        setBorderCornerThickness(2f)
+        setBorderCornerOffset(5f)
+        setBorderCornerLength(14f)
+        setBorderCornerColor(WHITE)
+        setGuidelinesThickness(1f)
+        setGuidelinesColor(R.color.white)
+        setBackgroundColor(Color.argb(119, 0, 0, 0))
+        setMinCropWindowSize(24, 24)
+        setMinCropResultSize(20, 20)
+        setMaxCropResultSize(99999, 99999)
+        setActivityTitle("")
+        setActivityMenuIconColor(0)
+        setOutputUri(null)
+        setOutputCompressFormat(Bitmap.CompressFormat.JPEG)
+        setOutputCompressQuality(90)
+        setRequestedSize(0, 0)
+        setRequestedSize(0, 0, CropImageView.RequestSizeOptions.RESIZE_INSIDE)
+        setInitialCropWindowRectangle(null)
+        setInitialRotation(0)
+        setAllowCounterRotation(false)
+        setFlipHorizontally(false)
+        setFlipVertically(false)
+        setCropMenuCropButtonTitle(null)
+        setCropMenuCropButtonIcon(0)
+        setAllowRotation(true)
+        setNoOutputImage(false)
+        setFixAspectRatio(false)
+      },
+    )
+  }
 
-    private fun showErrorMessage(message: String) {
-        Log.e("Camera Error:", message)
-        Toast.makeText(activity, "Crop failed: $message", Toast.LENGTH_SHORT).show()
-    }
+  private fun showErrorMessage(message: String) {
+    Log.e("Camera Error:", message)
+    Toast.makeText(activity, "Crop failed: $message", Toast.LENGTH_SHORT).show()
+  }
 
-    private fun handleCropImageResult(uri: String) {
-        SampleResultScreen.start(this, null, Uri.parse(uri.replace("file:", "")), null)
-    }
+  private fun handleCropImageResult(uri: String) {
+    SampleResultScreen.start(this, null, Uri.parse(uri.replace("file:", "")), null)
+  }
 
-    private fun setupOutputUri() {
-        if (outputUri == null) {
-            context?.let { ctx ->
-            val authorities = "${ctx.applicationContext?.packageName}$AUTHORITY_SUFFIX"
-            outputUri = FileProvider.getUriForFile(ctx, authorities, createImageFile())
-        }
-        }
+  private fun setupOutputUri() {
+    if (outputUri == null) {
+      context?.let { ctx ->
+        val authorities = "${ctx.applicationContext?.packageName}$AUTHORITY_SUFFIX"
+        outputUri = FileProvider.getUriForFile(ctx, authorities, createImageFile())
+      }
     }
+  }
 
-    private fun createImageFile(): File {
-        val timeStamp = SimpleDateFormat(DATE_FORMAT, Locale.getDefault()).format(Date())
-        val storageDir: File? = activity?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        return File.createTempFile(
-            "$FILE_NAMING_PREFIX${timeStamp}$FILE_NAMING_SUFFIX",
-            FILE_FORMAT,
-            storageDir
-        )
-    }
+  private fun createImageFile(): File {
+    val timeStamp = SimpleDateFormat(DATE_FORMAT, Locale.getDefault()).format(Date())
+    val storageDir: File? = activity?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+    return File.createTempFile(
+      "$FILE_NAMING_PREFIX${timeStamp}$FILE_NAMING_SUFFIX",
+      FILE_FORMAT,
+      storageDir,
+    )
+  }
 }

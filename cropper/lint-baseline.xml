@@ -4,45 +4,45 @@
     <issue
         id="AnnotateVersionCheck"
         message="This method should be annotated with `@ChecksSdkIntAtLeast(api=Build.VERSION_CODES.JELLY_BEAN_MR2)`"
-        errorLine1="    fun isAtLeastJ18() = SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2"
-        errorLine2="        ~~~~~~~~~~~~">
+        errorLine1="  fun isAtLeastJ18() = SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2"
+        errorLine2="      ~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/com/canhub/cropper/common/CommonVersionCheck.kt"
             line="8"
-            column="9"/>
+            column="7"/>
     </issue>
 
     <issue
         id="AnnotateVersionCheck"
         message="This method should be annotated with `@ChecksSdkIntAtLeast(api=Build.VERSION_CODES.M)`"
-        errorLine1="    fun isAtLeastM23() = SDK_INT >= Build.VERSION_CODES.M"
-        errorLine2="        ~~~~~~~~~~~~">
+        errorLine1="  fun isAtLeastM23() = SDK_INT >= Build.VERSION_CODES.M"
+        errorLine2="      ~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/com/canhub/cropper/common/CommonVersionCheck.kt"
             line="9"
-            column="9"/>
+            column="7"/>
     </issue>
 
     <issue
         id="AnnotateVersionCheck"
         message="This method should be annotated with `@ChecksSdkIntAtLeast(api=Build.VERSION_CODES.O)`"
-        errorLine1="    fun isAtLeastO26() = SDK_INT >= Build.VERSION_CODES.O"
-        errorLine2="        ~~~~~~~~~~~~">
+        errorLine1="  fun isAtLeastO26() = SDK_INT >= Build.VERSION_CODES.O"
+        errorLine2="      ~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/com/canhub/cropper/common/CommonVersionCheck.kt"
             line="10"
-            column="9"/>
+            column="7"/>
     </issue>
 
     <issue
         id="AnnotateVersionCheck"
         message="This method should be annotated with `@ChecksSdkIntAtLeast(api=Build.VERSION_CODES.Q)`"
-        errorLine1="    fun isAtLeastQ29() = SDK_INT >= Build.VERSION_CODES.Q"
-        errorLine2="        ~~~~~~~~~~~~">
+        errorLine1="  fun isAtLeastQ29() = SDK_INT >= Build.VERSION_CODES.Q"
+        errorLine2="      ~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/com/canhub/cropper/common/CommonVersionCheck.kt"
             line="11"
-            column="9"/>
+            column="7"/>
     </issue>
 
     <issue
@@ -102,12 +102,12 @@
     <issue
         id="PrivateResource"
         message="The resource `@drawable/abc_ic_ab_back_material` is marked as private in androidx.appcompat:appcompat:1.5.1"
-        errorLine1="                        androidx.appcompat.R.drawable.abc_ic_ab_back_material"
-        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        errorLine1="            androidx.appcompat.R.drawable.abc_ic_ab_back_material,"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/com/canhub/cropper/CropImageActivity.kt"
             line="122"
-            column="25"/>
+            column="13"/>
     </issue>
 
     <issue
@@ -135,12 +135,12 @@
     <issue
         id="ObsoleteSdkInt"
         message="Unnecessary; SDK_INT is always >= 11"
-        errorLine1="        @TargetApi(Build.VERSION_CODES.HONEYCOMB)"
-        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        errorLine1="    @TargetApi(Build.VERSION_CODES.HONEYCOMB)"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/com/canhub/cropper/CropOverlayView.kt"
-            line="1277"
-            column="9"/>
+            line="1281"
+            column="5"/>
     </issue>
 
     <issue
@@ -157,144 +157,144 @@
     <issue
         id="SyntheticAccessor"
         message="Access to `private` method `getOnMeasureSpec` of class `Companion` requires synthetic accessor"
-        errorLine1="            val width = getOnMeasureSpec(widthMode, widthSize, desiredWidth)"
-        errorLine2="                        ~~~~~~~~~~~~~~~~">
+        errorLine1="      val width = getOnMeasureSpec(widthMode, widthSize, desiredWidth)"
+        errorLine2="                  ~~~~~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/com/canhub/cropper/CropImageView.kt"
             line="1183"
-            column="25"/>
+            column="19"/>
     </issue>
 
     <issue
         id="SyntheticAccessor"
         message="Access to `private` method `getOnMeasureSpec` of class `Companion` requires synthetic accessor"
-        errorLine1="            val height = getOnMeasureSpec(heightMode, heightSize, desiredHeight)"
-        errorLine2="                         ~~~~~~~~~~~~~~~~">
+        errorLine1="      val height = getOnMeasureSpec(heightMode, heightSize, desiredHeight)"
+        errorLine2="                   ~~~~~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/com/canhub/cropper/CropImageView.kt"
             line="1184"
-            column="26"/>
+            column="20"/>
     </issue>
 
     <issue
         id="SyntheticAccessor"
         message="Access to `private` method `getNewPaintOrNull` of class `Companion` requires synthetic accessor"
-        errorLine1="        mBorderPaint = getNewPaintOrNull(options.borderLineThickness, options.borderLineColor)"
-        errorLine2="                       ~~~~~~~~~~~~~~~~~">
+        errorLine1="    mBorderPaint = getNewPaintOrNull(options.borderLineThickness, options.borderLineColor)"
+        errorLine2="                   ~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/com/canhub/cropper/CropOverlayView.kt"
             line="503"
-            column="24"/>
+            column="20"/>
     </issue>
 
     <issue
         id="SyntheticAccessor"
         message="Access to `private` method `getNewPaintOrNull` of class `Companion` requires synthetic accessor"
-        errorLine1="            getNewPaintOrNull(options.borderCornerThickness, options.borderCornerColor)"
-        errorLine2="            ~~~~~~~~~~~~~~~~~">
+        errorLine1="      getNewPaintOrNull(options.borderCornerThickness, options.borderCornerColor)"
+        errorLine2="      ~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/com/canhub/cropper/CropOverlayView.kt"
             line="508"
-            column="13"/>
+            column="7"/>
     </issue>
 
     <issue
         id="SyntheticAccessor"
         message="Access to `private` method `getNewPaintOrNull` of class `Companion` requires synthetic accessor"
-        errorLine1="        mGuidelinePaint = getNewPaintOrNull(options.guidelinesThickness, options.guidelinesColor)"
-        errorLine2="                          ~~~~~~~~~~~~~~~~~">
+        errorLine1="    mGuidelinePaint = getNewPaintOrNull(options.guidelinesThickness, options.guidelinesColor)"
+        errorLine2="                      ~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/com/canhub/cropper/CropOverlayView.kt"
             line="509"
-            column="27"/>
+            column="23"/>
     </issue>
 
     <issue
         id="SyntheticAccessor"
         message="Access to `private` method `getNewPaint` of class `Companion` requires synthetic accessor"
-        errorLine1="        mBackgroundPaint = getNewPaint(options.backgroundColor)"
-        errorLine2="                           ~~~~~~~~~~~">
+        errorLine1="    mBackgroundPaint = getNewPaint(options.backgroundColor)"
+        errorLine2="                       ~~~~~~~~~~~">
         <location
             file="src/main/kotlin/com/canhub/cropper/CropOverlayView.kt"
             line="510"
-            column="28"/>
+            column="24"/>
     </issue>
 
     <issue
         id="SyntheticAccessor"
         message="Access to `private` method `getTextPaint` of class `Companion` requires synthetic accessor"
-        errorLine1="        textLabelPaint = getTextPaint(options)"
-        errorLine2="                         ~~~~~~~~~~~~">
+        errorLine1="    textLabelPaint = getTextPaint(options)"
+        errorLine2="                     ~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/com/canhub/cropper/CropOverlayView.kt"
             line="511"
-            column="26"/>
+            column="22"/>
     </issue>
 
     <issue
         id="SyntheticAccessor"
         message="Access to `private` method `getNewPaintOrNull` of class `Companion` requires synthetic accessor"
-        errorLine1="        mBorderCornerPaint = getNewPaintOrNull(mOptions?.borderCornerThickness ?: 0.0f, mOptions?.borderCornerColor ?: Color.WHITE)"
-        errorLine2="                             ~~~~~~~~~~~~~~~~~">
+        errorLine1="    mBorderCornerPaint = getNewPaintOrNull(mOptions?.borderCornerThickness ?: 0.0f, mOptions?.borderCornerColor ?: Color.WHITE)"
+        errorLine2="                         ~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/com/canhub/cropper/CropOverlayView.kt"
             line="654"
-            column="30"/>
+            column="26"/>
     </issue>
 
     <issue
         id="SyntheticAccessor"
         message="Access to `private` method `getNewPaintWithFill` of class `Companion` requires synthetic accessor"
-        errorLine1="                mBorderCornerPaint = mCircleCornerFillColor?.let { getNewPaintWithFill(it) }"
-        errorLine2="                                                                   ~~~~~~~~~~~~~~~~~~~">
+        errorLine1="        mBorderCornerPaint = mCircleCornerFillColor?.let { getNewPaintWithFill(it) }"
+        errorLine2="                                                           ~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/com/canhub/cropper/CropOverlayView.kt"
-            line="888"
-            column="68"/>
+            line="892"
+            column="60"/>
     </issue>
 
     <issue
         id="SyntheticAccessor"
         message="Access to `private` method `calculateAspectRatio` of class `Companion` requires synthetic accessor"
-        errorLine1="                if (calculateAspectRatio(x, y, rect.right, rect.bottom) &lt; aspectRatio) {"
-        errorLine2="                    ~~~~~~~~~~~~~~~~~~~~">
+        errorLine1="        if (calculateAspectRatio(x, y, rect.right, rect.bottom) &lt; aspectRatio) {"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/com/canhub/cropper/CropWindowMoveHandler.kt"
             line="370"
-            column="21"/>
+            column="13"/>
     </issue>
 
     <issue
         id="SyntheticAccessor"
         message="Access to `private` method `calculateAspectRatio` of class `Companion` requires synthetic accessor"
-        errorLine1="                if (calculateAspectRatio("
-        errorLine2="                    ~~~~~~~~~~~~~~~~~~~~">
+        errorLine1="        if (calculateAspectRatio("
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/com/canhub/cropper/CropWindowMoveHandler.kt"
             line="394"
-            column="21"/>
+            column="13"/>
     </issue>
 
     <issue
         id="SyntheticAccessor"
         message="Access to `private` method `calculateAspectRatio` of class `Companion` requires synthetic accessor"
-        errorLine1="                if (calculateAspectRatio("
-        errorLine2="                    ~~~~~~~~~~~~~~~~~~~~">
+        errorLine1="        if (calculateAspectRatio("
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/com/canhub/cropper/CropWindowMoveHandler.kt"
             line="425"
-            column="21"/>
+            column="13"/>
     </issue>
 
     <issue
         id="SyntheticAccessor"
         message="Access to `private` method `calculateAspectRatio` of class `Companion` requires synthetic accessor"
-        errorLine1="                if (calculateAspectRatio("
-        errorLine2="                    ~~~~~~~~~~~~~~~~~~~~">
+        errorLine1="        if (calculateAspectRatio("
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/com/canhub/cropper/CropWindowMoveHandler.kt"
             line="456"
-            column="21"/>
+            column="13"/>
     </issue>
 
     <issue
@@ -311,23 +311,23 @@
     <issue
         id="ClickableViewAccessibility"
         message="Custom view `CropOverlayView` overrides `onTouchEvent` but not `performClick`"
-        errorLine1="    override fun onTouchEvent(event: MotionEvent): Boolean {"
-        errorLine2="                 ~~~~~~~~~~~~">
+        errorLine1="  override fun onTouchEvent(event: MotionEvent): Boolean {"
+        errorLine2="               ~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/com/canhub/cropper/CropOverlayView.kt"
-            line="1081"
-            column="18"/>
+            line="1085"
+            column="16"/>
     </issue>
 
     <issue
         id="UnknownNullness"
         message="Should explicitly declare type here since implicit type does not specify nullness (ActivityResultLauncher&lt;(CropImageContractOptions or CropImageContractOptions?)>)"
-        errorLine1="    val cropImage = registerForActivityResult(CropImageContract(), registry) { result ->"
-        errorLine2="        ~~~~~~~~~">
+        errorLine1="  val cropImage = registerForActivityResult(CropImageContract(), registry) { result ->"
+        errorLine2="      ~~~~~~~~~">
         <location
             file="src/test/kotlin/com/canhub/cropper/ContractTestFragment.kt"
             line="15"
-            column="9"/>
+            column="7"/>
     </issue>
 
 </issues>
