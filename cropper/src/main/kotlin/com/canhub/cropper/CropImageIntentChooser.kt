@@ -8,6 +8,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
+import android.os.Build.VERSION.SDK_INT
 import android.os.Parcelable
 import android.provider.MediaStore
 import androidx.activity.ComponentActivity
@@ -117,7 +118,13 @@ class CropImageIntentChooser(
     val allIntents: MutableList<Intent> = ArrayList()
     // Determine Uri of camera image to  save.
     val captureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-    val listCam = packageManager.queryIntentActivities(captureIntent, 0)
+
+    val flags = 0
+    val listCam = when {
+      SDK_INT >= 33 -> packageManager.queryIntentActivities(captureIntent, PackageManager.ResolveInfoFlags.of(flags.toLong()))
+      else -> @Suppress("DEPRECATION") packageManager.queryIntentActivities(captureIntent, flags)
+    }
+
     for (resolveInfo in listCam) {
       val intent = Intent(captureIntent)
       intent.component = ComponentName(
@@ -152,7 +159,12 @@ class CropImageIntentChooser(
       Intent(action, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
     }
     galleryIntent.type = "image/*"
-    val listGallery = packageManager.queryIntentActivities(galleryIntent, 0)
+
+    val flags = 0
+    val listGallery = when {
+      SDK_INT >= 33 -> packageManager.queryIntentActivities(galleryIntent, PackageManager.ResolveInfoFlags.of(flags.toLong()))
+      else -> @Suppress("DEPRECATION") packageManager.queryIntentActivities(galleryIntent, flags)
+    }
     for (res in listGallery) {
       val intent = Intent(galleryIntent)
       intent.component = ComponentName(res.activityInfo.packageName, res.activityInfo.name)
@@ -179,7 +191,7 @@ class CropImageIntentChooser(
      * question](http://stackoverflow.com/questions/32789027/android-m-camera-intent-permission-bug).
    */
   private fun isExplicitCameraPermissionRequired(context: Context): Boolean {
-    return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
+    return SDK_INT >= Build.VERSION_CODES.M &&
       hasCameraPermissionInManifest(context) &&
       context.checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
   }
@@ -193,8 +205,11 @@ class CropImageIntentChooser(
   private fun hasCameraPermissionInManifest(context: Context): Boolean {
     val packageName = context.packageName
     try {
-      val packageInfo =
-        context.packageManager.getPackageInfo(packageName, PackageManager.GET_PERMISSIONS)
+      val flags = PackageManager.GET_PERMISSIONS
+      val packageInfo = when {
+        SDK_INT >= 33 -> context.packageManager.getPackageInfo(packageName, PackageManager.PackageInfoFlags.of(flags.toLong()))
+        else -> @Suppress("DEPRECATION") context.packageManager.getPackageInfo(packageName, flags)
+      }
       val declaredPermissions = packageInfo.requestedPermissions
       return declaredPermissions
         ?.any { it?.equals("android.permission.CAMERA", true) == true } == true

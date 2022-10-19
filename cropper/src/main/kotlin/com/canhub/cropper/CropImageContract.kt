@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.Parcelable
 import androidx.activity.result.contract.ActivityResultContract
 
 /**
@@ -32,7 +31,7 @@ class CropImageContract :
     resultCode: Int,
     intent: Intent?,
   ): CropImageView.CropResult {
-    val result = intent?.getParcelableExtra<Parcelable>(CropImage.CROP_IMAGE_EXTRA_RESULT) as? CropImage.ActivityResult?
+    val result = intent?.parcelable<CropImage.ActivityResult>(CropImage.CROP_IMAGE_EXTRA_RESULT)
 
     return if (result == null || resultCode == Activity.RESULT_CANCELED) {
       CropImage.CancelledResult

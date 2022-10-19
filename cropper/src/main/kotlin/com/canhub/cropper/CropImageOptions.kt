@@ -446,6 +446,7 @@ open class CropImageOptions : Parcelable {
   }
 
   /** Create object from parcel.  */
+  @Suppress("DEPRECATION")
   protected constructor(parcel: Parcel) {
     imageSourceIncludeCamera = parcel.readByte().toInt() != 0
     imageSourceIncludeGallery = parcel.readByte().toInt() != 0

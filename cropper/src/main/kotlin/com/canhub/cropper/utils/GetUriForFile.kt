@@ -2,10 +2,10 @@ package com.canhub.cropper.utils
 
 import android.content.Context
 import android.net.Uri
+import android.os.Build.VERSION.SDK_INT
 import android.util.Log
 import androidx.core.content.FileProvider
 import com.canhub.cropper.common.CommonValues
-import com.canhub.cropper.common.CommonVersionCheck
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -58,7 +58,7 @@ internal fun getUriForFile(context: Context, file: File): Uri {
         Log.i("AIC", "Trying to provide URI manually")
         val path = "content://$authority/files/my_images/"
 
-        if (CommonVersionCheck.isAtLeastO26()) {
+        if (SDK_INT >= 26) {
           Files.createDirectories(Paths.get(path))
         } else {
           val directory = File(path)
@@ -73,7 +73,7 @@ internal fun getUriForFile(context: Context, file: File): Uri {
     } catch (e: Exception) {
       Log.e("AIC", "${e.message}")
 
-      if (!CommonVersionCheck.isAtLeastQ29()) {
+      if (SDK_INT < 29) {
         val cacheDir = context.externalCacheDir
         cacheDir?.let {
           try {

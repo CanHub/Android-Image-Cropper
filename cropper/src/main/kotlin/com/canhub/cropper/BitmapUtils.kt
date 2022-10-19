@@ -10,12 +10,12 @@ import android.graphics.Matrix
 import android.graphics.Rect
 import android.graphics.RectF
 import android.net.Uri
+import android.os.Build.VERSION.SDK_INT
 import android.os.Environment
 import android.util.Log
 import android.util.Pair
 import androidx.exifinterface.media.ExifInterface
 import com.canhub.cropper.CropImageView.RequestSizeOptions
-import com.canhub.cropper.common.CommonVersionCheck.isAtLeastQ29
 import com.canhub.cropper.utils.getUriForFile
 import java.io.File
 import java.io.FileNotFoundException
@@ -453,7 +453,7 @@ internal object BitmapUtils {
         else -> ".webp"
       }
       // We have this because of a HUAWEI path bug when we use getUriForFile
-      if (isAtLeastQ29()) {
+      if (SDK_INT >= 29) {
         try {
           val file = File.createTempFile(
             "cropped",
@@ -734,7 +734,10 @@ internal object BitmapUtils {
         )
 
       context.contentResolver.openInputStream(uri).use {
-        val decoder = BitmapRegionDecoder.newInstance(it!!, false)
+        val decoder = when {
+          SDK_INT >= 31 -> BitmapRegionDecoder.newInstance(it!!)
+          else -> @Suppress("DEPRECATION") BitmapRegionDecoder.newInstance(it!!, false)
+        }
 
         try {
           do {
@@ -892,7 +895,7 @@ internal object BitmapUtils {
   // Initialise
   // Query total number of configurations
   // Query actual list configurations
-  // Iterate through all the configurations to located the maximum texture size
+  // Iterate through all the configurations to locate the maximum texture size
   // Safe minimum default size
   /**
    * Get the max size of bitmap allowed to be rendered on the device.<br></br>
@@ -923,7 +926,7 @@ internal object BitmapUtils {
         )
         val textureSize = IntArray(1)
         var maximumTextureSize = 0
-        // Iterate through all the configurations to located the maximum texture size
+        // Iterate through all the configurations to locate the maximum texture size
         for (i in 0 until totalConfigurations[0]) {
           // Only need to check for width since opengl textures are always squared
           egl.eglGetConfigAttrib(

@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import com.canhub.cropper.CropImageView
+import com.canhub.cropper.parcelable
 import com.example.croppersample.databinding.FragmentOptionsBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
@@ -53,7 +54,7 @@ internal class SampleOptionsBottomSheet : BottomSheetDialogFragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
 
-    options = arguments?.getParcelable(OPTIONS_KEY) ?: defaultOptions
+    options = arguments?.parcelable(OPTIONS_KEY) ?: defaultOptions
     updateOptions(options)
 
     bindingActions()

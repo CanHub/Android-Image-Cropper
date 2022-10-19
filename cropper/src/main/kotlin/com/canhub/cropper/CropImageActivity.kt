@@ -14,6 +14,7 @@ import android.util.Log
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.addCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -62,9 +63,9 @@ open class CropImageActivity :
     setContentView(binding.root)
     setCropImageView(binding.cropImageView)
     val bundle = intent.getBundleExtra(CropImage.CROP_IMAGE_EXTRA_BUNDLE)
-    cropImageUri = bundle?.getParcelable(CropImage.CROP_IMAGE_EXTRA_SOURCE)
+    cropImageUri = bundle?.parcelable(CropImage.CROP_IMAGE_EXTRA_SOURCE)
     cropImageOptions =
-      bundle?.getParcelable(CropImage.CROP_IMAGE_EXTRA_OPTIONS) ?: CropImageOptions()
+      bundle?.parcelable(CropImage.CROP_IMAGE_EXTRA_OPTIONS) ?: CropImageOptions()
 
     if (savedInstanceState == null) {
       if (cropImageUri == null || cropImageUri == Uri.EMPTY) {
@@ -87,6 +88,10 @@ open class CropImageActivity :
     }
 
     setCustomizations()
+
+    onBackPressedDispatcher.addCallback {
+      setResultCancel()
+    }
   }
 
   private fun setCustomizations() {
@@ -197,7 +202,8 @@ open class CropImageActivity :
       .setCancelable(false)
       .setOnKeyListener { _, keyCode, keyEvent ->
         if (keyCode == KeyEvent.KEYCODE_BACK && keyEvent.action == KeyEvent.ACTION_UP) {
-          onBackPressed()
+          setResultCancel()
+          finish()
         }
         true
       }
@@ -302,11 +308,6 @@ open class CropImageActivity :
       else -> return super.onOptionsItemSelected(item)
     }
     return true
-  }
-
-  override fun onBackPressed() {
-    super.onBackPressed()
-    setResultCancel()
   }
 
   protected open fun onPickImageResult(resultUri: Uri?) {

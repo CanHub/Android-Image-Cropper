@@ -7,10 +7,12 @@ import android.graphics.Bitmap
 import android.graphics.Bitmap.CompressFormat
 import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.graphics.ImageDecoder
 import android.graphics.Matrix
 import android.graphics.Rect
 import android.graphics.RectF
 import android.net.Uri
+import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.os.Parcelable
 import android.provider.MediaStore
@@ -1088,7 +1090,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
     if (state is Bundle) {
       // prevent restoring state if already set by outside code
       if (bitmapLoadingWorkerJob == null && imageUri == null && originalBitmap == null && mImageResource == 0) {
-        var uri = state.getParcelable<Uri>("LOADED_IMAGE_URI")
+        var uri = state.parcelable<Uri>("LOADED_IMAGE_URI")
         if (uri != null) {
           val key = state.getString("LOADED_IMAGE_STATE_BITMAP_KEY")
           key?.run {
@@ -1107,19 +1109,19 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
           if (resId > 0) {
             imageResource = resId
           } else {
-            uri = state.getParcelable("LOADING_IMAGE_URI")
+            uri = state.parcelable("LOADING_IMAGE_URI")
             uri?.let { setImageUriAsync(it) }
           }
         }
         mRestoreDegreesRotated = state.getInt("DEGREES_ROTATED")
         mDegreesRotated = mRestoreDegreesRotated
-        val initialCropRect = state.getParcelable<Rect>("INITIAL_CROP_RECT")
+        val initialCropRect = state.parcelable<Rect>("INITIAL_CROP_RECT")
         if (initialCropRect != null &&
           (initialCropRect.width() > 0 || initialCropRect.height() > 0)
         ) {
           mCropOverlayView!!.initialCropWindowRect = initialCropRect
         }
-        val cropWindowRect = state.getParcelable<RectF>("CROP_WINDOW_RECT")
+        val cropWindowRect = state.parcelable<RectF>("CROP_WINDOW_RECT")
         if (cropWindowRect != null && (cropWindowRect.width() > 0 || cropWindowRect.height() > 0)) {
           mRestoreCropWindowRect = cropWindowRect
         }
@@ -1135,7 +1137,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
         mShowCropLabel = state.getBoolean("SHOW_CROP_LABEL")
         mCropOverlayView.setCropperTextLabelVisibility(mShowCropLabel)
       }
-      super.onRestoreInstanceState(state.getParcelable("instanceState"))
+      super.onRestoreInstanceState(state.parcelable("instanceState"))
     } else {
       super.onRestoreInstanceState(state)
     }
@@ -1745,7 +1747,10 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
      */
     fun getBitmap(context: Context): Bitmap? {
       return bitmap ?: try {
-        MediaStore.Images.Media.getBitmap(context.contentResolver, uriContent)
+        when {
+          SDK_INT >= 28 -> ImageDecoder.decodeBitmap(ImageDecoder.createSource(context.contentResolver, uriContent!!))
+          else -> @Suppress("DEPRECATION") MediaStore.Images.Media.getBitmap(context.contentResolver, uriContent)
+        }
       } catch (e: Exception) {
         null
       }
@@ -1798,7 +1803,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
     if (intent != null) {
       val bundle = intent.getBundleExtra(CropImage.CROP_IMAGE_EXTRA_BUNDLE)
       if (bundle != null) {
-        options = bundle.getParcelable(CropImage.CROP_IMAGE_EXTRA_OPTIONS)
+        options = bundle.parcelable(CropImage.CROP_IMAGE_EXTRA_OPTIONS)
       }
     }
     if (options == null) {
