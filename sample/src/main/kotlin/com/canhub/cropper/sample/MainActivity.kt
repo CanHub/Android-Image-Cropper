@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment
 import com.example.croppersample.databinding.ActivityMainBinding
 
 internal class MainActivity : AppCompatActivity() {
-
   private lateinit var binding: ActivityMainBinding
 
   override fun onCreate(savedInstanceState: Bundle?) {

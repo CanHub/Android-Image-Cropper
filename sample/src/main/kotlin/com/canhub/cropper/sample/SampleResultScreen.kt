@@ -25,7 +25,7 @@ class SampleResultScreen : Activity() {
       fragment.startActivity(intent)
     }
 
-    // This is used, because bitmap is huge and cannot be passed in Intent without throw and exceptiont
+    // This is used, because bitmap is huge and cannot be passed in Intent without throw and exception
     var image: Bitmap? = null
 
     private const val SAMPLE_SIZE = "SAMPLE_SIZE"

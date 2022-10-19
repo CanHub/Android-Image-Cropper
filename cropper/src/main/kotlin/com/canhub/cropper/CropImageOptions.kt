@@ -40,7 +40,7 @@ open class CropImageOptions : Parcelable {
   @JvmField
   var imageSourceIncludeCamera: Boolean
 
-  /** The shape of the cropping window.  */
+  /** The shape of the cropping window. */
   @JvmField
   var cropShape: CropShape
 
@@ -72,7 +72,7 @@ open class CropImageOptions : Parcelable {
   @JvmField
   var touchRadius: Float
 
-  /** whether the guidelines should be on, off, or only showing when resizing.  */
+  /** whether the guidelines should be on, off, or only showing when resizing. */
   @JvmField
   var guidelines: Guidelines
 
@@ -121,7 +121,7 @@ open class CropImageOptions : Parcelable {
   @JvmField
   var centerMoveEnabled: Boolean
 
-  /** The max zoom allowed during cropping.  */
+  /** The max zoom allowed during cropping. */
   @JvmField
   var maxZoom: Int
 
@@ -132,15 +132,15 @@ open class CropImageOptions : Parcelable {
   @JvmField
   var initialCropWindowPaddingRatio: Float
 
-  /** whether the width to height aspect ratio should be maintained or free to change.  */
+  /** whether the width to height aspect ratio should be maintained or free to change. */
   @JvmField
   var fixAspectRatio: Boolean
 
-  /** the X value of the aspect ratio.  */
+  /** the X value of the aspect ratio. */
   @JvmField
   var aspectRatioX: Int
 
-  /** the Y value of the aspect ratio.  */
+  /** the Y value of the aspect ratio. */
   @JvmField
   var aspectRatioY: Int
 
@@ -371,7 +371,7 @@ open class CropImageOptions : Parcelable {
   @JvmField
   var toolbarTintColor: Int? = null
 
-  /** Init options with defaults.  */
+  /** Init options with defaults. */
   constructor() {
     val dm = Resources.getSystem().displayMetrics
     imageSourceIncludeCamera = true
@@ -445,7 +445,7 @@ open class CropImageOptions : Parcelable {
     toolbarTintColor = null
   }
 
-  /** Create object from parcel.  */
+  /** Create object from parcel. */
   @Suppress("DEPRECATION")
   protected constructor(parcel: Parcel) {
     imageSourceIncludeCamera = parcel.readByte().toInt() != 0

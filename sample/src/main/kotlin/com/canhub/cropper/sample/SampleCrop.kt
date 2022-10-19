@@ -26,9 +26,7 @@ import java.util.Date
 import java.util.Locale
 
 internal class SampleCrop : Fragment() {
-
   companion object {
-
     fun newInstance() = SampleCrop()
 
     const val DATE_FORMAT = "yyyyMMdd_HHmmss"

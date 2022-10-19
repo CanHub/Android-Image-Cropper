@@ -85,7 +85,7 @@ class BitmapLoadingWorkerJob internal constructor(
     currentJob.cancel()
   }
 
-  /** The result of BitmapLoadingWorkerJob async loading.  */
+  /** The result of BitmapLoadingWorkerJob async loading. */
   companion object
   class Result {
 
@@ -110,7 +110,7 @@ class BitmapLoadingWorkerJob internal constructor(
     /** If the image was flipped vertically */
     var flipVertically: Boolean = false
 
-    /** The error that occurred during async bitmap loading.  */
+    /** The error that occurred during async bitmap loading. */
     val error: Exception?
 
     /**

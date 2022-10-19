@@ -34,25 +34,25 @@ import kotlin.math.min
 import kotlin.math.pow
 import kotlin.math.sqrt
 
-/** Custom view that provides cropping capabilities to an image.  */
+/** Custom view that provides cropping capabilities to an image. */
 @Suppress("unused", "MemberVisibilityCanBePrivate")
 class CropImageView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
   FrameLayout(context, attrs),
   CropWindowChangeListener {
 
-  /** Image view widget used to show the image for cropping.  */
+  /** Image view widget used to show the image for cropping. */
   private val imageView: ImageView
 
-  /** Overlay over the image view to show cropping UI.  */
+  /** Overlay over the image view to show cropping UI. */
   private val mCropOverlayView: CropOverlayView?
 
   /** The matrix used to transform the cropping image in the image view  */
   private val mImageMatrix = Matrix()
 
-  /** Reusing matrix instance for reverse matrix calculations.  */
+  /** Reusing matrix instance for reverse matrix calculations. */
   private val mImageInverseMatrix = Matrix()
 
-  /** Progress bar widget to show progress bar on async image loading and cropping.  */
+  /** Progress bar widget to show progress bar on async image loading and cropping. */
   private val mProgressBar: ProgressBar
 
   /** Rectangle used in image matrix transformation calculation (reusing rect instance)  */
@@ -65,7 +65,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
   private var mAnimation: CropImageAnimation? = null
   private var originalBitmap: Bitmap? = null
 
-  /** The image rotation value used during loading of the image so we can reset to it  */
+  /** The image rotation value used during loading of the image, so we can reset to it  */
   private var mInitialDegreesRotated = 0
 
   /** How much the image is rotated from original clockwise  */
@@ -136,21 +136,21 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
   /** The max zoom allowed during cropping  */
   private var mMaxZoom: Int
 
-  /** callback to be invoked when crop overlay is released.  */
+  /** callback to be invoked when crop overlay is released. */
   private var mOnCropOverlayReleasedListener: OnSetCropOverlayReleasedListener? = null
 
-  /** callback to be invoked when crop overlay is moved.  */
+  /** callback to be invoked when crop overlay is moved. */
   private var mOnSetCropOverlayMovedListener: OnSetCropOverlayMovedListener? = null
 
-  /** callback to be invoked when crop window is changed.  */
+  /** callback to be invoked when crop window is changed. */
   private var mOnSetCropWindowChangeListener: OnSetCropWindowChangeListener? = null
 
-  /** callback to be invoked when image async loading is complete.  */
+  /** callback to be invoked when image async loading is complete. */
   private var mOnSetImageUriCompleteListener: OnSetImageUriCompleteListener? = null
 
-  /** callback to be invoked when image async cropping is complete.  */
+  /** callback to be invoked when image async cropping is complete. */
   private var mOnCropImageCompleteListener: OnCropImageCompleteListener? = null
-  /** Get the URI of an image that was set by URI, null otherwise.  */
+  /** Get the URI of an image that was set by URI, null otherwise. */
   /** The URI that the image was loaded from (if loaded from URI)  */
   var imageUri: Uri? = null
     private set
@@ -158,7 +158,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
   /** The sample size the image was loaded by if was loaded by URI  */
   private var loadedSampleSize = 1
 
-  /** The current zoom level to to scale the cropping image  */
+  /** The current zoom level to scale the cropping image  */
   private var mZoom = 1f
 
   /** The X offset that the cropping image was translated after zooming  */
@@ -184,7 +184,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
   /** Task used to crop bitmap async from UI thread  */
   private var bitmapCroppingWorkerJob: WeakReference<BitmapCroppingWorkerJob>? = null
 
-  /** Get / set the scale type of the image in the crop view.  */
+  /** Get / set the scale type of the image in the crop view. */
   var scaleType: ScaleType
     get() = mScaleType
     set(scaleType) {
@@ -225,7 +225,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
       mCropOverlayView!!.setCropCornerShape(cornerShape!!)
     }
 
-  /** Set auto-zoom functionality to enabled/disabled.  */
+  /** Set auto-zoom functionality to enabled/disabled. */
   var isAutoZoomEnabled: Boolean
     get() = mAutoZoomEnabled
     set(autoZoomEnabled) {
@@ -236,7 +236,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
       }
     }
 
-  /** Set multi-touch functionality to enabled/disabled.  */
+  /** Set multitouch functionality to enabled/disabled. */
   fun setMultiTouchEnabled(multiTouchEnabled: Boolean) {
     if (mCropOverlayView!!.setMultiTouchEnabled(multiTouchEnabled)) {
       handleCropWindowChanged(inProgress = false, animate = false)
@@ -244,7 +244,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
     }
   }
 
-  /** Set moving of the crop window by dragging the center to enabled/disabled.  */
+  /** Set moving of the crop window by dragging the center to enabled/disabled. */
   fun setCenterMoveEnabled(centerMoveEnabled: Boolean) {
     if (mCropOverlayView!!.setCenterMoveEnabled(centerMoveEnabled)) {
       handleCropWindowChanged(inProgress = false, animate = false)
@@ -252,7 +252,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
     }
   }
 
-  /** The max zoom allowed during cropping.  */
+  /** The max zoom allowed during cropping. */
   var maxZoom: Int
     get() = mMaxZoom
     set(maxZoom) {
@@ -337,7 +337,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
         )
       }
     }
-  /** Get the current guidelines option set.  */
+  /** Get the current guidelines option set. */
   /**
    * Sets the guidelines for the CropOverlayView to be either on, off, or to show when resizing the
    * application.
@@ -348,7 +348,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
       mCropOverlayView!!.setGuidelines(guidelines!!)
     }
 
-  /** both the X and Y values of the aspectRatio.  */
+  /** both the X and Y values of the aspectRatio. */
   val aspectRatio: Pair<Int, Int>
     get() = Pair(mCropOverlayView!!.aspectRatioX, mCropOverlayView.aspectRatioY)
 
@@ -365,7 +365,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
     setFixedAspectRatio(true)
   }
 
-  /** Clears set aspect ratio values and sets fixed aspect ratio to FALSE.  */
+  /** Clears set aspect ratio values and sets fixed aspect ratio to FALSE. */
   fun clearAspectRatio() {
     mCropOverlayView!!.aspectRatioX = 1
     mCropOverlayView.aspectRatioY = 1
@@ -486,7 +486,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
       val points = cropPoints
       val orgWidth = bitmap.width * loadedSampleSize
       val orgHeight = bitmap.height * loadedSampleSize
-      // get the rectangle for the points (it may be larger than original if rotation is not stright)
+      // get the rectangle for the points (it may be larger than original if rotation is not straight)
       return BitmapUtils.getRectFromPoints(
         points,
         orgWidth,
@@ -539,7 +539,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
       return resultPoints
     }
 
-  /** Reset crop window to initial rectangle.  */
+  /** Reset crop window to initial rectangle. */
   fun resetCropRect() {
     mZoom = 1f
     mZoomOffsetX = 0f
@@ -750,7 +750,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
     }
   }
 
-  /** Clear the current image set for cropping.  */
+  /** Clear the current image set for cropping. */
   fun clearImage() {
     clearImageInt()
     mCropOverlayView?.initialCropWindowRect = null
@@ -843,7 +843,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
     }
   }
 
-  /** Flips the image horizontally.  */
+  /** Flips the image horizontally. */
   fun flipImageHorizontally() {
     mFlipHorizontally = !mFlipHorizontally
     applyImageMatrix(
@@ -854,7 +854,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
     )
   }
 
-  /** Flips the image vertically.  */
+  /** Flips the image vertically. */
   fun flipImageVertically() {
     mFlipVertically = !mFlipVertically
     applyImageMatrix(
@@ -1164,7 +1164,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
       if (heightSize < bitmap.height) {
         viewToBitmapHeightRatio = heightSize.toDouble() / bitmap.height.toDouble()
       }
-      // If either needs to be fixed, choose smallest ratio and calculate from there
+      // If either needs to be fixed, choose the smallest ratio and calculate from there
       if (viewToBitmapWidthRatio != Double.POSITIVE_INFINITY ||
         viewToBitmapHeightRatio != Double.POSITIVE_INFINITY
       ) {
@@ -1250,7 +1250,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
    * Handle crop window change to:<br></br>
    * 1. Execute auto-zoom-in/out depending on the area covered of cropping window relative to the
    * available view area.<br></br>
-   * 2. Slide the zoomed sub-area if the cropping window is outside of the visible view sub-area.
+   * 2. Slide the zoomed sub-area if the cropping window is outside the visible view sub-area.
    * <br></br>
    *
    * @param inProgress is the crop window change is still in progress by the user
@@ -1325,7 +1325,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
       val cropRect = mCropOverlayView!!.cropWindowRect
       mImageInverseMatrix.mapRect(cropRect)
       mImageMatrix.reset()
-      // move the image to the center of the image view first so we can manipulate it from there
+      // move the image to the center of the image view first, so we can manipulate it from there
       mImageMatrix.postTranslate(
         (width - bitmap.width) / 2,
         (height - bitmap.height) / 2,
@@ -1466,7 +1466,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
   }
 
   /**
-   * Set visibility of crop overlay to hide it when there is no image or specificly set by client.
+   * Set visibility of crop overlay to hide it when there is no image or specifically set by client.
    */
   private fun setCropOverlayVisibility() {
     if (mCropOverlayView != null) {
@@ -1565,7 +1565,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
     CENTER_INSIDE,
   }
 
-  /** The possible guidelines showing types.  */
+  /** The possible guidelines showing types. */
   enum class Guidelines {
 
     /** Never show  */
@@ -1578,10 +1578,10 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
     ON,
   }
 
-  /** Possible options for handling requested width/height for cropping.  */
+  /** Possible options for handling requested width/height for cropping. */
   enum class RequestSizeOptions {
 
-    /** No resize/sampling is done unless required for memory management (OOM).  */
+    /** No resize/sampling is done unless required for memory management (OOM). */
     NONE,
 
     /**
@@ -1617,7 +1617,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
     RESIZE_EXACT,
   }
 
-  /** Interface definition for a callback to be invoked when the crop overlay is released.  */
+  /** Interface definition for a callback to be invoked when the crop overlay is released. */
   fun interface OnSetCropOverlayReleasedListener {
 
     /**
@@ -1628,7 +1628,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
     fun onCropOverlayReleased(rect: Rect?)
   }
 
-  /** Interface definition for a callback to be invoked when the crop overlay is released.  */
+  /** Interface definition for a callback to be invoked when the crop overlay is released. */
   fun interface OnSetCropOverlayMovedListener {
 
     /**
@@ -1639,14 +1639,14 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
     fun onCropOverlayMoved(rect: Rect?)
   }
 
-  /** Interface definition for a callback to be invoked when the crop overlay is released.  */
+  /** Interface definition for a callback to be invoked when the crop overlay is released. */
   fun interface OnSetCropWindowChangeListener {
 
     /** Called when the crop window is changed  */
     fun onCropWindowChanged()
   }
 
-  /** Interface definition for a callback to be invoked when image async loading is complete.  */
+  /** Interface definition for a callback to be invoked when image async loading is complete. */
   fun interface OnSetImageUriCompleteListener {
 
     /**
@@ -1660,13 +1660,13 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
     fun onSetImageUriComplete(view: CropImageView, uri: Uri, error: Exception?)
   }
 
-  /** Interface definition for a callback to be invoked when image async crop is complete.  */
+  /** Interface definition for a callback to be invoked when image async crop is complete. */
   fun interface OnCropImageCompleteListener {
 
     /**
      * Called when a crop image view has completed cropping image.<br></br>
      * Result object contains the cropped bitmap, saved cropped image uri, crop points data or the
-     * error occured during cropping.
+     * error occurred during cropping.
      *
      * @param view The crop image view that cropping of image was complete.
      * @param result the crop image result data (with cropped image or error)
@@ -1674,7 +1674,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
     fun onCropImageComplete(view: CropImageView, result: CropResult)
   }
 
-  /** Result data of crop image.  */
+  /** Result data of crop image. */
   open class CropResult internal constructor(
     /**
      * The image bitmap of the original image loaded for cropping.<br></br>
@@ -1726,7 +1726,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
      * Null if uri used to load image or activity result is used.
      */
     /**
-     * The Android uri of the saved cropped image result Null if get cropped image was executed, no
+     * The Android uri of the saved cropped image result Null if you get cropped image was executed, no
      * output requested or failure.
      */
     /** The error that failed the loading/cropping (null if successful)  */
@@ -1735,7 +1735,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
     /** The rectangle of the source image dimensions  */
     /** The final rotation of the cropped image relative to source  */
     /** sample size used creating the crop bitmap to lower its size  */
-    /** Is the result is success or error.  */
+    /** Is the result is success or error. */
     val isSuccessful: Boolean
       get() = error == null
 
@@ -1758,7 +1758,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
 
     /**
      * The file path of the image to load
-     * Null if get cropped image was executed, no output requested or failure.
+     * Null if you get cropped image was executed, no output requested or failure.
      *
      * @param context used to access Android APIs, like content resolve, it is your
      * activity/fragment/widget.

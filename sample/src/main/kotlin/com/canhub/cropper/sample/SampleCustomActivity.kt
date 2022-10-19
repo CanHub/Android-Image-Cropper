@@ -41,11 +41,6 @@ internal class SampleCustomActivity : CropImageActivity() {
     setCropImageView(binding.cropImageView)
   }
 
-  override fun showImageSourceDialog(openSource: (Source) -> Unit) {
-    // Override this if you wanna a custom dialog layout
-    super.showImageSourceDialog(openSource)
-  }
-
   override fun setContentView(view: View) {
     // Override this to use your custom layout
     super.setContentView(binding.root)

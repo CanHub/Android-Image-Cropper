@@ -132,7 +132,7 @@ class BitmapCroppingWorkerJob(
     /** The saved cropped bitmap uri  */
     val uri: Uri?
 
-    /** The error that occurred during async bitmap cropping.  */
+    /** The error that occurred during async bitmap cropping. */
     val error: java.lang.Exception?
 
     /** is the cropping request was to get a bitmap or to save it to uri  */

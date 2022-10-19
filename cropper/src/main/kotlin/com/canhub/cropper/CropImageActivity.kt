@@ -100,12 +100,7 @@ open class CropImageActivity :
     }
 
     supportActionBar?.let {
-      title =
-        if (cropImageOptions.activityTitle.isNotEmpty()) {
-          cropImageOptions.activityTitle
-        } else {
-          ""
-        }
+      title = cropImageOptions.activityTitle.ifEmpty { "" }
       it.setDisplayHomeAsUpEnabled(true)
       cropImageOptions.toolbarColor?.let { toolbarColor ->
         it.setBackgroundDrawable(ColorDrawable(toolbarColor))
@@ -194,8 +189,8 @@ open class CropImageActivity :
   }
 
   /**
-   * This method show the dialog for user source choice, it is an open function so can be override
-   * and customised with the app layout if need.
+   * This method show the dialog for user source choice, it is an open function so can be overridden
+   * and customised with the app layout if you need.
    */
   open fun showImageSourceDialog(openSource: (Source) -> Unit) {
     AlertDialog.Builder(this)

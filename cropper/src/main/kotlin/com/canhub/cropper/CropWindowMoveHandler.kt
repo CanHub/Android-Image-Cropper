@@ -10,18 +10,18 @@ import kotlin.math.min
  *
  * @param type the type of move this handler is executing
  * @param cropWindowHandler main crop window handle to get and update the crop window edges
- * @param touchX the location of the initial toch possition to measure move distance
- * @param touchY the location of the initial toch possition to measure move distance
+ * @param touchX the location of the initial touch position to measure move distance
+ * @param touchY the location of the initial touch position to measure move distance
  */
 class CropWindowMoveHandler(
-  /** The type of crop window move that is handled.  */
+  /** The type of crop window move that is handled. */
   private val type: Type,
   cropWindowHandler: CropWindowHandler,
   touchX: Float,
   touchY: Float,
 ) {
 
-  /** The type of crop window move that is handled.  */
+  /** The type of crop window move that is handled. */
   enum class Type {
 
     TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT, LEFT, TOP, RIGHT, BOTTOM, CENTER
@@ -29,21 +29,21 @@ class CropWindowMoveHandler(
 
   companion object {
 
-    /** Calculates the aspect ratio given a rectangle.  */
+    /** Calculates the aspect ratio given a rectangle. */
     internal fun calculateAspectRatio(left: Float, top: Float, right: Float, bottom: Float) =
       (right - left) / (bottom - top)
   }
 
-  /** Minimum width in pixels that the crop window can get.  */
+  /** Minimum width in pixels that the crop window can get. */
   private val mMinCropWidth: Float = cropWindowHandler.getMinCropWidth()
 
-  /** Minimum width in pixels that the crop window can get.  */
+  /** Minimum width in pixels that the crop window can get. */
   private val mMinCropHeight: Float = cropWindowHandler.getMinCropHeight()
 
-  /** Maximum height in pixels that the crop window can get.  */
+  /** Maximum height in pixels that the crop window can get. */
   private val mMaxCropWidth: Float = cropWindowHandler.getMaxCropWidth()
 
-  /** Maximum height in pixels that the crop window can get.  */
+  /** Maximum height in pixels that the crop window can get. */
   private val mMaxCropHeight: Float = cropWindowHandler.getMaxCropHeight()
 
   /**
@@ -59,12 +59,12 @@ class CropWindowMoveHandler(
   }
 
   /**
-   * Updates the crop window by change in the toch location.<br></br>
-   * Move type handled by this instance, as initialized in creation, affects how the change in toch
+   * Updates the crop window by change in the touch location.<br></br>
+   * Move type handled by this instance, as initialized in creation, affects how the change in touch
    * location changes the crop window position and size.<br></br>
-   * After the crop window position/size is changed by toch move it may result in values that
-   * vialate contraints: outside the bounds of the shown bitmap, smaller/larger than min/max size or
-   * missmatch in aspect ratio. So a series of fixes is executed on "secondary" edges to adjust it
+   * After the crop window position/size is changed by touch move it may result in values that
+   * violate constraints: outside the bounds of the shown bitmap, smaller/larger than min/max size or
+   * mismatch in aspect ratio. So a series of fixes is executed on "secondary" edges to adjust it
    * by the "primary" edge movement.<br></br>
    * Primary is the edge directly affected by move type, secondary is the other edge.<br></br>
    * The crop window is changed by directly setting the Edge coordinates.
@@ -77,7 +77,7 @@ class CropWindowMoveHandler(
    * edges.
    * @param snapMargin the maximum distance (in pixels) at which the crop window should snap to the
    * image
-   * @param fixedAspectRatio is the aspect ration fixed and 'targetAspectRatio' should be used
+   * @param fixedAspectRatio is the aspect ratio fixed and 'targetAspectRatio' should be used
    * @param aspectRatio the aspect ratio to maintain
    */
   fun move(
@@ -183,7 +183,7 @@ class CropWindowMoveHandler(
     mTouchOffset.y = touchOffsetY
   }
 
-  /** Center move only changes the position of the crop window without changing the size.  */
+  /** Center move only changes the position of the crop window without changing the size. */
   private fun moveCenter(
     rect: RectF,
     x: Float,
@@ -555,7 +555,7 @@ class CropWindowMoveHandler(
     }
   }
 
-  /** Check if edges have gone out of bounds (including snap margin), and fix if needed.  */
+  /** Check if edges have gone out of bounds (including snap margin), and fix if needed. */
   private fun snapEdgesToBounds(edges: RectF, bounds: RectF, margin: Float) {
     if (edges.left < bounds.left + margin) edges.offset(bounds.left - edges.left, 0f)
 
@@ -839,7 +839,7 @@ class CropWindowMoveHandler(
 
   /**
    * Adjust left edge by current crop window height and the given aspect ratio, the right edge
-   * remains in possition while the left adjusts to keep aspect ratio to the height.
+   * remains in position while the left adjusts to keep aspect ratio to the height.
    */
   private fun adjustLeftByAspectRatio(rect: RectF, aspectRatio: Float) {
     rect.left = rect.right - rect.height() * aspectRatio
@@ -847,7 +847,7 @@ class CropWindowMoveHandler(
 
   /**
    * Adjust top edge by current crop window width and the given aspect ratio, the bottom edge
-   * remains in possition while the top adjusts to keep aspect ratio to the width.
+   * remains in position while the top adjusts to keep aspect ratio to the width.
    */
   private fun adjustTopByAspectRatio(rect: RectF, aspectRatio: Float) {
     rect.top = rect.bottom - rect.width() / aspectRatio
@@ -855,7 +855,7 @@ class CropWindowMoveHandler(
 
   /**
    * Adjust right edge by current crop window height and the given aspect ratio, the left edge
-   * remains in possition while the left adjusts to keep aspect ratio to the height.
+   * remains in position while the left adjusts to keep aspect ratio to the height.
    */
   private fun adjustRightByAspectRatio(rect: RectF, aspectRatio: Float) {
     rect.right = rect.left + rect.height() * aspectRatio
@@ -863,7 +863,7 @@ class CropWindowMoveHandler(
 
   /**
    * Adjust bottom edge by current crop window width and the given aspect ratio, the top edge
-   * remains in possition while the top adjusts to keep aspect ratio to the width.
+   * remains in position while the top adjusts to keep aspect ratio to the width.
    */
   private fun adjustBottomByAspectRatio(rect: RectF, aspectRatio: Float) {
     rect.bottom = rect.top + rect.width() / aspectRatio
