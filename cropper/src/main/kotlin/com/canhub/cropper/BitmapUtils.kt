@@ -123,7 +123,10 @@ internal object BitmapUtils {
             // Calculate inSampleSize
             options.inSampleSize = max(
                 calculateInSampleSizeByReqestedSize(
-                    options.outWidth, options.outHeight, reqWidth, reqHeight
+                    options.outWidth,
+                    options.outHeight,
+                    reqWidth,
+                    reqHeight
                 ),
                 calculateInSampleSizeByMaxTextureSize(options.outWidth, options.outHeight)
             )
@@ -232,7 +235,13 @@ internal object BitmapUtils {
             // extra crop because non rectangular crop cannot be done directly on the image without
             // rotating first
             result = cropForRotatedImage(
-                result, points, rect, degreesRotated, fixAspectRatio, aspectRatioX, aspectRatioY
+                result,
+                points,
+                rect,
+                degreesRotated,
+                fixAspectRatio,
+                aspectRatioX,
+                aspectRatioY
             )
         }
         return result
@@ -394,7 +403,7 @@ internal object BitmapUtils {
     fun writeTempStateStoreBitmap(
         context: Context,
         bitmap: Bitmap?,
-        customOutputUri: Uri?,
+        customOutputUri: Uri?
     ): Uri? =
         try {
             writeBitmapToUri(
@@ -422,7 +431,7 @@ internal object BitmapUtils {
         bitmap: Bitmap,
         compressFormat: CompressFormat,
         compressQuality: Int,
-        customOutputUri: Uri?,
+        customOutputUri: Uri?
     ): Uri {
         val newUri = customOutputUri ?: buildUri(context, compressFormat)
 
@@ -456,7 +465,9 @@ internal object BitmapUtils {
                     val file = File.createTempFile("cropped", ext, context.cacheDir)
                     getUriForFile(context, file)
                 }
-            } else Uri.fromFile(File.createTempFile("cropped", ext, context.cacheDir))
+            } else {
+                Uri.fromFile(File.createTempFile("cropped", ext, context.cacheDir))
+            }
         } catch (e: IOException) {
             throw RuntimeException("Failed to create temp file for output image", e)
         }
@@ -481,7 +492,10 @@ internal object BitmapUtils {
                     val scale = max(width / reqWidth.toFloat(), height / reqHeight.toFloat())
                     if (scale > 1 || options === RequestSizeOptions.RESIZE_FIT) {
                         resized = Bitmap.createScaledBitmap(
-                            bitmap, (width / scale).toInt(), (height / scale).toInt(), false
+                            bitmap,
+                            (width / scale).toInt(),
+                            (height / scale).toInt(),
+                            false
                         )
                     }
                 }
@@ -711,7 +725,10 @@ internal object BitmapUtils {
             options.inSampleSize = (
                 sampleMulti
                     * calculateInSampleSizeByReqestedSize(
-                        rect.width(), rect.height(), reqWidth, reqHeight
+                        rect.width(),
+                        rect.height(),
+                        reqWidth,
+                        reqHeight
                     )
                 )
 
@@ -909,7 +926,10 @@ internal object BitmapUtils {
                 for (i in 0 until totalConfigurations[0]) {
                     // Only need to check for width since opengl textures are always squared
                     egl.eglGetConfigAttrib(
-                        display, configurationsList[i], EGL10.EGL_MAX_PBUFFER_WIDTH, textureSize
+                        display,
+                        configurationsList[i],
+                        EGL10.EGL_MAX_PBUFFER_WIDTH,
+                        textureSize
                     )
                     // Keep track of the maximum texture size
                     if (maximumTextureSize < textureSize[0]) {

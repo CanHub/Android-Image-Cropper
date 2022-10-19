@@ -18,8 +18,8 @@ import com.canhub.cropper.CropImageView
 import com.canhub.cropper.CropImageView.CropResult
 import com.canhub.cropper.CropImageView.OnCropImageCompleteListener
 import com.canhub.cropper.CropImageView.OnSetImageUriCompleteListener
-import com.canhub.cropper.sample.options_dialog.SampleOptionsBottomSheet
-import com.canhub.cropper.sample.options_dialog.SampleOptionsEntity
+import com.canhub.cropper.sample.optionsdialog.SampleOptionsBottomSheet
+import com.canhub.cropper.sample.optionsdialog.SampleOptionsEntity
 import com.example.croppersample.R
 import com.example.croppersample.databinding.FragmentCropImageViewBinding
 
@@ -93,8 +93,9 @@ internal class SampleUsingImageView :
             scaleType = options.scaleType
             cropShape = options.cropShape
             guidelines = options.guidelines
-            if (options.ratio == null) setFixedAspectRatio(false)
-            else {
+            if (options.ratio == null) {
+                setFixedAspectRatio(false)
+            } else {
                 setFixedAspectRatio(true)
                 setAspectRatio(options.ratio.first, options.ratio.second)
             }
@@ -109,8 +110,9 @@ internal class SampleUsingImageView :
             isShowCropLabel = options.showCropLabel
         }
 
-        if (options.scaleType == CropImageView.ScaleType.CENTER_INSIDE)
+        if (options.scaleType == CropImageView.ScaleType.CENTER_INSIDE) {
             binding.cropImageView.imageResource = R.drawable.cat_small
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -161,9 +163,11 @@ internal class SampleUsingImageView :
     private fun handleCropResult(result: CropResult?) {
         if (result != null && result.error == null) {
             val imageBitmap =
-                if (binding.cropImageView.cropShape == CropImageView.CropShape.OVAL)
+                if (binding.cropImageView.cropShape == CropImageView.CropShape.OVAL) {
                     result.bitmap?.let { CropImage.toOvalBitmap(it) }
-                else result.bitmap
+                } else {
+                    result.bitmap
+                }
             context?.let { Log.v("File Path", result.getUriFilePath(it).toString()) }
             SampleResultScreen.start(this, imageBitmap, result.uriContent, result.sampleSize)
         } else {

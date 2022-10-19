@@ -1,4 +1,4 @@
-package com.canhub.cropper.sample.options_dialog
+package com.canhub.cropper.sample.optionsdialog
 
 import android.content.DialogInterface
 import android.os.Bundle

@@ -16,7 +16,7 @@ import com.canhub.cropper.CropImageView.RequestSizeOptions
  */
 data class CropImageContractOptions @JvmOverloads constructor(
     val uri: Uri?,
-    val cropImageOptions: CropImageOptions,
+    val cropImageOptions: CropImageOptions
 ) {
 
     /**
@@ -396,7 +396,7 @@ data class CropImageContractOptions @JvmOverloads constructor(
     fun setRequestedSize(
         reqWidth: Int,
         reqHeight: Int,
-        reqSizeOptions: RequestSizeOptions,
+        reqSizeOptions: RequestSizeOptions
     ): CropImageContractOptions {
         cropImageOptions.outputRequestWidth = reqWidth
         cropImageOptions.outputRequestHeight = reqHeight

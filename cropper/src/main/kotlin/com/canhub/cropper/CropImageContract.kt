@@ -34,8 +34,10 @@ class CropImageContract :
     ): CropImageView.CropResult {
         val result = intent?.getParcelableExtra<Parcelable>(CropImage.CROP_IMAGE_EXTRA_RESULT) as? CropImage.ActivityResult?
 
-        return if (result == null || resultCode == Activity.RESULT_CANCELED)
+        return if (result == null || resultCode == Activity.RESULT_CANCELED) {
             CropImage.CancelledResult
-        else result
+        } else {
+            result
+        }
     }
 }

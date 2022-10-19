@@ -28,8 +28,11 @@ import java.util.Locale.getDefault
  * @return string value of the File path.
  */
 internal fun getFilePathFromUri(context: Context, uri: Uri, uniqueName: Boolean): String =
-    if (uri.path?.contains("file://") == true) uri.path!!
-    else getFileFromContentUri(context, uri, uniqueName).path
+    if (uri.path?.contains("file://") == true) {
+        uri.path!!
+    } else {
+        getFileFromContentUri(context, uri, uniqueName).path
+    }
 
 private fun getFileFromContentUri(context: Context, contentUri: Uri, uniqueName: Boolean): File {
     // Preparing Temp file name
@@ -61,9 +64,11 @@ private fun getFileFromContentUri(context: Context, contentUri: Uri, uniqueName:
 }
 
 private fun getFileExtension(context: Context, uri: Uri): String? =
-    if (uri.scheme == ContentResolver.SCHEME_CONTENT)
+    if (uri.scheme == ContentResolver.SCHEME_CONTENT) {
         MimeTypeMap.getSingleton().getExtensionFromMimeType(context.contentResolver.getType(uri))
-    else uri.path?.let { MimeTypeMap.getFileExtensionFromUrl(Uri.fromFile(File(it)).toString()) }
+    } else {
+        uri.path?.let { MimeTypeMap.getFileExtensionFromUrl(Uri.fromFile(File(it)).toString()) }
+    }
 
 @Throws(IOException::class)
 private fun copy(source: InputStream, target: OutputStream) {

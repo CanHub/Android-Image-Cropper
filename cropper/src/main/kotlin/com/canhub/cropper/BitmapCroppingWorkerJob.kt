@@ -31,7 +31,7 @@ class BitmapCroppingWorkerJob(
     private val options: CropImageView.RequestSizeOptions,
     private val saveCompressFormat: Bitmap.CompressFormat,
     private val saveCompressQuality: Int,
-    private val customOutputUri: Uri?,
+    private val customOutputUri: Uri?
 ) : CoroutineScope {
 
     private var job: Job = Job()

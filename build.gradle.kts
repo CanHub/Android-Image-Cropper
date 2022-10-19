@@ -27,7 +27,7 @@ codeQualityTools {
   }
   ktlint {
     toolVersion = libs.versions.ktlint.get()
-    experimental = false // Can't do this yet.
+    experimental = true
   }
   detekt {
     enabled = false // Don"t want.
