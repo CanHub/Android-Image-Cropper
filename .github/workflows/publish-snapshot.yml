@@ -1,0 +1,36 @@
+name: Publish Snapshot
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish:
+
+    runs-on: macOS-latest
+    if: github.repository == 'CanHub/Android-Image-Cropper'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install JDK 11
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: 11
+
+      - name: Setup gradle
+        uses: gradle/gradle-build-action@v2
+
+      - name: Retrieve version
+        run: |
+          echo "VERSION_NAME=$(cat gradle.properties | grep -w "VERSION_NAME" | cut -d'=' -f2)" >> $GITHUB_ENV
+
+      - name: Publish snapshot
+        run: ./gradlew publishAllPublicationsToMavenCentralRepository
+        if: endsWith(env.VERSION_NAME, '-SNAPSHOT')
+        env:
+          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.SONATYPE_NEXUS_USERNAME }}
+          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.SONATYPE_NEXUS_PASSWORD }}
