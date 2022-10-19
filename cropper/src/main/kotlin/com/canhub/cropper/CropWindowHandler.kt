@@ -11,7 +11,6 @@ import kotlin.math.max
 /** Handler from crop window stuff, moving and knowing position. */
 class CropWindowHandler {
 
-  // region: Fields and Constants
   /** The 4 edges of the crop window defining its coordinates and size  */
   private val mEdges = RectF()
 
@@ -21,16 +20,16 @@ class CropWindowHandler {
    */
   private val mGetEdges = RectF()
 
-  /** Minimum width in pixels that the crop window can get.  */
+  /** Minimum width in pixels that the crop window can get. */
   private var mMinCropWindowWidth = 0f
 
-  /** Minimum height in pixels that the crop window can get.  */
+  /** Minimum height in pixels that the crop window can get. */
   private var mMinCropWindowHeight = 0f
 
-  /** Maximum width in pixels that the crop window can CURRENTLY get.  */
+  /** Maximum width in pixels that the crop window can CURRENTLY get. */
   private var mMaxCropWindowWidth = 0f
 
-  /** Maximum height in pixels that the crop window can CURRENTLY get.  */
+  /** Maximum height in pixels that the crop window can CURRENTLY get. */
   private var mMaxCropWindowHeight = 0f
 
   /**
@@ -62,33 +61,33 @@ class CropWindowHandler {
 
   /** The height scale factor of shown image and actual image  */
   private var mScaleFactorHeight = 1f
-  // endregion
-  /** Get the left/top/right/bottom coordinates of the crop window.  */
+
+  /** Get the left/top/right/bottom coordinates of the crop window. */
   fun getRect(): RectF {
     mGetEdges.set(mEdges)
     return mGetEdges
   }
 
-  /** Minimum width in pixels that the crop window can get.  */
+  /** Minimum width in pixels that the crop window can get. */
   fun getMinCropWidth() =
     mMinCropWindowWidth.coerceAtLeast(mMinCropResultWidth / mScaleFactorWidth)
 
-  /** Minimum height in pixels that the crop window can get.  */
+  /** Minimum height in pixels that the crop window can get. */
   fun getMinCropHeight() =
     mMinCropWindowHeight.coerceAtLeast(mMinCropResultHeight / mScaleFactorHeight)
 
-  /** Maximum width in pixels that the crop window can get.  */
+  /** Maximum width in pixels that the crop window can get. */
   fun getMaxCropWidth() =
     mMaxCropWindowWidth.coerceAtMost(mMaxCropResultWidth / mScaleFactorWidth)
 
-  /** Maximum height in pixels that the crop window can get.  */
+  /** Maximum height in pixels that the crop window can get. */
   fun getMaxCropHeight() =
     mMaxCropWindowHeight.coerceAtMost(mMaxCropResultHeight / mScaleFactorHeight)
 
-  /** get the scale factor (on width) of the shown image to original image.  */
+  /** get the scale factor (on width) of the shown image to original image. */
   fun getScaleFactorWidth() = mScaleFactorWidth
 
-  /** get the scale factor (on height) of the shown image to original image.  */
+  /** get the scale factor (on height) of the shown image to original image. */
   fun getScaleFactorHeight() = mScaleFactorHeight
 
   /**
@@ -125,7 +124,7 @@ class CropWindowHandler {
     mScaleFactorHeight = scaleFactorHeight
   }
 
-  /** Set the variables to be used during crop window handling.  */
+  /** Set the variables to be used during crop window handling. */
   fun setInitialAttributeValues(options: CropImageOptions) {
     mMinCropWindowWidth = options.minCropWindowWidth.toFloat()
     mMinCropWindowHeight = options.minCropWindowHeight.toFloat()
@@ -135,7 +134,7 @@ class CropWindowHandler {
     mMaxCropResultHeight = options.maxCropResultHeight.toFloat()
   }
 
-  /** Set the left/top/right/bottom coordinates of the crop window.  */
+  /** Set the left/top/right/bottom coordinates of the crop window. */
   fun setRect(rect: RectF) {
     mEdges.set(rect)
   }
@@ -175,8 +174,6 @@ class CropWindowHandler {
 
     return if (type != null) CropWindowMoveHandler(type, this, x, y) else null
   }
-
-  // region: Private methods
 
   /**
    * Determines which, if any, of the handles are pressed given the touch coordinates, the bounding
@@ -463,9 +460,8 @@ class CropWindowHandler {
    * on the side handles so user can grab them. Corresponds to the appearance of the
    * RuleOfThirdsGuidelines.
    *
-   * @return true if it is small enough such that it should focus on the center; less than
+   * @return true if it is small enough such that it should focus in the center; less than
    * show_guidelines limit
    */
   private fun focusCenter() = !showGuidelines()
-  // endregion
 }

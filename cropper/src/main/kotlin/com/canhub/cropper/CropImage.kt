@@ -22,10 +22,10 @@ import com.canhub.cropper.utils.getFilePathFromUri
 import java.io.File
 
 /**
- * Helper to simplify crop image work like starting pick-image acitvity and handling camera/gallery
+ * Helper to simplify crop image work like starting pick-image activity and handling camera/gallery
  * intents.<br></br>
  * The goal of the helper is to simplify the starting and most-common usage of image cropping and
- * not all porpose all possible scenario one-to-rule-them-all code base. So feel free to use it as
+ * not all-purpose all possible scenario one-to-rule-them-all code base. So feel free to use it as
  * is and as a wiki to make your own.<br></br>
  * Added value you get out-of-the-box is some edge case handling that you may miss otherwise, like
  * the stupid-ass Android camera result URI that may differ from version to version and from device
@@ -55,7 +55,7 @@ object CropImage {
   const val CROP_IMAGE_EXTRA_RESULT = "CROP_IMAGE_EXTRA_RESULT"
 
   /**
-   * The request code used to start pick image activity to be used on result to identify the this
+   * The request code used to start pick image activity to be used on result to identify the
    * specific request.
    */
   const val PICK_IMAGE_CHOOSER_REQUEST_CODE = 200
@@ -72,7 +72,7 @@ object CropImage {
 
   /**
    * The request code used to start [CropImageActivity] to be used on result to identify the
-   * this specific request.
+   * specific request.
    */
   const val CROP_IMAGE_ACTIVITY_REQUEST_CODE = 203
 
@@ -253,7 +253,7 @@ object CropImage {
     }
   }
 
-  object CancelledResult : CropImageView.CropResult(
+  object CancelledResult : CropResult(
     originalBitmap = null,
     originalUri = null,
     bitmap = null,

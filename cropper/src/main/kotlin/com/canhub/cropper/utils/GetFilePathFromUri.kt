@@ -14,7 +14,7 @@ import java.util.Date
 import java.util.Locale.getDefault
 
 /**
- * This class will create a temporary file in the cache if need.
+ * This class will create a temporary file in the cache if you need.
  *
  * When the uri already have `file://` schema we don't need to create a new file.
  * The temporary file will always override a previous one, saving memory.

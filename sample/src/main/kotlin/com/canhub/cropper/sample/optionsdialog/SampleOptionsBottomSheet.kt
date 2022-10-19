@@ -14,14 +14,11 @@ import com.example.croppersample.databinding.FragmentOptionsBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 internal class SampleOptionsBottomSheet : BottomSheetDialogFragment() {
-
   fun interface Listener {
-
     fun onOptionsApplySelected(options: SampleOptionsEntity)
   }
 
   companion object {
-
     fun show(
       fragmentManager: FragmentManager,
       options: SampleOptionsEntity?,

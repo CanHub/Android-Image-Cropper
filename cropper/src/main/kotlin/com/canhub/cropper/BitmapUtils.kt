@@ -123,7 +123,7 @@ internal object BitmapUtils {
       if (options.outWidth == -1 && options.outHeight == -1) throw RuntimeException("File is not a picture")
       // Calculate inSampleSize
       options.inSampleSize = max(
-        calculateInSampleSizeByReqestedSize(
+        calculateInSampleSizeByRequestedSize(
           options.outWidth,
           options.outHeight,
           reqWidth,
@@ -143,7 +143,7 @@ internal object BitmapUtils {
    * Crop image bitmap from given bitmap using the given points in the original bitmap and the given
    * rotation.<br></br>
    * if the rotation is not 0,90,180 or 270 degrees then we must first crop a larger area of the
-   * image that contains the requires rectangle, rotate and then crop again a sub rectangle.<br></br>
+   * image that contains the required rectangle, rotate and then crop again a sub rectangle.<br></br>
    * If crop fails due to OOM we scale the cropping image by 0.5 every time it fails until it is
    * small enough.
    */
@@ -185,7 +185,7 @@ internal object BitmapUtils {
    * Crop image bitmap from given bitmap using the given points in the original bitmap and the given
    * rotation.<br></br>
    * if the rotation is not 0,90,180 or 270 degrees then we must first crop a larger area of the
-   * image that contains the requires rectangle, rotate and then crop again a sub rectangle.
+   * image that contains the required rectangle, rotate and then crop again a sub rectangle.
    *
    * @param scale how much to scale the cropped image part, use 0.5 to lower the image by half (OOM
    * handling)
@@ -201,7 +201,7 @@ internal object BitmapUtils {
     flipHorizontally: Boolean,
     flipVertically: Boolean,
   ): Bitmap? {
-    // get the rectangle in original image that contains the required cropped area (larger for non
+    // get the rectangle in original image that contains the required cropped area (larger for non-
     // rectangular crop)
     val rect = getRectFromPoints(
       points,
@@ -233,7 +233,7 @@ internal object BitmapUtils {
     }
     // rotating by 0, 90, 180 or 270 degrees doesn't require extra cropping
     if (degreesRotated % 90 != 0) {
-      // extra crop because non rectangular crop cannot be done directly on the image without
+      // extra crop because non-rectangular crop cannot be done directly on the image without
       // rotating first
       result = cropForRotatedImage(
         result,
@@ -537,7 +537,7 @@ internal object BitmapUtils {
     flipVertically: Boolean,
     sampleMulti: Int,
   ): BitmapSampled {
-    // get the rectangle in original image that contains the required cropped area (larger for non
+    // get the rectangle in original image that contains the required cropped area (larger for non-
     // rectangular crop)
     val rect = getRectFromPoints(
       points,
@@ -567,7 +567,7 @@ internal object BitmapUtils {
           rotateAndFlipBitmapInt(result, degreesRotated, flipHorizontally, flipVertically)
         // rotating by 0, 90, 180 or 270 degrees doesn't require extra cropping
         if (degreesRotated % 90 != 0) {
-          // extra crop because non rectangular crop cannot be done directly on the image without
+          // extra crop because non-rectangular crop cannot be done directly on the image without
           // rotating first
           result = cropForRotatedImage(
             result,
@@ -629,7 +629,7 @@ internal object BitmapUtils {
       val options = BitmapFactory.Options()
       sampleSize = (
         sampleMulti *
-          calculateInSampleSizeByReqestedSize(
+          calculateInSampleSizeByRequestedSize(
             rect.width(),
             rect.height(),
             width,
@@ -725,7 +725,7 @@ internal object BitmapUtils {
       val options = BitmapFactory.Options()
       options.inSampleSize = (
         sampleMulti
-          * calculateInSampleSizeByReqestedSize(
+          * calculateInSampleSizeByRequestedSize(
             rect.width(),
             rect.height(),
             reqWidth,
@@ -761,7 +761,7 @@ internal object BitmapUtils {
   }
 
   /**
-   * Special crop of bitmap rotated by not stright angle, in this case the original crop bitmap
+   * Special crop of bitmap rotated by not straight angle, in this case the original crop bitmap
    * contains parts beyond the required crop area, this method crops the already cropped and rotated
    * bitmap to the final rectangle.<br></br>
    * Note: rotating by 0, 90, 180 or 270 degrees doesn't require extra cropping.
@@ -822,7 +822,7 @@ internal object BitmapUtils {
    * Calculate the largest inSampleSize value that is a power of 2 and keeps both height and width
    * larger than the requested height and width.
    */
-  private fun calculateInSampleSizeByReqestedSize(
+  private fun calculateInSampleSizeByRequestedSize(
     width: Int,
     height: Int,
     reqWidth: Int,

@@ -86,7 +86,7 @@ class CropImageIntentChooser(
     if (includeGallery) {
       var galleryIntents = getGalleryIntents(packageManager, Intent.ACTION_GET_CONTENT)
       if (galleryIntents.isEmpty()) {
-        // if no intents found for get-content try pick intent action (Huawei P9).
+        // if no intents found for get-content try to pick intent action (Huawei P9).
         galleryIntents = getGalleryIntents(packageManager, Intent.ACTION_PICK)
       }
       allIntents.addAll(galleryIntents)
@@ -148,7 +148,7 @@ class CropImageIntentChooser(
   /**
    * Get all Gallery intents for getting image from one of the apps of the device that handle
    * images.
-   * Note: It currently get only the main camera app intent. Still have to figure out
+   * Note: It currently gets only the main camera app intent. Still have to figure out
    * how to get multiple camera apps to pick from (if available)
    */
   private fun getGalleryIntents(packageManager: PackageManager, action: String): List<Intent> {
@@ -184,8 +184,8 @@ class CropImageIntentChooser(
   }
 
   /**
-   * Check if explicetly requesting camera permission is required.<br></br>
-   * It is required in Android Marshmellow and above if "CAMERA" permission is requested in the
+   * Check if explicitly requesting camera permission is required.<br></br>
+   * It is required in Android Marshmallow and above if "CAMERA" permission is requested in the
    * manifest.<br></br>
    * See [StackOverflow
      * question](http://stackoverflow.com/questions/32789027/android-m-camera-intent-permission-bug).
@@ -216,8 +216,8 @@ class CropImageIntentChooser(
     } catch (e: PackageManager.NameNotFoundException) {
       // Since the package name cannot be found we return false below
       // because this means that the camera permission hasn't been declared
-      // by the user for this package so we can't show the camera app among
-      // among the list of apps
+      // by the user for this package, so we can't show the camera app among
+      // the list of apps.
       e.printStackTrace()
     }
     return false

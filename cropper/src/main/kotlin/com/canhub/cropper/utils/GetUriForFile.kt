@@ -16,11 +16,11 @@ import java.nio.file.Paths
 
 /**
  * This class exist because of two issues. One is related to the new Scope Storage for OS 10+
- * Where we should not access external storage anymore. Because of this we cannot get a external uri
+ * Where we should not access external storage anymore. Because of this we cannot get an external uri
  *
  * Using FileProvider to retrieve the path can return a value that is not the real one for some devices
- * This happen in specific devices and OSs. Because of this is needed to do a lot of if/else and
- * try/catch to just use the latest cases when need.
+ * This happens in specific devices and OSs. Because of this is needed to do a lot of if/else and
+ * try/catch to just use the latest cases when needed.
  *
  * This code is not good, but work. I don't suggest anyone to reproduce it.
  *
@@ -40,7 +40,7 @@ internal fun getUriForFile(context: Context, file: File): Uri {
         "ANR Risk -- Copying the file the location cache to avoid 'external-files-path' bug for N+ devices",
       )
       // Note: Periodically clear this cache
-      val cacheFolder = File(context.cacheDir, CommonValues.CROP_LIB_CACHE)
+      val cacheFolder = File(context.cacheDir, "CROP_LIB_CACHE")
       val cacheLocation = File(cacheFolder, file.name)
       var input: InputStream? = null
       var output: OutputStream? = null
