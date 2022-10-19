@@ -1,95 +1,162 @@
-[![CanHub](.documentation/art/canhub_logo_horizontal_transparent.png?raw=true)](https://github.com/canhub)
-
-❓[FAQ - frequently asked question](.documentation/FAQ.md)
+[![CanHub](.documentation/art/cover.png?raw=true)](https://github.com/canhub)
 
 Android Image Cropper
-=======
-- **Powerful** (Zoom, Rotation, Multi-Source);
-- **Customizable** (Shape, Limits, Style);
-- **Optimized** (Async, Sampling, Matrix);
-- **Simple** image cropping library for Android.
+=====================
 
-[Features List](.documentation/features.md)
+- **Powerful** (Zoom, Rotation, Multi-Source)
+- **Customizable** (Shape, Limits, Style)
+- **Optimized** (Async, Sampling, Matrix)
+- **Simple** image cropping library for Android
 
-![Crop](.documentation/art/demo.gif?raw=true)
+![Crop demo](.documentation/art/showcase-1.gif?raw=true)
 
-# Add to your project
+## Add to your project
 
-### Step 1. Add the dependency
-```gradle
+```groovy
 dependencies {
-  implementation 'com.vanniktech:android-image-cropper:4.3.3'
+  implementation("com.vanniktech:android-image-cropper:4.3.3")
 }
 ```
 
-### Step 2. Add permissions to manifest
-Only need if you run on devices under OS10 (SDK 29)
- ```xml
-<manifest>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="28" />
-</manifest>
- ```
+## Using the Library
 
-# Using the Library
+There are 3 ways of using the library. Check out the sample app for all details.
 
-There is 3 ways of using the library:
-- Calling crop directly [Below]
-- [Using the CropView](.documentation/crop_view.md)
-- [Extending the activity](.documentation/custom_activity.md)
+### [1. Calling crop directly](./sample/src/main/kotlin/com/canhub/cropper/sample/SampleCrop.kt)
 
-Your choice depends on how you want your layout to look.
-
-## Calling crop directly
-[Sample code](https://github.com/CanHub/Android-Image-Cropper/tree/main/sample/src/main/kotlin/com/canhub/cropper/sample/SampleCrop.kt)
-
-- Register for activity result with `CropImageContract`
- ```kotlin
+```kotlin
 class MainActivity {
-    private val cropImage = registerForActivityResult(CropImageContract()) { result ->
-            if (result.isSuccessful) {
-                // use the returned uri
-                val uriContent = result.uriContent 
-                val uriFilePath = result.getUriFilePath(context) // optional usage
-            } else {
-                // an error occurred
-                val exception = result.error
-            }
-        }
-
-    private fun startCrop() {
-        // start picker to get image for cropping and then use the image in cropping activity
-        cropImage.launch(
-            options {
-                setGuidelines(Guidelines.ON)
-            }
-        )
-
-        //start picker to get image for cropping from only gallery and then use the image in
-        //cropping activity
-        cropImage.launch(
-            options {
-                setImagePickerContractOptions(
-                    PickImageContractOptions(includeGallery = true, includeCamera = false)
-                )
-            }
-        )
-
-        // start cropping activity for pre-acquired image saved on the device and customize settings
-        cropImage.launch(
-            options(uri = imageUri) {
-                setGuidelines(Guidelines.ON)
-                setOutputCompressFormat(CompressFormat.PNG)
-            }
-        )
+  private val cropImage = registerForActivityResult(CropImageContract()) { result ->
+    if (result.isSuccessful) {
+      // Use the returned uri.
+      val uriContent = result.uriContent
+      val uriFilePath = result.getUriFilePath(context) // optional usage
+    } else {
+      // An error occurred.
+      val exception = result.error
     }
+  }
+
+  private fun startCrop() {
+    // Start picker to get image for cropping and then use the image in cropping activity.
+    cropImage.launch(
+      options {
+        setGuidelines(Guidelines.ON)
+      }
+    )
+
+    // Start picker to get image for cropping from only gallery and then use the image in cropping activity.
+    cropImage.launch(
+      options {
+        setImagePickerContractOptions(
+          PickImageContractOptions(includeGallery = true, includeCamera = false)
+        )
+      }
+    )
+
+    // Start cropping activity for pre-acquired image saved on the device and customize settings.
+    cropImage.launch(
+      options(uri = imageUri) {
+        setGuidelines(Guidelines.ON)
+        setOutputCompressFormat(CompressFormat.PNG)
+      }
+    )
+  }
 }
- ```
+```
+
+### [2. Using CropView](./sample/src/main/kotlin/com/canhub/cropper/sample/SampleUsingImageView.kt)
+
+- Add `CropImageView` into your activity
+
+```xml
+<!-- Image Cropper fill the remaining available height -->
+<com.canhub.cropper.CropImageView
+  android:id="@+id/cropImageView"
+  android:layout_width="match_parent"
+  android:layout_height="0dp"
+  android:layout_weight="1"
+  />
+```
+
+- Set image to crop
+
+```kotlin
+cropImageView.setImageUriAsync(uri)
+// Or prefer using uri for performance and better user experience.
+cropImageView.setImageBitmap(bitmap)
+```
+
+- Get cropped image
+
+```kotlin
+// Subscribe to async event using cropImageView.setOnCropImageCompleteListener(listener)
+cropImageView.getCroppedImageAsync()
+// Or.
+val cropped: Bitmap = cropImageView.getCroppedImage()
+```
+
+### [3. Extend to make a custom activity](./sample/src/main/kotlin/com/canhub/cropper/sample/SampleCustomActivity.kt)
+
+If you want to extend the `CropImageActivity` please be aware you will need to set up your `CropImageView`
+
+- Add `CropImageActivity` into your AndroidManifest.xml
+```xml
+<!-- Theme is optional and only needed if default theme has no action bar. -->
+<activity
+  android:name="com.canhub.cropper.CropImageActivity"
+  android:theme="@style/Base.Theme.AppCompat"
+  />
+```
+
+- Set up your `CropImageView` after call `super.onCreate(savedInstanceState)`
+
+```kotlin
+override fun onCreate(savedInstanceState: Bundle?) {
+  super.onCreate(savedInstanceState)
+  setCropImageView(binding.cropImageView)
+}
+```
+
+#### Custom dialog for image source pick
+
+When calling crop directly the library will prompt a dialog for the user choose between gallery or camera (If you keep both enable).
+We use the Android default AlertDialog for this. If you wanna customised it with your app theme you need to override the method `showImageSourceDialog(..)` when extending the activity _(above)_
+
+```kotlin
+override fun showImageSourceDialog(openSource: (Source) -> Unit) {
+  super.showImageSourceDialog(openCamera)
+}
+```
 
 ## Posts
+
  - [Android cropping image from camera or gallery](https://canato.medium.com/android-cropping-image-from-camera-or-gallery-fbe732800b08)
 
+## Migrating from Android Image Cropper
+
+Add this library like it's shown above.
+
+### Update all imports
+
+```diff
+-import com.theartofdev.edmodo.cropper.CropImage
+-import com.theartofdev.edmodo.cropper.CropImageActivity
++import com.canhub.cropper.CropImage
++import com.canhub.cropper.CropImageActivity
+```
+
+# Update all XML references
+
+```diff
+-<com.theartofdev.edmodo.cropper.CropImageView
++<com.canhub.cropper.CropImageView
+```
+
+Consult with the sample app on how to use our Activity Contracts since `onActivityResult` got deprecated.
+
 ## License
+
 Forked from [ArthurHub](https://github.com/ArthurHub/Android-Image-Cropper)
 Originally forked from [edmodo/cropper](https://github.com/edmodo/cropper).
 
