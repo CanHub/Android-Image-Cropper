@@ -10,6 +10,7 @@ import android.graphics.PorterDuffXfermode
 import android.graphics.Rect
 import android.graphics.RectF
 import android.net.Uri
+import android.os.Build.VERSION.SDK_INT
 import android.os.Environment
 import android.os.Parcel
 import android.os.Parcelable
@@ -17,7 +18,6 @@ import android.provider.MediaStore
 import androidx.core.content.FileProvider
 import com.canhub.cropper.CropImageView.CropResult
 import com.canhub.cropper.common.CommonValues
-import com.canhub.cropper.common.CommonVersionCheck.isAtLeastQ29
 import com.canhub.cropper.utils.getFilePathFromUri
 import java.io.File
 
@@ -115,7 +115,7 @@ object CropImage {
     val outputFileUri: Uri
     val getImage: File?
     // We have this because of a HUAWEI path bug when we use getUriForFile
-    if (isAtLeastQ29()) {
+    if (SDK_INT >= 29) {
       getImage = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
       outputFileUri = try {
         FileProvider.getUriForFile(
@@ -213,6 +213,7 @@ object CropImage {
       sampleSize = sampleSize,
     )
 
+    @Suppress("DEPRECATION")
     protected constructor(`in`: Parcel) : super(
       originalBitmap = null,
       originalUri = `in`.readParcelable<Parcelable>(Uri::class.java.classLoader) as Uri?,

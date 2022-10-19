@@ -173,7 +173,7 @@ class CropImageContractTest {
     val bundle = cropImageIntent?.getBundleExtra(CropImage.CROP_IMAGE_EXTRA_BUNDLE)
     // THEN
     assertEquals(expectedClassName, cropImageIntent?.component?.className)
-    assertEquals(expectedSource, bundle?.getParcelable(CropImage.CROP_IMAGE_EXTRA_SOURCE))
+    assertEquals(expectedSource, bundle?.parcelable(CropImage.CROP_IMAGE_EXTRA_SOURCE))
   }
 
   @Test

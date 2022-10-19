@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.Window
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.canhub.cropper.parcelable
 import com.example.croppersample.R
 import com.example.croppersample.databinding.ActivityCropResultBinding
 
@@ -55,7 +56,7 @@ class SampleResultScreen : Activity() {
 
       binding.resultImageText.text = desc
     } ?: run {
-      val imageUri = intent.getParcelableExtra<Uri>(URI)
+      val imageUri = intent.parcelable<Uri>(URI)
 
       if (imageUri != null) {
         binding.resultImageView.setImageURI(imageUri)
@@ -65,9 +66,9 @@ class SampleResultScreen : Activity() {
     }
   }
 
-  override fun onBackPressed() {
+  override fun onDestroy() {
+    super.onDestroy()
     releaseBitmap()
-    super.onBackPressed()
   }
 
   private fun releaseBitmap() {

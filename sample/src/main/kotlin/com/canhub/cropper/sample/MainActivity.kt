@@ -1,6 +1,7 @@
 package com.canhub.cropper.sample
 
 import android.os.Bundle
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.croppersample.databinding.ActivityMainBinding
@@ -18,6 +19,24 @@ internal class MainActivity : AppCompatActivity() {
     binding.sampleCropImageView.setOnClickListener { SampleUsingImageView.newInstance().show() }
     binding.sampleCustomActivity.setOnClickListener { SampleCustomActivity.start(this) }
     binding.sampleCropImage.setOnClickListener { SampleCrop.newInstance().show() }
+
+    onBackPressedDispatcher.addCallback(
+      this,
+      object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+          val fragment = supportFragmentManager.findFragmentById(binding.container.id)
+          isEnabled = fragment != null
+
+          if (fragment != null) {
+            supportFragmentManager.beginTransaction().remove(fragment).commit()
+          } else {
+            onBackPressedDispatcher.onBackPressed()
+          }
+
+          isEnabled = true
+        }
+      },
+    )
   }
 
   private fun Fragment.show() {
@@ -25,13 +44,5 @@ internal class MainActivity : AppCompatActivity() {
       .beginTransaction()
       .replace(binding.container.id, this)
       .commit()
-  }
-
-  override fun onBackPressed() {
-    supportFragmentManager.findFragmentById(binding.container.id)?.apply {
-      supportFragmentManager.beginTransaction().remove(this).commit()
-      return
-    }
-    super.onBackPressed()
   }
 }

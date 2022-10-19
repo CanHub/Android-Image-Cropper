@@ -14,7 +14,7 @@ import com.canhub.cropper.CropImageView.RequestSizeOptions
  * Options to customize the activity opened by CropImageContract.
  * Conveniently created by the options method.
  */
-data class CropImageContractOptions @JvmOverloads constructor(
+data class CropImageContractOptions(
   val uri: Uri?,
   val cropImageOptions: CropImageOptions,
 ) {

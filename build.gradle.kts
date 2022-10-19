@@ -40,7 +40,7 @@ codeQualityTools {
     checkAllWarnings = true
   }
   kotlin {
-    allWarningsAsErrors = false // Can't do this yet.
+    allWarningsAsErrors = true
   }
 }
 

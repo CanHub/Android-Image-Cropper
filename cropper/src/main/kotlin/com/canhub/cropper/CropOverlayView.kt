@@ -11,6 +11,7 @@ import android.graphics.Rect
 import android.graphics.RectF
 import android.graphics.Region
 import android.os.Build
+import android.os.Build.VERSION.SDK_INT
 import android.util.AttributeSet
 import android.util.Log
 import android.util.TypedValue
@@ -21,7 +22,6 @@ import android.view.View
 import androidx.annotation.RequiresApi
 import com.canhub.cropper.CropImageView.CropShape
 import com.canhub.cropper.CropImageView.Guidelines
-import com.canhub.cropper.common.CommonVersionCheck
 import java.util.Arrays
 import kotlin.math.abs
 import kotlin.math.acos
@@ -715,13 +715,12 @@ class CropOverlayView
           mPath.close()
           canvas.save()
 
-          if (CommonVersionCheck.isAtLeastO26()) {
+          if (SDK_INT >= 26) {
             canvas.clipOutPath(mPath)
           } else {
-            canvas.clipPath(mPath, Region.Op.INTERSECT)
+            @Suppress("DEPRECATION") canvas.clipPath(mPath, Region.Op.INTERSECT)
           }
 
-          canvas.clipRect(rect, Region.Op.XOR)
           canvas.drawRect(left, top, right, bottom, mBackgroundPaint!!)
           canvas.restore()
         }
@@ -732,9 +731,10 @@ class CropOverlayView
         mPath.addOval(mDrawRect, Path.Direction.CW)
         canvas.save()
 
-        if (CommonVersionCheck.isAtLeastO26()) {
+        if (SDK_INT >= 26) {
           canvas.clipOutPath(mPath)
         } else {
+          @Suppress("DEPRECATION")
           canvas.clipPath(mPath, Region.Op.XOR)
         }
 
@@ -1014,7 +1014,7 @@ class CropOverlayView
   ) {
     when (cornerShape) {
       CropImageView.CropCornerShape.OVAL -> {
-        drawCircleShape(canvas, rect, cornerOffset, cornerExtension, radius)
+        drawCircleShape(canvas, rect, cornerOffset, radius)
       }
       CropImageView.CropCornerShape.RECTANGLE -> drawLineShape(canvas, rect, cornerOffset, cornerExtension)
       null -> Unit
@@ -1027,7 +1027,6 @@ class CropOverlayView
   private fun drawCircleShape(
     canvas: Canvas,
     rect: RectF,
-    cornerOffset: Float,
     cornerExtension: Float,
     radius: Float,
   ) {
