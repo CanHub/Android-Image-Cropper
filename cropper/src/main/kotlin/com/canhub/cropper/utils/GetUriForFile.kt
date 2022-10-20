@@ -5,7 +5,6 @@ import android.net.Uri
 import android.os.Build.VERSION.SDK_INT
 import android.util.Log
 import androidx.core.content.FileProvider
-import com.canhub.cropper.common.CommonValues
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -13,6 +12,8 @@ import java.io.InputStream
 import java.io.OutputStream
 import java.nio.file.Files
 import java.nio.file.Paths
+
+internal fun Context.authority() = "$packageName.cropper.fileprovider"
 
 /**
  * This class exist because of two issues. One is related to the new Scope Storage for OS 10+
@@ -28,7 +29,7 @@ import java.nio.file.Paths
  * the cache from time to time,
  */
 internal fun getUriForFile(context: Context, file: File): Uri {
-  val authority = context.packageName + CommonValues.authority
+  val authority = context.authority()
   try {
     Log.i("AIC", "Try get URI for scope storage - content://")
     return FileProvider.getUriForFile(context, authority, file)

@@ -17,7 +17,7 @@ import android.os.Parcelable
 import android.provider.MediaStore
 import androidx.core.content.FileProvider
 import com.canhub.cropper.CropImageView.CropResult
-import com.canhub.cropper.common.CommonValues
+import com.canhub.cropper.utils.authority
 import com.canhub.cropper.utils.getFilePathFromUri
 import java.io.File
 
@@ -99,7 +99,7 @@ object CropImage {
       outputFileUri = try {
         FileProvider.getUriForFile(
           context,
-          context.packageName + CommonValues.authority,
+          context.authority(),
           File(getImage!!.path, "pickImageResult.jpeg"),
         )
       } catch (e: Exception) {
