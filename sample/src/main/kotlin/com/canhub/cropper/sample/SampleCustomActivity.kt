@@ -4,14 +4,14 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.View
 import androidx.core.app.ActivityCompat
-import com.canhub.cropper.CropImage
+import com.canhub.cropper.CropImage.ActivityResult
 import com.canhub.cropper.CropImageActivity
 import com.example.croppersample.R
 import com.example.croppersample.databinding.ExtendedActivityBinding
+import timber.log.Timber
 
 internal class SampleCustomActivity : CropImageActivity() {
 
@@ -63,7 +63,7 @@ internal class SampleCustomActivity : CropImageActivity() {
   }
 
   override fun setResult(uri: Uri?, error: Exception?, sampleSize: Int) {
-    val result = CropImage.ActivityResult(
+    val result = ActivityResult(
       originalUri = binding.cropImageView.imageUri,
       uriContent = uri,
       error = error,
@@ -74,20 +74,20 @@ internal class SampleCustomActivity : CropImageActivity() {
       sampleSize = sampleSize,
     )
 
-    Log.v("File Path", result.getUriFilePath(this).toString())
+    Timber.tag("File Path").v(result.getUriFilePath(this).toString())
     binding.cropImageView.setImageUriAsync(result.uriContent)
   }
 
   override fun setResultCancel() {
-    Log.i("extend", "User this override to change behaviour when cancel")
+    Timber.tag("extend").i("User this override to change behaviour when cancel")
     super.setResultCancel()
   }
 
   override fun updateMenuItemIconColor(menu: Menu, itemId: Int, color: Int) {
-    Log.i(
-      "extend",
-      "If not using your layout, this can be one option to change colours. Check README and wiki for more",
-    )
+    Timber.tag("extend")
+      .i(
+        "If not using your layout, this can be one option to change colours. Check README and wiki for more",
+      )
     super.updateMenuItemIconColor(menu, itemId, color)
   }
 

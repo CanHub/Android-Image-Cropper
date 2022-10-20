@@ -6,7 +6,6 @@ import android.graphics.Color.WHITE
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +19,7 @@ import com.canhub.cropper.CropImageView
 import com.canhub.cropper.options
 import com.example.croppersample.R
 import com.example.croppersample.databinding.FragmentCameraBinding
+import timber.log.Timber
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -44,8 +44,8 @@ internal class SampleCrop : Fragment() {
   private val cropImage = registerForActivityResult(CropImageContract()) { result ->
     when {
       result.isSuccessful -> {
-        Log.v("Bitmap", result.bitmap.toString())
-        Log.v("File Path", context?.let { result.getUriFilePath(it) }.toString())
+        Timber.tag("Bitmap").v(result.bitmap.toString())
+        Timber.tag("File Path").v(context?.let { result.getUriFilePath(it) }.toString())
         handleCropImageResult(result.uriContent.toString())
       }
       result is CropImage.CancelledResult -> {
@@ -250,7 +250,7 @@ internal class SampleCrop : Fragment() {
   }
 
   private fun showErrorMessage(message: String) {
-    Log.e("Camera Error:", message)
+    Timber.tag("Camera Error:").e(message)
     Toast.makeText(activity, "Crop failed: $message", Toast.LENGTH_SHORT).show()
   }
 

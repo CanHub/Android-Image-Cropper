@@ -6,6 +6,7 @@
       android:icon="@drawable/ic_launcher"
       android:label="@string/app_name"
       android:theme="@style/Theme.Sample"
+      android:name="com.canhub.cropper.sample.SampleApplication"
       tools:ignore="DataExtractionRules">
     <activity
         android:name="com.canhub.cropper.sample.MainActivity"
