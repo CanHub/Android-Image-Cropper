@@ -13,7 +13,7 @@ import kotlin.math.min
  * @param touchX the location of the initial touch position to measure move distance
  * @param touchY the location of the initial touch position to measure move distance
  */
-class CropWindowMoveHandler(
+internal class CropWindowMoveHandler(
   /** The type of crop window move that is handled. */
   private val type: Type,
   cropWindowHandler: CropWindowHandler,
@@ -22,13 +22,11 @@ class CropWindowMoveHandler(
 ) {
 
   /** The type of crop window move that is handled. */
-  enum class Type {
-
+  internal enum class Type {
     TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT, LEFT, TOP, RIGHT, BOTTOM, CENTER
   }
 
-  companion object {
-
+  internal companion object {
     /** Calculates the aspect ratio given a rectangle. */
     internal fun calculateAspectRatio(left: Float, top: Float, right: Float, bottom: Float) =
       (right - left) / (bottom - top)
