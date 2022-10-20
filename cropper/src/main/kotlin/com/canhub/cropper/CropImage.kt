@@ -31,7 +31,6 @@ import java.io.File
  * the stupid-ass Android camera result URI that may differ from version to version and from device
  * to device.
  */
-@Suppress("unused", "MemberVisibilityCanBePrivate")
 object CropImage {
 
   /**
@@ -53,28 +52,6 @@ object CropImage {
    * The key used to pass crop image result data back from [CropImageActivity].
    */
   const val CROP_IMAGE_EXTRA_RESULT = "CROP_IMAGE_EXTRA_RESULT"
-
-  /**
-   * The request code used to start pick image activity to be used on result to identify the
-   * specific request.
-   */
-  const val PICK_IMAGE_CHOOSER_REQUEST_CODE = 200
-
-  /**
-   * The request code used to request permission to pick image from external storage.
-   */
-  const val PICK_IMAGE_PERMISSIONS_REQUEST_CODE = 201
-
-  /**
-   * The request code used to request permission to capture image from camera.
-   */
-  const val CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE = 2011
-
-  /**
-   * The request code used to start [CropImageActivity] to be used on result to identify the
-   * specific request.
-   */
-  const val CROP_IMAGE_ACTIVITY_REQUEST_CODE = 203
 
   /**
    * The result code used to return error from [CropImageActivity].
