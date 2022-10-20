@@ -9,7 +9,7 @@ import kotlin.math.abs
 import kotlin.math.max
 
 /** Handler from crop window stuff, moving and knowing position. */
-class CropWindowHandler {
+internal class CropWindowHandler {
 
   /** The 4 edges of the crop window defining its coordinates and size  */
   private val mEdges = RectF()
