@@ -32,11 +32,11 @@ import kotlin.math.min
 import kotlin.math.sin
 
 /** A custom View representing the crop window and the shaded background outside the crop window. */
-class CropOverlayView
-@JvmOverloads constructor(context: Context?, attrs: AttributeSet? = null) : View(context, attrs) {
-
-  companion object {
-
+internal class CropOverlayView @JvmOverloads constructor(
+  context: Context,
+  attrs: AttributeSet? = null,
+) : View(context, attrs) {
+  internal companion object {
     /**
      * Creates the paint object for drawing text label over crop overlay */
     internal fun getTextPaint(options: CropImageOptions): Paint =
@@ -74,6 +74,7 @@ class CropOverlayView
       return borderPaint
     }
   }
+
   private var mCropCornerRadius: Float = 0f
   private var mCircleCornerFillColor: Int? = null
   private var mOptions: CropImageOptions? = null

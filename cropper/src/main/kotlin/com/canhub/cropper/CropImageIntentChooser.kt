@@ -18,16 +18,12 @@ class CropImageIntentChooser(
   private val activity: ComponentActivity,
   private val callback: ResultCallback,
 ) {
-
   interface ResultCallback {
-
     fun onSuccess(uri: Uri?)
-
     fun onCancelled()
   }
 
   companion object {
-
     const val GOOGLE_PHOTOS = "com.google.android.apps.photos"
     const val GOOGLE_PHOTOS_GO = "com.google.android.apps.photosgo"
     const val SAMSUNG_GALLERY = "com.sec.android.gallery3d"
