@@ -13,22 +13,21 @@ import kotlinx.coroutines.withContext
 import java.lang.ref.WeakReference
 import kotlin.coroutines.CoroutineContext
 
-class BitmapLoadingWorkerJob internal constructor(
+internal class BitmapLoadingWorkerJob internal constructor(
   private val context: Context,
   cropImageView: CropImageView,
   val uri: Uri,
 ) : CoroutineScope {
-
   private val width: Int
   private val height: Int
   private val cropImageViewReference = WeakReference(cropImageView)
   private var currentJob: Job = Job()
-  override val coroutineContext: CoroutineContext
-    get() = Dispatchers.Main + currentJob
+
+  override val coroutineContext: CoroutineContext get() = Dispatchers.Main + currentJob
 
   init {
     val metrics = cropImageView.resources.displayMetrics
-    val densityAdj: Double = if (metrics.density > 1) (1.0 / metrics.density) else 1.0
+    val densityAdj = if (metrics.density > 1) (1.0 / metrics.density) else 1.0
     width = (metrics.widthPixels * densityAdj).toInt()
     height = (metrics.heightPixels * densityAdj).toInt()
   }
@@ -86,9 +85,7 @@ class BitmapLoadingWorkerJob internal constructor(
   }
 
   /** The result of BitmapLoadingWorkerJob async loading. */
-  companion object
-  class Result {
-
+  internal companion object class Result {
     /**
      * The Android URI of the image to load.
      * NOT a file path, for it use [getUriFilePath]

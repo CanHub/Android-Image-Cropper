@@ -36,9 +36,10 @@ import kotlin.math.sqrt
 
 /** Custom view that provides cropping capabilities to an image. */
 @Suppress("unused", "MemberVisibilityCanBePrivate")
-class CropImageView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
-  FrameLayout(context, attrs),
-  CropWindowChangeListener {
+class CropImageView @JvmOverloads constructor(
+  context: Context,
+  attrs: AttributeSet? = null,
+) : FrameLayout(context, attrs), CropWindowChangeListener {
 
   /** Image view widget used to show the image for cropping. */
   private val imageView: ImageView
@@ -871,7 +872,7 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
    *
    * @param result the result of bitmap loading
    */
-  fun onSetImageUriAsyncComplete(result: BitmapLoadingWorkerJob.Result) {
+  internal fun onSetImageUriAsyncComplete(result: BitmapLoadingWorkerJob.Result) {
     bitmapLoadingWorkerJob = null
     setProgressBarVisibility()
     if (result.error == null) {
