@@ -3,7 +3,6 @@ package com.canhub.cropper.sample
 import android.graphics.Rect
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -22,6 +21,7 @@ import com.canhub.cropper.sample.optionsdialog.SampleOptionsBottomSheet
 import com.canhub.cropper.sample.optionsdialog.SampleOptionsEntity
 import com.example.croppersample.R
 import com.example.croppersample.databinding.FragmentCropImageViewBinding
+import timber.log.Timber
 
 internal class SampleUsingImageView :
   Fragment(),
@@ -150,7 +150,7 @@ internal class SampleUsingImageView :
 
   override fun onSetImageUriComplete(view: CropImageView, uri: Uri, error: Exception?) {
     if (error != null) {
-      Log.e("AIC", "Failed to load image by URI", error)
+      Timber.tag("AIC").e(error, "Failed to load image by URI")
       Toast.makeText(activity, "Image load failed: " + error.message, Toast.LENGTH_LONG)
         .show()
     }
@@ -168,10 +168,10 @@ internal class SampleUsingImageView :
         } else {
           result.bitmap
         }
-      context?.let { Log.v("File Path", result.getUriFilePath(it).toString()) }
+      context?.let { Timber.tag("File Path").v(result.getUriFilePath(it).toString()) }
       SampleResultScreen.start(this, imageBitmap, result.uriContent, result.sampleSize)
     } else {
-      Log.e("AIC", "Failed to crop image", result?.error)
+      Timber.tag("AIC").e(result?.error, "Failed to crop image")
       Toast
         .makeText(activity, "Crop failed: ${result?.error?.message}", Toast.LENGTH_SHORT)
         .show()
