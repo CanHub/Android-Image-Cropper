@@ -88,6 +88,8 @@ object CropImage {
    * @param context used to access Android APIs, like content resolve, it is your
    * activity/fragment/widget.
    */
+  @Suppress("DeprecatedCallableAddReplaceWith", "DEPRECATION")
+  @Deprecated("This will become obsolete. There will be no replacement. In case you need this, please raise an issue and explain your use case.")
   fun getCaptureImageOutputUriContent(context: Context): Uri {
     val outputFileUri: Uri
     val getImage: File?
@@ -118,6 +120,8 @@ object CropImage {
    * @param uniqueName If true, make each image cropped have a different file name, this could cause
    * memory issues, use wisely. [Default: false]
    */
+  @Suppress("DeprecatedCallableAddReplaceWith", "DEPRECATION")
+  @Deprecated("This will become obsolete. There will be no replacement. In case you need this, please raise an issue and explain your use case.")
   fun getCaptureImageOutputUriFilePath(context: Context, uniqueName: Boolean = false): String =
     getFilePathFromUri(context, getCaptureImageOutputUriContent(context), uniqueName)
 
@@ -132,6 +136,8 @@ object CropImage {
    * @param data    the returned data of the activity result
    */
   @JvmStatic
+  @Suppress("DeprecatedCallableAddReplaceWith", "DEPRECATION")
+  @Deprecated("This will become obsolete. There will be no replacement. In case you need this, please raise an issue and explain your use case.")
   fun getPickImageResultUriContent(context: Context, data: Intent?): Uri {
     var isCamera = true
     val uri = data?.data
@@ -156,6 +162,8 @@ object CropImage {
    * memory issues, use wisely. [Default: false]
    */
   @JvmStatic
+  @Suppress("DeprecatedCallableAddReplaceWith", "DEPRECATION")
+  @Deprecated("This will become obsolete. There will be no replacement. In case you need this, please raise an issue and explain your use case.")
   fun getPickImageResultUriFilePath(
     context: Context,
     data: Intent?,
