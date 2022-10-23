@@ -191,6 +191,7 @@ internal class CropWindowMoveHandler(
       dx /= 1.05f
       mTouchOffset.x -= dx / 2
     }
+
     if (rect.top + dy < 0 || rect.bottom + dy > viewHeight || rect.top + dy < bounds.top || rect.bottom + dy > bounds.bottom) {
       dy /= 1.05f
       mTouchOffset.y -= dy / 2
@@ -549,13 +550,21 @@ internal class CropWindowMoveHandler(
 
   /** Check if edges have gone out of bounds (including snap margin), and fix if needed. */
   private fun snapEdgesToBounds(edges: RectF, bounds: RectF, margin: Float) {
-    if (edges.left < bounds.left + margin) edges.offset(bounds.left - edges.left, 0f)
+    if (edges.left < bounds.left + margin) {
+      edges.offset(bounds.left - edges.left, 0f)
+    }
 
-    if (edges.top < bounds.top + margin) edges.offset(0f, bounds.top - edges.top)
+    if (edges.top < bounds.top + margin) {
+      edges.offset(0f, bounds.top - edges.top)
+    }
 
-    if (edges.right > bounds.right - margin) edges.offset(bounds.right - edges.right, 0f)
+    if (edges.right > bounds.right - margin) {
+      edges.offset(bounds.right - edges.right, 0f)
+    }
 
-    if (edges.bottom > bounds.bottom - margin) edges.offset(0f, bounds.bottom - edges.bottom)
+    if (edges.bottom > bounds.bottom - margin) {
+      edges.offset(0f, bounds.bottom - edges.bottom)
+    }
   }
 
   /**
@@ -580,6 +589,7 @@ internal class CropWindowMoveHandler(
       newLeft /= 1.05f
       mTouchOffset.x -= newLeft / 1.1f
     }
+
     if (newLeft < bounds.left) mTouchOffset.x -= (newLeft - bounds.left) / 2f
 
     if (newLeft - bounds.left < snapMargin) newLeft = bounds.left
@@ -651,6 +661,7 @@ internal class CropWindowMoveHandler(
       newRight = viewWidth + (newRight - viewWidth) / 1.05f
       mTouchOffset.x -= (newRight - viewWidth) / 1.1f
     }
+
     if (newRight > bounds.right) mTouchOffset.x -= (newRight - bounds.right) / 2f
     // If close to the edge
     if (bounds.right - newRight < snapMargin) newRight = bounds.right
@@ -718,6 +729,7 @@ internal class CropWindowMoveHandler(
       newTop /= 1.05f
       mTouchOffset.y -= newTop / 1.1f
     }
+
     if (newTop < bounds.top) mTouchOffset.y -= (newTop - bounds.top) / 2f
 
     if (newTop - bounds.top < snapMargin) newTop = bounds.top
@@ -785,6 +797,7 @@ internal class CropWindowMoveHandler(
       newBottom = viewHeight + (newBottom - viewHeight) / 1.05f
       mTouchOffset.y -= (newBottom - viewHeight) / 1.1f
     }
+
     if (newBottom > bounds.bottom) mTouchOffset.y -= (newBottom - bounds.bottom) / 2f
 
     if (bounds.bottom - newBottom < snapMargin) newBottom = bounds.bottom
@@ -867,8 +880,13 @@ internal class CropWindowMoveHandler(
    */
   private fun adjustLeftRightByAspectRatio(rect: RectF, bounds: RectF, aspectRatio: Float) {
     rect.inset((rect.width() - rect.height() * aspectRatio) / 2, 0f)
-    if (rect.left < bounds.left) rect.offset(bounds.left - rect.left, 0f)
-    if (rect.right > bounds.right) rect.offset(bounds.right - rect.right, 0f)
+    if (rect.left < bounds.left) {
+      rect.offset(bounds.left - rect.left, 0f)
+    }
+
+    if (rect.right > bounds.right) {
+      rect.offset(bounds.right - rect.right, 0f)
+    }
   }
 
   /**
@@ -877,7 +895,12 @@ internal class CropWindowMoveHandler(
    */
   private fun adjustTopBottomByAspectRatio(rect: RectF, bounds: RectF, aspectRatio: Float) {
     rect.inset(0f, (rect.height() - rect.width() / aspectRatio) / 2)
-    if (rect.top < bounds.top) rect.offset(0f, bounds.top - rect.top)
-    if (rect.bottom > bounds.bottom) rect.offset(0f, bounds.bottom - rect.bottom)
+    if (rect.top < bounds.top) {
+      rect.offset(0f, bounds.top - rect.top)
+    }
+
+    if (rect.bottom > bounds.bottom) {
+      rect.offset(0f, bounds.bottom - rect.bottom)
+    }
   }
 }

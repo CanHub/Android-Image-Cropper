@@ -64,6 +64,7 @@ internal class CropOverlayView @JvmOverloads constructor(
       } else {
         null
       }
+
     internal fun getNewPaintWithFill(color: Int): Paint {
       val borderPaint = Paint()
       borderPaint.color = color
@@ -569,21 +570,25 @@ internal class CropOverlayView @JvmOverloads constructor(
       rect.left -= adj
       rect.right += adj
     }
+
     if (rect.height() < mCropWindowHandler.getMinCropHeight()) {
       val adj = (mCropWindowHandler.getMinCropHeight() - rect.height()) / 2
       rect.top -= adj
       rect.bottom += adj
     }
+
     if (rect.width() > mCropWindowHandler.getMaxCropWidth()) {
       val adj = (rect.width() - mCropWindowHandler.getMaxCropWidth()) / 2
       rect.left += adj
       rect.right -= adj
     }
+
     if (rect.height() > mCropWindowHandler.getMaxCropHeight()) {
       val adj = (rect.height() - mCropWindowHandler.getMaxCropHeight()) / 2
       rect.top += adj
       rect.bottom -= adj
     }
+
     calculateBounds(rect)
 
     if (mCalcBounds.width() > 0 && mCalcBounds.height() > 0) {
@@ -597,6 +602,7 @@ internal class CropOverlayView @JvmOverloads constructor(
       if (rect.right > rightLimit) rect.right = rightLimit
       if (rect.bottom > bottomLimit) rect.bottom = bottomLimit
     }
+
     if (isFixAspectRatio && abs(rect.width() - rect.height() * mTargetAspectRatio) > 0.1) {
       if (rect.width() > rect.height() * mTargetAspectRatio) {
         val adj = abs(rect.height() * mTargetAspectRatio - rect.width()) / 2

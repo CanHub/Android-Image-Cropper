@@ -34,6 +34,7 @@ class CropImageContractTest {
         dispatchResult(requestCode, Activity.RESULT_CANCELED, Intent())
       }
     }
+
     with(launchFragmentInContainer { ContractTestFragment(testRegistry) }) {
       onFragment { fragment = it }
     }
@@ -62,6 +63,7 @@ class CropImageContractTest {
         dispatchResult(requestCode, Activity.RESULT_CANCELED, Intent())
       }
     }
+
     with(launchFragmentInContainer { ContractTestFragment(testRegistry) }) {
       onFragment { fragment = it }
     }
@@ -98,6 +100,7 @@ class CropImageContractTest {
         dispatchResult(requestCode, CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE, intent)
       }
     }
+
     with(launchFragmentInContainer { ContractTestFragment(testRegistry) }) {
       onFragment { fragment = it }
     }
@@ -157,6 +160,7 @@ class CropImageContractTest {
       setCropMenuCropButtonTitle("Test Button Title")
       setCropMenuCropButtonIcon(R.drawable.ic_rotate_left_24)
     }
+
     val testRegistry = object : ActivityResultRegistry() {
       override fun <I, O> onLaunch(
         requestCode: Int,
@@ -170,6 +174,7 @@ class CropImageContractTest {
     with(launchFragmentInContainer { ContractTestFragment(testRegistry) }) {
       onFragment { fragment -> cropImageIntent = fragment.cropImageIntent(options) }
     }
+
     val bundle = cropImageIntent?.getBundleExtra(CropImage.CROP_IMAGE_EXTRA_BUNDLE)
     // THEN
     assertEquals(expectedClassName, cropImageIntent?.component?.className)
@@ -203,6 +208,7 @@ class CropImageContractTest {
         dispatchResult(requestCode, CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE, intent)
       }
     }
+
     with(launchFragmentInContainer { ContractTestFragment(testRegistry) }) {
       onFragment { fragment = it }
     }

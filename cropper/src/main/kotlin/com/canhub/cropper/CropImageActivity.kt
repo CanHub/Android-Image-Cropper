@@ -243,6 +243,7 @@ open class CropImageActivity : AppCompatActivity(), OnSetImageUriCompleteListene
       menu.findItem(R.id.crop_image_menu_crop).title =
         cropImageOptions.cropMenuCropButtonTitle
     }
+
     var cropIcon: Drawable? = null
     try {
       if (cropImageOptions.cropMenuCropButtonIcon != 0) {
@@ -252,6 +253,7 @@ open class CropImageActivity : AppCompatActivity(), OnSetImageUriCompleteListene
     } catch (e: Exception) {
       Log.w("AIC", "Failed to read menu crop drawable", e)
     }
+
     if (cropImageOptions.activityMenuIconColor != 0) {
       updateMenuItemIconColor(
         menu,
