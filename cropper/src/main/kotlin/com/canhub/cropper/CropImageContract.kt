@@ -7,23 +7,21 @@ import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContract
 
 /**
- * An ActivityResultContract to start an activity that allows the user to crop an image.
- *
- * The activity can be heavily customized by the input CropImageContractOptions.
- *
- * If you do not provide an uri in the input the user will be asked to pick an image before cropping.
+ * An [ActivityResultContract] to start an activity that allows the user to crop an image.
+ * The UI can be customized using [CropImageOptions].
+ * If you do not provide an [CropImageContractOptions.uri] in the input the user will be asked to pick an image before cropping.
  */
-
-class CropImageContract :
-  ActivityResultContract<CropImageContractOptions, CropImageView.CropResult>() {
-
+class CropImageContract : ActivityResultContract<CropImageContractOptions, CropImageView.CropResult>() {
   override fun createIntent(context: Context, input: CropImageContractOptions): Intent {
     input.cropImageOptions.validate()
     return Intent(context, CropImageActivity::class.java).apply {
-      val bundle = Bundle()
-      bundle.putParcelable(CropImage.CROP_IMAGE_EXTRA_SOURCE, input.uri)
-      bundle.putParcelable(CropImage.CROP_IMAGE_EXTRA_OPTIONS, input.cropImageOptions)
-      putExtra(CropImage.CROP_IMAGE_EXTRA_BUNDLE, bundle)
+      putExtra(
+        CropImage.CROP_IMAGE_EXTRA_BUNDLE,
+        Bundle(2).apply {
+          putParcelable(CropImage.CROP_IMAGE_EXTRA_SOURCE, input.uri)
+          putParcelable(CropImage.CROP_IMAGE_EXTRA_OPTIONS, input.cropImageOptions)
+        },
+      )
     }
   }
 
