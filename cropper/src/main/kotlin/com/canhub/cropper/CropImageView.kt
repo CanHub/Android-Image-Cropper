@@ -1587,8 +1587,7 @@ class CropImageView @JvmOverloads constructor(
     /**
      * Only sample the image during loading (if image set using URI) so the smallest of the image
      * dimensions will be between the requested size and x2 requested size.<br></br>
-     * NOTE: resulting image will not be exactly requested width/height see: [Loading
- * Large Bitmaps Efficiently](http://developer.android.com/training/displaying-bitmaps/load-bitmap.html).
+     * NOTE: resulting image will not be exactly requested width/height see: [Loading Large Bitmaps Efficiently](http://developer.android.com/training/displaying-bitmaps/load-bitmap.html).
      */
     SAMPLING,
 

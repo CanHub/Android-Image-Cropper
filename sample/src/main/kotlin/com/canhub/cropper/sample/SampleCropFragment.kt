@@ -122,6 +122,7 @@ internal class SampleCropFragment : Fragment() {
         setMaxCropResultSize(99999, 99999)
         setActivityTitle("")
         setActivityMenuIconColor(0)
+        setOutputUri(null)
         setOutputCompressFormat(Bitmap.CompressFormat.JPEG)
         setOutputCompressQuality(90)
         setRequestedSize(0, 0)
