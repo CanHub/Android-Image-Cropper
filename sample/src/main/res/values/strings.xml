@@ -4,7 +4,6 @@
   <string name="result_image_desc">crop result</string>
   <string name="main_action_crop">CROP</string>
   <string name="main_action_rotate">Rotate 90 degrees clockwise</string>
-  <string name="options_dialog_title">Options</string>
   <string name="fit_center">Fit Center</string>
   <string name="center">Center</string>
   <string name="center_crop">Center Crop</string>

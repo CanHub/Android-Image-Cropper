@@ -6,32 +6,14 @@
     android:background="@drawable/bg_bottom_sheet_rounded"
     android:orientation="vertical"
     >
-  <LinearLayout
-      android:id="@+id/optionsHeader"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:background="@drawable/bg_bottom_sheet_rounded"
-      android:stateListAnimator="@animator/toolbar_elevation"
-      android:orientation="vertical"
-      >
-    <ImageView
-        android:layout_width="@dimen/keyline_x11"
-        android:layout_height="@dimen/keyline_x2"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/keyline_x4"
-        android:background="@drawable/bg_draggable_view"
-        tools:ignore="ContentDescription"
-        />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/keyline_x4"
-        android:layout_marginBottom="@dimen/keyline_x4"
-        android:gravity="center"
-        android:text="@string/options_dialog_title"
-        android:textColor="@color/black"
-        />
-  </LinearLayout>
+  <ImageView
+      android:layout_width="50dp"
+      android:layout_height="@dimen/keyline_x2"
+      android:layout_gravity="center_horizontal"
+      android:layout_marginVertical="@dimen/keyline_x4"
+      android:background="@drawable/bg_draggable_view"
+      tools:ignore="ContentDescription"
+      />
   <ScrollView
       android:id="@+id/optionsItemsScroll"
       android:layout_width="match_parent"
@@ -42,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingBottom="@dimen/keyline_x8"
+        android:paddingBottom="@dimen/keyline_x4"
         >
       <include
           android:id="@+id/scaleType"

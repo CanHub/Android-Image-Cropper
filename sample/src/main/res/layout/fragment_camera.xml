@@ -19,11 +19,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/keyline_x4"
         android:text="@string/takePictureBeforeCallLibraryWithUri_text"
-        app:elevation="@dimen/elevation_fab_resting_or_snackbar"
         app:layout_constraintBottom_toTopOf="@id/callLibraryWithoutUri"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:pressedTranslationZ="@dimen/elevation_fab_pressed"
         />
     <Button
         android:id="@+id/callLibraryWithoutUri"
@@ -32,11 +30,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/keyline_x4"
         android:text="@string/callLibraryWithoutUri_text"
-        app:elevation="@dimen/elevation_fab_resting_or_snackbar"
         app:layout_constraintBottom_toTopOf="@id/callLibraryWithoutUriCameraOnly"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:pressedTranslationZ="@dimen/elevation_fab_pressed"
         />
     <Button
         android:id="@+id/callLibraryWithoutUriCameraOnly"
@@ -45,11 +41,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/keyline_x4"
         android:text="@string/callLibraryWithoutUriCameraOnly_text"
-        app:elevation="@dimen/elevation_fab_resting_or_snackbar"
         app:layout_constraintBottom_toTopOf="@id/callLibraryWithoutUriGalleryOnly"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:pressedTranslationZ="@dimen/elevation_fab_pressed"
         />
     <Button
         android:id="@+id/callLibraryWithoutUriGalleryOnly"
@@ -58,11 +52,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/keyline_x4"
         android:text="@string/callLibraryWithoutUriGalleryOnly_text"
-        app:elevation="@dimen/elevation_fab_resting_or_snackbar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:pressedTranslationZ="@dimen/elevation_fab_pressed"
         />
   </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

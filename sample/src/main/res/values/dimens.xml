@@ -3,14 +3,5 @@
   <dimen name="keyline">4dp</dimen>
   <dimen name="keyline_x2">8dp</dimen>
   <dimen name="keyline_x4">16dp</dimen>
-  <dimen name="keyline_x8">32dp</dimen>
-  <dimen name="keyline_x11">44dp</dimen>
-  <dimen name="elevation_fab_pressed">12dp</dimen>
-  <dimen name="elevation_fab_resting_or_snackbar">6dp</dimen>
-  <dimen name="elevation_top_app_bar_scrolled">4dp</dimen>
-  <dimen name="elevation_top_app_bar_resting">0dp</dimen>
   <dimen name="elevation_card_resting">1dp</dimen>
-  <dimen name="default_crop_corner_radius">8dp</dimen>
-  <dimen name="default_crop_corner_offset">4dp</dimen>
-  <dimen name="default_crop_text_size">20sp</dimen>
 </resources>
