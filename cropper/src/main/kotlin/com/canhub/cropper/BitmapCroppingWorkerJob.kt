@@ -15,7 +15,7 @@ import kotlin.coroutines.CoroutineContext
 internal class BitmapCroppingWorkerJob(
   private val context: Context,
   private val cropImageViewReference: WeakReference<CropImageView>,
-  val uri: Uri?,
+  private val uri: Uri?,
   private val bitmap: Bitmap?,
   private val cropPoints: FloatArray,
   private val degreesRotated: Int,
@@ -33,10 +33,9 @@ internal class BitmapCroppingWorkerJob(
   private val saveCompressQuality: Int,
   private val customOutputUri: Uri?,
 ) : CoroutineScope {
-
   private var job: Job = Job()
-  override val coroutineContext: CoroutineContext
-    get() = Dispatchers.Main + job
+
+  override val coroutineContext: CoroutineContext get() = Dispatchers.Main + job
 
   fun start() {
     job = launch(Dispatchers.Default) {
@@ -74,7 +73,9 @@ internal class BitmapCroppingWorkerJob(
               )
             }
             else -> {
-              onPostExecute(Result(bitmap = null, 1))
+              onPostExecute(
+                Result(bitmap = null, sampleSize = 1),
+              )
               return@launch
             }
           }
@@ -92,14 +93,16 @@ internal class BitmapCroppingWorkerJob(
             resizedBitmap.recycle()
             onPostExecute(
               Result(
-                newUri,
-                bitmapSampled.sampleSize,
+                uri = newUri,
+                sampleSize = bitmapSampled.sampleSize,
               ),
             )
           }
         }
-      } catch (e: Exception) {
-        onPostExecute(Result(e, false))
+      } catch (throwable: Exception) {
+        onPostExecute(
+          Result(error = throwable, sampleSize = 1),
+        )
       }
     }
   }
@@ -124,44 +127,14 @@ internal class BitmapCroppingWorkerJob(
     job.cancel()
   }
 
-  class Result {
+  internal data class Result(
     /** The cropped bitmap. */
-    val bitmap: Bitmap?
-
+    val bitmap: Bitmap? = null,
     /** The saved cropped bitmap uri. */
-    val uri: Uri?
-
+    val uri: Uri? = null,
     /** The error that occurred during async bitmap cropping. */
-    val error: java.lang.Exception?
-
-    /** Is the cropping request was to get a bitmap or to save it to uri. */
-    val isSave: Boolean
-
+    val error: Exception? = null,
     /** Sample size used creating the crop bitmap to lower its size. */
-    val sampleSize: Int
-
-    constructor(bitmap: Bitmap?, sampleSize: Int) {
-      this.bitmap = bitmap
-      uri = null
-      error = null
-      isSave = false
-      this.sampleSize = sampleSize
-    }
-
-    constructor(uri: Uri, sampleSize: Int) {
-      bitmap = null
-      this.uri = uri
-      error = null
-      isSave = true
-      this.sampleSize = sampleSize
-    }
-
-    constructor(error: java.lang.Exception?, isSave: Boolean) {
-      bitmap = null
-      uri = null
-      this.error = error
-      this.isSave = isSave
-      sampleSize = 1
-    }
-  }
+    val sampleSize: Int,
+  )
 }
