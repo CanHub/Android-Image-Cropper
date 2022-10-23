@@ -20,7 +20,7 @@ private val COLOR_PURPLE = Color.rgb(153, 51, 153)
  * All the possible options that can be set to customize crop image.<br></br>
  * Initialized with default values.
  */
-open class CropImageOptions : Parcelable {
+class CropImageOptions : Parcelable {
 
   /**
    * When library picking and image if this value is true user will be prompt with option to
