@@ -39,7 +39,7 @@ internal class SampleOptionsBottomSheet : BottomSheetDialogFragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
 
-    options = arguments?.parcelable(OPTIONS_KEY) ?: defaultOptions
+    options = arguments?.parcelable(OPTIONS_KEY) ?: SampleOptionsEntity()
     updateOptions(options)
 
     bindingActions()
@@ -108,23 +108,6 @@ internal class SampleOptionsBottomSheet : BottomSheetDialogFragment() {
     listener.onOptionsApplySelected(options)
     super.onDismiss(dialog)
   }
-
-  private val defaultOptions = SampleOptionsEntity(
-    scaleType = CropImageView.ScaleType.FIT_CENTER,
-    cropShape = CropImageView.CropShape.RECTANGLE,
-    cornerShape = CropImageView.CropCornerShape.RECTANGLE,
-    guidelines = CropImageView.Guidelines.ON,
-    ratio = Pair(1, 1),
-    maxZoomLvl = 2,
-    autoZoom = true,
-    multiTouch = true,
-    centerMove = true,
-    showCropOverlay = true,
-    showProgressBar = true,
-    flipHorizontally = false,
-    flipVertically = false,
-    showCropLabel = true,
-  )
 
   private fun bindingActions() {
     binding.optionsHeader.isSelected = false
