@@ -1045,6 +1045,7 @@ class CropImageView @JvmOverloads constructor(
     if (imageUri == null && originalBitmap == null && mImageResource < 1) {
       return super.onSaveInstanceState()
     }
+
     val bundle = Bundle()
     val loadedImageUri =
       if (isSaveBitmapToInstanceState && imageUri == null && mImageResource < 1) {
@@ -1056,17 +1057,20 @@ class CropImageView @JvmOverloads constructor(
       } else {
         imageUri
       }
+
     if (loadedImageUri != null && originalBitmap != null) {
       val key = UUID.randomUUID().toString()
       BitmapUtils.mStateBitmap = Pair(key, WeakReference(originalBitmap))
       bundle.putString("LOADED_IMAGE_STATE_BITMAP_KEY", key)
     }
+
     if (bitmapLoadingWorkerJob != null) {
       val task = bitmapLoadingWorkerJob!!.get()
       if (task != null) {
         bundle.putParcelable("LOADING_IMAGE_URI", task.uri)
       }
     }
+
     bundle.putParcelable("instanceState", super.onSaveInstanceState())
     bundle.putParcelable("LOADED_IMAGE_URI", loadedImageUri)
     bundle.putInt("LOADED_IMAGE_RESOURCE", mImageResource)
@@ -1770,6 +1774,7 @@ class CropImageView @JvmOverloads constructor(
         options = bundle.parcelable(CropImage.CROP_IMAGE_EXTRA_OPTIONS)
       }
     }
+
     if (options == null) {
       options = CropImageOptions()
       if (attrs != null) {

@@ -100,6 +100,7 @@ internal object BitmapUtils {
       ExifInterface.ORIENTATION_ROTATE_270 -> 270
       else -> 0
     }
+
     val flipHorizontally = orientationAttributeInt == ExifInterface.ORIENTATION_FLIP_HORIZONTAL ||
       orientationAttributeInt == ExifInterface.ORIENTATION_TRANSPOSE
     val flipVertically = orientationAttributeInt == ExifInterface.ORIENTATION_FLIP_VERTICAL ||
@@ -854,6 +855,7 @@ internal object BitmapUtils {
     if (mMaxTextureSize == 0) {
       mMaxTextureSize = maxTextureSize
     }
+
     if (mMaxTextureSize > 0) {
       while (
         height / inSampleSize > mMaxTextureSize ||

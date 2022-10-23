@@ -79,6 +79,7 @@ class CropImageIntentChooser(
     if (!isExplicitCameraPermissionRequired(activity) && includeCamera) {
       allIntents.addAll(getCameraIntents(activity, packageManager))
     }
+
     if (includeGallery) {
       var galleryIntents = getGalleryIntents(packageManager, Intent.ACTION_GET_CONTENT)
       if (galleryIntents.isEmpty()) {
@@ -87,6 +88,7 @@ class CropImageIntentChooser(
       }
       allIntents.addAll(galleryIntents)
     }
+
     val target = if (allIntents.isEmpty()) {
       Intent()
     } else {
