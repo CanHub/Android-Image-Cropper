@@ -897,7 +897,7 @@ class CropImageView @JvmOverloads constructor(
    *
    * [result] the result of bitmap cropping
    */
-  fun onImageCroppingAsyncComplete(result: BitmapCroppingWorkerJob.Result) {
+  internal fun onImageCroppingAsyncComplete(result: BitmapCroppingWorkerJob.Result) {
     bitmapCroppingWorkerJob = null
     setProgressBarVisibility()
     val listener = mOnCropImageCompleteListener

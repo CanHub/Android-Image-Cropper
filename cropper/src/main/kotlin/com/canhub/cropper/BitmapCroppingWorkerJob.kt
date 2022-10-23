@@ -12,7 +12,7 @@ import kotlinx.coroutines.withContext
 import java.lang.ref.WeakReference
 import kotlin.coroutines.CoroutineContext
 
-class BitmapCroppingWorkerJob(
+internal class BitmapCroppingWorkerJob(
   private val context: Context,
   private val cropImageViewReference: WeakReference<CropImageView>,
   val uri: Uri?,
