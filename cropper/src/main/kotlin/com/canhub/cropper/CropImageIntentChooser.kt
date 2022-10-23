@@ -63,9 +63,9 @@ class CropImageIntentChooser(
    * The source can be camera's (ACTION_IMAGE_CAPTURE) or gallery's (ACTION_GET_CONTENT).<br></br>
    * All possible sources are added to the intent chooser.
    *
-   * @param includeCamera    if to include camera intents
-   * @param includeGallery if to include Gallery app intents
-   * @param cameraImgUri required if includeCamera is set to true
+   * [includeCamera] if to include camera intents
+   * [includeGallery] if to include Gallery app intents
+   * [cameraImgUri] required if includeCamera is set to true
    */
   fun showChooserIntent(
     includeCamera: Boolean,
@@ -195,7 +195,7 @@ class CropImageIntentChooser(
   /**
    * Check if the app requests a specific permission in the manifest.
    *
-   * @param context the context of your activity to check for permissions
+   * [context] the context of your activity to check for permissions
    * @return true - the permission in requested in manifest, false - not.
    */
   private fun hasCameraPermissionInManifest(context: Context): Boolean {
@@ -223,7 +223,7 @@ class CropImageIntentChooser(
    * Set up a list of apps that you require to show first in the intent chooser
    * Apps will show in the order it is passed
    *
-   * @param appsList - pass a list of package names of apps of your choice
+   * [appsList] - pass a list of package names of apps of your choice
    *
    * This overrides the existing apps list
    */
@@ -234,7 +234,7 @@ class CropImageIntentChooser(
   /**
    * Set the title for the intent chooser
    *
-   * @param title - the title for the intent chooser
+   * [title] - the title for the intent chooser
    */
   fun setIntentChooserTitle(title: String): CropImageIntentChooser = apply {
     this.title = title

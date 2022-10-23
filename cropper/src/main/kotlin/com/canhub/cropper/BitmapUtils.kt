@@ -187,7 +187,7 @@ internal object BitmapUtils {
    * if the rotation is not 0,90,180 or 270 degrees then we must first crop a larger area of the
    * image that contains the required rectangle, rotate and then crop again a sub rectangle.
    *
-   * @param scale how much to scale the cropped image part, use 0.5 to lower the image by half (OOM
+   * [scale] how much to scale the cropped image part, use 0.5 to lower the image by half (OOM
    * handling)
    */
   private fun cropBitmapObjectWithScale(
@@ -517,9 +517,9 @@ internal object BitmapUtils {
    * Crop image bitmap from URI by decoding it with specific width and height to down-sample if
    * required.
    *
-   * @param orgWidth    used to get rectangle from points (handle edge cases to limit rectangle)
-   * @param orgHeight   used to get rectangle from points (handle edge cases to limit rectangle)
-   * @param sampleMulti used to increase the sampling of the image to handle memory issues.
+   * [orgWidth] used to get rectangle from points (handle edge cases to limit rectangle)
+   * [orgHeight] used to get rectangle from points (handle edge cases to limit rectangle)
+   * [sampleMulti] used to increase the sampling of the image to handle memory issues.
    */
   private fun cropBitmap(
     context: Context,
@@ -711,7 +711,7 @@ internal object BitmapUtils {
    * Decode specific rectangle bitmap from stream using sampling to get bitmap with the requested
    * limit.
    *
-   * @param sampleMulti used to increase the sampling of the image to handle memory issues.
+   * [sampleMulti] used to increase the sampling of the image to handle memory issues.
    */
   private fun decodeSampledBitmapRegion(
     context: Context,
@@ -949,39 +949,23 @@ internal object BitmapUtils {
       }
     }
 
-  /**
-   * Holds bitmap instance and the sample size that the bitmap was loaded/cropped with.
-   */
+  /** Holds bitmap instance and the sample size that the bitmap was loaded/cropped with. */
   internal class BitmapSampled(
-    /**
-     * The bitmap instance
-     */
+    /** The bitmap instance */
     val bitmap: Bitmap?,
-    /**
-     * The sample size used to lower the size of the bitmap (1,2,4,8,...)
-     */
+    /** The sample size used to lower the size of the bitmap (1,2,4,8,...) */
     val sampleSize: Int,
   )
 
-  /**
-   * The result of [.rotateBitmapByExif].
-   */
+  /** The result of [.rotateBitmapByExif]. */
   internal class RotateBitmapResult(
-    /**
-     * The loaded bitmap
-     */
+    /** The loaded bitmap */
     val bitmap: Bitmap?,
-    /**
-     * The degrees the image was rotated
-     */
+    /** The degrees the image was rotated */
     val degrees: Int,
-    /**
-     * If the image was flipped horizontally
-     */
+    /** If the image was flipped horizontally */
     val flipHorizontally: Boolean = false,
-    /**
-     * If the image was flipped vertically
-     */
+    /** If the image was flipped vertically */
     val flipVertically: Boolean = false,
   )
 }

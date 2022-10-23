@@ -62,7 +62,7 @@ internal class BitmapLoadingWorkerJob internal constructor(
   /**
    * Once complete, see if ImageView is still around and set bitmap.
    *
-   * @param result the result of bitmap loading
+   * [result] the result of bitmap loading
    */
   private suspend fun onPostExecute(result: Result) {
     withContext(Dispatchers.Main) {
@@ -92,19 +92,19 @@ internal class BitmapLoadingWorkerJob internal constructor(
      */
     val uriContent: Uri
 
-    /** The loaded bitmap  */
+    /** The loaded bitmap. */
     val bitmap: Bitmap?
 
-    /** The sample size used to load the given bitmap  */
+    /** The sample size used to load the given bitmap. */
     val loadSampleSize: Int
 
-    /** The degrees the image was rotated  */
+    /** The degrees the image was rotated. */
     val degreesRotated: Int
 
-    /** If the image was flipped horizontally */
+    /** If the image was flipped horizontally. */
     var flipHorizontally: Boolean = false
 
-    /** If the image was flipped vertically */
+    /** If the image was flipped vertically. */
     var flipVertically: Boolean = false
 
     /** The error that occurred during async bitmap loading. */
@@ -113,9 +113,8 @@ internal class BitmapLoadingWorkerJob internal constructor(
     /**
      * The file path of the image to load
      *
-     * @param context used to access Android APIs, like content resolve, it is your
-     * activity/fragment/widget.
-     * @param uniqueName If true, make each image cropped have a different file name, this could
+     * [context] used to access Android APIs, like content resolve, it is your activity/fragment/widget.
+     * [uniqueName] If true, make each image cropped have a different file name, this could
      * cause memory issues, use wisely. [Default: false]
      */
     fun getUriFilePath(context: Context, uniqueName: Boolean = false): String =

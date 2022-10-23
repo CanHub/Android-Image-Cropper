@@ -10,8 +10,7 @@ import kotlin.math.max
 
 /** Handler from crop window stuff, moving and knowing position. */
 internal class CropWindowHandler {
-
-  /** The 4 edges of the crop window defining its coordinates and size  */
+  /** The 4 edges of the crop window defining its coordinates and size. */
   private val mEdges = RectF()
 
   /**
@@ -56,10 +55,10 @@ internal class CropWindowHandler {
    */
   private var mMaxCropResultHeight = 0f
 
-  /** The width scale factor of shown image and actual image  */
+  /** The width scale factor of shown image and actual image. */
   private var mScaleFactorWidth = 1f
 
-  /** The height scale factor of shown image and actual image  */
+  /** The height scale factor of shown image and actual image. */
   private var mScaleFactorHeight = 1f
 
   /** Get the left/top/right/bottom coordinates of the crop window. */
@@ -84,10 +83,10 @@ internal class CropWindowHandler {
   fun getMaxCropHeight() =
     mMaxCropWindowHeight.coerceAtMost(mMaxCropResultHeight / mScaleFactorHeight)
 
-  /** get the scale factor (on width) of the shown image to original image. */
+  /** Get the scale factor (on width) of the shown image to original image. */
   fun getScaleFactorWidth() = mScaleFactorWidth
 
-  /** get the scale factor (on height) of the shown image to original image. */
+  /** Get the scale factor (on height) of the shown image to original image. */
   fun getScaleFactorHeight() = mScaleFactorHeight
 
   /**
@@ -151,11 +150,11 @@ internal class CropWindowHandler {
    * Determines which, if any, of the handles are pressed given the touch coordinates, the bounding
    * box, the touch radius, the crop shape and whether movement of the crop window is enabled.
    *
-   * @param x the x-coordinate of the touch point
-   * @param y the y-coordinate of the touch point
-   * @param targetRadius the target radius in pixels
-   * @param cropShape the shape of the crop window
-   * @param isCenterMoveEnabled whether movement of the crop window by dragging center is enabled
+   * [x] the x-coordinate of the touch point
+   * [y] the y-coordinate of the touch point
+   * [targetRadius] the target radius in pixels
+   * [cropShape] the shape of the crop window
+   * [isCenterMoveEnabled] whether movement of the crop window by dragging center is enabled
    * @return the Handle that was pressed; null if no Handle was pressed
    */
   fun getMoveHandler(
@@ -179,10 +178,10 @@ internal class CropWindowHandler {
    * Determines which, if any, of the handles are pressed given the touch coordinates, the bounding
    * box, and the touch radius.
    *
-   * @param x the x-coordinate of the touch point
-   * @param y the y-coordinate of the touch point
-   * @param targetRadius the target radius in pixels
-   * @param isCenterMoveEnabled whether movement of the crop window by dragging center is enabled
+   * [x] the x-coordinate of the touch point
+   * [y] the y-coordinate of the touch point
+   * [targetRadius] the target radius in pixels
+   * [isCenterMoveEnabled] whether movement of the crop window by dragging center is enabled
    * @return the Handle that was pressed; null if no Handle was pressed
    */
   private fun getRectanglePressedMoveType(
@@ -235,9 +234,9 @@ internal class CropWindowHandler {
    * Determines which, if any, of the handles are pressed given the touch coordinates, the bounding
    * box/oval, and the touch radius.
    *
-   * @param x the x-coordinate of the touch point
-   * @param y the y-coordinate of the touch point
-   * @param isCenterMoveEnabled whether movement of the crop window by dragging center is enabled
+   * [x] the x-coordinate of the touch point
+   * [y] the y-coordinate of the touch point
+   * [isCenterMoveEnabled] whether movement of the crop window by dragging center is enabled
    * @return the Handle that was pressed; null if no Handle was pressed
    */
   private fun getOvalPressedMoveType(
@@ -296,10 +295,10 @@ internal class CropWindowHandler {
    * Determines which, if any, of the handles are pressed given the touch coordinates, the bounding
    * box, and the touch radius.
    *
-   * @param x the x-coordinate of the touch point
-   * @param y the y-coordinate of the touch point
-   * @param targetRadius the target radius in pixels
-   * @param isCenterMoveEnabled whether movement of the crop window by dragging center is enabled
+   * [x] the x-coordinate of the touch point
+   * [y] the y-coordinate of the touch point
+   * [targetRadius] the target radius in pixels
+   * [isCenterMoveEnabled] whether movement of the crop window by dragging center is enabled
    * @return the Handle that was pressed; null if no Handle was pressed
    */
   private fun getRectangleVerticalOnlyPressedMoveType(
@@ -330,10 +329,10 @@ internal class CropWindowHandler {
    * Determines which, if any, of the handles are pressed given the touch coordinates, the bounding
    * box, and the touch radius.
    *
-   * @param x the x-coordinate of the touch point
-   * @param y the y-coordinate of the touch point
-   * @param targetRadius the target radius in pixels
-   * @param isCenterMoveEnabled whether movement of the crop window by dragging center is enabled
+   * [x] the x-coordinate of the touch point
+   * [y] the y-coordinate of the touch point
+   * [targetRadius] the target radius in pixels
+   * [isCenterMoveEnabled] whether movement of the crop window by dragging center is enabled
    * @return the Handle that was pressed; null if no Handle was pressed
    */
   private fun getRectangleHorizontalOnlyPressedMoveType(
@@ -363,11 +362,11 @@ internal class CropWindowHandler {
   /**
    * Determines if the specified coordinate is in the target touch zone for a corner handle.
    *
-   * @param x the x-coordinate of the touch point
-   * @param y the y-coordinate of the touch point
-   * @param handleX the x-coordinate of the corner handle
-   * @param handleY the y-coordinate of the corner handle
-   * @param targetRadius the target radius in pixels
+   * [x] the x-coordinate of the touch point
+   * [y] the y-coordinate of the touch point
+   * [handleX] the x-coordinate of the corner handle
+   * [handleY] the y-coordinate of the corner handle
+   * [targetRadius] the target radius in pixels
    * @return true if the touch point is in the target touch zone; false otherwise
    */
   private fun isInCornerTargetZone(
@@ -381,10 +380,10 @@ internal class CropWindowHandler {
   /**
    * Get the distance between two points in the maximum norm.
    *
-   * @param x1 the x-coordinate of the first point
-   * @param y1 the y-coordinate of the first point
-   * @param x2 the x-coordinate of the second point
-   * @param y2 the y-coordinate of the second point
+   * [x1] the x-coordinate of the first point
+   * [y1] the y-coordinate of the first point
+   * [x2] the x-coordinate of the second point
+   * [y2] the y-coordinate of the second point
    * @return the distance between these points
    */
   private fun distance(
@@ -397,12 +396,12 @@ internal class CropWindowHandler {
   /**
    * Determines if the specified coordinate is in the target touch zone for a horizontal bar handle.
    *
-   * @param x the x-coordinate of the touch point
-   * @param y the y-coordinate of the touch point
-   * @param handleXStart the left x-coordinate of the horizontal bar handle
-   * @param handleXEnd the right x-coordinate of the horizontal bar handle
-   * @param handleY the y-coordinate of the horizontal bar handle
-   * @param targetRadius the target radius in pixels
+   * [x] the x-coordinate of the touch point
+   * [y] the y-coordinate of the touch point
+   * [handleXStart] the left x-coordinate of the horizontal bar handle
+   * [handleXEnd] the right x-coordinate of the horizontal bar handle
+   * [handleY] the y-coordinate of the horizontal bar handle
+   * [targetRadius] the target radius in pixels
    * @return true if the touch point is in the target touch zone; false otherwise
    */
   private fun isInHorizontalTargetZone(
@@ -417,12 +416,12 @@ internal class CropWindowHandler {
   /**
    * Determines if the specified coordinate is in the target touch zone for a vertical bar handle.
    *
-   * @param x the x-coordinate of the touch point
-   * @param y the y-coordinate of the touch point
-   * @param handleX the x-coordinate of the vertical bar handle
-   * @param handleYStart the top y-coordinate of the vertical bar handle
-   * @param handleYEnd the bottom y-coordinate of the vertical bar handle
-   * @param targetRadius the target radius in pixels
+   * [x] the x-coordinate of the touch point
+   * [y] the y-coordinate of the touch point
+   * [handleX] the x-coordinate of the vertical bar handle
+   * [handleYStart] the top y-coordinate of the vertical bar handle
+   * [handleYEnd] the bottom y-coordinate of the vertical bar handle
+   * [targetRadius] the target radius in pixels
    * @return true if the touch point is in the target touch zone; false otherwise
    */
   private fun isInVerticalTargetZone(
@@ -437,12 +436,12 @@ internal class CropWindowHandler {
   /**
    * Determines if the specified coordinate falls anywhere inside the given bounds.
    *
-   * @param x the x-coordinate of the touch point
-   * @param y the y-coordinate of the touch point
-   * @param left the x-coordinate of the left bound
-   * @param top the y-coordinate of the top bound
-   * @param right the x-coordinate of the right bound
-   * @param bottom the y-coordinate of the bottom bound
+   * [x] the x-coordinate of the touch point
+   * [y] the y-coordinate of the touch point
+   * [left] the x-coordinate of the left bound
+   * [top] the y-coordinate of the top bound
+   * [right] the x-coordinate of the right bound
+   * [bottom] the y-coordinate of the bottom bound
    * @return true if the touch point is inside the bounding rectangle; false otherwise
    */
   private fun isInCenterTargetZone(

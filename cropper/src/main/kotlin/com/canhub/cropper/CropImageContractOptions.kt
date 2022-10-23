@@ -62,7 +62,7 @@ data class CropImageContractOptions(
 
   /**
    * To set the fill color of the Oval crop corner
-   * @param circleFillColorHexValue Hex value of the color (Default is WHITE)
+   * [circleFillColorHexValue] Hex value of the color (Default is WHITE)
    */
   fun setCircleCornerFillColor(circleFillColorHexValue: Int): CropImageContractOptions {
     cropImageOptions.circleCornerFillColorHexValue = circleFillColorHexValue
@@ -193,8 +193,8 @@ data class CropImageContractOptions(
    * Also sets fixes aspect ratio to TRUE.<br></br>
    * *Default: 1/1*
    *
-   * @param aspectRatioX the width
-   * @param aspectRatioY the height
+   * [aspectRatioX] the width
+   * [aspectRatioY] the height
    */
   fun setAspectRatio(aspectRatioX: Int, aspectRatioY: Int): CropImageContractOptions {
     cropImageOptions.aspectRatioX = aspectRatioX
@@ -540,7 +540,7 @@ data class CropImageContractOptions(
    * This takes the given app package list (list of app package names)
    * and displays them first among the list of apps available
    *
-   * @param priorityAppPackages accepts a list of strings of app package names
+   * [priorityAppPackages] accepts a list of strings of app package names
    * Apps are displayed in the order you pass them if they are available on your device
    *
    * Note: If you pass an empty list here there will be no sorting of the apps list

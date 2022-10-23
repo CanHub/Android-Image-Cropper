@@ -36,8 +36,7 @@ internal class CropOverlayView @JvmOverloads constructor(
   attrs: AttributeSet? = null,
 ) : View(context, attrs) {
   internal companion object {
-    /**
-     * Creates the paint object for drawing text label over crop overlay */
+    /** Creates the paint object for drawing text label over crop overlay. */
     internal fun getTextPaint(options: CropImageOptions): Paint =
       Paint().apply {
         strokeWidth = 1f
@@ -78,28 +77,28 @@ internal class CropOverlayView @JvmOverloads constructor(
   private var mCircleCornerFillColor: Int? = null
   private var mOptions: CropImageOptions? = null
 
-  /** Gesture detector used for multitouch box scaling  */
+  /** Gesture detector used for multitouch box scaling. */
   private var mScaleDetector: ScaleGestureDetector? = null
 
-  /** Boolean to see if multitouch is enabled for the crop rectangle  */
+  /** Boolean to see if multitouch is enabled for the crop rectangle. */
   private var mMultiTouchEnabled = false
 
-  /** Boolean to see if movement via dragging center is enabled for the crop rectangle  */
+  /** Boolean to see if movement via dragging center is enabled for the crop rectangle. */
   private var mCenterMoveEnabled = true
 
   /** Handler from crop window stuff, moving and knowing position. */
   private val mCropWindowHandler = CropWindowHandler()
 
-  /** Listener to public crop window changes  */
+  /** Listener to public crop window changes. */
   private var mCropWindowChangeListener: CropWindowChangeListener? = null
 
-  /** Rectangle used for drawing  */
+  /** Rectangle used for drawing. */
   private val mDrawRect = RectF()
 
   /** The Paint used to draw the white rectangle around the crop area. */
   private var mBorderPaint: Paint? = null
 
-  /** The Paint used to draw the corners of the Border  */
+  /** The Paint used to draw the corners of the Border. */
   private var mBorderCornerPaint: Paint? = null
 
   /** The Paint used to draw the guidelines within the crop area when pressed. */
@@ -125,13 +124,13 @@ internal class CropOverlayView @JvmOverloads constructor(
   /** The bounding image view height used to know the crop overlay is at view edges. */
   private var mViewHeight = 0
 
-  /** The offset to draw the border corner from the border  */
+  /** The offset to draw the border corner from the border. */
   private var mBorderCornerOffset = 0f
 
-  /** the length of the border corner to draw  */
+  /** The length of the border corner to draw. */
   private var mBorderCornerLength = 0f
 
-  /** The initial crop window padding from image borders  */
+  /** The initial crop window padding from image borders. */
   private var mInitialCropWindowPaddingRatio = 0f
 
   /** The radius of the touch zone (in pixels) around a given Handle. */
@@ -157,10 +156,10 @@ internal class CropOverlayView @JvmOverloads constructor(
   var isFixAspectRatio = false
     private set
 
-  /** save the current aspect ratio of the image  */
+  /** Save the current aspect ratio of the image. */
   private var mAspectRatioX = 0
 
-  /** save the current aspect ratio of the image  */
+  /** Save the current aspect ratio of the image. */
   private var mAspectRatioY = 0
 
   /**
@@ -169,7 +168,7 @@ internal class CropOverlayView @JvmOverloads constructor(
    */
   private var mTargetAspectRatio = mAspectRatioX.toFloat() / mAspectRatioY
   /** Get the current guidelines option set. */
-  /** Instance variables for customizable attributes  */
+  /** Instance variables for customizable attributes. */
   var guidelines: Guidelines? = null
     private set
   /** The shape of the cropping area - rectangle/circular. */
@@ -186,19 +185,19 @@ internal class CropOverlayView @JvmOverloads constructor(
   /** To show the text label over crop overlay **/
   private var isCropLabelEnabled: Boolean = false
 
-  /** Text to show over text label over crop overlay */
+  /** Text to show over text label over crop overlay. */
   private var cropLabelText: String = ""
 
-  /** Text color to apply over text label over crop overlay */
+  /** Text color to apply over text label over crop overlay. */
   private var cropLabelTextSize: Float = 20f
 
-  /** Text color to apply over text label over crop overlay */
+  /** Text color to apply over text label over crop overlay. */
   private var cropLabelTextColor = Color.WHITE
 
-  /** the initial crop window rectangle to set  */
+  /** The initial crop window rectangle to set. */
   private val mInitialCropWindowRect = Rect()
 
-  /** Whether the Crop View has been initialized for the first time  */
+  /** Whether the Crop View has been initialized for the first time. */
   private var initializedCropWindow = false
 
   /** The maximum vertical gesture exclusion allowed by Android (200dp) in px. **/
@@ -227,9 +226,9 @@ internal class CropOverlayView @JvmOverloads constructor(
    * Informs the CropOverlayView of the image's position relative to the ImageView. This is
    * necessary to call in order to draw the crop window.
    *
-   * @param boundsPoints the image's bounding points
-   * @param viewWidth The bounding image view width.
-   * @param viewHeight The bounding image view height.
+   * [boundsPoints] the image's bounding points
+   * [viewWidth] The bounding image view width.
+   * [viewHeight] The bounding image view height.
    */
   fun setBounds(boundsPoints: FloatArray?, viewWidth: Int, viewHeight: Int) {
     if (boundsPoints == null || !Arrays.equals(mBoundsPoints, boundsPoints)) {
@@ -332,7 +331,7 @@ internal class CropOverlayView @JvmOverloads constructor(
       }
     }
   }
-  /** the X value of the aspect ratio;  */
+  /** The X value of the aspect ratio;  */
   /** Sets the X value of the aspect ratio; is defaulted to 1. */
   var aspectRatioX: Int
     get() = mAspectRatioX
@@ -347,7 +346,7 @@ internal class CropOverlayView @JvmOverloads constructor(
         }
       }
     }
-  /** the Y value of the aspect ratio;  */
+  /** The Y value of the aspect ratio;  */
   /**
    * Sets the Y value of the aspect ratio; is defaulted to 1.
    *
@@ -1140,7 +1139,7 @@ internal class CropOverlayView @JvmOverloads constructor(
    * we find the max rectangle that is within the image bounds starting from the crop window
    * rectangle.
    *
-   * @param rect the crop window rectangle to start finsing bounded rectangle from
+   * [rect] the crop window rectangle to start finsing bounded rectangle from
    * @return true - non-straight rotation in place, false - otherwise.
    */
   private fun calculateBounds(rect: RectF): Boolean {
@@ -1236,14 +1235,13 @@ internal class CropOverlayView @JvmOverloads constructor(
     /**
      * Called after a change in crop window rectangle.
      *
-     * @param inProgress is the crop window change operation is still in progress by user touch
+     * [inProgress] if the crop window change operation is still in progress by user touch
      */
     fun onCropWindowChanged(inProgress: Boolean)
   }
 
-  /** Handle scaling the rectangle based on two finger input  */
+  /** Handle scaling the rectangle based on two finger input. */
   private inner class ScaleListener : SimpleOnScaleGestureListener() {
-
     override fun onScale(detector: ScaleGestureDetector): Boolean {
       val rect = mCropWindowHandler.getRect()
       val x = detector.focusX

@@ -85,8 +85,7 @@ object CropImage {
    *
    * This is not the File Path, for it please use [getCaptureImageOutputUriFilePath]
    *
-   * @param context used to access Android APIs, like content resolve, it is your
-   * activity/fragment/widget.
+   * [context] used to access Android APIs, like content resolve, it is your activity/fragment/widget.
    */
   @Suppress("DeprecatedCallableAddReplaceWith", "DEPRECATION")
   @Deprecated("This will become obsolete. There will be no replacement. In case you need this, please raise an issue and explain your use case.")
@@ -115,9 +114,8 @@ object CropImage {
   /**
    * Get File Path to image received from capture by camera.
    *
-   * @param context used to access Android APIs, like content resolve, it is your
-   * activity/fragment/widget.
-   * @param uniqueName If true, make each image cropped have a different file name, this could cause
+   * [context] used to access Android APIs, like content resolve, it is your activity/fragment/widget.
+   * [uniqueName] If true, make each image cropped have a different file name, this could cause
    * memory issues, use wisely. [Default: false]
    */
   @Suppress("DeprecatedCallableAddReplaceWith", "DEPRECATION")
@@ -131,9 +129,8 @@ object CropImage {
    *
    * This is not the File Path, for it please use [getPickImageResultUriFilePath]
    *
-   * @param context used to access Android APIs, like content resolve, it is your
-   * activity/fragment/widget.
-   * @param data    the returned data of the activity result
+   * [context] used to access Android APIs, like content resolve, it is your activity/fragment/widget.
+   * [data] the returned data of the activity result
    */
   @JvmStatic
   @Suppress("DeprecatedCallableAddReplaceWith", "DEPRECATION")
@@ -155,10 +152,9 @@ object CropImage {
   /**
    * Get the File Path of the selected image
    *
-   * @param context used to access Android APIs, like content resolve, it is your
-   * activity/fragment/widget.
-   * @param data    the returned data of the activity result
-   * @param uniqueName If true, make each image cropped have a different file name, this could cause
+   * [context] used to access Android APIs, like content resolve, it is your activity/fragment/widget.
+   * [data] the returned data of the activity result
+   * [uniqueName] If true, make each image cropped have a different file name, this could cause
    * memory issues, use wisely. [Default: false]
    */
   @JvmStatic
