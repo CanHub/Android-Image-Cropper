@@ -40,7 +40,7 @@ class CropImageContractTest {
     }
     // WHEN
     try {
-      fragment?.cropImageIntent(options { setMaxZoom(-10) })
+      fragment?.cropImageIntent(CropImageContractOptions(null, CropImageOptions().copy(maxZoom = -10)))
     } catch (e: Exception) {
       result = e
     }
@@ -68,7 +68,7 @@ class CropImageContractTest {
       onFragment { fragment = it }
     }
     // WHEN
-    fragment?.cropImage(options())
+    fragment?.cropImage(CropImageContractOptions(null, CropImageOptions()))
     // THEN
     assertEquals(expected, fragment?.cropResult)
   }
@@ -105,7 +105,7 @@ class CropImageContractTest {
       onFragment { fragment = it }
     }
     // WHEN
-    fragment?.cropImage(options())
+    fragment?.cropImage(CropImageContractOptions(null, CropImageOptions()))
     // THEN
     assertEquals(expected, fragment?.cropResult)
   }
@@ -116,50 +116,59 @@ class CropImageContractTest {
     var cropImageIntent: Intent? = null
     val expectedClassName = CropImageActivity::class.java.name
     val expectedSource = "file://testInput".toUri()
-    val options = options(expectedSource) {
-      setCropShape(CropImageView.CropShape.OVAL)
-      setSnapRadius(1f)
-      setTouchRadius(2f)
-      setGuidelines(CropImageView.Guidelines.ON_TOUCH)
-      setScaleType(CropImageView.ScaleType.CENTER)
-      setShowCropOverlay(true)
-      setAutoZoomEnabled(false)
-      setMultiTouchEnabled(true)
-      setCenterMoveEnabled(false)
-      setMaxZoom(17)
-      setInitialCropWindowPaddingRatio(0.2f)
-      setFixAspectRatio(true)
-      setAspectRatio(3, 4)
-      setBorderLineThickness(3f)
-      setBorderLineColor(Color.GREEN)
-      setBorderCornerThickness(5f)
-      setBorderCornerOffset(6f)
-      setBorderCornerLength(7f)
-      setBorderCornerColor(Color.MAGENTA)
-      setGuidelinesThickness(8f)
-      setGuidelinesColor(Color.RED)
-      setBackgroundColor(Color.BLUE)
-      setMinCropWindowSize(5, 5)
-      setMinCropResultSize(10, 10)
-      setMaxCropResultSize(5000, 5000)
-      setActivityTitle("Test Activity Title")
-      setActivityMenuIconColor(Color.BLACK)
-      setOutputUri(expectedSource)
-      setOutputCompressFormat(Bitmap.CompressFormat.JPEG)
-      setOutputCompressQuality(85)
-      setRequestedSize(25, 30, CropImageView.RequestSizeOptions.NONE)
-      setNoOutputImage(false)
-      setInitialCropWindowRectangle(Rect(4, 5, 6, 7))
-      setInitialRotation(13)
-      setAllowRotation(true)
-      setAllowFlipping(false)
-      setAllowCounterRotation(true)
-      setRotationDegrees(4)
-      setFlipHorizontally(true)
-      setFlipVertically(false)
-      setCropMenuCropButtonTitle("Test Button Title")
-      setCropMenuCropButtonIcon(R.drawable.ic_rotate_left_24)
-    }
+    val options = CropImageContractOptions(
+      expectedSource,
+      CropImageOptions(
+        cropShape = CropImageView.CropShape.OVAL,
+        snapRadius = 1f,
+        touchRadius = 2f,
+        guidelines = CropImageView.Guidelines.ON_TOUCH,
+        scaleType = CropImageView.ScaleType.CENTER,
+        showCropOverlay = true,
+        autoZoomEnabled = false,
+        multiTouchEnabled = true,
+        centerMoveEnabled = false,
+        maxZoom = 17,
+        initialCropWindowPaddingRatio = 0.2f,
+        fixAspectRatio = true,
+        aspectRatioX = 3,
+        aspectRatioY = 4,
+        borderLineThickness = 3f,
+        borderLineColor = Color.GREEN,
+        borderCornerThickness = 5f,
+        borderCornerOffset = 6f,
+        borderCornerLength = 7f,
+        borderCornerColor = Color.MAGENTA,
+        guidelinesThickness = 8f,
+        guidelinesColor = Color.RED,
+        backgroundColor = Color.BLUE,
+        minCropWindowWidth = 5,
+        minCropWindowHeight = 5,
+        minCropResultWidth = 10,
+        minCropResultHeight = 10,
+        maxCropResultWidth = 5000,
+        maxCropResultHeight = 5000,
+        activityTitle = "Test Activity Title",
+        activityMenuIconColor = Color.BLACK,
+        customOutputUri = null,
+        outputCompressFormat = Bitmap.CompressFormat.JPEG,
+        outputCompressQuality = 85,
+        outputRequestWidth = 25,
+        outputRequestHeight = 30,
+        outputRequestSizeOptions = CropImageView.RequestSizeOptions.NONE,
+        noOutputImage = false,
+        initialCropWindowRectangle = Rect(4, 5, 6, 7),
+        initialRotation = 13,
+        allowRotation = true,
+        allowFlipping = false,
+        allowCounterRotation = true,
+        rotationDegrees = 4,
+        flipHorizontally = true,
+        flipVertically = false,
+        cropMenuCropButtonTitle = "Test Button Title",
+        cropMenuCropButtonIcon = R.drawable.ic_rotate_left_24,
+      ),
+    )
 
     val testRegistry = object : ActivityResultRegistry() {
       override fun <I, O> onLaunch(
@@ -213,7 +222,7 @@ class CropImageContractTest {
       onFragment { fragment = it }
     }
     // WHEN
-    fragment?.cropImage(options())
+    fragment?.cropImage(CropImageContractOptions(null, CropImageOptions()))
     // THEN
     assertEquals(false, fragment?.cropResult?.isSuccessful)
   }

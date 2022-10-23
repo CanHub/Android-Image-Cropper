@@ -1,3 +1,5 @@
+@file:Suppress("DeprecatedCallableAddReplaceWith")
+
 package com.canhub.cropper
 
 import android.graphics.Bitmap
@@ -26,6 +28,7 @@ data class CropImageContractOptions(
    *
    * Default values: `True`
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setImageSource(includeGallery: Boolean, includeCamera: Boolean): CropImageContractOptions {
     cropImageOptions.imageSourceIncludeGallery = includeGallery
     cropImageOptions.imageSourceIncludeCamera = includeCamera
@@ -45,6 +48,7 @@ data class CropImageContractOptions(
    * [setFixAspectRatio] } (with argument `false`) and
    * [setInitialCropWindowPaddingRatio] (with argument `0f).
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setCropShape(cropShape: CropShape): CropImageContractOptions {
     cropImageOptions.cropShape = cropShape
     return this
@@ -54,6 +58,7 @@ data class CropImageContractOptions(
    * To set the shape of the cropper corner (RECTANGLE / OVAL)
    * Default: RECTANGLE
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setCropCornerShape(cornerShape: CropImageView.CropCornerShape): CropImageContractOptions {
     cropImageOptions.cornerShape = cornerShape
     return this
@@ -63,6 +68,7 @@ data class CropImageContractOptions(
    * To set the fill color of the Oval crop corner
    * [circleFillColorHexValue] Hex value of the color (Default is WHITE)
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setCircleCornerFillColor(circleFillColorHexValue: Int): CropImageContractOptions {
     cropImageOptions.circleCornerFillColorHexValue = circleFillColorHexValue
     return this
@@ -72,6 +78,7 @@ data class CropImageContractOptions(
    * To set the Oval crop corner radius
    * Default is 10
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setCropCornerRadius(cornerRadius: Float): CropImageContractOptions {
     cropImageOptions.cropCornerRadius = cornerRadius
     return this
@@ -83,6 +90,7 @@ data class CropImageContractOptions(
    * bounding box edge (in pixels).<br></br>
    * *Default: 3dp*
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setSnapRadius(snapRadius: Float): CropImageContractOptions {
     cropImageOptions.snapRadius = snapRadius
     return this
@@ -94,6 +102,7 @@ data class CropImageContractOptions(
    * See: http://developer.android.com/design/style/metrics-grids.html#48dp-rhythm<br></br>
    * *Default: 48dp*
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setTouchRadius(touchRadius: Float): CropImageContractOptions {
     cropImageOptions.touchRadius = touchRadius
     return this
@@ -103,6 +112,7 @@ data class CropImageContractOptions(
    * whether the guidelines should be on, off, or only showing when resizing.<br></br>
    * *Default: ON_TOUCH*
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setGuidelines(guidelines: Guidelines): CropImageContractOptions {
     cropImageOptions.guidelines = guidelines
     return this
@@ -112,6 +122,7 @@ data class CropImageContractOptions(
    * The initial scale type of the image in the crop image view<br></br>
    * *Default: FIT_CENTER*
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setScaleType(scaleType: CropImageView.ScaleType): CropImageContractOptions {
     cropImageOptions.scaleType = scaleType
     return this
@@ -122,11 +133,13 @@ data class CropImageContractOptions(
    * cropping image.<br></br>
    * *default: true, may disable for animation or frame transition.*
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setShowCropOverlay(showCropOverlay: Boolean): CropImageContractOptions {
     cropImageOptions.showCropOverlay = showCropOverlay
     return this
   }
 
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setShowCropLabel(showCropLabel: Boolean): CropImageContractOptions {
     cropImageOptions.showCropLabel = showCropLabel
     return this
@@ -136,6 +149,7 @@ data class CropImageContractOptions(
    * if auto-zoom functionality is enabled.<br></br>
    * default: true.
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setAutoZoomEnabled(autoZoomEnabled: Boolean): CropImageContractOptions {
     cropImageOptions.autoZoomEnabled = autoZoomEnabled
     return this
@@ -145,6 +159,7 @@ data class CropImageContractOptions(
    * if multi touch functionality is enabled.<br></br>
    * default: true.
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setMultiTouchEnabled(multiTouchEnabled: Boolean): CropImageContractOptions {
     cropImageOptions.multiTouchEnabled = multiTouchEnabled
     return this
@@ -154,6 +169,7 @@ data class CropImageContractOptions(
    * if the crop window can be moved by dragging the center.<br></br>
    * default: true
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setCenterMoveEnabled(centerMoveEnabled: Boolean): CropImageContractOptions {
     cropImageOptions.centerMoveEnabled = centerMoveEnabled
     return this
@@ -163,6 +179,7 @@ data class CropImageContractOptions(
    * The max zoom allowed during cropping.<br></br>
    * *Default: 4*
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setMaxZoom(maxZoom: Int): CropImageContractOptions {
     cropImageOptions.maxZoom = maxZoom
     return this
@@ -173,6 +190,7 @@ data class CropImageContractOptions(
    * dimensions.<br></br>
    * *Default: 0.1*
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setInitialCropWindowPaddingRatio(initialCropWindowPaddingRatio: Float): CropImageContractOptions {
     cropImageOptions.initialCropWindowPaddingRatio = initialCropWindowPaddingRatio
     return this
@@ -182,6 +200,7 @@ data class CropImageContractOptions(
    * whether the width to height aspect ratio should be maintained or free to change.<br></br>
    * *Default: false*
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setFixAspectRatio(fixAspectRatio: Boolean): CropImageContractOptions {
     cropImageOptions.fixAspectRatio = fixAspectRatio
     return this
@@ -195,6 +214,7 @@ data class CropImageContractOptions(
    * [aspectRatioX] the width
    * [aspectRatioY] the height
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setAspectRatio(aspectRatioX: Int, aspectRatioY: Int): CropImageContractOptions {
     cropImageOptions.aspectRatioX = aspectRatioX
     cropImageOptions.aspectRatioY = aspectRatioY
@@ -206,6 +226,7 @@ data class CropImageContractOptions(
    * the thickness of the guidelines lines (in pixels).<br></br>
    * *Default: 3dp*
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setBorderLineThickness(borderLineThickness: Float): CropImageContractOptions {
     cropImageOptions.borderLineThickness = borderLineThickness
     return this
@@ -215,6 +236,7 @@ data class CropImageContractOptions(
    * the color of the guidelines lines.<br></br>
    * *Default: Color.argb(170, 255, 255, 255)*
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setBorderLineColor(borderLineColor: Int): CropImageContractOptions {
     cropImageOptions.borderLineColor = borderLineColor
     return this
@@ -224,6 +246,7 @@ data class CropImageContractOptions(
    * thickness of the corner line (in pixels).<br></br>
    * *Default: 2dp*
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setBorderCornerThickness(borderCornerThickness: Float): CropImageContractOptions {
     cropImageOptions.borderCornerThickness = borderCornerThickness
     return this
@@ -233,6 +256,7 @@ data class CropImageContractOptions(
    * the offset of corner line from crop window border (in pixels).<br></br>
    * *Default: 5dp*
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setBorderCornerOffset(borderCornerOffset: Float): CropImageContractOptions {
     cropImageOptions.borderCornerOffset = borderCornerOffset
     return this
@@ -242,6 +266,7 @@ data class CropImageContractOptions(
    * the length of the corner line away from the corner (in pixels).<br></br>
    * *Default: 14dp*
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setBorderCornerLength(borderCornerLength: Float): CropImageContractOptions {
     cropImageOptions.borderCornerLength = borderCornerLength
     return this
@@ -251,6 +276,7 @@ data class CropImageContractOptions(
    * the color of the corner line.<br></br>
    * *Default: WHITE*
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setBorderCornerColor(borderCornerColor: Int): CropImageContractOptions {
     cropImageOptions.borderCornerColor = borderCornerColor
     return this
@@ -260,6 +286,7 @@ data class CropImageContractOptions(
    * the thickness of the guidelines lines (in pixels).<br></br>
    * *Default: 1dp*
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setGuidelinesThickness(guidelinesThickness: Float): CropImageContractOptions {
     cropImageOptions.guidelinesThickness = guidelinesThickness
     return this
@@ -269,6 +296,7 @@ data class CropImageContractOptions(
    * the color of the guidelines lines.<br></br>
    * *Default: Color.argb(170, 255, 255, 255)*
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setGuidelinesColor(guidelinesColor: Int): CropImageContractOptions {
     cropImageOptions.guidelinesColor = guidelinesColor
     return this
@@ -279,6 +307,7 @@ data class CropImageContractOptions(
    * crop window.<br></br>
    * *Default: Color.argb(119, 0, 0, 0)*
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setBackgroundColor(backgroundColor: Int): CropImageContractOptions {
     cropImageOptions.backgroundColor = backgroundColor
     return this
@@ -288,6 +317,7 @@ data class CropImageContractOptions(
    * the min size the crop window is allowed to be (in pixels).<br></br>
    * *Default: 42dp, 42dp*
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setMinCropWindowSize(
     minCropWindowWidth: Int,
     minCropWindowHeight: Int,
@@ -302,6 +332,7 @@ data class CropImageContractOptions(
    * limits (in pixels).<br></br>
    * *Default: 40px, 40px*
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setMinCropResultSize(
     minCropResultWidth: Int,
     minCropResultHeight: Int,
@@ -316,6 +347,7 @@ data class CropImageContractOptions(
    * limits (in pixels).<br></br>
    * *Default: 99999, 99999*
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setMaxCropResultSize(
     maxCropResultWidth: Int,
     maxCropResultHeight: Int,
@@ -329,6 +361,7 @@ data class CropImageContractOptions(
    * the title of the [CropImageActivity].<br></br>
    * *Default: ""*
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setActivityTitle(activityTitle: CharSequence): CropImageContractOptions {
     cropImageOptions.activityTitle = activityTitle
     return this
@@ -338,6 +371,7 @@ data class CropImageContractOptions(
    * the color to use for action bar items icons.<br></br>
    * *Default: NONE*
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setActivityMenuIconColor(activityMenuIconColor: Int): CropImageContractOptions {
     cropImageOptions.activityMenuIconColor = activityMenuIconColor
     return this
@@ -347,6 +381,7 @@ data class CropImageContractOptions(
    * the color to use for action bar items texts.<br></br>
    * *Default: NONE*
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setActivityMenuTextColor(activityMenuTextColor: Int): CropImageContractOptions {
     cropImageOptions.activityMenuTextColor = activityMenuTextColor
     return this
@@ -356,6 +391,7 @@ data class CropImageContractOptions(
    * the Android Uri to save the cropped image to.<br></br>
    * *Default: NONE, will create a temp file*
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setOutputUri(outputUri: Uri?): CropImageContractOptions {
     cropImageOptions.customOutputUri = outputUri
     return this
@@ -365,6 +401,7 @@ data class CropImageContractOptions(
    * the compression format to use when writting the image.<br></br>
    * *Default: JPEG*
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setOutputCompressFormat(outputCompressFormat: Bitmap.CompressFormat): CropImageContractOptions {
     cropImageOptions.outputCompressFormat = outputCompressFormat
     return this
@@ -374,6 +411,7 @@ data class CropImageContractOptions(
    * the quality (if applicable) to use when writting the image (0 - 100).<br></br>
    * *Default: 90*
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setOutputCompressQuality(outputCompressQuality: Int): CropImageContractOptions {
     cropImageOptions.outputCompressQuality = outputCompressQuality
     return this
@@ -381,21 +419,14 @@ data class CropImageContractOptions(
 
   /**
    * the size to resize the cropped image to.<br></br>
-   * Uses [CropImageView.RequestSizeOptions.RESIZE_INSIDE] option.<br></br>
    * *Default: 0, 0 - not set, will not resize*
    */
-  fun setRequestedSize(reqWidth: Int, reqHeight: Int): CropImageContractOptions {
-    return setRequestedSize(reqWidth, reqHeight, RequestSizeOptions.RESIZE_INSIDE)
-  }
-
-  /**
-   * the size to resize the cropped image to.<br></br>
-   * *Default: 0, 0 - not set, will not resize*
-   */
+  @JvmOverloads
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setRequestedSize(
     reqWidth: Int,
     reqHeight: Int,
-    reqSizeOptions: RequestSizeOptions,
+    reqSizeOptions: RequestSizeOptions = RequestSizeOptions.RESIZE_INSIDE,
   ): CropImageContractOptions {
     cropImageOptions.outputRequestWidth = reqWidth
     cropImageOptions.outputRequestHeight = reqHeight
@@ -409,6 +440,7 @@ data class CropImageContractOptions(
    * data.<br></br>
    * *Default: false*
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setNoOutputImage(noOutputImage: Boolean): CropImageContractOptions {
     cropImageOptions.noOutputImage = noOutputImage
     return this
@@ -418,6 +450,7 @@ data class CropImageContractOptions(
    * the initial rectangle to set on the cropping image after loading.<br></br>
    * *Default: NONE - will initialize using initial crop window padding ratio*
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setInitialCropWindowRectangle(initialCropWindowRectangle: Rect?): CropImageContractOptions {
     cropImageOptions.initialCropWindowRectangle = initialCropWindowRectangle
     return this
@@ -428,6 +461,7 @@ data class CropImageContractOptions(
    * <br></br>
    * *Default: NONE - will read image exif data*
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setInitialRotation(initialRotation: Int): CropImageContractOptions {
     cropImageOptions.initialRotation = (initialRotation + DEGREES_360) % DEGREES_360
     return this
@@ -437,6 +471,7 @@ data class CropImageContractOptions(
    * if to allow rotation during cropping.<br></br>
    * *Default: true*
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setAllowRotation(allowRotation: Boolean): CropImageContractOptions {
     cropImageOptions.allowRotation = allowRotation
     return this
@@ -446,6 +481,7 @@ data class CropImageContractOptions(
    * if to allow flipping during cropping.<br></br>
    * *Default: true*
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setAllowFlipping(allowFlipping: Boolean): CropImageContractOptions {
     cropImageOptions.allowFlipping = allowFlipping
     return this
@@ -456,6 +492,7 @@ data class CropImageContractOptions(
    * Note: if rotation is disabled this option has no effect.<br></br>
    * *Default: false*
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setAllowCounterRotation(allowCounterRotation: Boolean): CropImageContractOptions {
     cropImageOptions.allowCounterRotation = allowCounterRotation
     return this
@@ -465,6 +502,7 @@ data class CropImageContractOptions(
    * The amount of degreees to rotate clockwise or counter-clockwise (0-360).<br></br>
    * *Default: 90*
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setRotationDegrees(rotationDegrees: Int): CropImageContractOptions {
     cropImageOptions.rotationDegrees = (rotationDegrees + DEGREES_360) % DEGREES_360
     return this
@@ -474,6 +512,7 @@ data class CropImageContractOptions(
    * whether the image should be flipped horizontally.<br></br>
    * *Default: false*
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setFlipHorizontally(flipHorizontally: Boolean): CropImageContractOptions {
     cropImageOptions.flipHorizontally = flipHorizontally
     return this
@@ -483,6 +522,7 @@ data class CropImageContractOptions(
    * whether the image should be flipped vertically.<br></br>
    * *Default: false*
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setFlipVertically(flipVertically: Boolean): CropImageContractOptions {
     cropImageOptions.flipVertically = flipVertically
     return this
@@ -492,6 +532,7 @@ data class CropImageContractOptions(
    * optional, set crop menu crop button title.<br></br>
    * *Default: null, will use resource string: crop_image_menu_crop*
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setCropMenuCropButtonTitle(title: CharSequence?): CropImageContractOptions {
     cropImageOptions.cropMenuCropButtonTitle = title
     return this
@@ -501,6 +542,7 @@ data class CropImageContractOptions(
    * Image resource id to use for crop icon instead of text.<br></br>
    * *Default: 0*
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setCropMenuCropButtonIcon(@DrawableRes drawableResource: Int): CropImageContractOptions {
     cropImageOptions.cropMenuCropButtonIcon = drawableResource
     return this
@@ -510,6 +552,7 @@ data class CropImageContractOptions(
    * Set whether the cropping option should be allowed or skipped entirely.<br></br>
    * *Default: false*
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setSkipEditing(skipEditing: Boolean): CropImageContractOptions {
     cropImageOptions.skipEditing = skipEditing
     cropImageOptions.showCropOverlay = !skipEditing
@@ -524,6 +567,7 @@ data class CropImageContractOptions(
    * Note: To show the camera app as an option in Intent chooser you will need to add
    * the camera permission ("android.permission.CAMERA") to your manifest file.
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setShowIntentChooser(showIntentChooser: Boolean) = cropImageOptions.apply {
     this.showIntentChooser = showIntentChooser
   }
@@ -531,6 +575,7 @@ data class CropImageContractOptions(
   /**
    * Sets a custom title for the intent chooser
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setIntentChooserTitle(intentChooserTitle: String) = cropImageOptions.apply {
     this.intentChooserTitle = intentChooserTitle
   }
@@ -547,6 +592,7 @@ data class CropImageContractOptions(
    * By default, the library sorts the list putting a few common
    * apps like Google Photos and Google Photos Go at the start of the list.
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setIntentChooserPriorityList(priorityAppPackages: List<String>) = cropImageOptions.apply {
     this.intentChooserPriorityList = priorityAppPackages
   }
@@ -554,6 +600,7 @@ data class CropImageContractOptions(
   /**
    * Sets the background color of the Crop Image Activity screen.
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setActivityBackgroundColor(@ColorInt color: Int) = cropImageOptions.apply {
     this.activityBackgroundColor = color
   }
@@ -561,6 +608,7 @@ data class CropImageContractOptions(
   /**
    * Sets the toolbar color of the Crop Image Activity screen.
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setToolbarColor(@ColorInt color: Int) = cropImageOptions.apply {
     this.toolbarColor = color
   }
@@ -568,6 +616,7 @@ data class CropImageContractOptions(
   /**
    * Sets the toolbar color of the Crop Image Activity screen.
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setToolbarTitleColor(@ColorInt color: Int) = cropImageOptions.apply {
     this.toolbarTitleColor = color
   }
@@ -575,6 +624,7 @@ data class CropImageContractOptions(
   /**
    * Sets the toolbar back button color of the Crop Image Activity screen.
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setToolbarBackButtonColor(@ColorInt color: Int) = cropImageOptions.apply {
     this.toolbarBackButtonColor = color
   }
@@ -587,6 +637,7 @@ data class CropImageContractOptions(
    * 3. Toolbar menu icon color
    * 4. Toolbar menu text color
    */
+  @Deprecated("Please modify the associated properties directly on CropImageOptions using either primary constructor or the copy method")
   fun setToolbarTintColor(@ColorInt color: Int) = cropImageOptions.apply {
     this.activityMenuTextColor = color
     this.activityMenuIconColor = color
@@ -595,6 +646,9 @@ data class CropImageContractOptions(
   }
 }
 
+@Deprecated(
+  message = "Please construct your own CropImageContractOptions using the constructor.",
+)
 fun options(
   uri: Uri? = null,
   builder: CropImageContractOptions.() -> (Unit) = {},
