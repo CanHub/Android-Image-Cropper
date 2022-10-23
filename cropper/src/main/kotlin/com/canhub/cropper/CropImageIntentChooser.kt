@@ -14,16 +14,16 @@ import android.provider.MediaStore
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
 
-class CropImageIntentChooser(
+internal class CropImageIntentChooser(
   private val activity: ComponentActivity,
   private val callback: ResultCallback,
 ) {
-  interface ResultCallback {
+  internal interface ResultCallback {
     fun onSuccess(uri: Uri?)
     fun onCancelled()
   }
 
-  companion object {
+  internal companion object {
     const val GOOGLE_PHOTOS = "com.google.android.apps.photos"
     const val GOOGLE_PHOTOS_GO = "com.google.android.apps.photosgo"
     const val SAMSUNG_GALLERY = "com.sec.android.gallery3d"
@@ -40,23 +40,22 @@ class CropImageIntentChooser(
     MIUI_GALLERY,
   )
   private var cameraImgUri: Uri? = null
-  private val intentChooser =
-    activity.registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityRes ->
-      if (activityRes.resultCode == Activity.RESULT_OK) {
-                /*
-                    Here we don't know whether a gallery app or the camera app is selected
-                    via the intent chooser. If a gallery app is selected and an image is
-                    chosen then we get the result from activityRes.
-                    If a camera app is selected we take the uri we passed to the camera
-                    app for storing the captured image
-                 */
-        (activityRes.data?.data ?: cameraImgUri).let { uri ->
-          callback.onSuccess(uri)
-        }
-      } else {
-        callback.onCancelled()
+  private val intentChooser = activity.registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityRes ->
+    if (activityRes.resultCode == Activity.RESULT_OK) {
+      /**
+       * Here we don't know whether a gallery app or the camera app is selected
+       * via the intent chooser. If a gallery app is selected and an image is
+       * chosen then we get the result from activityRes.
+       * If a camera app is selected we take the uri we passed to the camera
+       * app for storing the captured image
+       */
+      (activityRes.data?.data ?: cameraImgUri).let { uri ->
+        callback.onSuccess(uri)
       }
+    } else {
+      callback.onCancelled()
     }
+  }
 
   /**
    * Create a chooser intent to select the source to get image from.<br></br>
