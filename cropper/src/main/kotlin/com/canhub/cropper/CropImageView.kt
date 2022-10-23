@@ -1745,8 +1745,7 @@ class CropImageView @JvmOverloads constructor(
       uriContent?.let { getFilePathFromUri(context, it, uniqueName) }
   }
 
-  companion object {
-
+  internal companion object {
     /**
      * Determines the specs for the onMeasure function. Calculates the width or height depending on
      * the mode.
@@ -1992,9 +1991,10 @@ class CropImageView @JvmOverloads constructor(
 
   override fun onCropWindowChanged(inProgress: Boolean) {
     handleCropWindowChanged(inProgress, true)
-    val listener = mOnCropOverlayReleasedListener
-    if (listener != null && !inProgress) listener.onCropOverlayReleased(cropRect)
-    val movedListener = mOnSetCropOverlayMovedListener
-    if (movedListener != null && inProgress) movedListener.onCropOverlayMoved(cropRect)
+    if (inProgress) {
+      mOnSetCropOverlayMovedListener?.onCropOverlayMoved(cropRect)
+    } else {
+      mOnCropOverlayReleasedListener?.onCropOverlayReleased(cropRect)
+    }
   }
 }
