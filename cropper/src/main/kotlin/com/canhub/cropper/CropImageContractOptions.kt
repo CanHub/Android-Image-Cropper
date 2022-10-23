@@ -5,7 +5,6 @@ import android.graphics.Rect
 import android.net.Uri
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
-import com.canhub.cropper.CropImageOptions.Companion.DEGREES_360
 import com.canhub.cropper.CropImageView.CropShape
 import com.canhub.cropper.CropImageView.Guidelines
 import com.canhub.cropper.CropImageView.RequestSizeOptions

@@ -5,14 +5,13 @@ import android.graphics.Bitmap.CompressFormat
 import android.graphics.Color
 import android.graphics.Rect
 import android.net.Uri
-import android.os.Parcel
 import android.os.Parcelable
-import android.text.TextUtils
 import android.util.TypedValue
 import androidx.annotation.ColorInt
 import com.canhub.cropper.CropImageView.CropShape
 import com.canhub.cropper.CropImageView.Guidelines
 import com.canhub.cropper.CropImageView.RequestSizeOptions
+import kotlinx.parcelize.Parcelize
 
 private val COLOR_PURPLE = Color.rgb(153, 51, 153)
 
@@ -20,7 +19,7 @@ private val COLOR_PURPLE = Color.rgb(153, 51, 153)
  * All the possible options that can be set to customize crop image.<br></br>
  * Initialized with default values.
  */
-class CropImageOptions : Parcelable {
+@Parcelize data class CropImageOptions @JvmOverloads constructor(
 
   /**
    * When library picking and image if this value is true user will be prompt with option to
@@ -29,7 +28,7 @@ class CropImageOptions : Parcelable {
    * Default value: true
    */
   @JvmField
-  var imageSourceIncludeGallery: Boolean = true
+  var imageSourceIncludeGallery: Boolean = true,
 
   /**
    * When library picking and image if this value is true user will be prompt with option to
@@ -38,23 +37,23 @@ class CropImageOptions : Parcelable {
    * Default value: true
    */
   @JvmField
-  var imageSourceIncludeCamera: Boolean = true
+  var imageSourceIncludeCamera: Boolean = true,
 
   /** The shape of the cropping window. */
   @JvmField
-  var cropShape: CropShape = CropShape.RECTANGLE
+  var cropShape: CropShape = CropShape.RECTANGLE,
 
   /**
    * The shape of cropper corners
    */
   @JvmField
-  var cornerShape: CropImageView.CropCornerShape = CropImageView.CropCornerShape.RECTANGLE
+  var cornerShape: CropImageView.CropCornerShape = CropImageView.CropCornerShape.RECTANGLE,
 
   /**
    * The radius of the circular crop corner
    */
   @JvmField
-  var cropCornerRadius: Float = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10f, Resources.getSystem().displayMetrics)
+  var cropCornerRadius: Float = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10f, Resources.getSystem().displayMetrics),
 
   /**
    * An edge of the crop window will snap to the corresponding edge of a specified bounding box when
@@ -62,7 +61,7 @@ class CropImageOptions : Parcelable {
    * box edge. (in pixels)
    */
   @JvmField
-  var snapRadius: Float = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 3f, Resources.getSystem().displayMetrics)
+  var snapRadius: Float = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 3f, Resources.getSystem().displayMetrics),
 
   /**
    * The radius of the touchable area around the handle. (in pixels)<br></br>
@@ -70,15 +69,15 @@ class CropImageOptions : Parcelable {
    * See: http://developer.android.com/design/style/metrics-grids.html#48dp-rhythm
    */
   @JvmField
-  var touchRadius: Float = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24f, Resources.getSystem().displayMetrics)
+  var touchRadius: Float = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24f, Resources.getSystem().displayMetrics),
 
   /** Whether the guidelines should be on, off, or only showing when resizing. */
   @JvmField
-  var guidelines: Guidelines = Guidelines.ON_TOUCH
+  var guidelines: Guidelines = Guidelines.ON_TOUCH,
 
   /** The initial scale type of the image in the crop image view. */
   @JvmField
-  var scaleType: CropImageView.ScaleType = CropImageView.ScaleType.FIT_CENTER
+  var scaleType: CropImageView.ScaleType = CropImageView.ScaleType.FIT_CENTER,
 
   /**
    * if to show crop overlay UI what contains the crop window UI surrounded by background over the
@@ -86,104 +85,104 @@ class CropImageOptions : Parcelable {
    * default: true, may disable for animation or frame transition.
    */
   @JvmField
-  var showCropOverlay: Boolean = true
+  var showCropOverlay: Boolean = true,
 
   /**
    * If enabled, show a text label on top of crop overlay UI, which gets moved along with the cropper
    */
   @JvmField
-  var showCropLabel: Boolean = false
+  var showCropLabel: Boolean = false,
 
   /**
    * if to show progress bar when image async loading/cropping is in progress.<br></br>
    * default: true, disable to provide custom progress bar UI.
    */
   @JvmField
-  var showProgressBar: Boolean = true
+  var showProgressBar: Boolean = true,
 
   /** The color of the progress bar. Only works on API level 21 and upwards. */
   @JvmField
   @ColorInt
-  var progressBarColor: Int = COLOR_PURPLE
+  var progressBarColor: Int = COLOR_PURPLE,
 
   /**
    * if auto-zoom functionality is enabled.<br></br>
    * default: true.
    */
   @JvmField
-  var autoZoomEnabled: Boolean = true
+  var autoZoomEnabled: Boolean = true,
 
   /** If multi-touch should be enabled on the crop box default: false. */
   @JvmField
-  var multiTouchEnabled: Boolean = false
+  var multiTouchEnabled: Boolean = false,
 
   /** If the crop window can be moved by dragging the center; default: true. */
   @JvmField
-  var centerMoveEnabled: Boolean = true
+  var centerMoveEnabled: Boolean = true,
 
   /** The max zoom allowed during cropping. */
   @JvmField
-  var maxZoom: Int = 4
+  var maxZoom: Int = 4,
 
   /**
    * The initial crop window padding from image borders in percentage of the cropping image
    * dimensions.
    */
   @JvmField
-  var initialCropWindowPaddingRatio: Float = 0.0f
+  var initialCropWindowPaddingRatio: Float = 0.0f,
 
   /** Whether the width to height aspect ratio should be maintained or free to change. */
   @JvmField
-  var fixAspectRatio: Boolean = false
+  var fixAspectRatio: Boolean = false,
 
   /** The X value of the aspect ratio. */
   @JvmField
-  var aspectRatioX: Int = 1
+  var aspectRatioX: Int = 1,
 
   /** The Y value of the aspect ratio. */
   @JvmField
-  var aspectRatioY: Int = 1
+  var aspectRatioY: Int = 1,
 
   /** The thickness of the guidelines lines in pixels. (in pixels) */
   @JvmField
-  var borderLineThickness: Float = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 3f, Resources.getSystem().displayMetrics)
+  var borderLineThickness: Float = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 3f, Resources.getSystem().displayMetrics),
 
   /** The color of the guidelines lines. */
   @JvmField
   @ColorInt
-  var borderLineColor: Int = Color.argb(170, 255, 255, 255)
+  var borderLineColor: Int = Color.argb(170, 255, 255, 255),
 
   /** Thickness of the corner line. (in pixels) */
   @JvmField
-  var borderCornerThickness: Float = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2f, Resources.getSystem().displayMetrics)
+  var borderCornerThickness: Float = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2f, Resources.getSystem().displayMetrics),
 
   /** The offset of corner line from crop window border. (in pixels) */
   @JvmField
-  var borderCornerOffset: Float = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5f, Resources.getSystem().displayMetrics)
+  var borderCornerOffset: Float = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5f, Resources.getSystem().displayMetrics),
 
   /** The length of the corner line away from the corner. (in pixels) */
   @JvmField
-  var borderCornerLength: Float = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 14f, Resources.getSystem().displayMetrics)
+  var borderCornerLength: Float = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 14f, Resources.getSystem().displayMetrics),
 
   /** The color of the corner line. */
   @JvmField
   @ColorInt
-  var borderCornerColor: Int = Color.WHITE
+  var borderCornerColor: Int = Color.WHITE,
 
   /**
    * The fill color of circle corner
    */
   @JvmField
-  var circleCornerFillColorHexValue: Int = Color.WHITE
+  var circleCornerFillColorHexValue: Int = Color.WHITE,
 
   /** The thickness of the guidelines lines. (in pixels) */
   @JvmField
-  var guidelinesThickness: Float = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1f, Resources.getSystem().displayMetrics)
+  var guidelinesThickness: Float = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1f, Resources.getSystem().displayMetrics),
 
   /** The color of the guidelines lines. */
   @JvmField
   @ColorInt
-  var guidelinesColor: Int = Color.argb(170, 255, 255, 255)
+  var guidelinesColor: Int = Color.argb(170, 255, 255, 255),
 
   /**
    * the color of the overlay background around the crop window cover the image parts not in the
@@ -191,345 +190,186 @@ class CropImageOptions : Parcelable {
    */
   @JvmField
   @ColorInt
-  var backgroundColor: Int = Color.argb(119, 0, 0, 0)
+  var backgroundColor: Int = Color.argb(119, 0, 0, 0),
 
   /** The min width the crop window is allowed to be. (in pixels) */
   @JvmField
-  var minCropWindowWidth: Int = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 42f, Resources.getSystem().displayMetrics).toInt()
+  var minCropWindowWidth: Int = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 42f, Resources.getSystem().displayMetrics).toInt(),
 
   /** The min height the crop window is allowed to be. (in pixels) */
   @JvmField
-  var minCropWindowHeight: Int = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 42f, Resources.getSystem().displayMetrics).toInt()
+  var minCropWindowHeight: Int = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 42f, Resources.getSystem().displayMetrics).toInt(),
 
   /**
    * the min width the resulting cropping image is allowed to be, affects the cropping window
    * limits. (in pixels)
    */
   @JvmField
-  var minCropResultWidth: Int = 40
+  var minCropResultWidth: Int = 40,
 
   /**
    * the min height the resulting cropping image is allowed to be, affects the cropping window
    * limits. (in pixels)
    */
   @JvmField
-  var minCropResultHeight: Int = 40
+  var minCropResultHeight: Int = 40,
 
   /**
    * the max width the resulting cropping image is allowed to be, affects the cropping window
    * limits. (in pixels)
    */
   @JvmField
-  var maxCropResultWidth: Int = 99999
+  var maxCropResultWidth: Int = 99999,
 
   /**
    * the max height the resulting cropping image is allowed to be, affects the cropping window
    * limits. (in pixels)
    */
   @JvmField
-  var maxCropResultHeight: Int = 99999
+  var maxCropResultHeight: Int = 99999,
 
   /** The title of the [CropImageActivity]  */
   @JvmField
-  var activityTitle: CharSequence = ""
+  var activityTitle: CharSequence = "",
 
   /** The color to use for action bar items icons. */
   @JvmField
   @ColorInt
-  var activityMenuIconColor: Int = 0
+  var activityMenuIconColor: Int = 0,
 
   /** The color to use for action bar items texts. */
   @JvmField
   @ColorInt
-  var activityMenuTextColor: Int? = null
+  var activityMenuTextColor: Int? = null,
 
   /** The Android Uri to save the cropped image to. */
   @JvmField
-  var customOutputUri: Uri? = null
+  var customOutputUri: Uri? = null,
 
   /** The compression format to use when writing the image. */
   @JvmField
-  var outputCompressFormat: CompressFormat = CompressFormat.JPEG
+  var outputCompressFormat: CompressFormat = CompressFormat.JPEG,
 
   /** The quality (if applicable) to use when writing the image (0 - 100) */
   @JvmField
-  var outputCompressQuality: Int = 90
+  var outputCompressQuality: Int = 90,
 
   /** The width to resize the cropped image to (see options) */
   @JvmField
-  var outputRequestWidth: Int = 0
+  var outputRequestWidth: Int = 0,
 
   /** The height to resize the cropped image to (see options) */
   @JvmField
-  var outputRequestHeight: Int = 0
+  var outputRequestHeight: Int = 0,
 
   /** The resize method to use on the cropped bitmap (see options documentation) */
   @JvmField
-  var outputRequestSizeOptions: RequestSizeOptions = RequestSizeOptions.NONE
+  var outputRequestSizeOptions: RequestSizeOptions = RequestSizeOptions.NONE,
 
   /** If the result of crop image activity should not save the cropped image bitmap. */
   @JvmField
-  var noOutputImage: Boolean = false
+  var noOutputImage: Boolean = false,
 
   /** The initial rectangle to set on the cropping image after loading. */
   @JvmField
-  var initialCropWindowRectangle: Rect? = null
+  var initialCropWindowRectangle: Rect? = null,
 
   /** The initial rotation to set on the cropping image after loading (0-360 degrees clockwise) */
   @JvmField
-  var initialRotation: Int = -1
+  var initialRotation: Int = -1,
 
   /** If to allow (all) rotation during cropping (activity) */
   @JvmField
-  var allowRotation: Boolean = true
+  var allowRotation: Boolean = true,
 
   /** If to allow (all) flipping during cropping (activity) */
   @JvmField
-  var allowFlipping: Boolean = true
+  var allowFlipping: Boolean = true,
 
   /** If to allow counter-clockwise rotation during cropping (activity) */
   @JvmField
-  var allowCounterRotation: Boolean = false
+  var allowCounterRotation: Boolean = false,
 
   /** The amount of degrees to rotate clockwise or counter-clockwise. */
   @JvmField
-  var rotationDegrees: Int = 90
+  var rotationDegrees: Int = 90,
 
   /** Whether the image should be flipped horizontally. */
   @JvmField
-  var flipHorizontally: Boolean = false
+  var flipHorizontally: Boolean = false,
 
   /** Whether the image should be flipped vertically. */
   @JvmField
-  var flipVertically: Boolean = false
+  var flipVertically: Boolean = false,
 
   /** Optional, the text of the crop menu crop button. */
   @JvmField
-  var cropMenuCropButtonTitle: CharSequence? = null
+  var cropMenuCropButtonTitle: CharSequence? = null,
 
   /** Optional image resource to be used for crop menu crop icon instead of text. */
   @JvmField
-  var cropMenuCropButtonIcon: Int = 0
+  var cropMenuCropButtonIcon: Int = 0,
 
   /**
    * Allows you to skip the editing (cropping, flipping or rotating) option.
    * This returns the entire selected image directly
    */
   @JvmField
-  var skipEditing: Boolean = false
+  var skipEditing: Boolean = false,
 
   /**
    * Enabling this option replaces the current AlertDialog to choose the image source
    * with an Intent chooser
    */
   @JvmField
-  var showIntentChooser: Boolean = false
+  var showIntentChooser: Boolean = false,
 
   /**
    * optional, Sets a custom title for the intent chooser
    */
   @JvmField
-  var intentChooserTitle: String? = null
+  var intentChooserTitle: String? = null,
 
   /**
    * optional, reorders intent list displayed with the app package names
    * passed here in order
    */
   @JvmField
-  var intentChooserPriorityList: List<String>? = emptyList()
+  var intentChooserPriorityList: List<String>? = emptyList(),
 
   /** The initial text size of cropper label **/
   @JvmField
-  var cropperLabelTextSize: Float = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 20f, Resources.getSystem().displayMetrics)
+  var cropperLabelTextSize: Float = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 20f, Resources.getSystem().displayMetrics),
 
   /** The default cropper label text color **/
   @JvmField
   @ColorInt
-  var cropperLabelTextColor: Int = Color.WHITE
+  var cropperLabelTextColor: Int = Color.WHITE,
 
   /** The default cropper label text **/
   @JvmField
-  var cropperLabelText: String? = ""
+  var cropperLabelText: String? = "",
 
   /** Crop Image background color **/
   @JvmField
-  var activityBackgroundColor: Int = Color.WHITE
+  var activityBackgroundColor: Int = Color.WHITE,
 
   /** Toolbar color **/
   @JvmField
-  var toolbarColor: Int? = null
+  var toolbarColor: Int? = null,
 
   /** Toolbar color **/
   @JvmField
-  var toolbarTitleColor: Int? = null
+  var toolbarTitleColor: Int? = null,
 
   /** Toolbar color **/
   @JvmField
-  var toolbarBackButtonColor: Int? = null
+  var toolbarBackButtonColor: Int? = null,
 
   /** Toolbar tint color **/
   @JvmField
-  var toolbarTintColor: Int? = null
-
-  /** Init options with defaults. */
-  constructor() {
-  }
-
-  /** Create object from parcel. */
-  @Suppress("DEPRECATION")
-  protected constructor(parcel: Parcel) {
-    imageSourceIncludeCamera = parcel.readByte().toInt() != 0
-    imageSourceIncludeGallery = parcel.readByte().toInt() != 0
-    cropShape = CropShape.values()[parcel.readInt()]
-    cornerShape = CropImageView.CropCornerShape.values()[parcel.readInt()]
-    cropCornerRadius = parcel.readFloat()
-    snapRadius = parcel.readFloat()
-    touchRadius = parcel.readFloat()
-    guidelines = Guidelines.values()[parcel.readInt()]
-    scaleType = CropImageView.ScaleType.values()[parcel.readInt()]
-    showCropOverlay = parcel.readByte().toInt() != 0
-    showProgressBar = parcel.readByte().toInt() != 0
-    progressBarColor = parcel.readInt()
-    autoZoomEnabled = parcel.readByte().toInt() != 0
-    multiTouchEnabled = parcel.readByte().toInt() != 0
-    centerMoveEnabled = parcel.readByte().toInt() != 0
-    maxZoom = parcel.readInt()
-    initialCropWindowPaddingRatio = parcel.readFloat()
-    fixAspectRatio = parcel.readByte().toInt() != 0
-    aspectRatioX = parcel.readInt()
-    aspectRatioY = parcel.readInt()
-    borderLineThickness = parcel.readFloat()
-    borderLineColor = parcel.readInt()
-    borderCornerThickness = parcel.readFloat()
-    borderCornerOffset = parcel.readFloat()
-    borderCornerLength = parcel.readFloat()
-    borderCornerColor = parcel.readInt()
-    circleCornerFillColorHexValue = parcel.readInt()
-    guidelinesThickness = parcel.readFloat()
-    guidelinesColor = parcel.readInt()
-    backgroundColor = parcel.readInt()
-    minCropWindowWidth = parcel.readInt()
-    minCropWindowHeight = parcel.readInt()
-    minCropResultWidth = parcel.readInt()
-    minCropResultHeight = parcel.readInt()
-    maxCropResultWidth = parcel.readInt()
-    maxCropResultHeight = parcel.readInt()
-    activityTitle = TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(parcel)
-    activityMenuIconColor = parcel.readInt()
-    activityMenuTextColor = parcel.readValue(Int::class.java.classLoader) as Int?
-    customOutputUri = parcel.readParcelable(Uri::class.java.classLoader)
-    outputCompressFormat = CompressFormat.valueOf(parcel.readString()!!)
-    outputCompressQuality = parcel.readInt()
-    outputRequestWidth = parcel.readInt()
-    outputRequestHeight = parcel.readInt()
-    outputRequestSizeOptions = RequestSizeOptions.values()[parcel.readInt()]
-    noOutputImage = parcel.readByte().toInt() != 0
-    initialCropWindowRectangle = parcel.readParcelable(Rect::class.java.classLoader)
-    initialRotation = parcel.readInt()
-    allowRotation = parcel.readByte().toInt() != 0
-    allowFlipping = parcel.readByte().toInt() != 0
-    allowCounterRotation = parcel.readByte().toInt() != 0
-    rotationDegrees = parcel.readInt()
-    flipHorizontally = parcel.readByte().toInt() != 0
-    flipVertically = parcel.readByte().toInt() != 0
-    cropMenuCropButtonTitle = TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(parcel)
-    cropMenuCropButtonIcon = parcel.readInt()
-    skipEditing = parcel.readByte().toInt() != 0
-    showIntentChooser = parcel.readByte().toInt() != 0
-    intentChooserTitle = parcel.readString()
-    intentChooserPriorityList = parcel.createStringArrayList()
-    cropperLabelTextSize = parcel.readFloat()
-    cropperLabelTextColor = parcel.readInt()
-    cropperLabelText = parcel.readString()!!
-    showCropLabel = parcel.readByte().toInt() != 0
-    activityBackgroundColor = parcel.readInt()
-    toolbarColor = parcel.readValue(Int::class.java.classLoader) as Int?
-    toolbarTitleColor = parcel.readValue(Int::class.java.classLoader) as Int?
-    toolbarBackButtonColor = parcel.readValue(Int::class.java.classLoader) as Int?
-    toolbarTintColor = parcel.readValue(Int::class.java.classLoader) as Int?
-  }
-
-  override fun writeToParcel(dest: Parcel, flags: Int) {
-    dest.writeByte((if (imageSourceIncludeCamera) 1 else 0).toByte())
-    dest.writeByte((if (imageSourceIncludeGallery) 1 else 0).toByte())
-    dest.writeInt(cropShape.ordinal)
-    dest.writeInt(cornerShape.ordinal)
-    dest.writeFloat(cropCornerRadius)
-    dest.writeFloat(snapRadius)
-    dest.writeFloat(touchRadius)
-    dest.writeInt(guidelines.ordinal)
-    dest.writeInt(scaleType.ordinal)
-    dest.writeByte((if (showCropOverlay) 1 else 0).toByte())
-    dest.writeByte((if (showProgressBar) 1 else 0).toByte())
-    dest.writeInt(progressBarColor)
-    dest.writeByte((if (autoZoomEnabled) 1 else 0).toByte())
-    dest.writeByte((if (multiTouchEnabled) 1 else 0).toByte())
-    dest.writeByte((if (centerMoveEnabled) 1 else 0).toByte())
-    dest.writeInt(maxZoom)
-    dest.writeFloat(initialCropWindowPaddingRatio)
-    dest.writeByte((if (fixAspectRatio) 1 else 0).toByte())
-    dest.writeInt(aspectRatioX)
-    dest.writeInt(aspectRatioY)
-    dest.writeFloat(borderLineThickness)
-    dest.writeInt(borderLineColor)
-    dest.writeFloat(borderCornerThickness)
-    dest.writeFloat(borderCornerOffset)
-    dest.writeFloat(borderCornerLength)
-    dest.writeInt(borderCornerColor)
-    dest.writeInt(circleCornerFillColorHexValue)
-    dest.writeFloat(guidelinesThickness)
-    dest.writeInt(guidelinesColor)
-    dest.writeInt(backgroundColor)
-    dest.writeInt(minCropWindowWidth)
-    dest.writeInt(minCropWindowHeight)
-    dest.writeInt(minCropResultWidth)
-    dest.writeInt(minCropResultHeight)
-    dest.writeInt(maxCropResultWidth)
-    dest.writeInt(maxCropResultHeight)
-    TextUtils.writeToParcel(activityTitle, dest, flags)
-    dest.writeInt(activityMenuIconColor)
-    dest.writeValue(activityMenuTextColor)
-    dest.writeParcelable(customOutputUri, flags)
-    dest.writeString(outputCompressFormat.name)
-    dest.writeInt(outputCompressQuality)
-    dest.writeInt(outputRequestWidth)
-    dest.writeInt(outputRequestHeight)
-    dest.writeInt(outputRequestSizeOptions.ordinal)
-    dest.writeInt(if (noOutputImage) 1 else 0)
-    dest.writeParcelable(initialCropWindowRectangle, flags)
-    dest.writeInt(initialRotation)
-    dest.writeByte((if (allowRotation) 1 else 0).toByte())
-    dest.writeByte((if (allowFlipping) 1 else 0).toByte())
-    dest.writeByte((if (allowCounterRotation) 1 else 0).toByte())
-    dest.writeInt(rotationDegrees)
-    dest.writeByte((if (flipHorizontally) 1 else 0).toByte())
-    dest.writeByte((if (flipVertically) 1 else 0).toByte())
-    TextUtils.writeToParcel(cropMenuCropButtonTitle, dest, flags)
-    dest.writeInt(cropMenuCropButtonIcon)
-    dest.writeByte((if (skipEditing) 1 else 0).toByte())
-    dest.writeByte((if (showIntentChooser) 1 else 0).toByte())
-    dest.writeString(intentChooserTitle)
-    dest.writeStringList(intentChooserPriorityList)
-    dest.writeFloat(cropperLabelTextSize)
-    dest.writeInt(cropperLabelTextColor)
-    dest.writeString(cropperLabelText)
-    dest.writeByte((if (showCropLabel) 1 else 0).toByte())
-    dest.writeInt(activityBackgroundColor)
-    dest.writeValue(toolbarColor)
-    dest.writeValue(toolbarTitleColor)
-    dest.writeValue(toolbarBackButtonColor)
-    dest.writeValue(toolbarTintColor)
-  }
-
-  override fun describeContents(): Int {
-    return 0
-  }
-
-  /**
-   * Validate all the options are withing valid range.
-   *
-   * @throws IllegalArgumentException if any of the options is not valid
-   */
+  var toolbarTintColor: Int? = null,
+) : Parcelable {
   fun validate() {
     require(maxZoom >= 0) { "Cannot set max zoom to a number < 1" }
     require(touchRadius >= 0) { "Cannot set touch radius value to a number <= 0 " }
@@ -548,21 +388,6 @@ class CropImageOptions : Parcelable {
     require(outputRequestHeight >= 0) { "Cannot set request height value to a number < 0 " }
     require(!(rotationDegrees < 0 || rotationDegrees > DEGREES_360)) { "Cannot set rotation degrees value to a number < 0 or > 360" }
   }
-
-  companion object {
-
-    internal const val DEGREES_360 = 360
-
-    @JvmField
-    val CREATOR: Parcelable.Creator<CropImageOptions?> =
-      object : Parcelable.Creator<CropImageOptions?> {
-        override fun createFromParcel(parcel: Parcel): CropImageOptions? {
-          return CropImageOptions(parcel)
-        }
-
-        override fun newArray(size: Int): Array<CropImageOptions?> {
-          return arrayOfNulls(size)
-        }
-      }
-  }
 }
+
+internal const val DEGREES_360 = 360
