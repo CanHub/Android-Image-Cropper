@@ -45,31 +45,31 @@ internal class BitmapCroppingWorkerJob(
           when {
             uri != null -> {
               bitmapSampled = BitmapUtils.cropBitmap(
-                context,
-                uri,
-                cropPoints,
-                degreesRotated,
-                orgWidth,
-                orgHeight,
-                fixAspectRatio,
-                aspectRatioX,
-                aspectRatioY,
-                reqWidth,
-                reqHeight,
-                flipHorizontally,
-                flipVertically,
+                context = context,
+                loadedImageUri = uri,
+                cropPoints = cropPoints,
+                degreesRotated = degreesRotated,
+                orgWidth = orgWidth,
+                orgHeight = orgHeight,
+                fixAspectRatio = fixAspectRatio,
+                aspectRatioX = aspectRatioX,
+                aspectRatioY = aspectRatioY,
+                reqWidth = reqWidth,
+                reqHeight = reqHeight,
+                flipHorizontally = flipHorizontally,
+                flipVertically = flipVertically,
               )
             }
             bitmap != null -> {
               bitmapSampled = BitmapUtils.cropBitmapObjectHandleOOM(
-                bitmap,
-                cropPoints,
-                degreesRotated,
-                fixAspectRatio,
-                aspectRatioX,
-                aspectRatioY,
-                flipHorizontally,
-                flipVertically,
+                bitmap = bitmap,
+                cropPoints = cropPoints,
+                degreesRotated = degreesRotated,
+                fixAspectRatio = fixAspectRatio,
+                aspectRatioX = aspectRatioX,
+                aspectRatioY = aspectRatioY,
+                flipHorizontally = flipHorizontally,
+                flipVertically = flipVertically,
               )
             }
             else -> {
@@ -79,8 +79,12 @@ internal class BitmapCroppingWorkerJob(
               return@launch
             }
           }
-          val resizedBitmap =
-            BitmapUtils.resizeBitmap(bitmapSampled.bitmap, reqWidth, reqHeight, options)
+          val resizedBitmap = BitmapUtils.resizeBitmap(
+            bitmap = bitmapSampled.bitmap,
+            reqWidth = reqWidth,
+            reqHeight = reqHeight,
+            options = options,
+          )
 
           launch(Dispatchers.IO) {
             val newUri = BitmapUtils.writeBitmapToUri(

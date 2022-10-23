@@ -124,15 +124,22 @@ internal object BitmapUtils {
       // Calculate inSampleSize
       options.inSampleSize = max(
         calculateInSampleSizeByRequestedSize(
-          options.outWidth,
-          options.outHeight,
-          reqWidth,
-          reqHeight,
+          width = options.outWidth,
+          height = options.outHeight,
+          reqWidth = reqWidth,
+          reqHeight = reqHeight,
         ),
-        calculateInSampleSizeByMaxTextureSize(options.outWidth, options.outHeight),
+        calculateInSampleSizeByMaxTextureSize(
+          width = options.outWidth,
+          height = options.outHeight,
+        ),
       )
       // Decode bitmap with inSampleSize set
-      val bitmap = decodeImage(resolver, uri, options)
+      val bitmap = decodeImage(
+        resolver = resolver,
+        uri = uri,
+        options = options,
+      )
       BitmapSampled(bitmap, options.inSampleSize)
     } catch (e: Exception) {
       throw CropException.FailedToLoadBitmap(uri, e.message)
@@ -149,7 +156,7 @@ internal object BitmapUtils {
    */
   fun cropBitmapObjectHandleOOM(
     bitmap: Bitmap?,
-    points: FloatArray,
+    cropPoints: FloatArray,
     degreesRotated: Int,
     fixAspectRatio: Boolean,
     aspectRatioX: Int,
@@ -161,15 +168,15 @@ internal object BitmapUtils {
     while (true) {
       try {
         val cropBitmap = cropBitmapObjectWithScale(
-          bitmap!!,
-          points,
-          degreesRotated,
-          fixAspectRatio,
-          aspectRatioX,
-          aspectRatioY,
-          1 / scale.toFloat(),
-          flipHorizontally,
-          flipVertically,
+          bitmap = bitmap!!,
+          cropPoints = cropPoints,
+          degreesRotated = degreesRotated,
+          fixAspectRatio = fixAspectRatio,
+          aspectRatioX = aspectRatioX,
+          aspectRatioY = aspectRatioY,
+          scale = 1 / scale.toFloat(),
+          flipHorizontally = flipHorizontally,
+          flipVertically = flipVertically,
         )
         return BitmapSampled(cropBitmap, scale)
       } catch (e: OutOfMemoryError) {
@@ -192,7 +199,7 @@ internal object BitmapUtils {
    */
   private fun cropBitmapObjectWithScale(
     bitmap: Bitmap,
-    points: FloatArray,
+    cropPoints: FloatArray,
     degreesRotated: Int,
     fixAspectRatio: Boolean,
     aspectRatioX: Int,
@@ -204,7 +211,7 @@ internal object BitmapUtils {
     // get the rectangle in original image that contains the required cropped area (larger for non-
     // rectangular crop)
     val rect = getRectFromPoints(
-      points,
+      cropPoints,
       bitmap.width,
       bitmap.height,
       fixAspectRatio,
@@ -237,7 +244,7 @@ internal object BitmapUtils {
       // rotating first
       result = cropForRotatedImage(
         result,
-        points,
+        cropPoints,
         rect,
         degreesRotated,
         fixAspectRatio,
@@ -256,7 +263,7 @@ internal object BitmapUtils {
   fun cropBitmap(
     context: Context,
     loadedImageUri: Uri?,
-    points: FloatArray,
+    cropPoints: FloatArray,
     degreesRotated: Int,
     orgWidth: Int,
     orgHeight: Int,
@@ -269,27 +276,28 @@ internal object BitmapUtils {
     flipVertically: Boolean,
   ): BitmapSampled {
     var sampleMulti = 1
+
     while (true) {
       try {
         // if successful, just return the resulting bitmap
         return cropBitmap(
-          context,
-          loadedImageUri!!,
-          points,
-          degreesRotated,
-          orgWidth,
-          orgHeight,
-          fixAspectRatio,
-          aspectRatioX,
-          aspectRatioY,
-          reqWidth,
-          reqHeight,
-          flipHorizontally,
-          flipVertically,
-          sampleMulti,
+          context = context,
+          loadedImageUri = loadedImageUri!!,
+          cropPoints = cropPoints,
+          degreesRotated = degreesRotated,
+          orgWidth = orgWidth,
+          orgHeight = orgHeight,
+          fixAspectRatio = fixAspectRatio,
+          aspectRatioX = aspectRatioX,
+          aspectRatioY = aspectRatioY,
+          reqWidth = reqWidth,
+          reqHeight = reqHeight,
+          flipHorizontally = flipHorizontally,
+          flipVertically = flipVertically,
+          sampleMulti = sampleMulti,
         )
       } catch (e: OutOfMemoryError) {
-        // if OOM try to increase the sampling to lower the memory usage
+        // If OOM try to increase the sampling to lower the memory usage.
         sampleMulti *= 2
         if (sampleMulti > 16) {
           throw RuntimeException(
@@ -362,17 +370,17 @@ internal object BitmapUtils {
    * points that contains the given 4 points and is a straight rectangle.
    */
   fun getRectFromPoints(
-    points: FloatArray,
+    cropPoints: FloatArray,
     imageWidth: Int,
     imageHeight: Int,
     fixAspectRatio: Boolean,
     aspectRatioX: Int,
     aspectRatioY: Int,
   ): Rect {
-    val left = max(0f, getRectLeft(points)).roundToInt()
-    val top = max(0f, getRectTop(points)).roundToInt()
-    val right = min(imageWidth.toFloat(), getRectRight(points)).roundToInt()
-    val bottom = min(imageHeight.toFloat(), getRectBottom(points)).roundToInt()
+    val left = max(0f, getRectLeft(cropPoints)).roundToInt()
+    val top = max(0f, getRectTop(cropPoints)).roundToInt()
+    val right = min(imageWidth.toFloat(), getRectRight(cropPoints)).roundToInt()
+    val bottom = min(imageHeight.toFloat(), getRectBottom(cropPoints)).roundToInt()
     val rect = Rect(left, top, right, bottom)
     if (fixAspectRatio) {
       fixRectForAspectRatio(rect, aspectRatioX, aspectRatioY)
@@ -524,7 +532,7 @@ internal object BitmapUtils {
   private fun cropBitmap(
     context: Context,
     loadedImageUri: Uri,
-    points: FloatArray,
+    cropPoints: FloatArray,
     degreesRotated: Int,
     orgWidth: Int,
     orgHeight: Int,
@@ -540,7 +548,7 @@ internal object BitmapUtils {
     // get the rectangle in original image that contains the required cropped area (larger for non-
     // rectangular crop)
     val rect = getRectFromPoints(
-      points,
+      cropPoints,
       orgWidth,
       orgHeight,
       fixAspectRatio,
@@ -571,7 +579,7 @@ internal object BitmapUtils {
           // rotating first
           result = cropForRotatedImage(
             result,
-            points,
+            cropPoints,
             rect,
             degreesRotated,
             fixAspectRatio,
@@ -589,7 +597,7 @@ internal object BitmapUtils {
       cropBitmap(
         context,
         loadedImageUri,
-        points,
+        cropPoints,
         degreesRotated,
         fixAspectRatio,
         aspectRatioX,
@@ -611,7 +619,7 @@ internal object BitmapUtils {
   private fun cropBitmap(
     context: Context,
     loadedImageUri: Uri,
-    points: FloatArray,
+    cropPoints: FloatArray,
     degreesRotated: Int,
     fixAspectRatio: Boolean,
     aspectRatioX: Int,
@@ -630,31 +638,36 @@ internal object BitmapUtils {
       sampleSize = (
         sampleMulti *
           calculateInSampleSizeByRequestedSize(
-            rect.width(),
-            rect.height(),
-            width,
-            height,
+            width = rect.width(),
+            height = rect.height(),
+            reqWidth = width,
+            reqHeight = height,
           )
         )
       options.inSampleSize = sampleSize
-      val fullBitmap = decodeImage(context.contentResolver, loadedImageUri, options)
+      val fullBitmap = decodeImage(
+        resolver = context.contentResolver,
+        uri = loadedImageUri,
+        options = options,
+      )
       if (fullBitmap != null) {
         try {
           // adjust crop points by the sampling because the image is smaller
-          val points2 = FloatArray(points.size)
-          System.arraycopy(points, 0, points2, 0, points.size)
+          val points2 = FloatArray(cropPoints.size)
+          System.arraycopy(cropPoints, 0, points2, 0, cropPoints.size)
           for (i in points2.indices) {
             points2[i] = points2[i] / options.inSampleSize
           }
+
           result = cropBitmapObjectWithScale(
-            fullBitmap,
-            points2,
-            degreesRotated,
-            fixAspectRatio,
-            aspectRatioX,
-            aspectRatioY, 1f,
-            flipHorizontally,
-            flipVertically,
+            bitmap = fullBitmap,
+            cropPoints = points2,
+            degreesRotated = degreesRotated,
+            fixAspectRatio = fixAspectRatio,
+            aspectRatioX = aspectRatioX,
+            aspectRatioY = aspectRatioY, scale = 1f,
+            flipHorizontally = flipHorizontally,
+            flipVertically = flipVertically,
           )
         } finally {
           if (result != fullBitmap) {
@@ -723,15 +736,12 @@ internal object BitmapUtils {
   ): BitmapSampled {
     try {
       val options = BitmapFactory.Options()
-      options.inSampleSize = (
-        sampleMulti
-          * calculateInSampleSizeByRequestedSize(
-            rect.width(),
-            rect.height(),
-            reqWidth,
-            reqHeight,
-          )
-        )
+      options.inSampleSize = sampleMulti * calculateInSampleSizeByRequestedSize(
+        width = rect.width(),
+        height = rect.height(),
+        reqWidth = reqWidth,
+        reqHeight = reqHeight,
+      )
 
       context.contentResolver.openInputStream(uri).use {
         val decoder = when {
@@ -768,7 +778,7 @@ internal object BitmapUtils {
    */
   private fun cropForRotatedImage(
     bitmap: Bitmap?,
-    points: FloatArray,
+    cropPoints: FloatArray,
     rect: Rect,
     degreesRotated: Int,
     fixAspectRatio: Boolean,
@@ -782,19 +792,14 @@ internal object BitmapUtils {
       var width = 0
       var height = 0
       val rads = Math.toRadians(degreesRotated.toDouble())
-      val compareTo =
-        if (degreesRotated < 90 || degreesRotated in 181..269) rect.left else rect.right
+      val compareTo = if (degreesRotated < 90 || degreesRotated in 181..269) rect.left else rect.right
       var i = 0
-      while (i < points.size) {
-        if (points[i] >= compareTo - 1 && points[i] <= compareTo + 1) {
-          adjLeft = abs(sin(rads) * (rect.bottom - points[i + 1]))
-            .toInt()
-          adjTop = abs(cos(rads) * (points[i + 1] - rect.top))
-            .toInt()
-          width = abs((points[i + 1] - rect.top) / sin(rads))
-            .toInt()
-          height = abs((rect.bottom - points[i + 1]) / cos(rads))
-            .toInt()
+      while (i < cropPoints.size) {
+        if (cropPoints[i] >= compareTo - 1 && cropPoints[i] <= compareTo + 1) {
+          adjLeft = abs(sin(rads) * (rect.bottom - cropPoints[i + 1])).toInt()
+          adjTop = abs(cos(rads) * (cropPoints[i + 1] - rect.top)).toInt()
+          width = abs((cropPoints[i + 1] - rect.top) / sin(rads)).toInt()
+          height = abs((rect.bottom - cropPoints[i + 1]) / cos(rads)).toInt()
           break
         }
         i += 2
@@ -877,8 +882,7 @@ internal object BitmapUtils {
         (if (flipHorizontally) -1 else 1).toFloat(),
         (if (flipVertically) -1 else 1).toFloat(),
       )
-      val newBitmap =
-        Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, false)
+      val newBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, false)
       if (newBitmap != bitmap) {
         bitmap.recycle()
       }
