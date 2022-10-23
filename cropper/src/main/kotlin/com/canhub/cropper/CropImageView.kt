@@ -887,8 +887,7 @@ class CropImageView @JvmOverloads constructor(
         result.degreesRotated,
       )
     }
-    val listener = mOnSetImageUriCompleteListener
-    listener?.onSetImageUriComplete(this, result.uriContent, result.error)
+    mOnSetImageUriCompleteListener?.onSetImageUriComplete(this, result.uriContent, result.error)
   }
 
   /**

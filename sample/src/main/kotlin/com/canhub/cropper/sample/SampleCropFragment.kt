@@ -25,22 +25,19 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-internal class SampleCrop : Fragment() {
-  companion object {
-    fun newInstance() = SampleCrop()
+internal class SampleCropFragment : Fragment() {
+  private var _binding: FragmentCameraBinding? = null
+  private val binding get() = _binding!!
 
-    const val DATE_FORMAT = "yyyyMMdd_HHmmss"
-    const val FILE_NAMING_PREFIX = "JPEG_"
-    const val FILE_NAMING_SUFFIX = "_"
-    const val FILE_FORMAT = ".jpg"
-    const val AUTHORITY_SUFFIX = ".cropper.fileprovider"
-  }
-
-  private lateinit var binding: FragmentCameraBinding
   private var outputUri: Uri? = null
   private val takePicture = registerForActivityResult(ActivityResultContracts.TakePicture()) {
-    if (it) startCameraWithUri() else showErrorMessage("taking picture failed")
+    if (it) {
+      startCameraWithUri()
+    } else {
+      showErrorMessage("taking picture failed")
+    }
   }
+
   private val cropImage = registerForActivityResult(CropImageContract()) { result ->
     when {
       result.isSuccessful -> {
@@ -48,19 +45,15 @@ internal class SampleCrop : Fragment() {
         Timber.tag("File Path").v(context?.let { result.getUriFilePath(it) }.toString())
         handleCropImageResult(result.uriContent.toString())
       }
-      result is CropImage.CancelledResult -> {
-        showErrorMessage("cropping image was cancelled by the user")
-      }
-      else -> {
-        showErrorMessage("cropping image failed")
-      }
+      result is CropImage.CancelledResult -> showErrorMessage("cropping image was cancelled by the user")
+      else -> showErrorMessage("cropping image failed")
     }
   }
+
   private val customCropImage = registerForActivityResult(CropImageContract()) {
-    if (it is CropImage.CancelledResult) {
-      return@registerForActivityResult
+    if (it !is CropImage.CancelledResult) {
+      handleCropImageResult(it.uriContent.toString())
     }
-    handleCropImageResult(it.uriContent.toString())
   }
 
   override fun onCreateView(
@@ -68,8 +61,13 @@ internal class SampleCrop : Fragment() {
     container: ViewGroup?,
     savedInstanceState: Bundle?,
   ): View {
-    binding = FragmentCameraBinding.inflate(layoutInflater, container, false)
+    _binding = FragmentCameraBinding.inflate(layoutInflater, container, false)
     return binding.root
+  }
+
+  override fun onDestroyView() {
+    super.onDestroyView()
+    _binding = null
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -217,5 +215,13 @@ internal class SampleCrop : Fragment() {
       FILE_FORMAT,
       storageDir,
     )
+  }
+
+  companion object {
+    const val DATE_FORMAT = "yyyyMMdd_HHmmss"
+    const val FILE_NAMING_PREFIX = "JPEG_"
+    const val FILE_NAMING_SUFFIX = "_"
+    const val FILE_FORMAT = ".jpg"
+    const val AUTHORITY_SUFFIX = ".cropper.fileprovider"
   }
 }

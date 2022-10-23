@@ -42,7 +42,6 @@ internal class SampleCustomActivity : CropImageActivity() {
   }
 
   override fun setContentView(view: View) {
-    // Override this to use your custom layout
     super.setContentView(binding.root)
   }
 
@@ -56,9 +55,9 @@ internal class SampleCustomActivity : CropImageActivity() {
     if (resultUri != null) binding.cropImageView.setImageUriAsync(resultUri)
   }
 
-  // Override this to add more information into the intent
   override fun getResultIntent(uri: Uri?, error: java.lang.Exception?, sampleSize: Int): Intent {
     val result = super.getResultIntent(uri, error, sampleSize)
+    // Adding some more information.
     return result.putExtra("EXTRA_KEY", "Extra data")
   }
 
