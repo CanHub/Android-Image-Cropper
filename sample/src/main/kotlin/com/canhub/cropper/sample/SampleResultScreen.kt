@@ -13,25 +13,6 @@ import com.example.croppersample.R
 import com.example.croppersample.databinding.ActivityCropResultBinding
 
 class SampleResultScreen : Activity() {
-
-  companion object {
-    fun start(fragment: Fragment, imageBitmap: Bitmap?, uri: Uri?, sampleSize: Int?) {
-      val intent = Intent(fragment.context, SampleResultScreen::class.java)
-        .putExtra(SAMPLE_SIZE, sampleSize)
-        .putExtra(URI, uri)
-
-      image = imageBitmap
-
-      fragment.startActivity(intent)
-    }
-
-    // This is used, because bitmap is huge and cannot be passed in Intent without throw and exception
-    var image: Bitmap? = null
-
-    private const val SAMPLE_SIZE = "SAMPLE_SIZE"
-    private const val URI = "URI"
-  }
-
   private lateinit var binding: ActivityCropResultBinding
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,5 +57,23 @@ class SampleResultScreen : Activity() {
       it.recycle()
       image = null
     }
+  }
+
+  companion object {
+    fun start(fragment: Fragment, imageBitmap: Bitmap?, uri: Uri?, sampleSize: Int?) {
+      image = imageBitmap
+
+      fragment.startActivity(
+        Intent(fragment.context, SampleResultScreen::class.java)
+          .putExtra(SAMPLE_SIZE, sampleSize)
+          .putExtra(URI, uri),
+      )
+    }
+
+    // This is used, because bitmap is huge and cannot be passed in Intent without throw and exception
+    private var image: Bitmap? = null
+
+    private const val SAMPLE_SIZE = "SAMPLE_SIZE"
+    private const val URI = "URI"
   }
 }

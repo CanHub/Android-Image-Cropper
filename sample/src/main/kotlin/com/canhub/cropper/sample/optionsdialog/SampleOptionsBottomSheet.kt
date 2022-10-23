@@ -18,25 +18,8 @@ internal class SampleOptionsBottomSheet : BottomSheetDialogFragment() {
     fun onOptionsApplySelected(options: SampleOptionsEntity)
   }
 
-  companion object {
-    fun show(
-      fragmentManager: FragmentManager,
-      options: SampleOptionsEntity?,
-      listener: Listener,
-    ) {
-      Companion.listener = listener
-      SampleOptionsBottomSheet().apply {
-        arguments = Bundle().apply { putParcelable(OPTIONS_KEY, options) }
-        show(fragmentManager, null)
-      }
-    }
-
-    private const val DIRECTION_UPWARDS = -1
-    private lateinit var listener: Listener
-    private const val OPTIONS_KEY = "OPTIONS_KEY"
-  }
-
-  private lateinit var binding: FragmentOptionsBinding
+  private var _binding: FragmentOptionsBinding? = null
+  private val binding get() = _binding!!
   private lateinit var options: SampleOptionsEntity
 
   override fun onCreateView(
@@ -44,8 +27,13 @@ internal class SampleOptionsBottomSheet : BottomSheetDialogFragment() {
     container: ViewGroup?,
     savedInstanceState: Bundle?,
   ): View {
-    binding = FragmentOptionsBinding.inflate(layoutInflater, container, false)
+    _binding = FragmentOptionsBinding.inflate(layoutInflater, container, false)
     return binding.root
+  }
+
+  override fun onDestroyView() {
+    super.onDestroyView()
+    _binding = null
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -61,14 +49,12 @@ internal class SampleOptionsBottomSheet : BottomSheetDialogFragment() {
     when (options.scaleType) {
       CropImageView.ScaleType.CENTER -> binding.scaleType.chipCenter.isChecked = true
       CropImageView.ScaleType.FIT_CENTER -> binding.scaleType.chipFitCenter.isChecked = true
-      CropImageView.ScaleType.CENTER_INSIDE ->
-        binding.scaleType.chipCenterInside.isChecked = true
+      CropImageView.ScaleType.CENTER_INSIDE -> binding.scaleType.chipCenterInside.isChecked = true
       CropImageView.ScaleType.CENTER_CROP -> binding.scaleType.chipCenterCrop.isChecked = true
     }
+
     when (options.cornerShape) {
-      CropImageView.CropCornerShape.RECTANGLE ->
-        binding.cornerShape.chipRectangle.isChecked =
-          true
+      CropImageView.CropCornerShape.RECTANGLE -> binding.cornerShape.chipRectangle.isChecked = true
       CropImageView.CropCornerShape.OVAL -> binding.cornerShape.chipOval.isChecked = true
     }
 
@@ -183,9 +169,11 @@ internal class SampleOptionsBottomSheet : BottomSheetDialogFragment() {
       options = options.copy(cropShape = CropImageView.CropShape.RECTANGLE_HORIZONTAL_ONLY)
       binding.cornerShape.root.visibility = View.GONE
     }
+
     binding.cornerShape.chipRectangle.setOnClickListener {
       options = options.copy(cornerShape = CropImageView.CropCornerShape.RECTANGLE)
     }
+
     binding.cornerShape.chipOval.setOnClickListener {
       options = options.copy(cornerShape = CropImageView.CropCornerShape.OVAL)
     }
@@ -265,5 +253,23 @@ internal class SampleOptionsBottomSheet : BottomSheetDialogFragment() {
     binding.cropLabelText.toggle.setOnCheckedChangeListener { _, isChecked ->
       options = options.copy(showCropLabel = isChecked)
     }
+  }
+
+  companion object {
+    fun show(
+      fragmentManager: FragmentManager,
+      options: SampleOptionsEntity?,
+      listener: Listener,
+    ) {
+      Companion.listener = listener
+      SampleOptionsBottomSheet().apply {
+        arguments = Bundle().apply { putParcelable(OPTIONS_KEY, options) }
+        show(fragmentManager, null)
+      }
+    }
+
+    private const val DIRECTION_UPWARDS = -1
+    private lateinit var listener: Listener
+    private const val OPTIONS_KEY = "OPTIONS_KEY"
   }
 }

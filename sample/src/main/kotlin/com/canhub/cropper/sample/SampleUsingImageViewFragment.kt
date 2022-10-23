@@ -23,23 +23,14 @@ import com.example.croppersample.R
 import com.example.croppersample.databinding.FragmentCropImageViewBinding
 import timber.log.Timber
 
-internal class SampleUsingImageView :
-  Fragment(),
-  SampleOptionsBottomSheet.Listener,
-  OnSetImageUriCompleteListener,
-  OnCropImageCompleteListener {
+internal class SampleUsingImageViewFragment : Fragment(), SampleOptionsBottomSheet.Listener, OnSetImageUriCompleteListener, OnCropImageCompleteListener {
+  private var _binding: FragmentCropImageViewBinding? = null
+  private val binding get() = _binding!!
 
-  companion object {
-
-    fun newInstance() = SampleUsingImageView()
-  }
-
-  private lateinit var binding: FragmentCropImageViewBinding
   private var options: SampleOptionsEntity? = null
-  private val openPicker =
-    registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-      binding.cropImageView.setImageUriAsync(uri)
-    }
+  private val openPicker = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+    binding.cropImageView.setImageUriAsync(uri)
+  }
 
   override fun onCreateView(
     inflater: LayoutInflater,
@@ -47,8 +38,15 @@ internal class SampleUsingImageView :
     savedInstanceState: Bundle?,
   ): View {
     setHasOptionsMenu(true)
-    binding = FragmentCropImageViewBinding.inflate(layoutInflater, container, false)
+    _binding = FragmentCropImageViewBinding.inflate(layoutInflater, container, false)
     return binding.root
+  }
+
+  override fun onDestroyView() {
+    super.onDestroyView()
+    binding.cropImageView.setOnSetImageUriCompleteListener(null)
+    binding.cropImageView.setOnCropImageCompleteListener(null)
+    _binding = null
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -56,10 +54,11 @@ internal class SampleUsingImageView :
 
     setOptions()
 
-    binding.cropImageView.let {
-      it.setOnSetImageUriCompleteListener(this)
-      it.setOnCropImageCompleteListener(this)
-      if (savedInstanceState == null) it.imageResource = R.drawable.cat
+    binding.cropImageView.setOnSetImageUriCompleteListener(this)
+    binding.cropImageView.setOnCropImageCompleteListener(this)
+
+    if (savedInstanceState == null) {
+      binding.cropImageView.imageResource = R.drawable.cat
     }
 
     binding.settings.setOnClickListener {
@@ -120,32 +119,24 @@ internal class SampleUsingImageView :
     super.onCreateOptionsMenu(menu, inflater)
   }
 
-  override fun onOptionsItemSelected(item: MenuItem): Boolean {
-    when (item.itemId) {
-      R.id.main_action_crop -> {
-        binding.cropImageView.croppedImageAsync()
-        return true
-      }
-      R.id.main_action_rotate -> {
-        binding.cropImageView.rotateImage(90)
-        return true
-      }
-      R.id.main_action_flip_horizontally -> {
-        binding.cropImageView.flipImageHorizontally()
-        return true
-      }
-      R.id.main_action_flip_vertically -> {
-        binding.cropImageView.flipImageVertically()
-        return true
-      }
-      else -> return super.onOptionsItemSelected(item)
+  override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+    R.id.main_action_crop -> {
+      binding.cropImageView.croppedImageAsync()
+      true
     }
-  }
-
-  override fun onDetach() {
-    super.onDetach()
-    binding.cropImageView.setOnSetImageUriCompleteListener(null)
-    binding.cropImageView.setOnCropImageCompleteListener(null)
+    R.id.main_action_rotate -> {
+      binding.cropImageView.rotateImage(90)
+      true
+    }
+    R.id.main_action_flip_horizontally -> {
+      binding.cropImageView.flipImageHorizontally()
+      true
+    }
+    R.id.main_action_flip_vertically -> {
+      binding.cropImageView.flipImageVertically()
+      true
+    }
+    else -> super.onOptionsItemSelected(item)
   }
 
   override fun onSetImageUriComplete(view: CropImageView, uri: Uri, error: Exception?) {
@@ -157,23 +148,18 @@ internal class SampleUsingImageView :
   }
 
   override fun onCropImageComplete(view: CropImageView, result: CropResult) {
-    handleCropResult(result)
-  }
-
-  private fun handleCropResult(result: CropResult?) {
-    if (result != null && result.error == null) {
-      val imageBitmap =
-        if (binding.cropImageView.cropShape == CropImageView.CropShape.OVAL) {
-          result.bitmap?.let { CropImage.toOvalBitmap(it) }
-        } else {
-          result.bitmap
-        }
+    if (result.error == null) {
+      val imageBitmap = if (binding.cropImageView.cropShape == CropImageView.CropShape.OVAL) {
+        result.bitmap?.let(CropImage::toOvalBitmap)
+      } else {
+        result.bitmap
+      }
       context?.let { Timber.tag("File Path").v(result.getUriFilePath(it).toString()) }
       SampleResultScreen.start(this, imageBitmap, result.uriContent, result.sampleSize)
     } else {
-      Timber.tag("AIC").e(result?.error, "Failed to crop image")
+      Timber.tag("AIC").e(result.error, "Failed to crop image")
       Toast
-        .makeText(activity, "Crop failed: ${result?.error?.message}", Toast.LENGTH_SHORT)
+        .makeText(activity, "Crop failed: ${result.error?.message}", Toast.LENGTH_SHORT)
         .show()
     }
   }
@@ -189,8 +175,8 @@ internal class SampleUsingImageView :
     cornerShape = CropImageView.CropCornerShape.RECTANGLE,
     guidelines = CropImageView.Guidelines.ON,
     ratio = Pair(1, 1),
-    autoZoom = true,
     maxZoomLvl = 2,
+    autoZoom = true,
     multiTouch = true,
     centerMove = true,
     showCropOverlay = true,

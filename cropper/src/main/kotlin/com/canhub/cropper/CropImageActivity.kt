@@ -29,31 +29,28 @@ import com.canhub.cropper.databinding.CropImageActivityBinding
 import com.canhub.cropper.utils.getUriForFile
 import java.io.File
 
-open class CropImageActivity :
-  AppCompatActivity(),
-  OnSetImageUriCompleteListener,
-  OnCropImageCompleteListener {
+open class CropImageActivity : AppCompatActivity(), OnSetImageUriCompleteListener, OnCropImageCompleteListener {
 
-  /**
-   * Persist URI image to crop URI if specific permissions are required
-   */
+  /** Persist URI image to crop URI if specific permissions are required. */
   private var cropImageUri: Uri? = null
 
-  /**
-   * the options that were set for the crop image
-   */
+  /** The options that were set for the crop image*/
   private lateinit var cropImageOptions: CropImageOptions
 
   /** The crop image view library widget used in the activity. */
   private var cropImageView: CropImageView? = null
   private lateinit var binding: CropImageActivityBinding
   private var latestTmpUri: Uri? = null
-  private val pickImageGallery =
-    registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-      onPickImageResult(uri)
-    }
+  private val pickImageGallery = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+    onPickImageResult(uri)
+  }
+
   private val takePicture = registerForActivityResult(ActivityResultContracts.TakePicture()) {
-    if (it) onPickImageResult(latestTmpUri) else onPickImageResult(null)
+    if (it) {
+      onPickImageResult(latestTmpUri)
+    } else {
+      onPickImageResult(null)
+    }
   }
 
   public override fun onCreate(savedInstanceState: Bundle?) {
@@ -292,17 +289,32 @@ open class CropImageActivity :
     return true
   }
 
-  override fun onOptionsItemSelected(item: MenuItem): Boolean {
-    when (item.itemId) {
-      R.id.crop_image_menu_crop -> cropImage()
-      R.id.ic_rotate_left_24 -> rotateImage(-cropImageOptions.rotationDegrees)
-      R.id.ic_rotate_right_24 -> rotateImage(cropImageOptions.rotationDegrees)
-      R.id.ic_flip_24_horizontally -> cropImageView?.flipImageHorizontally()
-      R.id.ic_flip_24_vertically -> cropImageView?.flipImageVertically()
-      android.R.id.home -> setResultCancel()
-      else -> return super.onOptionsItemSelected(item)
+  override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+    R.id.crop_image_menu_crop -> {
+      cropImage()
+      true
     }
-    return true
+    R.id.ic_rotate_left_24 -> {
+      rotateImage(-cropImageOptions.rotationDegrees)
+      true
+    }
+    R.id.ic_rotate_right_24 -> {
+      rotateImage(cropImageOptions.rotationDegrees)
+      true
+    }
+    R.id.ic_flip_24_horizontally -> {
+      cropImageView?.flipImageHorizontally()
+      true
+    }
+    R.id.ic_flip_24_vertically -> {
+      cropImageView?.flipImageVertically()
+      true
+    }
+    android.R.id.home -> {
+      setResultCancel()
+      true
+    }
+    else -> super.onOptionsItemSelected(item)
   }
 
   protected open fun onPickImageResult(resultUri: Uri?) {

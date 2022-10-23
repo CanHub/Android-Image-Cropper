@@ -15,9 +15,9 @@ internal class MainActivity : AppCompatActivity() {
 
     setContentView(binding.root)
 
-    binding.sampleCropImageView.setOnClickListener { SampleUsingImageView.newInstance().show() }
+    binding.sampleCropImageView.setOnClickListener { SampleUsingImageViewFragment().show() }
     binding.sampleCustomActivity.setOnClickListener { SampleCustomActivity.start(this) }
-    binding.sampleCropImage.setOnClickListener { SampleCrop.newInstance().show() }
+    binding.sampleCropImage.setOnClickListener { SampleCropFragment().show() }
 
     onBackPressedDispatcher.addCallback(
       this,
