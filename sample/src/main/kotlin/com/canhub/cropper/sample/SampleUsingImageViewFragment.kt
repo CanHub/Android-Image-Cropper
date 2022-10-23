@@ -166,23 +166,6 @@ internal class SampleUsingImageViewFragment : Fragment(), SampleOptionsBottomShe
 
   private fun setOptions() {
     binding.cropImageView.cropRect = Rect(100, 300, 500, 1200)
-    onOptionsApplySelected(defaultOptions)
+    onOptionsApplySelected(SampleOptionsEntity())
   }
-
-  private val defaultOptions: SampleOptionsEntity = SampleOptionsEntity(
-    scaleType = CropImageView.ScaleType.FIT_CENTER,
-    cropShape = CropImageView.CropShape.RECTANGLE,
-    cornerShape = CropImageView.CropCornerShape.RECTANGLE,
-    guidelines = CropImageView.Guidelines.ON,
-    ratio = Pair(1, 1),
-    maxZoomLvl = 2,
-    autoZoom = true,
-    multiTouch = true,
-    centerMove = true,
-    showCropOverlay = true,
-    showProgressBar = true,
-    flipHorizontally = false,
-    flipVertically = false,
-    showCropLabel = false,
-  )
 }
