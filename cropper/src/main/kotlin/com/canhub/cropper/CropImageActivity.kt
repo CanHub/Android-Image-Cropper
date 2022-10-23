@@ -44,7 +44,7 @@ open class CropImageActivity :
    */
   private lateinit var cropImageOptions: CropImageOptions
 
-  /** The crop image view library widget used in the activity */
+  /** The crop image view library widget used in the activity. */
   private var cropImageView: CropImageView? = null
   private lateinit var binding: CropImageActivityBinding
   private var latestTmpUri: Uri? = null

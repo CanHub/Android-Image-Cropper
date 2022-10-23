@@ -5,19 +5,15 @@ import android.graphics.RectF
 import kotlin.math.max
 import kotlin.math.min
 
-/**
- * Handler to update crop window edges by the move type - Horizontal, Vertical, Corner or Center.
- *
- * @param type the type of move this handler is executing
- * @param cropWindowHandler main crop window handle to get and update the crop window edges
- * @param touchX the location of the initial touch position to measure move distance
- * @param touchY the location of the initial touch position to measure move distance
- */
+/** Handler to update crop window edges by the move type - Horizontal, Vertical, Corner or Center. */
 internal class CropWindowMoveHandler(
-  /** The type of crop window move that is handled. */
+  /** The type of move this handler is executing */
   private val type: Type,
+  /** Main crop window handle to get and update the crop window edges */
   cropWindowHandler: CropWindowHandler,
+  /** The location of the initial touch position to measure move distance */
   touchX: Float,
+  /** The location of the initial touch position to measure move distance */
   touchY: Float,
 ) {
 
@@ -67,16 +63,14 @@ internal class CropWindowMoveHandler(
    * Primary is the edge directly affected by move type, secondary is the other edge.<br></br>
    * The crop window is changed by directly setting the Edge coordinates.
    *
-   * @param x the new x-coordinate of this handle
-   * @param y the new y-coordinate of this handle
-   * @param bounds the bounding rectangle of the image
-   * @param viewWidth The bounding image view width used to know the crop overlay is at view edges.
-   * @param viewHeight The bounding image view height used to know the crop overlay is at view
-   * edges.
-   * @param snapMargin the maximum distance (in pixels) at which the crop window should snap to the
-   * image
-   * @param fixedAspectRatio is the aspect ratio fixed and 'targetAspectRatio' should be used
-   * @param aspectRatio the aspect ratio to maintain
+   * [x] the new x-coordinate of this handle
+   * [y] the new y-coordinate of this handle
+   * [bounds] the bounding rectangle of the image
+   * [viewWidth] The bounding image view width used to know the crop overlay is at view edges.
+   * [viewHeight] The bounding image view height used to know the crop overlay is at view edges.
+   * [snapMargin] the maximum distance (in pixels) at which the crop window should snap to the image
+   * [fixedAspectRatio] is the aspect ratio fixed and 'targetAspectRatio' should be used
+   * [aspectRatio] the aspect ratio to maintain
    */
   fun move(
     rect: RectF,
@@ -568,9 +562,9 @@ internal class CropWindowMoveHandler(
    * Get the resulting x-position of the left edge of the crop window given the handle's position
    * and the image's bounding box and snap radius.
    *
-   * @param left the position that the left edge is dragged to
-   * @param bounds the bounding box of the image that is being cropped
-   * @param snapMargin the snap distance to the image edge (in pixels)
+   * [left] the position that the left edge is dragged to
+   * [bounds] the bounding box of the image that is being cropped
+   * [snapMargin] the snap distance to the image edge (in pixels)
    */
   private fun adjustLeft(
     rect: RectF,
@@ -637,10 +631,10 @@ internal class CropWindowMoveHandler(
    * Get the resulting x-position of the right edge of the crop window given the handle's position
    * and the image's bounding box and snap radius.
    *
-   * @param right the position that the right edge is dragged to
-   * @param bounds the bounding box of the image that is being cropped
-   * @param viewWidth
-   * @param snapMargin the snap distance to the image edge (in pixels)
+   * [right] the position that the right edge is dragged to
+   * [bounds] the bounding box of the image that is being cropped
+   * [viewWidth]
+   * [snapMargin] the snap distance to the image edge (in pixels)
    */
   private fun adjustRight(
     rect: RectF,
@@ -706,9 +700,9 @@ internal class CropWindowMoveHandler(
    * Get the resulting y-position of the top edge of the crop window given the handle's position and
    * the image's bounding box and snap radius.
    *
-   * @param top the x-position that the top edge is dragged to
-   * @param bounds the bounding box of the image that is being cropped
-   * @param snapMargin the snap distance to the image edge (in pixels)
+   * [top] the x-position that the top edge is dragged to
+   * [bounds] the bounding box of the image that is being cropped
+   * [snapMargin] the snap distance to the image edge (in pixels)
    */
   private fun adjustTop(
     rect: RectF,
@@ -771,10 +765,10 @@ internal class CropWindowMoveHandler(
    * Get the resulting y-position of the bottom edge of the crop window given the handle's position
    * and the image's bounding box and snap radius.
    *
-   * @param bottom the position that the bottom edge is dragged to
-   * @param bounds the bounding box of the image that is being cropped
-   * @param viewHeight
-   * @param snapMargin the snap distance to the image edge (in pixels)
+   * [bottom] the position that the bottom edge is dragged to
+   * [bounds] the bounding box of the image that is being cropped
+   * [viewHeight]
+   * [snapMargin] the snap distance to the image edge (in pixels)
    */
   private fun adjustBottom(
     rect: RectF,

@@ -20,10 +20,9 @@ import java.util.Locale.getDefault
  * The temporary file will always override a previous one, saving memory.
  * Using the cache memory(context.cacheDir) we guarantee to not leak memory
  *
- * @param context used to access Android APIs, like content resolve, it is your activity/fragment.
- * @param uri the URI to load the image from.
- * @param uniqueName If true, make each image cropped have a different file name, this could cause
- * memory issues, use wisely.
+ * [context] used to access Android APIs, like content resolve, it is your activity/fragment.
+ * [uri] the URI to load the image from.
+ * [uniqueName] If true, make each image cropped have a different file name, this could cause memory issues, use wisely.
  *
  * @return string value of the File path.
  */

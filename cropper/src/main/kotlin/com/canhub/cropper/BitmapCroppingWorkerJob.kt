@@ -125,20 +125,19 @@ class BitmapCroppingWorkerJob(
   }
 
   class Result {
-
-    /** The cropped bitmap  */
+    /** The cropped bitmap. */
     val bitmap: Bitmap?
 
-    /** The saved cropped bitmap uri  */
+    /** The saved cropped bitmap uri. */
     val uri: Uri?
 
     /** The error that occurred during async bitmap cropping. */
     val error: java.lang.Exception?
 
-    /** is the cropping request was to get a bitmap or to save it to uri  */
+    /** Is the cropping request was to get a bitmap or to save it to uri. */
     val isSave: Boolean
 
-    /** sample size used creating the crop bitmap to lower its size  */
+    /** Sample size used creating the crop bitmap to lower its size. */
     val sampleSize: Int
 
     constructor(bitmap: Bitmap?, sampleSize: Int) {

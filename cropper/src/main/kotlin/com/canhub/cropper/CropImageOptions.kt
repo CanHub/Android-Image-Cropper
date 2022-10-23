@@ -72,11 +72,11 @@ open class CropImageOptions : Parcelable {
   @JvmField
   var touchRadius: Float
 
-  /** whether the guidelines should be on, off, or only showing when resizing. */
+  /** Whether the guidelines should be on, off, or only showing when resizing. */
   @JvmField
   var guidelines: Guidelines
 
-  /** The initial scale type of the image in the crop image view  */
+  /** The initial scale type of the image in the crop image view. */
   @JvmField
   var scaleType: CropImageView.ScaleType
 
@@ -113,11 +113,11 @@ open class CropImageOptions : Parcelable {
   @JvmField
   var autoZoomEnabled: Boolean
 
-  /** if multi-touch should be enabled on the crop box default: false  */
+  /** If multi-touch should be enabled on the crop box default: false. */
   @JvmField
   var multiTouchEnabled: Boolean
 
-  /** if the crop window can be moved by dragging the center; default: true  */
+  /** If the crop window can be moved by dragging the center; default: true. */
   @JvmField
   var centerMoveEnabled: Boolean
 
@@ -132,40 +132,40 @@ open class CropImageOptions : Parcelable {
   @JvmField
   var initialCropWindowPaddingRatio: Float
 
-  /** whether the width to height aspect ratio should be maintained or free to change. */
+  /** Whether the width to height aspect ratio should be maintained or free to change. */
   @JvmField
   var fixAspectRatio: Boolean
 
-  /** the X value of the aspect ratio. */
+  /** The X value of the aspect ratio. */
   @JvmField
   var aspectRatioX: Int
 
-  /** the Y value of the aspect ratio. */
+  /** The Y value of the aspect ratio. */
   @JvmField
   var aspectRatioY: Int
 
-  /** the thickness of the guidelines lines in pixels. (in pixels)  */
+  /** The thickness of the guidelines lines in pixels. (in pixels) */
   @JvmField
   var borderLineThickness: Float
 
-  /** the color of the guidelines lines  */
+  /** The color of the guidelines lines. */
   @JvmField
   @ColorInt
   var borderLineColor: Int
 
-  /** thickness of the corner line. (in pixels)  */
+  /** Thickness of the corner line. (in pixels) */
   @JvmField
   var borderCornerThickness: Float
 
-  /** the offset of corner line from crop window border. (in pixels)  */
+  /** The offset of corner line from crop window border. (in pixels) */
   @JvmField
   var borderCornerOffset: Float
 
-  /** the length of the corner line away from the corner. (in pixels)  */
+  /** The length of the corner line away from the corner. (in pixels) */
   @JvmField
   var borderCornerLength: Float
 
-  /** the color of the corner line  */
+  /** The color of the corner line. */
   @JvmField
   @ColorInt
   var borderCornerColor: Int
@@ -176,11 +176,11 @@ open class CropImageOptions : Parcelable {
   @JvmField
   var circleCornerFillColorHexValue: Int
 
-  /** the thickness of the guidelines lines. (in pixels)  */
+  /** The thickness of the guidelines lines. (in pixels) */
   @JvmField
   var guidelinesThickness: Float
 
-  /** the color of the guidelines lines  */
+  /** The color of the guidelines lines. */
   @JvmField
   @ColorInt
   var guidelinesColor: Int
@@ -193,11 +193,11 @@ open class CropImageOptions : Parcelable {
   @ColorInt
   var backgroundColor: Int
 
-  /** the min width the crop window is allowed to be. (in pixels)  */
+  /** The min width the crop window is allowed to be. (in pixels) */
   @JvmField
   var minCropWindowWidth: Int
 
-  /** the min height the crop window is allowed to be. (in pixels)  */
+  /** The min height the crop window is allowed to be. (in pixels) */
   @JvmField
   var minCropWindowHeight: Int
 
@@ -229,85 +229,85 @@ open class CropImageOptions : Parcelable {
   @JvmField
   var maxCropResultHeight: Int
 
-  /** the title of the [CropImageActivity]  */
+  /** The title of the [CropImageActivity]  */
   @JvmField
   var activityTitle: CharSequence
 
-  /** the color to use for action bar items icons  */
+  /** The color to use for action bar items icons. */
   @JvmField
   @ColorInt
   var activityMenuIconColor: Int
 
-  /** the color to use for action bar items texts  */
+  /** The color to use for action bar items texts. */
   @JvmField
   @ColorInt
   var activityMenuTextColor: Int? = null
 
-  /** the Android Uri to save the cropped image to  */
+  /** The Android Uri to save the cropped image to. */
   @JvmField
   var customOutputUri: Uri?
 
-  /** the compression format to use when writing the image  */
+  /** The compression format to use when writing the image. */
   @JvmField
   var outputCompressFormat: CompressFormat
 
-  /** the quality (if applicable) to use when writing the image (0 - 100)  */
+  /** The quality (if applicable) to use when writing the image (0 - 100) */
   @JvmField
   var outputCompressQuality: Int
 
-  /** the width to resize the cropped image to (see options)  */
+  /** The width to resize the cropped image to (see options) */
   @JvmField
   var outputRequestWidth: Int
 
-  /** the height to resize the cropped image to (see options)  */
+  /** The height to resize the cropped image to (see options) */
   @JvmField
   var outputRequestHeight: Int
 
-  /** the resize method to use on the cropped bitmap (see options documentation)  */
+  /** The resize method to use on the cropped bitmap (see options documentation) */
   @JvmField
   var outputRequestSizeOptions: RequestSizeOptions
 
-  /** if the result of crop image activity should not save the cropped image bitmap  */
+  /** If the result of crop image activity should not save the cropped image bitmap. */
   @JvmField
   var noOutputImage: Boolean
 
-  /** the initial rectangle to set on the cropping image after loading  */
+  /** The initial rectangle to set on the cropping image after loading. */
   @JvmField
   var initialCropWindowRectangle: Rect?
 
-  /** the initial rotation to set on the cropping image after loading (0-360 degrees clockwise)  */
+  /** The initial rotation to set on the cropping image after loading (0-360 degrees clockwise) */
   @JvmField
   var initialRotation: Int
 
-  /** if to allow (all) rotation during cropping (activity)  */
+  /** If to allow (all) rotation during cropping (activity) */
   @JvmField
   var allowRotation: Boolean
 
-  /** if to allow (all) flipping during cropping (activity)  */
+  /** If to allow (all) flipping during cropping (activity) */
   @JvmField
   var allowFlipping: Boolean
 
-  /** if to allow counter-clockwise rotation during cropping (activity)  */
+  /** If to allow counter-clockwise rotation during cropping (activity) */
   @JvmField
   var allowCounterRotation: Boolean
 
-  /** the amount of degrees to rotate clockwise or counter-clockwise  */
+  /** The amount of degrees to rotate clockwise or counter-clockwise. */
   @JvmField
   var rotationDegrees: Int
 
-  /** whether the image should be flipped horizontally  */
+  /** Whether the image should be flipped horizontally. */
   @JvmField
   var flipHorizontally: Boolean
 
-  /** whether the image should be flipped vertically  */
+  /** Whether the image should be flipped vertically. */
   @JvmField
   var flipVertically: Boolean
 
-  /** optional, the text of the crop menu crop button  */
+  /** Optional, the text of the crop menu crop button. */
   @JvmField
   var cropMenuCropButtonTitle: CharSequence?
 
-  /** optional image resource to be used for crop menu crop icon instead of text  */
+  /** Optional image resource to be used for crop menu crop icon instead of text. */
   @JvmField
   var cropMenuCropButtonIcon: Int
 
