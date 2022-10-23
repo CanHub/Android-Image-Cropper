@@ -1699,44 +1699,19 @@ class CropImageView @JvmOverloads constructor(
      * This is NOT the file path, please use [getUriFilePath]
      */
     val uriContent: Uri?,
-    /** The error that failed the loading/cropping (null if successful)  */
+    /** The error that failed the loading/cropping (null if successful) */
     val error: Exception?,
-    /** The 4 points of the cropping window in the source image  */
+    /** The 4 points of the cropping window in the source image */
     val cropPoints: FloatArray,
-    /** The rectangle of the cropping window in the source image  */
+    /** The rectangle of the cropping window in the source image */
     val cropRect: Rect?,
-    /** The rectangle of the source image dimensions  */
+    /** The rectangle of the source image dimensions */
     val wholeImageRect: Rect?,
-    /** The final rotation of the cropped image relative to source  */
+    /** The final rotation of the cropped image relative to source */
     val rotation: Int,
-    /** sample size used creating the crop bitmap to lower its size  */
+    /** sample size used creating the crop bitmap to lower its size */
     val sampleSize: Int,
   ) {
-
-    /**
-     * The image bitmap of the original image loaded for cropping.<br></br>
-     * Null if uri used to load image or activity result is used.
-     */
-    /**
-     * The Android uri of the original image loaded for cropping.<br></br>
-     * Null if bitmap was used to load image.
-     */
-    /**
-     * The cropped image bitmap result.<br></br>
-     * Null if save cropped image was executed, no output requested or failure.
-     * Null if uri used to load image or activity result is used.
-     */
-    /**
-     * The Android uri of the saved cropped image result Null if you get cropped image was executed, no
-     * output requested or failure.
-     */
-    /** The error that failed the loading/cropping (null if successful)  */
-    /** The 4 points of the cropping window in the source image  */
-    /** The rectangle of the cropping window in the source image  */
-    /** The rectangle of the source image dimensions  */
-    /** The final rotation of the cropped image relative to source  */
-    /** sample size used creating the crop bitmap to lower its size  */
-    /** Is the result is success or error. */
     val isSuccessful: Boolean
       get() = error == null
 
