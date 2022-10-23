@@ -13,7 +13,6 @@ import android.graphics.Region
 import android.os.Build
 import android.os.Build.VERSION.SDK_INT
 import android.util.AttributeSet
-import android.util.Log
 import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.ScaleGestureDetector
@@ -444,7 +443,7 @@ internal class CropOverlayView @JvmOverloads constructor(
       if (initializedCropWindow) {
         initCropWindow()
         invalidate()
-        callOnCropWindowChanged(false)
+        mCropWindowChangeListener?.onCropWindowChanged(false)
       }
     }
 
@@ -453,7 +452,7 @@ internal class CropOverlayView @JvmOverloads constructor(
     if (initializedCropWindow) {
       initCropWindow()
       invalidate()
-      callOnCropWindowChanged(false)
+      mCropWindowChangeListener?.onCropWindowChanged(false)
     }
   }
 
@@ -1101,7 +1100,7 @@ internal class CropOverlayView @JvmOverloads constructor(
   private fun onActionUp() {
     if (mMoveHandler != null) {
       mMoveHandler = null
-      callOnCropWindowChanged(false)
+      mCropWindowChangeListener?.onCropWindowChanged(false)
       invalidate()
     }
   }
@@ -1129,7 +1128,7 @@ internal class CropOverlayView @JvmOverloads constructor(
         mTargetAspectRatio,
       )
       mCropWindowHandler.setRect(rect)
-      callOnCropWindowChanged(true)
+      mCropWindowChangeListener?.onCropWindowChanged(true)
       invalidate()
     }
   }
@@ -1232,18 +1231,8 @@ internal class CropOverlayView @JvmOverloads constructor(
   private val isNonStraightAngleRotated: Boolean
     get() = mBoundsPoints[0] != mBoundsPoints[6] && mBoundsPoints[1] != mBoundsPoints[7]
 
-  /** Invoke on crop change listener safe, don't let the app crash on exception. */
-  private fun callOnCropWindowChanged(inProgress: Boolean) {
-    try {
-      mCropWindowChangeListener?.onCropWindowChanged(inProgress)
-    } catch (e: Exception) {
-      Log.e("AIC", "Exception in crop window changed", e)
-    }
-  }
-
   /** Interface definition for a callback to be invoked when crop window rectangle is changing. */
-  fun interface CropWindowChangeListener {
-
+  internal fun interface CropWindowChangeListener {
     /**
      * Called after a change in crop window rectangle.
      *
