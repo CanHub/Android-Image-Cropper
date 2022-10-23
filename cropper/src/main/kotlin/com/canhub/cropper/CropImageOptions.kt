@@ -391,7 +391,7 @@ open class CropImageOptions : Parcelable {
     multiTouchEnabled = false
     centerMoveEnabled = true
     maxZoom = 4
-    initialCropWindowPaddingRatio = 0.1f
+    initialCropWindowPaddingRatio = 0.0f
     fixAspectRatio = false
     aspectRatioX = 1
     aspectRatioY = 1
