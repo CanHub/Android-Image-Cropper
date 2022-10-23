@@ -17,8 +17,6 @@
       android:text="@string/crop_shape"
       android:textColor="@color/black"
       />
-
-
   <HorizontalScrollView
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
