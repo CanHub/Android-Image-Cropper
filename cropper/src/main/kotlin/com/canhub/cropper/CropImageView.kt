@@ -466,8 +466,8 @@ class CropImageView @JvmOverloads constructor(
       val orgWidth = bitmap.width * loadedSampleSize
       val orgHeight = bitmap.height * loadedSampleSize
       return Rect(0, 0, orgWidth, orgHeight)
-    } // get the points of the crop rectangle adjusted to source bitmap
-  // get the rectangle for the points (it may be larger than original if rotation is not straight)
+    }
+
   /**
    * Gets the crop window's position relative to the source Bitmap (not the image displayed in the
    * CropImageView) using the original image rotation.
@@ -489,12 +489,12 @@ class CropImageView @JvmOverloads constructor(
       val orgHeight = bitmap.height * loadedSampleSize
       // get the rectangle for the points (it may be larger than original if rotation is not straight)
       return BitmapUtils.getRectFromPoints(
-        points,
-        orgWidth,
-        orgHeight,
-        mCropOverlayView!!.isFixAspectRatio,
-        mCropOverlayView.aspectRatioX,
-        mCropOverlayView.aspectRatioY,
+        cropPoints = points,
+        imageWidth = orgWidth,
+        imageHeight = orgHeight,
+        fixAspectRatio = mCropOverlayView!!.isFixAspectRatio,
+        aspectRatioX = mCropOverlayView.aspectRatioX,
+        aspectRatioY = mCropOverlayView.aspectRatioY,
       )
     }
     set(rect) {

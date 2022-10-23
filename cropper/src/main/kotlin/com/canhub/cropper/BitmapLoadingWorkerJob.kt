@@ -36,11 +36,19 @@ internal class BitmapLoadingWorkerJob internal constructor(
     currentJob = launch(Dispatchers.Default) {
       try {
         if (isActive) {
-          val decodeResult =
-            BitmapUtils.decodeSampledBitmap(context, uri, width, height)
+          val decodeResult = BitmapUtils.decodeSampledBitmap(
+            context = context,
+            uri = uri,
+            reqWidth = width,
+            reqHeight = height,
+          )
           if (isActive) {
-            val orientateResult =
-              BitmapUtils.orientateBitmapByExif(decodeResult.bitmap, context, uri)
+            val orientateResult = BitmapUtils.orientateBitmapByExif(
+              bitmap = decodeResult.bitmap,
+              context = context,
+              uri = uri,
+            )
+
             onPostExecute(
               Result(
                 uri = uri,
