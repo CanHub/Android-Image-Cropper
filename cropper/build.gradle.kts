@@ -5,16 +5,11 @@ plugins {
   id("org.jetbrains.kotlin.plugin.parcelize")
   id("com.vanniktech.maven.publish")
   id("app.cash.licensee")
+  id("dev.chrisbanes.paparazzi")
 }
 
 licensee {
   allow("Apache-2.0")
-}
-
-kotlin {
-  jvmToolchain {
-    languageVersion.set(JavaLanguageVersion.of("8"))
-  }
 }
 
 android {
