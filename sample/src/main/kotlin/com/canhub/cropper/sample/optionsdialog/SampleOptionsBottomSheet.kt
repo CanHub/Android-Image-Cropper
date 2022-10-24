@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
+import com.canhub.cropper.CropImageOptions
 import com.canhub.cropper.CropImageView
 import com.canhub.cropper.parcelable
 import com.example.croppersample.databinding.FragmentOptionsBinding
@@ -13,12 +14,12 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 internal class SampleOptionsBottomSheet : BottomSheetDialogFragment() {
   fun interface Listener {
-    fun onOptionsApplySelected(options: SampleOptionsEntity)
+    fun onOptionsApplySelected(options: CropImageOptions)
   }
 
   private var _binding: FragmentOptionsBinding? = null
   private val binding get() = _binding!!
-  private lateinit var options: SampleOptionsEntity
+  private lateinit var options: CropImageOptions
 
   override fun onCreateView(
     inflater: LayoutInflater,
@@ -37,13 +38,13 @@ internal class SampleOptionsBottomSheet : BottomSheetDialogFragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
 
-    options = arguments?.parcelable(OPTIONS_KEY) ?: SampleOptionsEntity()
+    options = arguments?.parcelable(OPTIONS_KEY) ?: CropImageOptions()
     updateOptions(options)
 
     bindingActions()
   }
 
-  private fun updateOptions(options: SampleOptionsEntity) {
+  private fun updateOptions(options: CropImageOptions) {
     when (options.scaleType) {
       CropImageView.ScaleType.CENTER -> binding.scaleType.chipCenter.isChecked = true
       CropImageView.ScaleType.FIT_CENTER -> binding.scaleType.chipFitCenter.isChecked = true
@@ -78,7 +79,7 @@ internal class SampleOptionsBottomSheet : BottomSheetDialogFragment() {
       CropImageView.Guidelines.ON_TOUCH -> binding.guidelines.chipOnTouch.isChecked = true
     }
 
-    when (options.ratio) {
+    when (Pair(options.aspectRatioX, options.aspectRatioY).takeIf { options.fixAspectRatio }) {
       Pair(1, 1) -> binding.ratio.chipOneOne.isChecked = true
       Pair(4, 3) -> binding.ratio.chipFourThree.isChecked = true
       Pair(2, 1) -> binding.ratio.chipTwoOne.isChecked = true
@@ -86,15 +87,15 @@ internal class SampleOptionsBottomSheet : BottomSheetDialogFragment() {
       else -> binding.ratio.chipFree.isChecked = true
     }
 
-    when (options.maxZoomLvl) {
+    when (options.maxZoom) {
       4 -> binding.maxZoom.chipFour.isChecked = true
       8 -> binding.maxZoom.chipEight.isChecked = true
       else -> binding.maxZoom.chipTwo.isChecked = true
     }
 
-    binding.autoZoom.toggle.isChecked = options.autoZoom
-    binding.multiTouch.toggle.isChecked = options.multiTouch
-    binding.centerMoveEnabled.toggle.isChecked = options.centerMove
+    binding.autoZoom.toggle.isChecked = options.autoZoomEnabled
+    binding.multiTouch.toggle.isChecked = options.multiTouchEnabled
+    binding.centerMoveEnabled.toggle.isChecked = options.centerMoveEnabled
     binding.cropOverlay.toggle.isChecked = options.showCropOverlay
     binding.progressBar.toggle.isChecked = options.showProgressBar
     binding.flipHorizontal.toggle.isChecked = options.flipHorizontally
@@ -165,39 +166,39 @@ internal class SampleOptionsBottomSheet : BottomSheetDialogFragment() {
     }
 
     binding.ratio.chipFree.setOnClickListener {
-      options = options.copy(ratio = null)
+      options = options.copy(fixAspectRatio = false, aspectRatioX = 1, aspectRatioY = 1)
     }
 
     binding.ratio.chipOneOne.setOnClickListener {
-      options = options.copy(ratio = Pair(1, 1))
+      options = options.copy(fixAspectRatio = true, aspectRatioX = 1, aspectRatioY = 1)
     }
 
     binding.ratio.chipTwoOne.setOnClickListener {
-      options = options.copy(ratio = Pair(2, 1))
+      options = options.copy(fixAspectRatio = true, aspectRatioX = 2, aspectRatioY = 1)
     }
 
     binding.ratio.chipFourThree.setOnClickListener {
-      options = options.copy(ratio = Pair(4, 3))
+      options = options.copy(fixAspectRatio = true, aspectRatioX = 4, aspectRatioY = 3)
     }
 
     binding.ratio.chipSixteenNine.setOnClickListener {
-      options = options.copy(ratio = Pair(16, 9))
+      options = options.copy(fixAspectRatio = true, aspectRatioX = 16, aspectRatioY = 9)
     }
 
     binding.maxZoom.chipTwo.setOnClickListener {
-      options = options.copy(maxZoomLvl = 2)
+      options = options.copy(maxZoom = 2)
     }
 
     binding.maxZoom.chipFour.setOnClickListener {
-      options = options.copy(maxZoomLvl = 4)
+      options = options.copy(maxZoom = 4)
     }
 
     binding.maxZoom.chipEight.setOnClickListener {
-      options = options.copy(maxZoomLvl = 8)
+      options = options.copy(maxZoom = 8)
     }
 
     binding.autoZoom.toggle.setOnCheckedChangeListener { _, isChecked ->
-      options = options.copy(autoZoom = isChecked)
+      options = options.copy(autoZoomEnabled = isChecked)
     }
 
     binding.cropOverlay.toggle.setOnCheckedChangeListener { _, isChecked ->
@@ -213,11 +214,11 @@ internal class SampleOptionsBottomSheet : BottomSheetDialogFragment() {
     }
 
     binding.multiTouch.toggle.setOnCheckedChangeListener { _, isChecked ->
-      options = options.copy(multiTouch = isChecked)
+      options = options.copy(multiTouchEnabled = isChecked)
     }
 
     binding.centerMoveEnabled.toggle.setOnCheckedChangeListener { _, isChecked ->
-      options = options.copy(centerMove = isChecked)
+      options = options.copy(centerMoveEnabled = isChecked)
     }
 
     binding.progressBar.toggle.setOnCheckedChangeListener { _, isChecked ->
@@ -232,7 +233,7 @@ internal class SampleOptionsBottomSheet : BottomSheetDialogFragment() {
   companion object {
     fun show(
       fragmentManager: FragmentManager,
-      options: SampleOptionsEntity?,
+      options: CropImageOptions?,
       listener: Listener,
     ) {
       Companion.listener = listener
