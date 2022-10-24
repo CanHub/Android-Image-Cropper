@@ -443,7 +443,6 @@ internal class CropOverlayView @JvmOverloads constructor(
       if (initializedCropWindow) {
         initCropWindow()
         invalidate()
-        mCropWindowChangeListener?.onCropWindowChanged(false)
       }
     }
 
@@ -452,7 +451,6 @@ internal class CropOverlayView @JvmOverloads constructor(
     if (initializedCropWindow) {
       initCropWindow()
       invalidate()
-      mCropWindowChangeListener?.onCropWindowChanged(false)
     }
   }
 
@@ -561,6 +559,7 @@ internal class CropOverlayView @JvmOverloads constructor(
     }
     fixCropWindowRectByRules(rect)
     mCropWindowHandler.setRect(rect)
+    mCropWindowChangeListener?.onCropWindowChanged(false)
   }
 
   /** Fix the given rect to fit into bitmap rect and follow min, max and aspect ratio rules. */
