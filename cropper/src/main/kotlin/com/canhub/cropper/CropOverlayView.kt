@@ -469,6 +469,9 @@ internal class CropOverlayView @JvmOverloads constructor(
 
     mOptions = options
 
+    mCropWindowHandler.setMinCropResultSize(options.minCropResultWidth, options.minCropResultHeight)
+    mCropWindowHandler.setMaxCropResultSize(options.maxCropResultWidth, options.maxCropResultHeight)
+
     if (!isDifferent) {
       return
     }
