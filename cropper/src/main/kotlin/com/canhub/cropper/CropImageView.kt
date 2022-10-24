@@ -18,6 +18,7 @@ import android.os.Parcelable
 import android.provider.MediaStore
 import android.util.AttributeSet
 import android.util.Pair
+import android.util.Size
 import android.view.LayoutInflater
 import android.widget.FrameLayout
 import android.widget.ImageView
@@ -500,6 +501,17 @@ class CropImageView @JvmOverloads constructor(
     set(rect) {
       mCropOverlayView!!.initialCropWindowRect = rect
     }
+
+  /** This returns the expected image size, if cropping the image right now. */
+  fun expectedImageSize(): Size? {
+    val rect = cropRect ?: return null
+
+    return if (rotatedDegrees == 0 || rotatedDegrees == 180) {
+      Size(rect.width(), rect.height())
+    } else {
+      Size(rect.height(), rect.width())
+    }
+  }
 
   /**
    * Gets the crop window's position relative to the parent's view at screen.
