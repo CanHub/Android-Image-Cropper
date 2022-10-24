@@ -365,6 +365,23 @@ class CropImageView @JvmOverloads constructor(
     mCropOverlayView.setFixedAspectRatio(true)
   }
 
+  fun setImageCropOptions(options: CropImageOptions) {
+    scaleType = options.scaleType
+    mCropOverlayView?.setInitialAttributeValues(options)
+    setMultiTouchEnabled(options.multiTouchEnabled)
+    setCenterMoveEnabled(options.centerMoveEnabled)
+    isShowCropOverlay = options.showCropOverlay
+    isShowProgressBar = options.showProgressBar
+    isAutoZoomEnabled = options.autoZoomEnabled
+    maxZoom = options.maxZoom
+    isFlippedHorizontally = options.flipHorizontally
+    isFlippedVertically = options.flipVertically
+    mAutoZoomEnabled = options.autoZoomEnabled
+    mShowCropOverlay = options.showCropOverlay
+    mShowProgressBar = options.showProgressBar
+    mProgressBar.indeterminateTintList = ColorStateList.valueOf(options.progressBarColor)
+  }
+
   /** Clears set aspect ratio values and sets fixed aspect ratio to FALSE. */
   fun clearAspectRatio() {
     mCropOverlayView!!.aspectRatioX = 1
