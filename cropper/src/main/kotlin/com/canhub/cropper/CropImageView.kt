@@ -367,6 +367,7 @@ class CropImageView @JvmOverloads constructor(
 
   fun setImageCropOptions(options: CropImageOptions) {
     scaleType = options.scaleType
+    customOutputUri = options.customOutputUri
     mCropOverlayView?.setInitialAttributeValues(options)
     setMultiTouchEnabled(options.multiTouchEnabled)
     setCenterMoveEnabled(options.centerMoveEnabled)
