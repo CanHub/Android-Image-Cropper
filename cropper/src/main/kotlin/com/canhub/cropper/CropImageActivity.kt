@@ -417,7 +417,7 @@ open class CropImageActivity : AppCompatActivity(), OnSetImageUriCompleteListene
       sampleSize,
     )
     val intent = Intent()
-    intent.putExtras(getIntent())
+    intent.extras?.let(intent::putExtras)
     intent.putExtra(CropImage.CROP_IMAGE_EXTRA_RESULT, result)
     return intent
   }
