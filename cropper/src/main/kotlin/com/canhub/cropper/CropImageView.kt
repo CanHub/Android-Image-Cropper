@@ -1990,6 +1990,7 @@ class CropImageView @JvmOverloads constructor(
 
   override fun onCropWindowChanged(inProgress: Boolean) {
     handleCropWindowChanged(inProgress, true)
+
     if (inProgress) {
       mOnSetCropOverlayMovedListener?.onCropOverlayMoved(cropRect)
     } else {

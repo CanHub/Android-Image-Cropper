@@ -208,6 +208,7 @@ internal class CropOverlayView @JvmOverloads constructor(
   fun setCropWindowChangeListener(listener: CropWindowChangeListener?) {
     mCropWindowChangeListener = listener
   }
+
   /** Get the left/top/right/bottom coordinates of the crop window. */
   /** Set the left/top/right/bottom coordinates of the crop window. */
   var cropWindowRect: RectF
@@ -461,33 +462,55 @@ internal class CropOverlayView @JvmOverloads constructor(
    * Used once at the very start to initialize the attributes.
    */
   fun setInitialAttributeValues(options: CropImageOptions) {
+    val isDifferent = mOptions != options
+    val cropWindowChanged = options.fixAspectRatio != mOptions?.fixAspectRatio ||
+      options.aspectRatioX != mOptions?.aspectRatioX ||
+      options.aspectRatioY != mOptions?.aspectRatioY
+
     mOptions = options
+
+    if (!isDifferent) {
+      return
+    }
+
     mCropWindowHandler.setInitialAttributeValues(options)
-    setCropLabelTextColor(options.cropperLabelTextColor)
-    setCropLabelTextSize(options.cropperLabelTextSize)
-    setCropLabelText(options.cropperLabelText)
-    setCropperTextLabelVisibility(options.showCropLabel)
-    setCropCornerRadius(options.cropCornerRadius)
-    setCropCornerShape(options.cornerShape)
-    setCropShape(options.cropShape)
-    setSnapRadius(options.snapRadius)
-    setGuidelines(options.guidelines)
-    setFixedAspectRatio(options.fixAspectRatio)
+    cropLabelTextColor = options.cropperLabelTextColor
+    cropLabelTextSize = options.cropperLabelTextSize
+    cropLabelText = options.cropperLabelText.orEmpty()
+    isCropLabelEnabled = options.showCropLabel
+    mCropCornerRadius = options.cropCornerRadius
+    cornerShape = options.cornerShape
+    cropShape = options.cropShape
+    mSnapRadius = options.snapRadius
+    guidelines = options.guidelines
+    isFixAspectRatio = options.fixAspectRatio
     aspectRatioX = options.aspectRatioX
     aspectRatioY = options.aspectRatioY
-    setMultiTouchEnabled(options.multiTouchEnabled)
-    setCenterMoveEnabled(options.centerMoveEnabled)
+    mMultiTouchEnabled = options.multiTouchEnabled
+    if (mMultiTouchEnabled && mScaleDetector == null) {
+      mScaleDetector = ScaleGestureDetector(context, ScaleListener())
+    }
+    mCenterMoveEnabled = options.centerMoveEnabled
     mTouchRadius = options.touchRadius
     mInitialCropWindowPaddingRatio = options.initialCropWindowPaddingRatio
     mBorderPaint = getNewPaintOrNull(options.borderLineThickness, options.borderLineColor)
     mBorderCornerOffset = options.borderCornerOffset
     mBorderCornerLength = options.borderCornerLength
     mCircleCornerFillColor = options.circleCornerFillColorHexValue
-    mBorderCornerPaint =
-      getNewPaintOrNull(options.borderCornerThickness, options.borderCornerColor)
+    mBorderCornerPaint = getNewPaintOrNull(options.borderCornerThickness, options.borderCornerColor)
     mGuidelinePaint = getNewPaintOrNull(options.guidelinesThickness, options.guidelinesColor)
     mBackgroundPaint = getNewPaint(options.backgroundColor)
     textLabelPaint = getTextPaint(options)
+
+    if (cropWindowChanged) {
+      initCropWindow()
+    }
+
+    invalidate()
+
+    if (cropWindowChanged) {
+      mCropWindowChangeListener?.onCropWindowChanged(false)
+    }
   }
 
   /**
