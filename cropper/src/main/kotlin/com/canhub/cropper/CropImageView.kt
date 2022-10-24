@@ -1567,15 +1567,14 @@ class CropImageView @JvmOverloads constructor(
     CENTER_INSIDE,
   }
 
-  /** The possible guidelines showing types. */
   enum class Guidelines {
-    /** Never show  */
+    /** Never shown. */
     OFF,
 
-    /** Show when crop move action is live  */
+    /** Shown when user is moving the crop window. */
     ON_TOUCH,
 
-    /** Always show  */
+    /** Always shown. */
     ON,
   }
 
