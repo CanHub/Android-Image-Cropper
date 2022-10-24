@@ -44,7 +44,6 @@
   <string name="callLibraryWithoutUriCameraOnly_text">Call library directly without uri. Camera only</string>
   <string name="callLibraryWithoutUriGalleryOnly_text">Call library directly without uri. Gallery only</string>
   <string name="save">Save</string>
-  <string name="extend_body">This is a sample code using the library. The sample here is for extend CropImageActivity, to be about to custom build your personal view around it. For that we need to use CropImageView.</string>
   <string name="rotation_value">Click to change rotation: %1$s</string>
   <string name="crop_corner__shape">Corner Shape</string>
   <string name="show_crop_label_text">Show Crop Label Text</string>
