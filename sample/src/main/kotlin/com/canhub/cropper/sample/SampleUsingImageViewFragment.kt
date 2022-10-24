@@ -13,12 +13,12 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.canhub.cropper.CropImage
+import com.canhub.cropper.CropImageOptions
 import com.canhub.cropper.CropImageView
 import com.canhub.cropper.CropImageView.CropResult
 import com.canhub.cropper.CropImageView.OnCropImageCompleteListener
 import com.canhub.cropper.CropImageView.OnSetImageUriCompleteListener
 import com.canhub.cropper.sample.optionsdialog.SampleOptionsBottomSheet
-import com.canhub.cropper.sample.optionsdialog.SampleOptionsEntity
 import com.example.croppersample.R
 import com.example.croppersample.databinding.FragmentCropImageViewBinding
 import timber.log.Timber
@@ -27,7 +27,7 @@ internal class SampleUsingImageViewFragment : Fragment(), SampleOptionsBottomShe
   private var _binding: FragmentCropImageViewBinding? = null
   private val binding get() = _binding!!
 
-  private var options: SampleOptionsEntity? = null
+  private var options: CropImageOptions? = null
   private val openPicker = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
     binding.cropImageView.setImageUriAsync(uri)
   }
@@ -70,44 +70,30 @@ internal class SampleUsingImageViewFragment : Fragment(), SampleOptionsBottomShe
     }
 
     binding.reset.setOnClickListener {
-      binding.cropImageView.apply {
-        resetCropRect()
-        options = options?.copy(
-          scaleType = CropImageView.ScaleType.FIT_CENTER,
-          flipHorizontally = false,
-          flipVertically = false,
-          autoZoom = true,
-          maxZoomLvl = 2,
-        )
-        imageResource = R.drawable.cat
-      }
+      binding.cropImageView.resetCropRect()
+      binding.cropImageView.imageResource = R.drawable.cat
+      onOptionsApplySelected(CropImageOptions())
     }
   }
 
-  override fun onOptionsApplySelected(options: SampleOptionsEntity) {
+  override fun onOptionsApplySelected(options: CropImageOptions) {
     this.options = options
 
-    binding.cropImageView.apply {
-      cornerShape = options.cornerShape
-      scaleType = options.scaleType
-      cropShape = options.cropShape
-      guidelines = options.guidelines
-      if (options.ratio == null) {
-        setFixedAspectRatio(false)
-      } else {
-        setFixedAspectRatio(true)
-        setAspectRatio(options.ratio.first, options.ratio.second)
-      }
-      setMultiTouchEnabled(options.multiTouch)
-      setCenterMoveEnabled(options.centerMove)
-      isShowCropOverlay = options.showCropOverlay
-      isShowProgressBar = options.showProgressBar
-      isAutoZoomEnabled = options.autoZoom
-      maxZoom = options.maxZoomLvl
-      isFlippedHorizontally = options.flipHorizontally
-      isFlippedVertically = options.flipVertically
-      isShowCropLabel = options.showCropLabel
-    }
+    binding.cropImageView.cornerShape = options.cornerShape
+    binding.cropImageView.scaleType = options.scaleType
+    binding.cropImageView.cropShape = options.cropShape
+    binding.cropImageView.guidelines = options.guidelines
+    binding.cropImageView.setAspectRatio(options.aspectRatioX, options.aspectRatioY)
+    binding.cropImageView.setFixedAspectRatio(options.fixAspectRatio)
+    binding.cropImageView.setMultiTouchEnabled(options.multiTouchEnabled)
+    binding.cropImageView.setCenterMoveEnabled(options.centerMoveEnabled)
+    binding.cropImageView.isShowCropOverlay = options.showCropOverlay
+    binding.cropImageView.isShowProgressBar = options.showProgressBar
+    binding.cropImageView.isAutoZoomEnabled = options.autoZoomEnabled
+    binding.cropImageView.maxZoom = options.maxZoom
+    binding.cropImageView.isFlippedHorizontally = options.flipHorizontally
+    binding.cropImageView.isFlippedVertically = options.flipVertically
+    binding.cropImageView.isShowCropLabel = options.showCropLabel
 
     if (options.scaleType == CropImageView.ScaleType.CENTER_INSIDE) {
       binding.cropImageView.imageResource = R.drawable.cat_small
@@ -166,6 +152,6 @@ internal class SampleUsingImageViewFragment : Fragment(), SampleOptionsBottomShe
 
   private fun setOptions() {
     binding.cropImageView.cropRect = Rect(100, 300, 500, 1200)
-    onOptionsApplySelected(SampleOptionsEntity())
+    onOptionsApplySelected(CropImageOptions())
   }
 }
