@@ -963,7 +963,6 @@ internal object BitmapUtils {
     val sampleSize: Int,
   )
 
-  /** The result of [.rotateBitmapByExif]. */
   internal class RotateBitmapResult(
     /** The loaded bitmap */
     val bitmap: Bitmap?,

@@ -175,9 +175,7 @@ class CropImageView @JvmOverloads constructor(
   /** Used to restore image rotation after state restore  */
   private var mRestoreDegreesRotated = 0
 
-  /**
-   * Used to detect size change to handle auto-zoom using [.handleCropWindowChanged] in [.layout].
-   */
+  /** Used to detect size change to handle auto-zoom using [handleCropWindowChanged] in layout. */
   private var mSizeChanged = false
 
   /** Task used to load bitmap async from UI thread  */
@@ -646,7 +644,7 @@ class CropImageView @JvmOverloads constructor(
 
   /**
    * Cropped image based on the current crop window to the given uri.
-   * The result will be invoked to listener set by [ ][.setOnCropImageCompleteListener].
+   * The result will be invoked to listener set by [setOnCropImageCompleteListener].
    *
    * [saveCompressFormat] the compression format to use when writing the image
    * [saveCompressQuality] the quality (if applicable) to use when writing the image (0 - 100)
@@ -689,7 +687,7 @@ class CropImageView @JvmOverloads constructor(
   }
 
   /**
-   * Set the callback to be invoked when image async loading ([.setImageUriAsync]) is
+   * Set the callback to be invoked when image async loading [setImageUriAsync] is
    * complete (successful or failed).
    */
   fun setOnSetImageUriCompleteListener(listener: OnSetImageUriCompleteListener?) {
@@ -697,8 +695,8 @@ class CropImageView @JvmOverloads constructor(
   }
 
   /**
-   * Set the callback to be invoked when image async cropping image ([.getCroppedImageAsync]
-   * or [.saveCroppedImageAsync]) is complete (successful or failed).
+   * Set the callback to be invoked when image async cropping image [croppedImageAsync]
+   * or [croppedImage] is complete (successful or failed).
    */
   fun setOnCropImageCompleteListener(listener: OnCropImageCompleteListener?) {
     mOnCropImageCompleteListener = listener
@@ -903,7 +901,7 @@ class CropImageView @JvmOverloads constructor(
   }
 
   /**
-   * On complete of the async bitmap cropping by [.getCroppedImageAsync] call listener if
+   * On complete of the async bitmap cropping by [croppedImageAsync] call listener if
    * set.
    *
    * [result] the result of bitmap cropping
@@ -993,7 +991,7 @@ class CropImageView @JvmOverloads constructor(
    * If (reqWidth,reqHeight) is given AND image is loaded from URI cropping will try to use sample
    * size to fit in the requested width and height down-sampling if possible - optimization to get
    * best size to quality.
-   * The result will be invoked to listener set by [ ][.setOnCropImageCompleteListener].
+   * The result will be invoked to listener set by [setOnCropImageCompleteListener].
    *
    * [reqWidth] the width to resize the cropped image to (see options)
    * [reqHeight] the height to resize the cropped image to (see options)
@@ -1253,10 +1251,7 @@ class CropImageView @JvmOverloads constructor(
     }
   }
 
-  /**
-   * Detect size change to handle auto-zoom using [.handleCropWindowChanged]
-   * in [.layout].
-   */
+  /** Detect size change to handle auto-zoom using [handleCropWindowChanged] in layout. */
   override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
     super.onSizeChanged(w, h, oldw, oldh)
     mSizeChanged = oldw > 0 && oldh > 0

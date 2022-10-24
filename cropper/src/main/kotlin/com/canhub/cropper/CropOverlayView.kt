@@ -1101,7 +1101,7 @@ internal class CropOverlayView @JvmOverloads constructor(
     if (mMoveHandler != null) invalidate()
   }
 
-  /** Clear move handler starting in [.onActionDown] if exists. */
+  /** Clear move handler starting in [onActionDown] if exists. */
   private fun onActionUp() {
     if (mMoveHandler != null) {
       mMoveHandler = null
@@ -1111,7 +1111,7 @@ internal class CropOverlayView @JvmOverloads constructor(
   }
 
   /**
-   * Handle move of crop window using the move handler created in [.onActionDown].<br></br>
+   * Handle move of crop window using the move handler created in [onActionDown].<br></br>
    * The move handler will do the proper move/resize of the crop window.
    */
   private fun onActionMove(x: Float, y: Float) {
