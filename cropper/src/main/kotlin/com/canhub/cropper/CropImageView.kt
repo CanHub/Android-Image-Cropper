@@ -363,7 +363,7 @@ class CropImageView @JvmOverloads constructor(
   fun setAspectRatio(aspectRatioX: Int, aspectRatioY: Int) {
     mCropOverlayView!!.aspectRatioX = aspectRatioX
     mCropOverlayView.aspectRatioY = aspectRatioY
-    setFixedAspectRatio(true)
+    mCropOverlayView.setFixedAspectRatio(true)
   }
 
   /** Clears set aspect ratio values and sets fixed aspect ratio to FALSE. */

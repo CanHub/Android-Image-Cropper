@@ -83,8 +83,8 @@ internal class SampleUsingImageViewFragment : Fragment(), SampleOptionsBottomShe
     binding.cropImageView.scaleType = options.scaleType
     binding.cropImageView.cropShape = options.cropShape
     binding.cropImageView.guidelines = options.guidelines
-    binding.cropImageView.setAspectRatio(options.aspectRatioX, options.aspectRatioY)
     binding.cropImageView.setFixedAspectRatio(options.fixAspectRatio)
+    binding.cropImageView.setAspectRatio(options.aspectRatioX, options.aspectRatioY)
     binding.cropImageView.setMultiTouchEnabled(options.multiTouchEnabled)
     binding.cropImageView.setCenterMoveEnabled(options.centerMoveEnabled)
     binding.cropImageView.isShowCropOverlay = options.showCropOverlay
