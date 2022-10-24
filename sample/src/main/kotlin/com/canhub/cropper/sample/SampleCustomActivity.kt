@@ -9,6 +9,7 @@ import android.view.View
 import androidx.core.app.ActivityCompat
 import com.canhub.cropper.CropImage.ActivityResult
 import com.canhub.cropper.CropImageActivity
+import com.canhub.cropper.CropImageView
 import com.example.croppersample.R
 import com.example.croppersample.databinding.ExtendedActivityBinding
 import timber.log.Timber
@@ -26,33 +27,52 @@ internal class SampleCustomActivity : CropImageActivity() {
   }
 
   private lateinit var binding: ExtendedActivityBinding
-  private var counter = 0
 
   override fun onCreate(savedInstanceState: Bundle?) {
     binding = ExtendedActivityBinding.inflate(layoutInflater)
 
     super.onCreate(savedInstanceState)
-    updateRotationCounter(counter.toString())
 
     binding.saveBtn.setOnClickListener { cropImage() }
     binding.backBtn.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
     binding.rotateText.setOnClickListener { onRotateClick() }
 
+    binding.cropImageView.setOnCropWindowChangedListener {
+      updateExpectedImageSize()
+    }
+
     setCropImageView(binding.cropImageView)
+  }
+
+  override fun onSetImageUriComplete(
+    view: CropImageView,
+    uri: Uri,
+    error: Exception?,
+  ) {
+    super.onSetImageUriComplete(view, uri, error)
+
+    updateRotationCounter()
+    updateExpectedImageSize()
+  }
+
+  private fun updateExpectedImageSize() {
+    binding.expectedImageSize.text = binding.cropImageView.expectedImageSize().toString()
   }
 
   override fun setContentView(view: View) {
     super.setContentView(binding.root)
   }
 
-  private fun updateRotationCounter(counter: String) {
-    binding.rotateText.text = getString(R.string.rotation_value, counter)
+  private fun updateRotationCounter() {
+    binding.rotateText.text = getString(R.string.rotation_value, binding.cropImageView.rotatedDegrees.toString())
   }
 
   override fun onPickImageResult(resultUri: Uri?) {
     super.onPickImageResult(resultUri)
 
-    if (resultUri != null) binding.cropImageView.setImageUriAsync(resultUri)
+    if (resultUri != null) {
+      binding.cropImageView.setImageUriAsync(resultUri)
+    }
   }
 
   override fun getResultIntent(uri: Uri?, error: java.lang.Exception?, sampleSize: Int): Intent {
@@ -91,9 +111,7 @@ internal class SampleCustomActivity : CropImageActivity() {
   }
 
   private fun onRotateClick() {
-    counter += 90
     binding.cropImageView.rotateImage(90)
-    if (counter == 360) counter = 0
-    updateRotationCounter(counter.toString())
+    updateRotationCounter()
   }
 }
