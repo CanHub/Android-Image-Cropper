@@ -71,9 +71,7 @@ private val COLOR_PURPLE = Color.rgb(153, 51, 153)
   @JvmField
   var touchRadius: Float = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24f, Resources.getSystem().displayMetrics),
 
-  /** Whether the guidelines should be on, off, or only showing when resizing. */
-  @JvmField
-  var guidelines: Guidelines = Guidelines.ON_TOUCH,
+  @JvmField var guidelines: Guidelines = Guidelines.ON,
 
   /** The initial scale type of the image in the crop image view. */
   @JvmField
