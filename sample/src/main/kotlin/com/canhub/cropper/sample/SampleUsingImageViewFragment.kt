@@ -79,21 +79,7 @@ internal class SampleUsingImageViewFragment : Fragment(), SampleOptionsBottomShe
   override fun onOptionsApplySelected(options: CropImageOptions) {
     this.options = options
 
-    binding.cropImageView.cornerShape = options.cornerShape
-    binding.cropImageView.scaleType = options.scaleType
-    binding.cropImageView.cropShape = options.cropShape
-    binding.cropImageView.guidelines = options.guidelines
-    binding.cropImageView.setFixedAspectRatio(options.fixAspectRatio)
-    binding.cropImageView.setAspectRatio(options.aspectRatioX, options.aspectRatioY)
-    binding.cropImageView.setMultiTouchEnabled(options.multiTouchEnabled)
-    binding.cropImageView.setCenterMoveEnabled(options.centerMoveEnabled)
-    binding.cropImageView.isShowCropOverlay = options.showCropOverlay
-    binding.cropImageView.isShowProgressBar = options.showProgressBar
-    binding.cropImageView.isAutoZoomEnabled = options.autoZoomEnabled
-    binding.cropImageView.maxZoom = options.maxZoom
-    binding.cropImageView.isFlippedHorizontally = options.flipHorizontally
-    binding.cropImageView.isFlippedVertically = options.flipVertically
-    binding.cropImageView.isShowCropLabel = options.showCropLabel
+    binding.cropImageView.setImageCropOptions(options)
 
     if (options.scaleType == CropImageView.ScaleType.CENTER_INSIDE) {
       binding.cropImageView.imageResource = R.drawable.cat_small
