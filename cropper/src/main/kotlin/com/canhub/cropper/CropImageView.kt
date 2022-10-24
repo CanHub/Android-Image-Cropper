@@ -608,8 +608,8 @@ class CropImageView @JvmOverloads constructor(
   /**
    * Gets the cropped image based on the current crop window.<br></br>
    *
-   * [reqWidth] the width to resize the cropped image to (see options)
-   * [reqHeight] the height to resize the cropped image to (see options)
+   * [reqWidth] the width to resize the cropped image
+   * [reqHeight] the height to resize the cropped image
    * [options] the resize method to use, see its documentation
    * @return a new Bitmap representing the cropped image
    */
@@ -666,8 +666,8 @@ class CropImageView @JvmOverloads constructor(
    *
    * [saveCompressFormat] the compression format to use when writing the image
    * [saveCompressQuality] the quality (if applicable) to use when writing the image (0 - 100)
-   * [reqWidth] the width to resize the cropped image to (see options)
-   * [reqHeight] the height to resize the cropped image to (see options)
+   * [reqWidth] the width to resize the cropped image
+   * [reqHeight] the height to resize the cropped image
    * [options] the resize method to use, see its documentation
    */
   fun croppedImageAsync(
@@ -1011,8 +1011,8 @@ class CropImageView @JvmOverloads constructor(
    * best size to quality.
    * The result will be invoked to listener set by [setOnCropImageCompleteListener].
    *
-   * [reqWidth] the width to resize the cropped image to (see options)
-   * [reqHeight] the height to resize the cropped image to (see options)
+   * [reqWidth] the width to resize the cropped image
+   * [reqHeight] the height to resize the cropped image
    * [options] the resize method to use on the cropped bitmap
    * [saveCompressFormat] if saveUri is given, the given compression will be used for saving
    * the image
