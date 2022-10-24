@@ -104,7 +104,7 @@ import kotlinx.parcelize.Parcelize
   @JvmField @ColorInt var toolbarBackButtonColor: Int? = null,
   @JvmField @ColorInt var toolbarTintColor: Int? = null,
 ) : Parcelable {
-  fun validate() {
+  init {
     require(maxZoom >= 0) { "Cannot set max zoom to a number < 1" }
     require(touchRadius >= 0) { "Cannot set touch radius value to a number <= 0 " }
     require(!(initialCropWindowPaddingRatio < 0 || initialCropWindowPaddingRatio >= 0.5)) { "Cannot set initial crop window padding value to a number < 0 or >= 0.5" }
