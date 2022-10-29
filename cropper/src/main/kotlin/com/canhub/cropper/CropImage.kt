@@ -1,7 +1,5 @@
 package com.canhub.cropper
 
-import android.content.Context
-import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Paint
@@ -10,16 +8,9 @@ import android.graphics.PorterDuffXfermode
 import android.graphics.Rect
 import android.graphics.RectF
 import android.net.Uri
-import android.os.Build.VERSION.SDK_INT
-import android.os.Environment
 import android.os.Parcel
 import android.os.Parcelable
-import android.provider.MediaStore
-import androidx.core.content.FileProvider
 import com.canhub.cropper.CropImageView.CropResult
-import com.canhub.cropper.utils.authority
-import com.canhub.cropper.utils.getFilePathFromUri
-import java.io.File
 
 /**
  * Helper to simplify crop image work like starting pick-image activity and handling camera/gallery
@@ -79,93 +70,6 @@ object CropImage {
     bitmap.recycle()
     return output
   }
-
-  /**
-   * Get URI to image received from capture by camera.
-   *
-   * This is not the File Path, for it please use [getCaptureImageOutputUriFilePath]
-   *
-   * [context] used to access Android APIs, like content resolve, it is your activity/fragment/widget.
-   */
-  @Suppress("DeprecatedCallableAddReplaceWith", "DEPRECATION")
-  @Deprecated("This will become obsolete. There will be no replacement. In case you need this, please raise an issue and explain your use case.")
-  fun getCaptureImageOutputUriContent(context: Context): Uri {
-    val outputFileUri: Uri
-    val getImage: File?
-    // We have this because of a HUAWEI path bug when we use getUriForFile
-    if (SDK_INT >= 29) {
-      getImage = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-      outputFileUri = try {
-        FileProvider.getUriForFile(
-          context,
-          context.authority(),
-          File(getImage!!.path, "pickImageResult.jpeg"),
-        )
-      } catch (e: Exception) {
-        Uri.fromFile(File(getImage!!.path, "pickImageResult.jpeg"))
-      }
-    } else {
-      getImage = context.externalCacheDir
-      outputFileUri = Uri.fromFile(File(getImage!!.path, "pickImageResult.jpeg"))
-    }
-    return outputFileUri
-  }
-
-  /**
-   * Get File Path to image received from capture by camera.
-   *
-   * [context] used to access Android APIs, like content resolve, it is your activity/fragment/widget.
-   * [uniqueName] If true, make each image cropped have a different file name, this could cause
-   * memory issues, use wisely. [Default: false]
-   */
-  @Suppress("DeprecatedCallableAddReplaceWith", "DEPRECATION")
-  @Deprecated("This will become obsolete. There will be no replacement. In case you need this, please raise an issue and explain your use case.")
-  fun getCaptureImageOutputUriFilePath(context: Context, uniqueName: Boolean = false): String =
-    getFilePathFromUri(context, getCaptureImageOutputUriContent(context), uniqueName)
-
-  /**
-   * Get the URI of the selected image
-   * Will return the correct URI for camera and gallery image.
-   *
-   * This is not the File Path, for it please use [getPickImageResultUriFilePath]
-   *
-   * [context] used to access Android APIs, like content resolve, it is your activity/fragment/widget.
-   * [data] the returned data of the activity result
-   */
-  @JvmStatic
-  @Suppress("DeprecatedCallableAddReplaceWith", "DEPRECATION")
-  @Deprecated("This will become obsolete. There will be no replacement. In case you need this, please raise an issue and explain your use case.")
-  fun getPickImageResultUriContent(context: Context, data: Intent?): Uri {
-    var isCamera = true
-    val uri = data?.data
-    if (uri != null) {
-      val action = data.action
-      isCamera = action != null && action == MediaStore.ACTION_IMAGE_CAPTURE
-    }
-    return if (isCamera || uri == null) {
-      getCaptureImageOutputUriContent(context)
-    } else {
-      uri
-    }
-  }
-
-  /**
-   * Get the File Path of the selected image
-   *
-   * [context] used to access Android APIs, like content resolve, it is your activity/fragment/widget.
-   * [data] the returned data of the activity result
-   * [uniqueName] If true, make each image cropped have a different file name, this could cause
-   * memory issues, use wisely. [Default: false]
-   */
-  @JvmStatic
-  @Suppress("DeprecatedCallableAddReplaceWith", "DEPRECATION")
-  @Deprecated("This will become obsolete. There will be no replacement. In case you need this, please raise an issue and explain your use case.")
-  fun getPickImageResultUriFilePath(
-    context: Context,
-    data: Intent?,
-    uniqueName: Boolean = false,
-  ): String =
-    getFilePathFromUri(context, getPickImageResultUriContent(context, data), uniqueName)
 
   /**
    * Result data of Crop Image Activity.
