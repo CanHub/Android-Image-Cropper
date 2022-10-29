@@ -226,7 +226,7 @@ internal class CropWindowHandler {
         !focusCenter() -> {
         CropWindowMoveHandler.Type.CENTER
       }
-      else -> null
+      else -> getOvalPressedMoveType(x, y, isCenterMoveEnabled)
     }
   }
 
@@ -321,7 +321,7 @@ internal class CropWindowHandler {
         isInCenterTargetZone(x, y, mEdges.left, mEdges.top, mEdges.right, mEdges.bottom) -> {
         CropWindowMoveHandler.Type.CENTER
       }
-      else -> null
+      else -> getOvalPressedMoveType(x, y, isCenterMoveEnabled)
     }
   }
 
@@ -355,7 +355,7 @@ internal class CropWindowHandler {
         isInCenterTargetZone(x, y, mEdges.left, mEdges.top, mEdges.right, mEdges.bottom) -> {
         CropWindowMoveHandler.Type.CENTER
       }
-      else -> null
+      else -> getOvalPressedMoveType(x, y, isCenterMoveEnabled)
     }
   }
 
