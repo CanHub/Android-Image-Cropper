@@ -94,9 +94,10 @@ internal class BitmapCroppingWorkerJob(
               compressQuality = saveCompressQuality,
               customOutputUri = customOutputUri,
             )
-            resizedBitmap.recycle()
+
             onPostExecute(
               Result(
+                bitmap = resizedBitmap,
                 uri = newUri,
                 sampleSize = bitmapSampled.sampleSize,
               ),
