@@ -113,7 +113,7 @@ internal class SampleUsingImageViewFragment : Fragment(), SampleOptionsBottomShe
 
   override fun onSetImageUriComplete(view: CropImageView, uri: Uri, error: Exception?) {
     if (error != null) {
-      Timber.tag("AIC").e(error, "Failed to load image by URI")
+      Timber.tag("AIC-Sample").e(error, "Failed to load image by URI")
       Toast.makeText(activity, "Image load failed: " + error.message, Toast.LENGTH_LONG)
         .show()
     }
@@ -126,10 +126,13 @@ internal class SampleUsingImageViewFragment : Fragment(), SampleOptionsBottomShe
       } else {
         result.bitmap
       }
-      context?.let { Timber.tag("File Path").v(result.getUriFilePath(it).toString()) }
+      Timber.tag("AIC-Sample").i("Original bitmap: ${result.originalBitmap}")
+      Timber.tag("AIC-Sample").i("Original uri: ${result.originalUri}")
+      Timber.tag("AIC-Sample").i("Output bitmap: $imageBitmap")
+      Timber.tag("AIC-Sample").i("Output uri: ${result.getUriFilePath(view.context)}")
       SampleResultScreen.start(this, imageBitmap, result.uriContent, result.sampleSize)
     } else {
-      Timber.tag("AIC").e(result.error, "Failed to crop image")
+      Timber.tag("AIC-Sample").e(result.error, "Failed to crop image")
       Toast
         .makeText(activity, "Crop failed: ${result.error?.message}", Toast.LENGTH_SHORT)
         .show()
