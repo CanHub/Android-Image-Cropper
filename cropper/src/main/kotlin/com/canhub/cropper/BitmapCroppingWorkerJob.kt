@@ -74,11 +74,17 @@ internal class BitmapCroppingWorkerJob(
             }
             else -> {
               onPostExecute(
-                Result(bitmap = null, sampleSize = 1),
+                Result(
+                  bitmap = null,
+                  uri = null,
+                  error = null,
+                  sampleSize = 1,
+                ),
               )
               return@launch
             }
           }
+
           val resizedBitmap = BitmapUtils.resizeBitmap(
             bitmap = bitmapSampled.bitmap,
             reqWidth = reqWidth,
@@ -100,13 +106,19 @@ internal class BitmapCroppingWorkerJob(
                 bitmap = resizedBitmap,
                 uri = newUri,
                 sampleSize = bitmapSampled.sampleSize,
+                error = null,
               ),
             )
           }
         }
       } catch (throwable: Exception) {
         onPostExecute(
-          Result(error = throwable, sampleSize = 1),
+          Result(
+            bitmap = null,
+            uri = null,
+            error = throwable,
+            sampleSize = 1,
+          ),
         )
       }
     }
@@ -134,11 +146,11 @@ internal class BitmapCroppingWorkerJob(
 
   internal data class Result(
     /** The cropped bitmap. */
-    val bitmap: Bitmap? = null,
+    val bitmap: Bitmap?,
     /** The saved cropped bitmap uri. */
-    val uri: Uri? = null,
+    val uri: Uri?,
     /** The error that occurred during async bitmap cropping. */
-    val error: Exception? = null,
+    val error: Exception?,
     /** Sample size used creating the crop bitmap to lower its size. */
     val sampleSize: Int,
   )
