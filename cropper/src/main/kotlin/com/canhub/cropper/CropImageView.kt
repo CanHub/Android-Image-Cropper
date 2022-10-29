@@ -930,16 +930,16 @@ class CropImageView @JvmOverloads constructor(
     val listener = mOnCropImageCompleteListener
     if (listener != null) {
       val cropResult = CropResult(
-        originalBitmap,
-        imageUri,
-        result.bitmap,
-        result.uri,
-        result.error,
-        cropPoints,
-        cropRect,
-        wholeImageRect,
-        rotatedDegrees,
-        result.sampleSize,
+        originalBitmap = originalBitmap,
+        originalUri = imageUri,
+        bitmap = result.bitmap,
+        uriContent = result.uri,
+        error = result.error,
+        cropPoints = cropPoints,
+        cropRect = cropRect,
+        wholeImageRect = wholeImageRect,
+        rotation = rotatedDegrees,
+        sampleSize = result.sampleSize,
       )
       listener.onCropImageComplete(this, cropResult)
     }
