@@ -37,8 +37,10 @@ internal class SampleCropFragment : Fragment() {
   private val cropImage = registerForActivityResult(CropImageContract()) { result ->
     when {
       result.isSuccessful -> {
-        Timber.tag("Bitmap").v(result.bitmap.toString())
-        Timber.tag("File Path").v(context?.let { result.getUriFilePath(it) }.toString())
+        Timber.tag("AIC-Sample").i("Original bitmap: ${result.originalBitmap}")
+        Timber.tag("AIC-Sample").i("Original uri: ${result.originalUri}")
+        Timber.tag("AIC-Sample").i("Output bitmap: ${result.bitmap}")
+        Timber.tag("AIC-Sample").i("Output uri: ${result.getUriFilePath(requireContext())}")
         handleCropImageResult(result.uriContent.toString())
       }
       result is CropImage.CancelledResult -> showErrorMessage("cropping image was cancelled by the user")
@@ -106,7 +108,7 @@ internal class SampleCropFragment : Fragment() {
   }
 
   private fun showErrorMessage(message: String) {
-    Timber.tag("Camera Error:").e(message)
+    Timber.tag("AIC-Sample").e("Camera error: $message")
     Toast.makeText(activity, "Crop failed: $message", Toast.LENGTH_SHORT).show()
   }
 

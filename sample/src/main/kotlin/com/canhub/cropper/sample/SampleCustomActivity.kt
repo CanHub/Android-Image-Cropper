@@ -93,20 +93,20 @@ internal class SampleCustomActivity : CropImageActivity() {
       sampleSize = sampleSize,
     )
 
-    Timber.tag("File Path").v(result.getUriFilePath(this).toString())
+    Timber.tag("AIC-Sample").i("Original bitmap: ${result.originalBitmap}")
+    Timber.tag("AIC-Sample").i("Original uri: ${result.originalUri}")
+    Timber.tag("AIC-Sample").i("Output bitmap: ${result.bitmap}")
+    Timber.tag("AIC-Sample").i("Output uri: ${result.getUriFilePath(this)}")
     binding.cropImageView.setImageUriAsync(result.uriContent)
   }
 
   override fun setResultCancel() {
-    Timber.tag("extend").i("User this override to change behaviour when cancel")
+    Timber.tag("AIC-Sample").i("User this override to change behaviour when cancel")
     super.setResultCancel()
   }
 
   override fun updateMenuItemIconColor(menu: Menu, itemId: Int, color: Int) {
-    Timber.tag("extend")
-      .i(
-        "If not using your layout, this can be one option to change colours. Check README and wiki for more",
-      )
+    Timber.tag("AIC-Sample").i("If not using your layout, this can be one option to change colours")
     super.updateMenuItemIconColor(menu, itemId, color)
   }
 
