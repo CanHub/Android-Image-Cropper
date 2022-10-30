@@ -595,6 +595,8 @@ class CropImageView @JvmOverloads constructor(
    *
    * @return a new Bitmap representing the cropped image
    */
+  @Deprecated("Please use getCroppedImage", replaceWith = ReplaceWith("getCroppedImage()"))
+  @get:JvmName("-croppedImage")
   val croppedImage: Bitmap?
     get() = getCroppedImage(0, 0, RequestSizeOptions.NONE)
 
@@ -608,8 +610,8 @@ class CropImageView @JvmOverloads constructor(
    */
   @JvmOverloads
   fun getCroppedImage(
-    reqWidth: Int,
-    reqHeight: Int,
+    reqWidth: Int = 0,
+    reqHeight: Int = 0,
     options: RequestSizeOptions = RequestSizeOptions.RESIZE_INSIDE,
   ): Bitmap? {
     if (originalBitmap != null) {
