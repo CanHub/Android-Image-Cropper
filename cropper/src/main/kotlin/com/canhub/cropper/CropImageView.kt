@@ -36,7 +36,6 @@ import kotlin.math.pow
 import kotlin.math.sqrt
 
 /** Custom view that provides cropping capabilities to an image. */
-@Suppress("unused", "MemberVisibilityCanBePrivate")
 class CropImageView @JvmOverloads constructor(
   context: Context,
   attrs: AttributeSet? = null,
@@ -600,70 +599,60 @@ class CropImageView @JvmOverloads constructor(
     get() = getCroppedImage(0, 0, RequestSizeOptions.NONE)
 
   /**
-   * Gets the cropped image based on the current crop window.<br></br>
-   * Uses [RequestSizeOptions.RESIZE_INSIDE] option.
-   *
-   * [reqWidth] the width to resize the cropped image to
-   * [reqHeight] the height to resize the cropped image to
-   * @return a new Bitmap representing the cropped image
-   */
-  fun getCroppedImage(reqWidth: Int, reqHeight: Int): Bitmap? {
-    return getCroppedImage(reqWidth, reqHeight, RequestSizeOptions.RESIZE_INSIDE)
-  }
-
-  /**
-   * Gets the cropped image based on the current crop window.<br></br>
+   * Gets the cropped image based on the current crop window.
    *
    * [reqWidth] the width to resize the cropped image
    * [reqHeight] the height to resize the cropped image
-   * [options] the resize method to use, see its documentation
+   * [options] the resize method to use
    * @return a new Bitmap representing the cropped image
    */
-  fun getCroppedImage(reqWidth: Int, reqHeight: Int, options: RequestSizeOptions): Bitmap? {
-    var croppedBitmap: Bitmap? = null
+  @JvmOverloads
+  fun getCroppedImage(
+    reqWidth: Int,
+    reqHeight: Int,
+    options: RequestSizeOptions = RequestSizeOptions.RESIZE_INSIDE,
+  ): Bitmap? {
     if (originalBitmap != null) {
       val newReqWidth = if (options != RequestSizeOptions.NONE) reqWidth else 0
       val newReqHeight = if (options != RequestSizeOptions.NONE) reqHeight else 0
-      croppedBitmap = if (imageUri != null &&
-        (loadedSampleSize > 1 || options == RequestSizeOptions.SAMPLING)
-      ) {
-        val orgWidth = originalBitmap!!.width * loadedSampleSize
-        val orgHeight = originalBitmap!!.height * loadedSampleSize
-        val bitmapSampled = BitmapUtils
-          .cropBitmap(
-            context,
-            imageUri,
-            cropPoints,
-            mDegreesRotated,
-            orgWidth,
-            orgHeight,
-            mCropOverlayView!!.isFixAspectRatio,
-            mCropOverlayView.aspectRatioX,
-            mCropOverlayView.aspectRatioY,
-            newReqWidth,
-            newReqHeight,
-            mFlipHorizontally,
-            mFlipVertically,
-          )
-        bitmapSampled.bitmap
+      val croppedBitmap = if (imageUri != null && (loadedSampleSize > 1 || options == RequestSizeOptions.SAMPLING)) {
+        BitmapUtils.cropBitmap(
+          context = context,
+          loadedImageUri = imageUri,
+          cropPoints = cropPoints,
+          degreesRotated = mDegreesRotated,
+          orgWidth = originalBitmap!!.width * loadedSampleSize,
+          orgHeight = originalBitmap!!.height * loadedSampleSize,
+          fixAspectRatio = mCropOverlayView!!.isFixAspectRatio,
+          aspectRatioX = mCropOverlayView.aspectRatioX,
+          aspectRatioY = mCropOverlayView.aspectRatioY,
+          reqWidth = newReqWidth,
+          reqHeight = newReqHeight,
+          flipHorizontally = mFlipHorizontally,
+          flipVertically = mFlipVertically,
+        ).bitmap
       } else {
-        BitmapUtils
-          .cropBitmapObjectHandleOOM(
-            originalBitmap,
-            cropPoints,
-            mDegreesRotated,
-            mCropOverlayView!!.isFixAspectRatio,
-            mCropOverlayView.aspectRatioX,
-            mCropOverlayView.aspectRatioY,
-            mFlipHorizontally,
-            mFlipVertically,
-          )
-          .bitmap
+        BitmapUtils.cropBitmapObjectHandleOOM(
+          bitmap = originalBitmap,
+          cropPoints = cropPoints,
+          degreesRotated = mDegreesRotated,
+          fixAspectRatio = mCropOverlayView!!.isFixAspectRatio,
+          aspectRatioX = mCropOverlayView.aspectRatioX,
+          aspectRatioY = mCropOverlayView.aspectRatioY,
+          flipHorizontally = mFlipHorizontally,
+          flipVertically = mFlipVertically,
+        ).bitmap
       }
-      croppedBitmap =
-        BitmapUtils.resizeBitmap(croppedBitmap, newReqWidth, newReqHeight, options)
+
+      return BitmapUtils.resizeBitmap(
+        bitmap = croppedBitmap,
+        reqWidth = newReqWidth,
+        reqHeight = newReqHeight,
+        options = options,
+      )
     }
-    return croppedBitmap
+
+    return null
   }
 
   /**
