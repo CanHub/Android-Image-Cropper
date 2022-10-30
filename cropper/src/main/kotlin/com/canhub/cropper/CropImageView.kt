@@ -1755,7 +1755,7 @@ class CropImageView @JvmOverloads constructor(
      *
      * [context] used to access Android APIs, like content resolve, it is your activity/fragment/widget.
      * [uniqueName] If true, make each image cropped have a different file name, this could
-     * cause memory issues, use wisely. [Default: false]
+     * cause memory issues, use wisely.
      */
     fun getUriFilePath(context: Context, uniqueName: Boolean = false): String? =
       uriContent?.let { getFilePathFromUri(context, it, uniqueName) }
