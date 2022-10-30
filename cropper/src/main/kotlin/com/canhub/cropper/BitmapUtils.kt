@@ -71,17 +71,24 @@ internal object BitmapUtils {
    * If no rotation is required the image will not be rotated.<br></br>
    * New bitmap is created and the old one is recycled.
    */
-  fun orientateBitmapByExif(bitmap: Bitmap?, context: Context, uri: Uri?): RotateBitmapResult {
-    var ei: ExifInterface? = null
-    try {
-      val `is` = context.contentResolver.openInputStream(uri!!)
-      if (`is` != null) {
-        ei = ExifInterface(`is`)
-        `is`.close()
+  fun orientateBitmapByExif(bitmap: Bitmap?, context: Context, uri: Uri): RotateBitmapResult {
+    val exifInterface = try {
+      context.contentResolver.openInputStream(uri)?.use {
+        ExifInterface(it)
       }
-    } catch (ignored: Exception) {
+    } catch (ignored: Throwable) {
+      null
     }
-    return if (ei != null) orientateBitmapByExif(bitmap, ei) else RotateBitmapResult(bitmap, 0)
+
+    return when {
+      exifInterface != null -> orientateBitmapByExif(bitmap, exifInterface)
+      else -> RotateBitmapResult(
+        bitmap = bitmap,
+        degrees = 0,
+        flipHorizontally = false,
+        flipVertically = false,
+      )
+    }
   }
 
   /**
@@ -105,7 +112,12 @@ internal object BitmapUtils {
       orientationAttributeInt == ExifInterface.ORIENTATION_TRANSPOSE
     val flipVertically = orientationAttributeInt == ExifInterface.ORIENTATION_FLIP_VERTICAL ||
       orientationAttributeInt == ExifInterface.ORIENTATION_TRANSVERSE
-    return RotateBitmapResult(bitmap, degrees, flipHorizontally, flipVertically)
+    return RotateBitmapResult(
+      bitmap = bitmap,
+      degrees = degrees,
+      flipHorizontally = flipHorizontally,
+      flipVertically = flipVertically,
+    )
   }
 
   /**
@@ -955,22 +967,15 @@ internal object BitmapUtils {
       }
     }
 
-  /** Holds bitmap instance and the sample size that the bitmap was loaded/cropped with. */
   internal class BitmapSampled(
-    /** The bitmap instance */
     val bitmap: Bitmap?,
-    /** The sample size used to lower the size of the bitmap (1,2,4,8,...) */
     val sampleSize: Int,
   )
 
   internal class RotateBitmapResult(
-    /** The loaded bitmap */
     val bitmap: Bitmap?,
-    /** The degrees the image was rotated */
     val degrees: Int,
-    /** If the image was flipped horizontally */
-    val flipHorizontally: Boolean = false,
-    /** If the image was flipped vertically */
-    val flipVertically: Boolean = false,
+    val flipHorizontally: Boolean,
+    val flipVertically: Boolean,
   )
 }
