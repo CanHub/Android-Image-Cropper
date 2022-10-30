@@ -133,25 +133,20 @@ internal class BitmapCroppingWorkerJob(
           it.onImageCroppingAsyncComplete(result)
         }
       }
+
       if (!completeCalled && result.bitmap != null) {
-        // fast release of unused bitmap
+        // Fast release of unused bitmap.
         result.bitmap.recycle()
       }
     }
   }
 
-  fun cancel() {
-    job.cancel()
-  }
+  fun cancel() = job.cancel()
 
   internal data class Result(
-    /** The cropped bitmap. */
     val bitmap: Bitmap?,
-    /** The saved cropped bitmap uri. */
     val uri: Uri?,
-    /** The error that occurred during async bitmap cropping. */
     val error: Exception?,
-    /** Sample size used creating the crop bitmap to lower its size. */
     val sampleSize: Int,
   )
 }
