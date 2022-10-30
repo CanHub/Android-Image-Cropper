@@ -467,7 +467,13 @@ class CropImageView @JvmOverloads constructor(
       if (resId != 0) {
         mCropOverlayView!!.initialCropWindowRect = null
         val bitmap = BitmapFactory.decodeResource(resources, resId)
-        setBitmap(bitmap, resId, null, 1, 0)
+        setBitmap(
+          bitmap = bitmap,
+          imageResource = resId,
+          imageUri = null,
+          loadSampleSize = 1,
+          degreesRotated = 0,
+        )
       }
     }
 
@@ -727,7 +733,13 @@ class CropImageView @JvmOverloads constructor(
    */
   fun setImageBitmap(bitmap: Bitmap?) {
     mCropOverlayView!!.initialCropWindowRect = null
-    setBitmap(bitmap, 0, null, 1, 0)
+    setBitmap(
+      bitmap = bitmap,
+      imageResource = 0,
+      imageUri = null,
+      loadSampleSize = 1,
+      degreesRotated = 0,
+    )
   }
 
   /**
@@ -754,7 +766,13 @@ class CropImageView @JvmOverloads constructor(
     }
 
     mCropOverlayView!!.initialCropWindowRect = null
-    setBitmap(setBitmap, 0, null, 1, degreesRotated)
+    setBitmap(
+      bitmap = setBitmap,
+      imageResource = 0,
+      imageUri = null,
+      loadSampleSize = 1,
+      degreesRotated = degreesRotated,
+    )
   }
 
   /**
@@ -766,15 +784,11 @@ class CropImageView @JvmOverloads constructor(
    */
   fun setImageUriAsync(uri: Uri?) {
     if (uri != null) {
-      val currentTask =
-        if (bitmapLoadingWorkerJob != null) bitmapLoadingWorkerJob!!.get() else null
-      currentTask?.cancel()
-      // either no existing task is working or we canceled it, need to load new URI
+      bitmapLoadingWorkerJob?.get()?.cancel()
       clearImageInt()
       mCropOverlayView!!.initialCropWindowRect = null
-      bitmapLoadingWorkerJob =
-        WeakReference(BitmapLoadingWorkerJob(context, this, uri))
-      bitmapLoadingWorkerJob!!.get()!!.start()
+      bitmapLoadingWorkerJob = WeakReference(BitmapLoadingWorkerJob(context, this, uri))
+      bitmapLoadingWorkerJob?.get()?.start()
       setProgressBarVisibility()
     }
   }
@@ -908,14 +922,18 @@ class CropImageView @JvmOverloads constructor(
       mFlipHorizontally = result.flipHorizontally
       mFlipVertically = result.flipVertically
       setBitmap(
-        result.bitmap,
-        0,
-        result.uriContent,
-        result.loadSampleSize,
-        result.degreesRotated,
+        bitmap = result.bitmap,
+        imageResource = 0,
+        imageUri = result.uri,
+        loadSampleSize = result.loadSampleSize,
+        degreesRotated = result.degreesRotated,
       )
     }
-    mOnSetImageUriCompleteListener?.onSetImageUriComplete(this, result.uriContent, result.error)
+    mOnSetImageUriCompleteListener?.onSetImageUriComplete(
+      view = this,
+      uri = result.uri,
+      error = result.error,
+    )
   }
 
   /**
@@ -1092,11 +1110,9 @@ class CropImageView @JvmOverloads constructor(
       bundle.putString("LOADED_IMAGE_STATE_BITMAP_KEY", key)
     }
 
-    if (bitmapLoadingWorkerJob != null) {
-      val task = bitmapLoadingWorkerJob!!.get()
-      if (task != null) {
-        bundle.putParcelable("LOADING_IMAGE_URI", task.uri)
-      }
+    val task = bitmapLoadingWorkerJob?.get()
+    if (task != null) {
+      bundle.putParcelable("LOADING_IMAGE_URI", task.uri)
     }
 
     bundle.putParcelable("instanceState", super.onSaveInstanceState())
@@ -1131,7 +1147,13 @@ class CropImageView @JvmOverloads constructor(
             }
             BitmapUtils.mStateBitmap = null
             if (stateBitmap != null && !stateBitmap.isRecycled) {
-              setBitmap(stateBitmap, 0, uri, state.getInt("LOADED_SAMPLE_SIZE"), 0)
+              setBitmap(
+                bitmap = stateBitmap,
+                imageResource = 0,
+                imageUri = uri,
+                loadSampleSize = state.getInt("LOADED_SAMPLE_SIZE"),
+                degreesRotated = 0,
+              )
             }
           }
           imageUri ?: setImageUriAsync(uri)
