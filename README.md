@@ -135,7 +135,13 @@ override fun showImageSourceDialog(openSource: (Source) -> Unit) {
 
 ## Migrating from Android Image Cropper
 
-Add this library like it's shown above.
+Start by using [Version 4.3.3](https://github.com/CanHub/Android-Image-Cropper/releases/tag/4.3.3):
+
+```groovy
+dependencies {
+  implementation("com.vanniktech:android-image-cropper:4.3.3")
+}
+```
 
 ### Update all imports
 
@@ -146,14 +152,16 @@ Add this library like it's shown above.
 +import com.canhub.cropper.CropImageActivity
 ```
 
-# Update all XML references
+### Update all XML references
 
 ```diff
 -<com.theartofdev.edmodo.cropper.CropImageView
 +<com.canhub.cropper.CropImageView
 ```
 
-Consult with the sample app on how to use our Activity Contracts since `onActivityResult` got deprecated.
+When using Activity Contracts, consult with the sample app on how to use our Activity Contracts since `onActivityResult` got deprecated.
+
+Versions after 4.3.3 have changed the APIs quite a bit, it's best to upgrade to each minor version individually, remove deprecated API usages and continue upgrading. So after using 4.3.3, upgrade to 4.4.0, etc.
 
 ## License
 
