@@ -3,7 +3,6 @@ package com.canhub.cropper
 import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
-import com.canhub.cropper.utils.getFilePathFromUri
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -96,7 +95,6 @@ internal class BitmapLoadingWorkerJob internal constructor(
   internal companion object class Result {
     /**
      * The Android URI of the image to load.
-     * NOT a file path, for it use [getUriFilePath]
      */
     val uriContent: Uri
 
@@ -117,16 +115,6 @@ internal class BitmapLoadingWorkerJob internal constructor(
 
     /** The error that occurred during async bitmap loading. */
     val error: Exception?
-
-    /**
-     * The file path of the image to load
-     *
-     * [context] used to access Android APIs, like content resolve, it is your activity/fragment/widget.
-     * [uniqueName] If true, make each image cropped have a different file name, this could
-     * cause memory issues, use wisely. [Default: false]
-     */
-    fun getUriFilePath(context: Context, uniqueName: Boolean = false): String =
-      getFilePathFromUri(context, uriContent, uniqueName)
 
     internal constructor(
       uri: Uri,

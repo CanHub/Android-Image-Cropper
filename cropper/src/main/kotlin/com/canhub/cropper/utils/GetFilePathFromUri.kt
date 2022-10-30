@@ -13,19 +13,6 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale.getDefault
 
-/**
- * This class will create a temporary file in the cache if you need.
- *
- * When the uri already have `file://` schema we don't need to create a new file.
- * The temporary file will always override a previous one, saving memory.
- * Using the cache memory(context.cacheDir) we guarantee to not leak memory
- *
- * [context] used to access Android APIs, like content resolve, it is your activity/fragment.
- * [uri] the URI to load the image from.
- * [uniqueName] If true, make each image cropped have a different file name, this could cause memory issues, use wisely.
- *
- * @return string value of the File path.
- */
 internal fun getFilePathFromUri(context: Context, uri: Uri, uniqueName: Boolean): String =
   if (uri.path?.contains("file://") == true) {
     uri.path!!

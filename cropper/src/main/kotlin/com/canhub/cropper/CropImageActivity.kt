@@ -407,14 +407,14 @@ open class CropImageActivity : AppCompatActivity(), OnSetImageUriCompleteListene
    */
   open fun getResultIntent(uri: Uri?, error: Exception?, sampleSize: Int): Intent {
     val result = CropImage.ActivityResult(
-      cropImageView?.imageUri,
-      uri,
-      error,
-      cropImageView?.cropPoints,
-      cropImageView?.cropRect,
-      cropImageView?.rotatedDegrees ?: 0,
-      cropImageView?.wholeImageRect,
-      sampleSize,
+      originalUri = cropImageView?.imageUri,
+      uriContent = uri,
+      error = error,
+      cropPoints = cropImageView?.cropPoints,
+      cropRect = cropImageView?.cropRect,
+      rotation = cropImageView?.rotatedDegrees ?: 0,
+      wholeImageRect = cropImageView?.wholeImageRect,
+      sampleSize = sampleSize,
     )
     val intent = Intent()
     intent.extras?.let(intent::putExtras)
