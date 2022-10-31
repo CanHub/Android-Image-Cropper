@@ -80,10 +80,6 @@ internal class SampleUsingImageViewFragment : Fragment(), SampleOptionsBottomShe
     this.options = options
 
     binding.cropImageView.setImageCropOptions(options)
-
-    if (options.scaleType == CropImageView.ScaleType.CENTER_INSIDE) {
-      binding.cropImageView.imageResource = R.drawable.cat_small
-    }
   }
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
