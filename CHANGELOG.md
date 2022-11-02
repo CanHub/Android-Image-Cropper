@@ -1,5 +1,13 @@
-Version 4.5.0 *(In development)*
---------------------------------
+Version 4.5.0 *(2022-11-02)*
+----------------------------
+
+- README: Slightly improve the Migration section. [\#520](https://github.com/CanHub/Android-Image-Cropper/pull/520) ([vanniktech](https://github.com/vanniktech))
+- API: Deprecate CropImageView.croppedImage [\#519](https://github.com/CanHub/Android-Image-Cropper/pull/519) ([vanniktech](https://github.com/vanniktech))
+- API: Deprecate CropImageView.isSaveBitmapToInstanceState [\#518](https://github.com/CanHub/Android-Image-Cropper/pull/518) ([vanniktech](https://github.com/vanniktech))
+- API: Remove deprecated methods from Version 4.4.0 in CropImageContractOption. [\#513](https://github.com/CanHub/Android-Image-Cropper/pull/513) ([vanniktech](https://github.com/vanniktech))
+- API: Remove deprecated methods from Version 4.4.0 in CropImage. [\#512](https://github.com/CanHub/Android-Image-Cropper/pull/512) ([vanniktech](https://github.com/vanniktech))
+- Behavior Change: Always try to return resized bitmap in CropResult. [\#509](https://github.com/CanHub/Android-Image-Cropper/pull/509) ([vanniktech](https://github.com/vanniktech))
+- Behavior Change: The crop area for CropShapes \(Rectangle, Rectangle vertical only, Rectangle horizontal only\) can now also be adjusted by dragging outside the Crop Area just like it's always been possible for CropShape.OVAL. [\#508](https://github.com/CanHub/Android-Image-Cropper/pull/508) ([vanniktech](https://github.com/vanniktech))
 
 Version 4.4.0 *(2022-10-24)*
 ----------------------------
