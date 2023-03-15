@@ -450,7 +450,7 @@ open class CropImageActivity : AppCompatActivity(), OnSetImageUriCompleteListene
    * Update the color of a specific menu item to the given color.
    */
   open fun updateMenuItemTextColor(menu: Menu, itemId: Int, color: Int) {
-    val menuItem = menu.findItem(itemId)
+    val menuItem = menu.findItem(itemId) ?: return
     val menuTitle = menuItem.title
     if (menuTitle?.isNotBlank() == true) {
       try {
