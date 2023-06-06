@@ -151,6 +151,9 @@ class CropOverlayView
     var cropCornerRadius: Float? = null
         private set
 
+    var borderCornerRadius: Float? = null
+        private set
+
     /** the initial crop window rectangle to set  */
     private val mInitialCropWindowRect = Rect()
 
@@ -235,6 +238,14 @@ class CropOverlayView
     fun setCropCornerRadius(cropCornerRadius: Float) {
         if (this.cropCornerRadius != cropCornerRadius) {
             this.cropCornerRadius = cropCornerRadius
+            invalidate()
+        }
+    }
+
+    /** The corner radius of the border controls.  */
+    fun setCropBorderCornerRadius(cropCornerRadius: Float) {
+        if (this.borderCornerRadius != cropCornerRadius) {
+            this.borderCornerRadius = cropCornerRadius
             invalidate()
         }
     }
@@ -403,6 +414,7 @@ class CropOverlayView
         mBorderCornerLength = options.borderCornerLength
         mBorderCornerPaint =
             getNewPaintOrNull(options.borderCornerThickness, options.borderCornerColor)
+        borderCornerRadius = options.borderCornerRadius
         mGuidelinePaint = getNewPaintOrNull(options.guidelinesThickness, options.guidelinesColor)
         mBackgroundPaint = getNewPaint(options.backgroundColor)
     }
@@ -707,7 +719,6 @@ class CropOverlayView
             val lineWidth: Float = if (mBorderPaint != null) mBorderPaint!!.strokeWidth else 0f
             val cornerWidth = mBorderCornerPaint!!.strokeWidth
             val cornerOffset = (cornerWidth - lineWidth) / 2
-            val cornerExtension = cornerWidth / 2 + cornerOffset
             val w: Float = when (cropShape) {
                 // for rectangle crop shape we allow the corners to be offset from the borders
                 CropShape.RECTANGLE_VERTICAL_ONLY,
@@ -720,66 +731,11 @@ class CropOverlayView
             rect.inset(w, w)
             when (cropShape) {
                 CropShape.RECTANGLE, CropShape.OVAL -> {
-                    // Top left
-                    canvas.drawLine(
-                        rect.left - cornerOffset,
-                        rect.top - cornerExtension,
-                        rect.left - cornerOffset,
-                        rect.top + mBorderCornerLength,
-                        mBorderCornerPaint!!
-                    )
-                    canvas.drawLine(
-                        rect.left - cornerExtension,
-                        rect.top - cornerOffset,
-                        rect.left + mBorderCornerLength,
-                        rect.top - cornerOffset,
-                        mBorderCornerPaint!!
-                    )
-                    // Top right
-                    canvas.drawLine(
-                        rect.right + cornerOffset,
-                        rect.top - cornerExtension,
-                        rect.right + cornerOffset,
-                        rect.top + mBorderCornerLength,
-                        mBorderCornerPaint!!
-                    )
-                    canvas.drawLine(
-                        rect.right + cornerExtension,
-                        rect.top - cornerOffset,
-                        rect.right - mBorderCornerLength,
-                        rect.top - cornerOffset,
-                        mBorderCornerPaint!!
-                    )
-                    // Bottom left
-                    canvas.drawLine(
-                        rect.left - cornerOffset,
-                        rect.bottom + cornerExtension,
-                        rect.left - cornerOffset,
-                        rect.bottom - mBorderCornerLength,
-                        mBorderCornerPaint!!
-                    )
-                    canvas.drawLine(
-                        rect.left - cornerExtension,
-                        rect.bottom + cornerOffset,
-                        rect.left + mBorderCornerLength,
-                        rect.bottom + cornerOffset,
-                        mBorderCornerPaint!!
-                    )
-                    // Bottom right
-                    canvas.drawLine(
-                        rect.right + cornerOffset,
-                        rect.bottom + cornerExtension,
-                        rect.right + cornerOffset,
-                        rect.bottom - mBorderCornerLength,
-                        mBorderCornerPaint!!
-                    )
-                    canvas.drawLine(
-                        rect.right + cornerExtension,
-                        rect.bottom + cornerOffset,
-                        rect.right - mBorderCornerLength,
-                        rect.bottom + cornerOffset,
-                        mBorderCornerPaint!!
-                    )
+                    if ((cropCornerRadius ?: 0f) > 0f || (borderCornerRadius ?: 0f) > 0f) {
+                        drawRoundedCorners(canvas)
+                    } else {
+                        drawRectCorners(canvas)
+                    }
                 }
                 CropShape.RECTANGLE_VERTICAL_ONLY -> {
                     // For the vertical variant, the user can only resize the crop window up and down, so the
@@ -820,6 +776,190 @@ class CropOverlayView
                 else -> throw IllegalStateException("Unrecognized crop shape")
             }
         }
+    }
+
+    private fun drawRectCorners(canvas: Canvas) {
+        val rect = mCropWindowHandler.getRect()
+        val lineWidth: Float = if (mBorderPaint != null) mBorderPaint!!.strokeWidth else 0f
+        val cornerWidth = mBorderCornerPaint!!.strokeWidth
+        val cornerOffset = (cornerWidth - lineWidth) / 2
+        val cornerExtension = cornerWidth / 2 + cornerOffset
+
+        // Top left
+        canvas.drawLine(
+            rect.left - cornerOffset,
+            rect.top - cornerExtension,
+            rect.left - cornerOffset,
+            rect.top + mBorderCornerLength,
+            mBorderCornerPaint!!
+        )
+        canvas.drawLine(
+            rect.left - cornerExtension,
+            rect.top - cornerOffset,
+            rect.left + mBorderCornerLength,
+            rect.top - cornerOffset,
+            mBorderCornerPaint!!
+        )
+        // Top right
+        canvas.drawLine(
+            rect.right + cornerOffset,
+            rect.top - cornerExtension,
+            rect.right + cornerOffset,
+            rect.top + mBorderCornerLength,
+            mBorderCornerPaint!!
+        )
+        canvas.drawLine(
+            rect.right + cornerExtension,
+            rect.top - cornerOffset,
+            rect.right - mBorderCornerLength,
+            rect.top - cornerOffset,
+            mBorderCornerPaint!!
+        )
+        // Bottom left
+        canvas.drawLine(
+            rect.left - cornerOffset,
+            rect.bottom + cornerExtension,
+            rect.left - cornerOffset,
+            rect.bottom - mBorderCornerLength,
+            mBorderCornerPaint!!
+        )
+        canvas.drawLine(
+            rect.left - cornerExtension,
+            rect.bottom + cornerOffset,
+            rect.left + mBorderCornerLength,
+            rect.bottom + cornerOffset,
+            mBorderCornerPaint!!
+        )
+        // Bottom right
+        canvas.drawLine(
+            rect.right + cornerOffset,
+            rect.bottom + cornerExtension,
+            rect.right + cornerOffset,
+            rect.bottom - mBorderCornerLength,
+            mBorderCornerPaint!!
+        )
+        canvas.drawLine(
+            rect.right + cornerExtension,
+            rect.bottom + cornerOffset,
+            rect.right - mBorderCornerLength,
+            rect.bottom + cornerOffset,
+            mBorderCornerPaint!!
+        )
+    }
+
+    private fun drawRoundedCorners(canvas: Canvas) {
+        val rect = mCropWindowHandler.getRect()
+        val lineWidth: Float = if (mBorderPaint != null) mBorderPaint!!.strokeWidth else 0f
+        val cornerWidth = mBorderCornerPaint!!.strokeWidth
+        val cornerOffset = (cornerWidth - lineWidth) / 2
+
+        // Top left
+        var clipRect = RectF(
+            rect.left,
+            rect.top,
+            rect.left + mBorderCornerLength + cornerOffset * 2,
+            rect.top + mBorderCornerLength + cornerOffset * 2
+        )
+        var checkpoint = canvas.save()
+        var corners = floatArrayOf(
+            cropCornerRadius ?: 0f, cropCornerRadius ?: 0f,  // Top left radius in px
+            0f, 0f,  // Top right radius in px
+            0f, 0f,  // Bottom right radius in px
+            0f, 0f // Bottom left radius in px
+        )
+        canvas.clipOutPath(Path().apply {
+            addRoundRect(clipRect, corners, Path.Direction.CW)
+        })
+        canvas.drawRoundRect(
+            RectF(
+                rect.left - cornerOffset,
+                rect.top - cornerOffset,
+                rect.left + mBorderCornerLength,
+                rect.top + mBorderCornerLength
+            ), borderCornerRadius ?: 0f, borderCornerRadius ?: 0f, mBorderCornerPaint!!
+        )
+        canvas.restoreToCount(checkpoint)
+
+        // Top right
+        clipRect = RectF(
+            rect.right - mBorderCornerLength - cornerOffset * 2,
+            rect.top,
+            rect.right,
+            rect.top + mBorderCornerLength + cornerOffset * 2
+        )
+        checkpoint = canvas.save()
+        corners = floatArrayOf(
+            0f, 0f,  // Top left radius in px
+            cropCornerRadius ?: 0f, cropCornerRadius ?: 0f,  // Top right radius in px
+            0f, 0f,  // Bottom right radius in px
+            0f, 0f // Bottom left radius in px
+        )
+        canvas.clipOutPath(Path().apply {
+            addRoundRect(clipRect, corners, Path.Direction.CW)
+        })
+        canvas.drawRoundRect(
+            RectF(
+                rect.right - mBorderCornerLength,
+                rect.top - cornerOffset,
+                rect.right + cornerOffset,
+                rect.top + mBorderCornerLength
+            ), borderCornerRadius ?: 0f, borderCornerRadius ?: 0f, mBorderCornerPaint!!
+        )
+        canvas.restoreToCount(checkpoint)
+
+        // Bottom left
+        clipRect = RectF(
+            rect.left,
+            rect.bottom - mBorderCornerLength - cornerOffset * 2,
+            rect.left + mBorderCornerLength + cornerOffset * 2,
+            rect.bottom
+        )
+        checkpoint = canvas.save()
+        corners = floatArrayOf(
+            0f, 0f,  // Top left radius in px
+            0f, 0f,  // Top right radius in px
+            0f, 0f,  // Bottom right radius in px
+            cropCornerRadius ?: 0f, cropCornerRadius ?: 0f // Bottom left radius in px
+        )
+        canvas.clipOutPath(Path().apply {
+            addRoundRect(clipRect, corners, Path.Direction.CW)
+        })
+        canvas.drawRoundRect(
+            RectF(
+                rect.left - cornerOffset,
+                rect.bottom - mBorderCornerLength,
+                rect.left + mBorderCornerLength,
+                rect.bottom + cornerOffset
+            ), borderCornerRadius ?: 0f, borderCornerRadius ?: 0f, mBorderCornerPaint!!
+        )
+        canvas.restoreToCount(checkpoint)
+
+        // Bottom right
+        clipRect = RectF(
+            rect.right - mBorderCornerLength - cornerOffset * 2,
+            rect.bottom - mBorderCornerLength - cornerOffset * 2,
+            rect.right,
+            rect.bottom
+        )
+        checkpoint = canvas.save()
+        corners = floatArrayOf(
+            0f, 0f,  // Top left radius in px
+            0f, 0f,  // Top right radius in px
+            cropCornerRadius ?: 0f, cropCornerRadius ?: 0f,  // Bottom right radius in px
+            0f, 0f // Bottom left radius in px
+        )
+        canvas.clipOutPath(Path().apply {
+            addRoundRect(clipRect, corners, Path.Direction.CW)
+        })
+        canvas.drawRoundRect(
+            RectF(
+                rect.right - mBorderCornerLength,
+                rect.bottom - mBorderCornerLength,
+                rect.right + cornerOffset,
+                rect.bottom + cornerOffset
+            ), borderCornerRadius ?: 0f, borderCornerRadius ?: 0f, mBorderCornerPaint!!
+        )
+        canvas.restoreToCount(checkpoint)
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {

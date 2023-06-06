@@ -216,6 +216,12 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
         set(value) {
             mCropOverlayView!!.setCropCornerRadius(value!!)
         }
+
+    var cropBorderCornerRadius: Float?
+        get() = mCropOverlayView!!.borderCornerRadius
+        set(value) {
+            mCropOverlayView!!.setCropBorderCornerRadius(value!!)
+        }
     /** if auto-zoom functionality is enabled. default: true.  */
     /** Set auto-zoom functionality to enabled/disabled.  */
     var isAutoZoomEnabled: Boolean
@@ -1864,6 +1870,10 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
                     options.borderLineThickness = ta.getDimension(
                         R.styleable.CropImageView_cropBorderLineThickness,
                         options.borderLineThickness
+                    )
+                    options.borderCornerRadius = ta.getDimension(
+                        R.styleable.CropImageView_cropBorderCornerRadius,
+                        options.borderCornerRadius
                     )
                     options.borderLineCornerRadius = ta.getDimension(
                         R.styleable.CropImageView_cropBorderLineCornerRadius,

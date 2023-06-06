@@ -58,6 +58,7 @@
     <string name="guidelines">Guidelines</string>
     <string name="crop_shape">Crop Shape</string>
     <string name="crop_rounded_corners">Crop Rounded Corners</string>
+    <string name="crop_rounded_border_corners">Crop Rounded Border Corners</string>
     <string name="scale_type">Scale Type</string>
     <string name="max_zoom_level">Max Zoom Level</string>
     <string name="zoom_2">2</string>

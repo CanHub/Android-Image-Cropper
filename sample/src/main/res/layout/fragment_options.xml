@@ -58,6 +58,10 @@
                 layout="@layout/chip_crop_rounded_corners" />
 
             <include
+                android:id="@+id/cropRoundedBorderCorners"
+                layout="@layout/chip_crop_borders_rounded_corners" />
+
+            <include
                 android:id="@+id/guidelines"
                 layout="@layout/chip_guidelines" />
 

@@ -10,6 +10,7 @@ internal data class SOptionsDomain(
     val scaleType: CropImageView.ScaleType,
     val cropShape: CropImageView.CropShape,
     val cropRoundedCorners: Float,
+    val cropBorderRoundedCorners: Float,
     val guidelines: CropImageView.Guidelines,
     val ratio: @RawValue Pair<Int, Int>?,
     val maxZoomLvl: Int,

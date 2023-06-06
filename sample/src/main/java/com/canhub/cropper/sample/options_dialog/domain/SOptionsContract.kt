@@ -19,6 +19,7 @@ internal interface SOptionsContract {
         fun onScaleTypeSelect(scaleType: ScaleType)
         fun onCropShapeSelect(cropShape: CropShape)
         fun onCropRoundedCornersSelect(size: Float)
+        fun onCropRoundedBorderCornersSelect(size: Float)
         fun onGuidelinesSelect(guidelines: Guidelines)
         fun onRatioSelect(ratio: Pair<Int, Int>?)
         fun onAutoZoomSelect(enable: Boolean)

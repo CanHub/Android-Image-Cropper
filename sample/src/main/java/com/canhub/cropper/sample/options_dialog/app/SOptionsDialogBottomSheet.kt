@@ -131,6 +131,30 @@ internal class SOptionsDialogBottomSheet : BottomSheetDialogFragment(), SOptions
             presenter.onCropRoundedCornersSelect(16f)
         }
 
+        binding.cropRoundedBorderCorners.chipRoundedBorderCorners0.setOnClickListener {
+            presenter.onCropRoundedBorderCornersSelect(0f)
+        }
+
+        binding.cropRoundedBorderCorners.chipRoundedBorderCorners2.setOnClickListener {
+            presenter.onCropRoundedBorderCornersSelect(2f)
+        }
+
+        binding.cropRoundedBorderCorners.chipRoundedBorderCorners4.setOnClickListener {
+            presenter.onCropRoundedBorderCornersSelect(4f)
+        }
+
+        binding.cropRoundedBorderCorners.chipRoundedBorderCorners8.setOnClickListener {
+            presenter.onCropRoundedBorderCornersSelect(8f)
+        }
+
+        binding.cropRoundedBorderCorners.chipRoundedBorderCorners12.setOnClickListener {
+            presenter.onCropRoundedBorderCornersSelect(12f)
+        }
+
+        binding.cropRoundedBorderCorners.chipRoundedBorderCorners16.setOnClickListener {
+            presenter.onCropRoundedBorderCornersSelect(16f)
+        }
+
         binding.guidelines.chipOff.setOnClickListener {
             presenter.onGuidelinesSelect(CropImageView.Guidelines.OFF)
         }
@@ -225,6 +249,15 @@ internal class SOptionsDialogBottomSheet : BottomSheetDialogFragment(), SOptions
             12f -> binding.cropRoundedCorners.chipRoundedCorners12.isChecked = true
             16f -> binding.cropRoundedCorners.chipRoundedCorners16.isChecked = true
             else -> binding.cropRoundedCorners.chipRoundedCorners0.isChecked = true
+        }
+
+        when (options.cropBorderRoundedCorners) {
+            2f -> binding.cropRoundedBorderCorners.chipRoundedBorderCorners2.isChecked = true
+            4f -> binding.cropRoundedBorderCorners.chipRoundedBorderCorners4.isChecked = true
+            8f -> binding.cropRoundedBorderCorners.chipRoundedBorderCorners8.isChecked = true
+            12f -> binding.cropRoundedBorderCorners.chipRoundedBorderCorners12.isChecked = true
+            16f -> binding.cropRoundedBorderCorners.chipRoundedBorderCorners16.isChecked = true
+            else -> binding.cropRoundedBorderCorners.chipRoundedBorderCorners0.isChecked = true
         }
 
         when (options.guidelines) {

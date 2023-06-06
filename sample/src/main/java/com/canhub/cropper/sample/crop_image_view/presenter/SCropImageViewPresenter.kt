@@ -23,7 +23,8 @@ internal class SCropImageViewPresenter : SCropImageViewContract.Presenter {
     private fun getOptions(): SOptionsDomain = SOptionsDomain(
         CropImageView.ScaleType.FIT_CENTER,
         CropImageView.CropShape.RECTANGLE,
-        0f,
+        cropRoundedCorners = 0f,
+        cropBorderRoundedCorners = 0f,
         CropImageView.Guidelines.ON,
         Pair(1, 1),
         autoZoom = true,

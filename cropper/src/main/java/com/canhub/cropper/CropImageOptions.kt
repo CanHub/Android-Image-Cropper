@@ -95,6 +95,8 @@ data class CropImageOptions(
     var borderLineColor: Int = Color.argb(170, 255, 255, 255),
     /** thickness of the corner line. (in pixels)  */
     var borderCornerThickness: Float = 2f.px(),
+    /** corner line radius. (in pixels)  */
+    var borderCornerRadius: Float = 0f.px(),
     /** the offset of corner line from crop window border. (in pixels)  */
     var borderCornerOffset: Float = 5f.px(),
     /** the length of the corner line away from the corner. (in pixels)  */
@@ -192,6 +194,7 @@ data class CropImageOptions(
         require(borderLineThickness >= 0) { "Cannot set line thickness value to a number less than 0." }
         require(borderLineCornerRadius >= 0) { "Cannot set line corner radius value to a number less than 0." }
         require(borderCornerThickness >= 0) { "Cannot set corner thickness value to a number less than 0." }
+        require(borderCornerRadius >= 0) { "Cannot set corner radius value to a number less than 0." }
         require(guidelinesThickness >= 0) { "Cannot set guidelines thickness value to a number less than 0." }
         require(minCropWindowHeight >= 0) { "Cannot set min crop window height value to a number < 0 " }
         require(minCropResultWidth >= 0) { "Cannot set min crop result width value to a number < 0 " }
