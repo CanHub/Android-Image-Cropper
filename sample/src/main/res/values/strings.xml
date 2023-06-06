@@ -48,6 +48,7 @@
     <string name="rectangleHorizontalOnly">Rectangle - horizontal only</string>
     <string name="off">Off</string>
     <string name="on_touch">On Touch</string>
+    <string name="on_room">On Room</string>
     <string name="on">ON</string>
     <string name="ration_16_9">16,9</string>
     <string name="ratio_4_3">4,3</string>
@@ -56,6 +57,7 @@
     <string name="activity_type">Activity Type</string>
     <string name="ratio">Ratio</string>
     <string name="guidelines">Guidelines</string>
+    <string name="horizontal_controllers">Show horizontal controllers</string>
     <string name="crop_shape">Crop Shape</string>
     <string name="crop_rounded_corners">Crop Rounded Corners</string>
     <string name="crop_rounded_border_corners">Crop Rounded Border Corners</string>

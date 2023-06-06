@@ -1,6 +1,7 @@
 package com.canhub.cropper.sample.options_dialog.presenter
 
 import com.canhub.cropper.CropImageView
+import com.canhub.cropper.CropImageView.HorizontalControllers
 import com.canhub.cropper.sample.options_dialog.domain.SOptionsContract
 import com.canhub.cropper.sample.options_dialog.domain.SOptionsDomain
 
@@ -40,6 +41,10 @@ internal class SOptionsPresenter : SOptionsContract.Presenter {
 
     override fun onCropRoundedBorderCornersSelect(size: Float) {
         options = options.copy(cropBorderRoundedCorners = size)
+    }
+
+    override fun onHorizontalControllersSelect(horizontalControllers: HorizontalControllers) {
+        options = options.copy(horizontalControllers = horizontalControllers)
     }
 
     override fun onGuidelinesSelect(guidelines: CropImageView.Guidelines) {
@@ -87,6 +92,7 @@ internal class SOptionsPresenter : SOptionsContract.Presenter {
         CropImageView.CropShape.RECTANGLE,
         cropRoundedCorners = 0f,
         cropBorderRoundedCorners = 0f,
+        horizontalControllers = HorizontalControllers.OFF,
         CropImageView.Guidelines.ON,
         Pair(1, 1),
         maxZoomLvl = 2,

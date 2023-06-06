@@ -354,6 +354,17 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
             mCropOverlayView!!.setGuidelines(guidelines!!)
         }
 
+    /** Get the current horizontal controlers option set.  */
+    /**
+     * Sets the guidelines for the CropOverlayView to be either on, off, or to show when resizing the
+     * application.
+     */
+    var horizontalControllers: HorizontalControllers?
+        get() = mCropOverlayView!!.horizontalControllers
+        set(horizontalControllers) {
+            mCropOverlayView!!.setHorizontalControllers(horizontalControllers!!)
+        }
+
     /** both the X and Y values of the aspectRatio.  */
     val aspectRatio: Pair<Int, Int>
         get() = Pair(mCropOverlayView!!.aspectRatioX, mCropOverlayView.aspectRatioY)
@@ -1570,6 +1581,19 @@ class CropImageView @JvmOverloads constructor(context: Context, attrs: Attribute
 
         /** Show when crop move action is live  */
         ON_TOUCH,
+
+        /** Always show  */
+        ON
+    }
+
+    /** The possible horizontal showing types.  */
+    enum class HorizontalControllers {
+
+        /** Never show  */
+        OFF,
+
+        /** Show when there is enough space  */
+        WHEN_ROOM,
 
         /** Always show  */
         ON

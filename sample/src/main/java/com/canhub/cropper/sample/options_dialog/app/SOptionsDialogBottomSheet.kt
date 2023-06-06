@@ -155,6 +155,18 @@ internal class SOptionsDialogBottomSheet : BottomSheetDialogFragment(), SOptions
             presenter.onCropRoundedBorderCornersSelect(16f)
         }
 
+        binding.horizontalControllers.chipOff.setOnClickListener {
+            presenter.onHorizontalControllersSelect(CropImageView.HorizontalControllers.OFF)
+        }
+
+        binding.horizontalControllers.chipOnRoom.setOnClickListener {
+            presenter.onHorizontalControllersSelect(CropImageView.HorizontalControllers.WHEN_ROOM)
+        }
+
+        binding.horizontalControllers.chipOn.setOnClickListener {
+            presenter.onHorizontalControllersSelect(CropImageView.HorizontalControllers.ON)
+        }
+
         binding.guidelines.chipOff.setOnClickListener {
             presenter.onGuidelinesSelect(CropImageView.Guidelines.OFF)
         }
@@ -258,6 +270,12 @@ internal class SOptionsDialogBottomSheet : BottomSheetDialogFragment(), SOptions
             12f -> binding.cropRoundedBorderCorners.chipRoundedBorderCorners12.isChecked = true
             16f -> binding.cropRoundedBorderCorners.chipRoundedBorderCorners16.isChecked = true
             else -> binding.cropRoundedBorderCorners.chipRoundedBorderCorners0.isChecked = true
+        }
+
+        when (options.horizontalControllers) {
+            CropImageView.HorizontalControllers.OFF -> binding.horizontalControllers.chipOff.isChecked = true
+            CropImageView.HorizontalControllers.WHEN_ROOM -> binding.horizontalControllers.chipOnRoom.isChecked = true
+            CropImageView.HorizontalControllers.ON -> binding.horizontalControllers.chipOn.isChecked = true
         }
 
         when (options.guidelines) {

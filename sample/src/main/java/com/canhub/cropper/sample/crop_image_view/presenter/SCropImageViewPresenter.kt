@@ -25,6 +25,7 @@ internal class SCropImageViewPresenter : SCropImageViewContract.Presenter {
         CropImageView.CropShape.RECTANGLE,
         cropRoundedCorners = 0f,
         cropBorderRoundedCorners = 0f,
+        horizontalControllers = CropImageView.HorizontalControllers.OFF,
         CropImageView.Guidelines.ON,
         Pair(1, 1),
         autoZoom = true,

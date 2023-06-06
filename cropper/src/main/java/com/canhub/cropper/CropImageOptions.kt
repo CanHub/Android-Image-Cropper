@@ -12,6 +12,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.IntRange
 import com.canhub.cropper.CropImageView.CropShape
 import com.canhub.cropper.CropImageView.Guidelines
+import com.canhub.cropper.CropImageView.HorizontalControllers
 import com.canhub.cropper.CropImageView.RequestSizeOptions
 import kotlinx.parcelize.Parcelize
 
@@ -51,6 +52,8 @@ data class CropImageOptions(
     var touchRadius: Float = 24f.px(),
     /** whether the guidelines should be on, off, or only showing when resizing.  */
     var guidelines: Guidelines = Guidelines.ON_TOUCH,
+    /** whether the horizontal controllers should be on, off, or when room is available.  */
+    var horizontalControllers: HorizontalControllers = HorizontalControllers.OFF,
     /** The initial scale type of the image in the crop image view  */
     var scaleType: CropImageView.ScaleType = CropImageView.ScaleType.FIT_CENTER,
     /**

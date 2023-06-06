@@ -99,6 +99,7 @@ internal class SCropImageViewFragment :
             cropShape = options.cropShape
             cropCornerRadius = options.cropRoundedCorners
             cropBorderCornerRadius = options.cropBorderRoundedCorners
+            horizontalControllers = options.horizontalControllers
             guidelines = options.guidelines
             if (options.ratio == null) setFixedAspectRatio(false)
             else {

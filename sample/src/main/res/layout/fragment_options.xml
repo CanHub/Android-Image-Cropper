@@ -62,6 +62,10 @@
                 layout="@layout/chip_crop_borders_rounded_corners" />
 
             <include
+                android:id="@+id/horizontal_controllers"
+                layout="@layout/chip_horizontal_controllers" />
+
+            <include
                 android:id="@+id/guidelines"
                 layout="@layout/chip_guidelines" />
 
