@@ -86,8 +86,10 @@ data class CropImageOptions(
     var aspectRatioX: Int = 1,
     /** the Y value of the aspect ratio.  */
     var aspectRatioY: Int = 1,
-    /** the thickness of the guidelines lines in pixels. (in pixels)  */
+    /** the thickness of the guidelines lines. (in pixels)  */
     var borderLineThickness: Float = 3f.px(),
+    /** the corner radius of the guidelines lines. (in pixels)  */
+    var borderLineCornerRadius: Float = 0f,
     /** the color of the guidelines lines  */
     @ColorInt
     var borderLineColor: Int = Color.argb(170, 255, 255, 255),
@@ -188,6 +190,7 @@ data class CropImageOptions(
         require(aspectRatioX > 0) { "Cannot set aspect ratio value to a number less than or equal to 0." }
         require(aspectRatioY > 0) { "Cannot set aspect ratio value to a number less than or equal to 0." }
         require(borderLineThickness >= 0) { "Cannot set line thickness value to a number less than 0." }
+        require(borderLineCornerRadius >= 0) { "Cannot set line corner radius value to a number less than 0." }
         require(borderCornerThickness >= 0) { "Cannot set corner thickness value to a number less than 0." }
         require(guidelinesThickness >= 0) { "Cannot set guidelines thickness value to a number less than 0." }
         require(minCropWindowHeight >= 0) { "Cannot set min crop window height value to a number < 0 " }

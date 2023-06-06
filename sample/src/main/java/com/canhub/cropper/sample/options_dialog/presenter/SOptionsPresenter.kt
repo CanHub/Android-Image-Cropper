@@ -34,6 +34,10 @@ internal class SOptionsPresenter : SOptionsContract.Presenter {
         options = options.copy(cropShape = cropShape)
     }
 
+    override fun onCropRoundedCornersSelect(size: Float) {
+        options = options.copy(cropRoundedCorners = size)
+    }
+
     override fun onGuidelinesSelect(guidelines: CropImageView.Guidelines) {
         options = options.copy(guidelines = guidelines)
     }
@@ -77,6 +81,7 @@ internal class SOptionsPresenter : SOptionsContract.Presenter {
     private fun defaultOptions() = SOptionsDomain(
         CropImageView.ScaleType.FIT_CENTER,
         CropImageView.CropShape.RECTANGLE,
+        0f,
         CropImageView.Guidelines.ON,
         Pair(1, 1),
         maxZoomLvl = 2,

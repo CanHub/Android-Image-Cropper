@@ -180,6 +180,15 @@ data class CropImageContractOptions @JvmOverloads constructor(
     }
 
     /**
+     * the corner radius of the guidelines lines (in pixels).<br></br>
+     * *Default: 0dp*
+     */
+    fun setBorderLineCornerRadius(borderLineCornerRadius: Float): CropImageContractOptions {
+        cropImageOptions.borderLineCornerRadius = borderLineCornerRadius
+        return this
+    }
+
+    /**
      * the color of the guidelines lines.<br></br>
      * *Default: Color.argb(170, 255, 255, 255)*
      */

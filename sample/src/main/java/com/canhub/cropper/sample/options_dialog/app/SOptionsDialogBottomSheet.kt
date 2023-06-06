@@ -107,6 +107,30 @@ internal class SOptionsDialogBottomSheet : BottomSheetDialogFragment(), SOptions
             presenter.onCropShapeSelect(CropImageView.CropShape.RECTANGLE_HORIZONTAL_ONLY)
         }
 
+        binding.cropRoundedCorners.chipRoundedCorners0.setOnClickListener {
+            presenter.onCropRoundedCornersSelect(0f)
+        }
+
+        binding.cropRoundedCorners.chipRoundedCorners2.setOnClickListener {
+            presenter.onCropRoundedCornersSelect(2f)
+        }
+
+        binding.cropRoundedCorners.chipRoundedCorners4.setOnClickListener {
+            presenter.onCropRoundedCornersSelect(4f)
+        }
+
+        binding.cropRoundedCorners.chipRoundedCorners8.setOnClickListener {
+            presenter.onCropRoundedCornersSelect(8f)
+        }
+
+        binding.cropRoundedCorners.chipRoundedCorners12.setOnClickListener {
+            presenter.onCropRoundedCornersSelect(12f)
+        }
+
+        binding.cropRoundedCorners.chipRoundedCorners16.setOnClickListener {
+            presenter.onCropRoundedCornersSelect(16f)
+        }
+
         binding.guidelines.chipOff.setOnClickListener {
             presenter.onGuidelinesSelect(CropImageView.Guidelines.OFF)
         }
@@ -192,6 +216,15 @@ internal class SOptionsDialogBottomSheet : BottomSheetDialogFragment(), SOptions
                 binding.cropShape.chipRectangleVerticalOnly.isChecked = true
             CropImageView.CropShape.RECTANGLE_HORIZONTAL_ONLY ->
                 binding.cropShape.chipRectangleHorizontalOnly.isChecked = true
+        }
+
+        when (options.cropRoundedCorners) {
+            2f -> binding.cropRoundedCorners.chipRoundedCorners2.isChecked = true
+            4f -> binding.cropRoundedCorners.chipRoundedCorners4.isChecked = true
+            8f -> binding.cropRoundedCorners.chipRoundedCorners8.isChecked = true
+            12f -> binding.cropRoundedCorners.chipRoundedCorners12.isChecked = true
+            16f -> binding.cropRoundedCorners.chipRoundedCorners16.isChecked = true
+            else -> binding.cropRoundedCorners.chipRoundedCorners0.isChecked = true
         }
 
         when (options.guidelines) {

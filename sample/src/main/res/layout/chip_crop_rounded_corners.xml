@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/keyline_x2"
+    android:background="@color/white"
+    android:elevation="@dimen/elevation_card_resting"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/keyline_x2"
+        android:text="@string/crop_rounded_corners"
+        android:textColor="@color/black" />
+
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <com.google.android.material.chip.ChipGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/keyline_x2"
+            android:paddingEnd="@dimen/keyline_x2"
+            app:singleLine="true"
+            app:singleSelection="true">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipRoundedCorners0"
+                style="@style/OptionChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rounded_corners_0" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipRoundedCorners2"
+                style="@style/OptionChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rounded_corners_2" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipRoundedCorners4"
+                style="@style/OptionChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rounded_corners_4" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipRoundedCorners8"
+                style="@style/OptionChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rounded_corners_8" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipRoundedCorners12"
+                style="@style/OptionChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rounded_corners_12" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipRoundedCorners16"
+                style="@style/OptionChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rounded_corners_16" />
+        </com.google.android.material.chip.ChipGroup>
+    </HorizontalScrollView>
+</LinearLayout>

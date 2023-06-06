@@ -148,6 +148,9 @@ class CropOverlayView
     var cropShape: CropShape? = null
         private set
 
+    var cropCornerRadius: Float? = null
+        private set
+
     /** the initial crop window rectangle to set  */
     private val mInitialCropWindowRect = Rect()
 
@@ -224,6 +227,14 @@ class CropOverlayView
                     mOriginalLayerType = null
                 }
             }
+            invalidate()
+        }
+    }
+
+    /** The corner radius of the rectangle cropping area.  */
+    fun setCropCornerRadius(cropCornerRadius: Float) {
+        if (this.cropCornerRadius != cropCornerRadius) {
+            this.cropCornerRadius = cropCornerRadius
             invalidate()
         }
     }
@@ -387,6 +398,7 @@ class CropOverlayView
         mTouchRadius = options.touchRadius
         mInitialCropWindowPaddingRatio = options.initialCropWindowPaddingRatio
         mBorderPaint = getNewPaintOrNull(options.borderLineThickness, options.borderLineColor)
+        cropCornerRadius = options.borderLineCornerRadius
         mBorderCornerOffset = options.borderCornerOffset
         mBorderCornerLength = options.borderCornerLength
         mBorderCornerPaint =
@@ -677,7 +689,11 @@ class CropOverlayView
                 // Draw rectangle crop window border.
                 CropShape.RECTANGLE_VERTICAL_ONLY,
                 CropShape.RECTANGLE_HORIZONTAL_ONLY,
-                CropShape.RECTANGLE -> canvas.drawRect(rect, mBorderPaint!!)
+                CropShape.RECTANGLE -> cropCornerRadius?.takeIf { it > 0 } ?.let {
+                    canvas.drawRoundRect(rect, it, it, mBorderPaint!!)
+                } ?: run {
+                    canvas.drawRect(rect, mBorderPaint!!)
+                }
                 // Draw circular crop window border
                 CropShape.OVAL -> canvas.drawOval(rect, mBorderPaint!!)
                 else -> throw IllegalStateException("Unrecognized crop shape")
