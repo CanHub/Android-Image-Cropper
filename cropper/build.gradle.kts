@@ -5,11 +5,17 @@ plugins {
   id("org.jetbrains.kotlin.plugin.parcelize")
   id("com.vanniktech.maven.publish")
   id("app.cash.licensee")
-  id("dev.chrisbanes.paparazzi")
+  id("app.cash.paparazzi")
 }
 
 licensee {
   allow("Apache-2.0")
+}
+
+kotlin {
+  jvmToolchain {
+    languageVersion.set(JavaLanguageVersion.of(11))
+  }
 }
 
 android {
@@ -23,6 +29,11 @@ android {
 
   buildFeatures {
     viewBinding = true
+  }
+
+  compileOptions {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
   }
 
   testOptions {

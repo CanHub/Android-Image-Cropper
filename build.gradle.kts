@@ -1,9 +1,4 @@
 buildscript {
-  repositories {
-    mavenCentral()
-    google()
-    gradlePluginPortal()
-  }
   dependencies {
     classpath(libs.plugin.android.cache.fix)
     classpath(libs.plugin.androidgradleplugin)
