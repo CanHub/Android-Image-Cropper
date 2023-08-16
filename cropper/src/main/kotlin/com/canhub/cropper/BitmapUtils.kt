@@ -457,9 +457,13 @@ internal object BitmapUtils {
   ): Uri {
     val newUri = customOutputUri ?: buildUri(context, compressFormat)
 
-    return context.contentResolver.openOutputStream(newUri, WRITE_AND_TRUNCATE).use {
-      bitmap.compress(compressFormat, compressQuality, it)
-      newUri
+    return try {
+      context.contentResolver.openOutputStream(newUri, WRITE_AND_TRUNCATE).use {
+        bitmap.compress(compressFormat, compressQuality, it)
+        newUri
+      }
+    } catch (e: SecurityException) {
+      throw SecurityException(e)
     }
   }
 
