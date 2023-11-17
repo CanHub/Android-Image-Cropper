@@ -19,15 +19,7 @@ internal class CropWindowMoveHandler(
 
   /** The type of crop window move that is handled. */
   internal enum class Type {
-    TOP_LEFT,
-    TOP_RIGHT,
-    BOTTOM_LEFT,
-    BOTTOM_RIGHT,
-    LEFT,
-    TOP,
-    RIGHT,
-    BOTTOM,
-    CENTER,
+    TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT, LEFT, TOP, RIGHT, BOTTOM, CENTER
   }
 
   internal companion object {
