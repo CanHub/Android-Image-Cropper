@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
-  <bool name="leak_canary_add_launcher_icon" tools:ignore="UnusedResources">false</bool>
+<resources>
   <string name="app_name">Android Image Cropper</string>
   <string name="result_image_desc">crop result</string>
   <string name="main_action_crop">CROP</string>
