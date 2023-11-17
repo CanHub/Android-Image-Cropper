@@ -2,7 +2,7 @@
 <resources>
   <string name="ic_rotate_left_24">گھڑی وار گھڑی گھومیں</string>
   <string name="ic_rotate_right_24">گھمائیں</string>
-  <string name="crop_image_menu_crop">تصویر کو تراشیں</string>
+  <string name="crop_image_menu_crop">فصل</string>
   <string name="ic_flip_24">پلٹائیں</string>
   <string name="ic_flip_24_horizontally">افقی پلٹائیں</string>
   <string name="ic_flip_24_vertically">عمودی طور پر پلٹائیں</string>
