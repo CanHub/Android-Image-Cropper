@@ -7,6 +7,4 @@
   <string name="ic_flip_24_horizontally">좌우반전</string>
   <string name="ic_flip_24_vertically">상하반전</string>
   <string name="pick_image_chooser_title">이미지 선택</string>
-  <string name="pick_image_camera">촬영</string>
-  <string name="pick_image_gallery">앨범</string>
 </resources>
