@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ic_rotate_left_24">Snúa rangsælis</string>
+    <string name="ic_rotate_right_24">Snúa</string>
+    <string name="crop_image_menu_crop">Klippa</string>
+    <string name="ic_flip_24">Snúa við</string>
+    <string name="ic_flip_24_horizontally">Snúa við lárétt</string>
+    <string name="ic_flip_24_vertically">Snúa við lóðrétt</string>
+    <string name="pick_image_chooser_title">Veldu mynd</string>
+    <string name="pick_image_camera">Myndavél</string>
+    <string name="pick_image_gallery">Myndasafn</string>
+</resources>
