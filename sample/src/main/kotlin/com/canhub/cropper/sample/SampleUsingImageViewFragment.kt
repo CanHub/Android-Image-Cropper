@@ -23,7 +23,11 @@ import com.example.croppersample.R
 import com.example.croppersample.databinding.FragmentCropImageViewBinding
 import timber.log.Timber
 
-internal class SampleUsingImageViewFragment : Fragment(), SampleOptionsBottomSheet.Listener, OnSetImageUriCompleteListener, OnCropImageCompleteListener {
+internal class SampleUsingImageViewFragment :
+  Fragment(),
+  SampleOptionsBottomSheet.Listener,
+  OnSetImageUriCompleteListener,
+  OnCropImageCompleteListener {
   private var _binding: FragmentCropImageViewBinding? = null
   private val binding get() = _binding!!
 

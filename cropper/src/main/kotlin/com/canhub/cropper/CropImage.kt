@@ -74,7 +74,9 @@ object CropImage {
   /**
    * Result data of Crop Image Activity.
    */
-  open class ActivityResult : CropResult, Parcelable {
+  open class ActivityResult :
+    CropResult,
+    Parcelable {
 
     constructor(
       originalUri: Uri?,
