@@ -39,7 +39,8 @@ import kotlin.math.sqrt
 class CropImageView @JvmOverloads constructor(
   context: Context,
   attrs: AttributeSet? = null,
-) : FrameLayout(context, attrs), CropWindowChangeListener {
+) : FrameLayout(context, attrs),
+  CropWindowChangeListener {
 
   /** Image view widget used to show the image for cropping. */
   private val imageView: ImageView
@@ -1756,15 +1757,13 @@ class CropImageView @JvmOverloads constructor(
      *
      * [context] used to retrieve the bitmap in case you need from activity result
      */
-    fun getBitmap(context: Context): Bitmap? {
-      return bitmap ?: try {
-        when {
-          SDK_INT >= 28 -> ImageDecoder.decodeBitmap(ImageDecoder.createSource(context.contentResolver, uriContent!!))
-          else -> @Suppress("DEPRECATION") MediaStore.Images.Media.getBitmap(context.contentResolver, uriContent)
-        }
-      } catch (e: Exception) {
-        null
+    fun getBitmap(context: Context): Bitmap? = bitmap ?: try {
+      when {
+        SDK_INT >= 28 -> ImageDecoder.decodeBitmap(ImageDecoder.createSource(context.contentResolver, uriContent!!))
+        else -> @Suppress("DEPRECATION") MediaStore.Images.Media.getBitmap(context.contentResolver, uriContent)
       }
+    } catch (e: Exception) {
+      null
     }
 
     /**

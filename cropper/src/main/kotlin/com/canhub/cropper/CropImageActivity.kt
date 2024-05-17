@@ -29,7 +29,10 @@ import com.canhub.cropper.databinding.CropImageActivityBinding
 import com.canhub.cropper.utils.getUriForFile
 import java.io.File
 
-open class CropImageActivity : AppCompatActivity(), OnSetImageUriCompleteListener, OnCropImageCompleteListener {
+open class CropImageActivity :
+  AppCompatActivity(),
+  OnSetImageUriCompleteListener,
+  OnCropImageCompleteListener {
 
   /** Persist URI image to crop URI if specific permissions are required. */
   private var cropImageUri: Uri? = null

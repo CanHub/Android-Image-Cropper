@@ -59,7 +59,7 @@ internal class SampleCustomActivity : CropImageActivity() {
     binding.expectedImageSize.text = binding.cropImageView.expectedImageSize().toString()
   }
 
-  override fun setContentView(view: View) {
+  override fun setContentView(view: View?) {
     super.setContentView(binding.root)
   }
 
