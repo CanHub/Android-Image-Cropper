@@ -12,6 +12,7 @@ import androidx.activity.result.contract.ActivityResultContract
  * If you do not provide an [CropImageContractOptions.uri] in the input the user will be asked to pick an image before cropping.
  */
 class CropImageContract : ActivityResultContract<CropImageContractOptions, CropImageView.CropResult>() {
+  @Suppress("DEPRECATION")
   override fun createIntent(context: Context, input: CropImageContractOptions) = Intent(context, CropImageActivity::class.java).apply {
     putExtra(
       CropImage.CROP_IMAGE_EXTRA_BUNDLE,
