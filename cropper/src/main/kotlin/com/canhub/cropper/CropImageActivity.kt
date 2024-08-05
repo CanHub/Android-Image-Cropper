@@ -29,6 +29,13 @@ import com.canhub.cropper.databinding.CropImageActivityBinding
 import com.canhub.cropper.utils.getUriForFile
 import java.io.File
 
+@Deprecated(
+  message = """
+  Create your own Activity and use the CropImageView directly.
+  This way you can customize everything and have utter control of everything.
+  Feel free to use this Activity Code to create your own Activity.
+""",
+)
 open class CropImageActivity :
   AppCompatActivity(),
   OnSetImageUriCompleteListener,
