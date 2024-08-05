@@ -485,6 +485,7 @@ internal class CropOverlayView @JvmOverloads constructor(
     cornerShape = options.cornerShape
     cropShape = options.cropShape
     mSnapRadius = options.snapRadius
+    isEnabled = options.canChangeCropWindow
     guidelines = options.guidelines
     isFixAspectRatio = options.fixAspectRatio
     aspectRatioX = options.aspectRatioX

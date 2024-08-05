@@ -40,6 +40,8 @@ import kotlinx.parcelize.Parcelize
   @JvmField var multiTouchEnabled: Boolean = false,
   /** If the crop window can be moved by dragging the crop window in the center. */
   @JvmField var centerMoveEnabled: Boolean = true,
+  /** If you are allowed to change the crop window by resizing it. */
+  @JvmField var canChangeCropWindow: Boolean = true,
   @JvmField var maxZoom: Int = 4,
   /** In percentage. 0.1 means 10% on both sides. */
   @JvmField var initialCropWindowPaddingRatio: Float = 0.0f,
