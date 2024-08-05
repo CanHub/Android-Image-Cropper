@@ -25,43 +25,53 @@ There are 3 ways of using the library. Check out the sample app for all details.
 ### [1. Calling crop directly](./sample/src/main/kotlin/com/canhub/cropper/sample/SampleCrop.kt)
 
 ```kotlin
-class MainActivity {
+class MainActivity : AppCompatActivity() {
   private val cropImage = registerForActivityResult(CropImageContract()) { result ->
     if (result.isSuccessful) {
-      // Use the returned uri.
-      val uriContent = result.uriContent
-      val uriFilePath = result.getUriFilePath(context) // optional usage
+      // Use the cropped image URI.
+      val croppedImageUri = result.uriContent
+      val croppedImageFilePath = result.getUriFilePath(this) // optional usage
+      // Process the cropped image URI as needed.
     } else {
       // An error occurred.
       val exception = result.error
+      // Handle the error.
     }
   }
 
   private fun startCrop() {
-    // Start picker to get image for cropping and then use the image in cropping activity.
+    // Start cropping activity with guidelines.
     cropImage.launch(
-      options {
-        setGuidelines(Guidelines.ON)
-      }
-    )
-
-    // Start picker to get image for cropping from only gallery and then use the image in cropping activity.
-    cropImage.launch(
-      options {
-        setImagePickerContractOptions(
-          PickImageContractOptions(includeGallery = true, includeCamera = false)
+      CropImageContractOptions(
+        cropImageOptions = CropImageOptions(
+          guidelines = Guidelines.ON
         )
-      }
+      )
     )
 
-    // Start cropping activity for pre-acquired image saved on the device and customize settings.
+    // Start cropping activity with gallery picker only.
     cropImage.launch(
-      options(uri = imageUri) {
-        setGuidelines(Guidelines.ON)
-        setOutputCompressFormat(CompressFormat.PNG)
-      }
+      CropImageContractOptions(
+        pickImageContractOptions = PickImageContractOptions(
+          includeGallery = true,
+          includeCamera = false
+        )
+      )
+    )
+
+    // Start cropping activity for a pre-acquired image with custom settings.
+    cropImage.launch(
+      CropImageContractOptions(
+        uri = imageUri,
+        cropImageOptions = CropImageOptions(
+          guidelines = Guidelines.ON,
+          outputCompressFormat = Bitmap.CompressFormat.PNG
+        )
+      )
     )
   }
+
+  // Call the startCrop function when needed.
 }
 ```
 
