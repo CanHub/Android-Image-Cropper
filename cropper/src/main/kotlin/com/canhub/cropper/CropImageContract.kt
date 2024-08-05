@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.canhub.cropper
 
 import android.app.Activity
@@ -11,8 +13,13 @@ import androidx.activity.result.contract.ActivityResultContract
  * The UI can be customized using [CropImageOptions].
  * If you do not provide an [CropImageContractOptions.uri] in the input the user will be asked to pick an image before cropping.
  */
+@Deprecated(
+  """
+  This ActivityResultContract is deprecated.
+  Please either roll your own ActivityResultContract with the desired behavior or copy paste this.
+""",
+)
 class CropImageContract : ActivityResultContract<CropImageContractOptions, CropImageView.CropResult>() {
-  @Suppress("DEPRECATION")
   override fun createIntent(context: Context, input: CropImageContractOptions) = Intent(context, CropImageActivity::class.java).apply {
     putExtra(
       CropImage.CROP_IMAGE_EXTRA_BUNDLE,

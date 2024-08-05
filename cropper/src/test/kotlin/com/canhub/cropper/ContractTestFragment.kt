@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.canhub.cropper
 
 import android.content.Intent
