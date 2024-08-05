@@ -14,7 +14,7 @@ Android Image Cropper
 
 ```groovy
 dependencies {
-  implementation("com.vanniktech:android-image-cropper:4.5.0")
+  implementation("com.vanniktech:android-image-cropper:4.6.0")
 }
 ```
 
@@ -23,6 +23,8 @@ dependencies {
 There are 3 ways of using the library. Check out the sample app for all details.
 
 ### [1. Calling crop directly](./sample/src/main/kotlin/com/canhub/cropper/sample/SampleCrop.kt)
+
+**Note:** This way is deprecated and will be removed in future versions. The path forward is to write your own Activity, handle all the `Uri` stuff yourself and use `CropImageView`.
 
 ```kotlin
 class MainActivity : AppCompatActivity() {
@@ -77,7 +79,7 @@ class MainActivity : AppCompatActivity() {
 
 ### [2. Using CropView](./sample/src/main/kotlin/com/canhub/cropper/sample/SampleUsingImageView.kt)
 
-- Add `CropImageView` into your activity
+**Note:** This is the only way forward, add `CropImageView` into your own activity and do whatever you wish. Checkout the sample for more details.
 
 ```xml
 <!-- Image Cropper fill the remaining available height -->
@@ -107,6 +109,8 @@ val cropped: Bitmap = cropImageView.getCroppedImage()
 ```
 
 ### [3. Extend to make a custom activity](./sample/src/main/kotlin/com/canhub/cropper/sample/SampleCustomActivity.kt)
+
+**Note:** This way is also deprecated and will be removed in future versions. The path forward is to write your own Activity, handle all the `Uri` stuff yourself and use `CropImageView`.
 
 If you want to extend the `CropImageActivity` please be aware you will need to set up your `CropImageView`
 
@@ -171,7 +175,7 @@ dependencies {
 
 When using Activity Contracts, consult with the sample app on how to use our Activity Contracts since `onActivityResult` got deprecated.
 
-Versions after 4.3.3 have changed the APIs quite a bit, it's best to upgrade to each minor version individually, remove deprecated API usages and continue upgrading. So after using 4.3.3, upgrade to 4.4.0, etc.
+Versions after 4.3.3 have changed the APIs quite a bit, it's best to upgrade to each minor version individually, remove deprecated API usages and continue upgrading. So after using 4.3.3, upgrade to 4.4.0, upgrade to 4.5.0, 4.6.0, etc.
 
 ## License
 

@@ -1,5 +1,12 @@
-Version 4.6.0 *(In development)*
---------------------------------
+Version 4.6.0 *(2024-08-05)*
+----------------------------
+
+- API: CropImageOptions\#canChangeCropWindow option. [\#636](https://github.com/CanHub/Android-Image-Cropper/pull/636) ([vanniktech](https://github.com/vanniktech))
+- API: Deprecate CropImageActivity. [\#635](https://github.com/CanHub/Android-Image-Cropper/pull/635) ([vanniktech](https://github.com/vanniktech))
+- API: Deprecate CropImageContract. [\#637](https://github.com/CanHub/Android-Image-Cropper/pull/637) ([vanniktech](https://github.com/vanniktech))
+- Fixed bug when changing toolbar text color [\#556](https://github.com/CanHub/Android-Image-Cropper/pull/556) ([Husseinhj](https://github.com/Husseinhj))
+- Resource: Missing Translations added for korean / japanese [\#552](https://github.com/CanHub/Android-Image-Cropper/pull/552) ([hubtwork](https://github.com/hubtwork))
+- Technical: Update to Kotlin 2.0.0 & more. [\#634](https://github.com/CanHub/Android-Image-Cropper/pull/634) ([vanniktech](https://github.com/vanniktech))
 
 Version 4.5.0 *(2022-11-02)*
 ----------------------------
