@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import com.canhub.cropper.CropImage
 import com.canhub.cropper.CropImageOptions
@@ -25,6 +26,7 @@ import timber.log.Timber
 
 internal class SampleUsingImageViewFragment :
   Fragment(),
+  MenuProvider,
   SampleOptionsBottomSheet.Listener,
   OnSetImageUriCompleteListener,
   OnCropImageCompleteListener {
@@ -41,7 +43,7 @@ internal class SampleUsingImageViewFragment :
     container: ViewGroup?,
     savedInstanceState: Bundle?,
   ): View {
-    setHasOptionsMenu(true)
+    activity?.addMenuProvider(this)
     _binding = FragmentCropImageViewBinding.inflate(layoutInflater, container, false)
     return binding.root
   }
@@ -86,12 +88,11 @@ internal class SampleUsingImageViewFragment :
     binding.cropImageView.setImageCropOptions(options)
   }
 
-  override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-    inflater.inflate(R.menu.main, menu)
-    super.onCreateOptionsMenu(menu, inflater)
+  override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+    menuInflater.inflate(R.menu.main, menu)
   }
 
-  override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+  override fun onMenuItemSelected(menuItem: MenuItem) = when (menuItem.itemId) {
     R.id.main_action_crop -> {
       binding.cropImageView.croppedImageAsync()
       true
@@ -108,7 +109,7 @@ internal class SampleUsingImageViewFragment :
       binding.cropImageView.flipImageVertically()
       true
     }
-    else -> super.onOptionsItemSelected(item)
+    else -> false
   }
 
   override fun onSetImageUriComplete(view: CropImageView, uri: Uri, error: Exception?) {
