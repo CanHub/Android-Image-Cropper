@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ic_rotate_left_24">എതിർ ഘടികാരദിശയിൽ തിരിക്കുക</string>
+    <string name="ic_rotate_right_24">തിരിക്കുക</string>
+    <string name="crop_image_menu_crop">മുറിക്കുക</string>
+    <string name="ic_flip_24">മറിക്കുക</string>
+    <string name="ic_flip_24_horizontally">തിരശ്ചീനമായി മറിക്കുക</string>
+    <string name="ic_flip_24_vertically">ലംബമായി മറിക്കുക</string>
+    <string name="pick_image_chooser_title">ഉറവിടം തിരഞ്ഞെടുക്കുക</string>
+    <string name="pick_image_camera">ക്യാമറ</string>
+    <string name="pick_image_gallery">ഗാലറി</string>
+</resources>
