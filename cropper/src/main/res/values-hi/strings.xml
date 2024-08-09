@@ -7,4 +7,6 @@
   <string name="ic_flip_24_horizontally">क्षैतिज फ्लिप</string>
   <string name="ic_flip_24_vertically">लंबवत फ्लिप करें</string>
   <string name="pick_image_chooser_title">सोर्स चुनें</string>
+  <string name="pick_image_camera">कैमरा</string>
+  <string name="pick_image_gallery">गैलरी</string>
 </resources>
