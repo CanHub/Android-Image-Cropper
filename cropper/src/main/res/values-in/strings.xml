@@ -7,4 +7,6 @@
   <string name="ic_flip_24_horizontally">Balik secara horizontal</string>
   <string name="ic_flip_24_vertically">Balik secara vertikal</string>
   <string name="pick_image_chooser_title">Pilih sumber</string>
+  <string name="pick_image_camera">Kamera</string>
+  <string name="pick_image_gallery">Galeri</string>
 </resources>

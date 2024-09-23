@@ -7,4 +7,6 @@
   <string name="ic_flip_24_horizontally">Odbij poziomo</string>
   <string name="ic_flip_24_vertically">Odbij pionowo</string>
   <string name="pick_image_chooser_title">Wybierz źródło</string>
+  <string name="pick_image_camera">Aparat</string>
+  <string name="pick_image_gallery">Galeria</string>
 </resources>

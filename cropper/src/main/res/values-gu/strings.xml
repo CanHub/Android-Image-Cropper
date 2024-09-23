@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ic_rotate_left_24">વિરુદ્ધ ઘૂરો</string>
+    <string name="ic_rotate_right_24">ઘૂરો</string>
+    <string name="crop_image_menu_crop">કાપો</string>
+    <string name="ic_flip_24">ફ્લિપ</string>
+    <string name="ic_flip_24_horizontally">જ્યાં સુધીનું ફ્લિપ</string>
+    <string name="ic_flip_24_vertically">લંબાઈમાં ફ્લિપ</string>
+    <string name="pick_image_chooser_title">સ્રોત પસંદ કરો</string>
+    <string name="pick_image_camera">કેમેરા</string>
+    <string name="pick_image_gallery">ગેલેરી</string>
+</resources>

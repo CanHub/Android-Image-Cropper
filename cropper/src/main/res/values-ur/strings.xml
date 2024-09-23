@@ -7,4 +7,6 @@
   <string name="ic_flip_24_horizontally">افقی پلٹائیں</string>
   <string name="ic_flip_24_vertically">عمودی طور پر پلٹائیں</string>
   <string name="pick_image_chooser_title">ذریعہ منتخب کریں</string>
+  <string name="pick_image_camera">کیمرہ</string>
+  <string name="pick_image_gallery">گالری</string>
 </resources>

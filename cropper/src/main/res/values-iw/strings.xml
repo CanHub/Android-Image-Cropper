@@ -7,4 +7,6 @@
   <string name="ic_flip_24_horizontally">הפוך אופקית</string>
   <string name="ic_flip_24_vertically">הפוך אנכית</string>
   <string name="pick_image_chooser_title">בחר מקור</string>
+  <string name="pick_image_camera">מצלמה</string>
+  <string name="pick_image_gallery">גלריה</string>
 </resources>
