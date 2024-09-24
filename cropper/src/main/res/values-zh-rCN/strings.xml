@@ -7,4 +7,6 @@
   <string name="ic_flip_24_horizontally">水平翻转</string>
   <string name="ic_flip_24_vertically">垂直翻转</string>
   <string name="pick_image_chooser_title">选择来源</string>
+  <string name="pick_image_camera">相机</string>
+  <string name="pick_image_gallery">相册</string>
 </resources>

@@ -7,4 +7,6 @@
   <string name="ic_flip_24_horizontally">Yatay olarak çevir</string>
   <string name="ic_flip_24_vertically">Dikey olarak çevir</string>
   <string name="pick_image_chooser_title">Kaynağı seçin</string>
+  <string name="pick_image_camera">Kamera</string>
+  <string name="pick_image_gallery">Galeriden</string>
 </resources>

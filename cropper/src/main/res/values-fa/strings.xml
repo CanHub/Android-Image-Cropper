@@ -7,4 +7,6 @@
   <string name="ic_flip_24_horizontally">آیینه کردن به صورت افقی</string>
   <string name="ic_flip_24_vertically">آیینه کردن به صورت عمودی</string>
   <string name="pick_image_chooser_title">منبع را انتخاب کنید</string>
+  <string name="pick_image_camera">دوربین</string>
+  <string name="pick_image_gallery">گالری</string>
 </resources>

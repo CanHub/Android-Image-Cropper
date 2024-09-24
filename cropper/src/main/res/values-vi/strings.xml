@@ -7,4 +7,6 @@
   <string name="ic_flip_24_horizontally">Lật theo chiều ngang</string>
   <string name="ic_flip_24_vertically">Lật theo chiều dọc</string>
   <string name="pick_image_chooser_title">Chọn nguồn</string>
+  <string name="pick_image_camera">Camera</string>
+  <string name="pick_image_gallery">Thư viện</string>
 </resources>
