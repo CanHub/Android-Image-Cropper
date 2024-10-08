@@ -14,7 +14,7 @@ licensee {
 
 kotlin {
   jvmToolchain {
-    languageVersion.set(JavaLanguageVersion.of(11))
+    languageVersion.set(JavaLanguageVersion.of(17))
   }
 }
 
@@ -37,9 +37,7 @@ android {
   }
 
   testOptions {
-    unitTests {
-      isIncludeAndroidResources = true
-    }
+    unitTests.isIncludeAndroidResources = true
   }
 }
 
