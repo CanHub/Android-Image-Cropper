@@ -1815,10 +1815,10 @@ class CropImageView @JvmOverloads constructor(
           isSaveBitmapToInstanceState = a.getBoolean(R.styleable.CropImageView_cropSaveBitmapToInstanceState, isSaveBitmapToInstanceState)
 
           CropImageOptions(
-            scaleType = ScaleType.values()[a.getInt(R.styleable.CropImageView_cropScaleType, default.scaleType.ordinal)],
-            cropShape = CropShape.values()[a.getInt(R.styleable.CropImageView_cropShape, default.cropShape.ordinal)],
-            cornerShape = CropCornerShape.values()[a.getInt(R.styleable.CropImageView_cornerShape, default.cornerShape.ordinal)],
-            guidelines = Guidelines.values()[a.getInt(R.styleable.CropImageView_cropGuidelines, default.guidelines.ordinal)],
+            scaleType = ScaleType.entries[a.getInt(R.styleable.CropImageView_cropScaleType, default.scaleType.ordinal)],
+            cropShape = CropShape.entries[a.getInt(R.styleable.CropImageView_cropShape, default.cropShape.ordinal)],
+            cornerShape = CropCornerShape.entries[a.getInt(R.styleable.CropImageView_cornerShape, default.cornerShape.ordinal)],
+            guidelines = Guidelines.entries[a.getInt(R.styleable.CropImageView_cropGuidelines, default.guidelines.ordinal)],
             aspectRatioX = a.getInteger(R.styleable.CropImageView_cropAspectRatioX, default.aspectRatioX),
             aspectRatioY = a.getInteger(R.styleable.CropImageView_cropAspectRatioY, default.aspectRatioY),
             autoZoomEnabled = a.getBoolean(R.styleable.CropImageView_cropAutoZoomEnabled, default.autoZoomEnabled),

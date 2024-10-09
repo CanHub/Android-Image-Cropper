@@ -218,7 +218,7 @@ internal object BitmapUtils {
     scale: Float,
     flipHorizontally: Boolean,
     flipVertically: Boolean,
-  ): Bitmap? {
+  ): Bitmap {
     // get the rectangle in original image that contains the required cropped area (larger for non-
     // rectangular crop)
     val rect = getRectFromPoints(
