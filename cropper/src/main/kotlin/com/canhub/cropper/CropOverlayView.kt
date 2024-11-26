@@ -110,6 +110,13 @@ internal class CropOverlayView @JvmOverloads constructor(
 
   private var textLabelPaint: Paint? = null
 
+  /**
+   * Currently moving pointer used to stop movement event
+   * when initial pointer was released
+   * (to avoid crop overlay jumps)
+   */
+  private var currentPointerId: Int? = null
+
   /** Used for oval crop window shape or non-straight rotation drawing. */
   private val mPath = Path()
 
@@ -233,7 +240,7 @@ internal class CropOverlayView @JvmOverloads constructor(
    * [viewHeight] The bounding image view height.
    */
   fun setBounds(boundsPoints: FloatArray?, viewWidth: Int, viewHeight: Int) {
-    if (boundsPoints == null || !Arrays.equals(mBoundsPoints, boundsPoints)) {
+    if (boundsPoints == null || !mBoundsPoints.contentEquals(boundsPoints)) {
       if (boundsPoints == null) {
         Arrays.fill(mBoundsPoints, 0f)
       } else {
@@ -1097,18 +1104,25 @@ internal class CropOverlayView @JvmOverloads constructor(
 
       when (event.action) {
         MotionEvent.ACTION_DOWN -> {
+          currentPointerId = event.getPointerId(0)
           onActionDown(event.x, event.y)
           true
         }
         MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+          currentPointerId = event.getPointerId(0)
           parent.requestDisallowInterceptTouchEvent(false)
           onActionUp()
           true
         }
-        MotionEvent.ACTION_MOVE -> {
-          onActionMove(event.x, event.y)
-          parent.requestDisallowInterceptTouchEvent(true)
-          true
+        MotionEvent.ACTION_MOVE -> when {
+          // If we have released the pointer,
+          // we should ignore the next event to avoid overlay jumping.
+          currentPointerId != event.getPointerId(0) -> false
+          else -> {
+            onActionMove(event.x, event.y)
+            parent.requestDisallowInterceptTouchEvent(true)
+            true
+          }
         }
         else -> false
       }
