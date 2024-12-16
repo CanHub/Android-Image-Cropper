@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ic_rotate_left_24">எதிர் கடிகார திசையில் சுழற்று</string>
+    <string name="ic_rotate_right_24">சுழற்று</string>
+    <string name="crop_image_menu_crop">படத்தை செதுக்கு</string>
+    <string name="ic_flip_24">புரட்டவும்</string>
+    <string name="ic_flip_24_horizontally">கிடைமட்டமாக புரட்டவும்</string>
+    <string name="ic_flip_24_vertically">செங்குத்தாக புரட்டவும்</string>
+    <string name="pick_image_chooser_title">மூலத்தைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="pick_image_camera">கேமரா</string>
+    <string name="pick_image_gallery">தொகுப்பு</string>
+</resources>
