@@ -457,18 +457,8 @@ internal object BitmapUtils {
       }
       // We have this because of a HUAWEI path bug when we use getUriForFile
       if (SDK_INT >= 29) {
-        try {
-          val file = File.createTempFile(
-            "cropped",
-            ext,
-            context.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
-          )
-          getUriForFile(context, file)
-        } catch (e: Exception) {
-          Log.e("AIC", "${e.message}")
-          val file = File.createTempFile("cropped", ext, context.cacheDir)
-          getUriForFile(context, file)
-        }
+        val file = File.createTempFile("cropped", ext, context.cacheDir)
+        getUriForFile(context, file)
       } else {
         Uri.fromFile(File.createTempFile("cropped", ext, context.cacheDir))
       }
