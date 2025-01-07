@@ -11,7 +11,6 @@ import android.graphics.Rect
 import android.graphics.RectF
 import android.net.Uri
 import android.os.Build.VERSION.SDK_INT
-import android.os.Environment
 import android.util.Log
 import android.util.Pair
 import androidx.exifinterface.media.ExifInterface
@@ -457,18 +456,8 @@ internal object BitmapUtils {
       }
       // We have this because of a HUAWEI path bug when we use getUriForFile
       if (SDK_INT >= 29) {
-        try {
-          val file = File.createTempFile(
-            "cropped",
-            ext,
-            context.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
-          )
-          getUriForFile(context, file)
-        } catch (e: Exception) {
-          Log.e("AIC", "${e.message}")
-          val file = File.createTempFile("cropped", ext, context.cacheDir)
-          getUriForFile(context, file)
-        }
+        val file = File.createTempFile("cropped", ext, context.cacheDir)
+        getUriForFile(context, file)
       } else {
         Uri.fromFile(File.createTempFile("cropped", ext, context.cacheDir))
       }

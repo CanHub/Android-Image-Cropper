@@ -17,7 +17,7 @@
         android:grantUriPermissions="true">
       <meta-data
           android:name="android.support.FILE_PROVIDER_PATHS"
-          android:resource="@xml/library_file_paths"/>
+          android:resource="@xml/cropper_library_file_paths"/>
     </provider>
     <activity
         android:name="com.canhub.cropper.CropImageActivity"
