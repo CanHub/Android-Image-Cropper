@@ -22,7 +22,7 @@ dependencies {
 
 There are 3 ways of using the library. Check out the sample app for all details.
 
-### [1. Calling crop directly](./sample/src/main/kotlin/com/canhub/cropper/sample/SampleCrop.kt)
+### [1. Calling crop directly](./sample/src/main/kotlin/com/canhub/cropper/sample/SampleCropFragment.kt)
 
 **Note:** This way is deprecated and will be removed in future versions. The path forward is to write your own Activity, handle all the `Uri` stuff yourself and use `CropImageView`.
 
@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity() {
 }
 ```
 
-### [2. Using CropView](./sample/src/main/kotlin/com/canhub/cropper/sample/SampleUsingImageView.kt)
+### [2. Using CropView](./sample/src/main/kotlin/com/canhub/cropper/sample/SampleUsingImageViewFragment.kt)
 
 **Note:** This is the only way forward, add `CropImageView` into your own activity and do whatever you wish. Checkout the sample for more details.
 
