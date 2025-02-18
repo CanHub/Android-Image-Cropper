@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="ic_rotate_left_24">Rotér mod uret</string>
+  <string name="ic_rotate_right_24">Roter</string>
+  <string name="crop_image_menu_crop">Beskær</string>
+  <string name="ic_flip_24">Flip</string>
+  <string name="ic_flip_24_horizontally">Flip horisontalt</string>
+  <string name="ic_flip_24_vertically">Flip vertikalt</string>
+  <string name="pick_image_chooser_title">Vælg billede</string>
+  <string name="pick_image_camera">Kamera</string>
+  <string name="pick_image_gallery">Galleri</string>
+</resources>
