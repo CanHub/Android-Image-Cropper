@@ -28,6 +28,7 @@ import com.canhub.cropper.CropImageView.OnSetImageUriCompleteListener
 import com.canhub.cropper.databinding.CropImageActivityBinding
 import com.canhub.cropper.utils.getUriForFile
 import java.io.File
+import com.canhub.cropper.utils.EdgeToEdgeUtils
 
 @Deprecated(
   message = """
@@ -69,6 +70,7 @@ open class CropImageActivity :
     binding = CropImageActivityBinding.inflate(layoutInflater)
     setContentView(binding.root)
     setCropImageView(binding.cropImageView)
+	EdgeToEdgeUtils.enableEdgeToEdge(this, R.id.cropImageView)
     val bundle = intent.getBundleExtra(CropImage.CROP_IMAGE_EXTRA_BUNDLE)
     cropImageUri = bundle?.parcelable(CropImage.CROP_IMAGE_EXTRA_SOURCE)
     cropImageOptions =
