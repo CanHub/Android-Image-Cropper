@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 buildscript {
   dependencies {
     classpath(libs.plugin.android.cache.fix)
@@ -54,5 +56,14 @@ subprojects {
 
   tasks.withType(Test::class.java).all {
     testLogging.exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+  }
+
+  tasks.withType<KotlinCompile>().configureEach {
+    compilerOptions {
+      freeCompilerArgs.addAll(
+        "-Xconsistent-data-class-copy-visibility",
+        "-Xannotation-default-target=param-property",
+      )
+    }
   }
 }
