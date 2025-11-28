@@ -185,7 +185,7 @@ internal class CropImageIntentChooser(
    * It is required in Android Marshmallow and above if "CAMERA" permission is requested in the
    * manifest.<br></br>
    * See [StackOverflow
-     * question](http://stackoverflow.com/questions/32789027/android-m-camera-intent-permission-bug).
+   * question](http://stackoverflow.com/questions/32789027/android-m-camera-intent-permission-bug).
    */
   private fun isExplicitCameraPermissionRequired(context: Context): Boolean = SDK_INT >= Build.VERSION_CODES.M &&
     hasCameraPermissionInManifest(context) &&
