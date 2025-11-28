@@ -428,14 +428,14 @@ internal object BitmapUtils {
   /**
    * Validates the output URI for security purposes.
    * Only allows content:// URIs and validates file extension matches compress format.
-   * 
+   *
    * @throws SecurityException if URI scheme is not content:// or extension doesn't match format
    */
   internal fun validateOutputUri(uri: Uri, compressFormat: CompressFormat) {
     // Only allow content:// URIs for security reasons
     if (uri.scheme != ContentResolver.SCHEME_CONTENT) {
       throw SecurityException(
-        "Only content:// URIs are allowed for security reasons. Received: ${uri.scheme}://"
+        "Only content:// URIs are allowed for security reasons. Received: ${uri.scheme}://",
       )
     }
 
@@ -453,7 +453,7 @@ internal object BitmapUtils {
         "File extension does not match compress format. " +
           "Expected one of: ${expectedExtensions.joinToString(", ")}, " +
           "Format: $compressFormat, " +
-          "Path: $path"
+          "Path: $path",
       )
     }
   }
