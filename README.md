@@ -14,7 +14,7 @@ Android Image Cropper
 
 ```groovy
 dependencies {
-  implementation("com.vanniktech:android-image-cropper:4.6.0")
+  implementation("com.vanniktech:android-image-cropper:4.7.0")
 }
 ```
 

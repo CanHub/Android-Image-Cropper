@@ -1,9 +1,19 @@
 # Change Log
 
-Version 4.7.0 *(In development)*
---------------------------------
+Version 4.7.0 *(2025-11-27)*
+----------------------------
 
-- Security: Added URI validation to prevent file system manipulation attacks. Only content:// URIs are now allowed for customOutputUri, and file extensions must match the compress format. This prevents malicious apps from overwriting sensitive files or writing arbitrary file types. [\#613](https://github.com/CanHub/Android-Image-Cropper/issues/613)
+- Security: Added URI validation to prevent file system manipulation (fixes #613) [\#680](https://github.com/CanHub/Android-Image-Cropper/pull/680) ([xronyx](https://github.com/xronyx))
+- Fix issue #610: keep layout params [\#665](https://github.com/CanHub/Android-Image-Cropper/pull/665) ([isidro89](https://github.com/isidro89))
+- Add danish language support [\#666](https://github.com/CanHub/Android-Image-Cropper/pull/666) ([andreastorp](https://github.com/andreastorp))
+- Removed file provider workaround to fix security issue [\#659](https://github.com/CanHub/Android-Image-Cropper/pull/659) ([M66B](https://github.com/M66B))
+- Add support for south indian languages [\#658](https://github.com/CanHub/Android-Image-Cropper/pull/658) ([the-alchemist-07](https://github.com/the-alchemist-07))
+- Fix: Crop overlay jumps during multiple pointers active, but initial pointer is released [\#656](https://github.com/CanHub/Android-Image-Cropper/pull/656) ([dinaraparanid](https://github.com/dinaraparanid))
+- Renovate: Automerge updates. ([vanniktech](https://github.com/vanniktech))
+- Update: Added missing translations, and support for Gujarati language [\#647](https://github.com/CanHub/Android-Image-Cropper/pull/647) ([Jaypatelbond](https://github.com/Jaypatelbond))
+- Updations to the Hindi language [\#640](https://github.com/CanHub/Android-Image-Cropper/pull/640) ([the-alchemist-07](https://github.com/the-alchemist-07))
+- Added new language - Malayalam [\#638](https://github.com/CanHub/Android-Image-Cropper/pull/638) ([the-alchemist-07](https://github.com/the-alchemist-07))
+
 
 Version 4.6.0 *(2024-08-05)*
 ----------------------------
