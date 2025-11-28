@@ -3,6 +3,8 @@
 Version 4.7.0 *(In development)*
 --------------------------------
 
+- Security: Added URI validation to prevent file system manipulation attacks. Only content:// URIs are now allowed for customOutputUri, and file extensions must match the compress format. This prevents malicious apps from overwriting sensitive files or writing arbitrary file types. [\#613](https://github.com/CanHub/Android-Image-Cropper/issues/613)
+
 Version 4.6.0 *(2024-08-05)*
 ----------------------------
 
