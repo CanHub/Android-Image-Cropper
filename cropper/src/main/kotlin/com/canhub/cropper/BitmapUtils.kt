@@ -440,21 +440,27 @@ internal object BitmapUtils {
     }
 
     // Validate file extension matches compress format
-    val path = uri.path ?: uri.toString()
-    val expectedExtensions = when (compressFormat) {
-      CompressFormat.JPEG -> listOf(".jpg", ".jpeg")
-      CompressFormat.PNG -> listOf(".png")
-      else -> listOf(".webp")
-    }
+    // For content:// URIs, the path might not contain the extension or might be virtual, so strict checking is risky.
+    // We only enforce this for file:// URIs or if practical. 
+    // Actually, for this fix (Issue #682), we simply skip extension validation for content schemes entirely
+    // as it causes more harm than good for valid MediaStore URIs.
+    if (uri.scheme != ContentResolver.SCHEME_CONTENT) {
+      val path = uri.path ?: uri.toString()
+      val expectedExtensions = when (compressFormat) {
+        CompressFormat.JPEG -> listOf(".jpg", ".jpeg")
+        CompressFormat.PNG -> listOf(".png")
+        else -> listOf(".webp")
+      }
 
-    val hasValidExtension = expectedExtensions.any { path.endsWith(it, ignoreCase = true) }
-    if (!hasValidExtension) {
-      throw SecurityException(
-        "File extension does not match compress format. " +
-          "Expected one of: ${expectedExtensions.joinToString(", ")}, " +
-          "Format: $compressFormat, " +
-          "Path: $path",
-      )
+      val hasValidExtension = expectedExtensions.any { path.endsWith(it, ignoreCase = true) }
+      if (!hasValidExtension) {
+        throw SecurityException(
+          "File extension does not match compress format. " +
+            "Expected one of: ${expectedExtensions.joinToString(", ")}, " +
+            "Format: $compressFormat, " +
+            "Path: $path",
+        )
+      }
     }
   }
 

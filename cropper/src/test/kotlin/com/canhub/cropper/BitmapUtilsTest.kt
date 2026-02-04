@@ -159,28 +159,24 @@ class BitmapUtilsTest {
     // THEN - SecurityException expected
   }
 
-  @Test(expected = SecurityException::class)
-  fun `WHEN content URI with wrong extension for JPEG is provided, THEN SecurityException is thrown`() {
+  @Test
+  fun `WHEN content URI with wrong extension for JPEG is provided, THEN validation passes`() {
     // GIVEN
     val contentUri = Uri.parse("content://com.example.provider/images/image.png")
     val compressFormat = Bitmap.CompressFormat.JPEG
 
-    // WHEN
+    // WHEN & THEN - No exception should be thrown (relaxed check)
     BitmapUtils.validateOutputUri(contentUri, compressFormat)
-
-    // THEN - SecurityException expected
   }
 
-  @Test(expected = SecurityException::class)
-  fun `WHEN content URI with wrong extension for PNG is provided, THEN SecurityException is thrown`() {
+  @Test
+  fun `WHEN content URI with wrong extension for PNG is provided, THEN validation passes`() {
     // GIVEN
     val contentUri = Uri.parse("content://com.example.provider/images/image.jpg")
     val compressFormat = Bitmap.CompressFormat.PNG
 
-    // WHEN
+    // WHEN & THEN - No exception should be thrown (relaxed check)
     BitmapUtils.validateOutputUri(contentUri, compressFormat)
-
-    // THEN - SecurityException expected
   }
 
   @Test(expected = SecurityException::class)
