@@ -1,9 +1,12 @@
 package com.canhub.cropper
 
+import android.graphics.Bitmap
+import android.net.Uri
 import io.mockk.mockkObject
 import io.mockk.unmockkObject
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 
@@ -130,5 +133,140 @@ class BitmapUtilsTest {
   @Test(expected = ArrayIndexOutOfBoundsException::class)
   fun `WHEN low rectangle points is provided getRectBottom, THEN resultArrayOutOfIndexException`() {
     BitmapUtils.getRectBottom(LOW_RECT_POINTS)
+  }
+
+  @Test(expected = SecurityException::class)
+  fun `WHEN file URI is provided for validation, THEN SecurityException is thrown`() {
+    // GIVEN
+    val fileUri = Uri.parse("file:///data/user/0/com.example/cache/image.jpg")
+    val compressFormat = Bitmap.CompressFormat.JPEG
+
+    // WHEN
+    BitmapUtils.validateOutputUri(fileUri, compressFormat)
+
+    // THEN - SecurityException expected
+  }
+
+  @Test(expected = SecurityException::class)
+  fun `WHEN file URI with malicious path is provided, THEN SecurityException is thrown`() {
+    // GIVEN
+    val maliciousUri = Uri.parse("file:///data/user/0/com.example/shared_prefs/SecureStore.xml")
+    val compressFormat = Bitmap.CompressFormat.JPEG
+
+    // WHEN
+    BitmapUtils.validateOutputUri(maliciousUri, compressFormat)
+
+    // THEN - SecurityException expected
+  }
+
+  @Test(expected = SecurityException::class)
+  fun `WHEN content URI with wrong extension for JPEG is provided, THEN SecurityException is thrown`() {
+    // GIVEN
+    val contentUri = Uri.parse("content://com.example.provider/images/image.png")
+    val compressFormat = Bitmap.CompressFormat.JPEG
+
+    // WHEN
+    BitmapUtils.validateOutputUri(contentUri, compressFormat)
+
+    // THEN - SecurityException expected
+  }
+
+  @Test(expected = SecurityException::class)
+  fun `WHEN content URI with wrong extension for PNG is provided, THEN SecurityException is thrown`() {
+    // GIVEN
+    val contentUri = Uri.parse("content://com.example.provider/images/image.jpg")
+    val compressFormat = Bitmap.CompressFormat.PNG
+
+    // WHEN
+    BitmapUtils.validateOutputUri(contentUri, compressFormat)
+
+    // THEN - SecurityException expected
+  }
+
+  @Test(expected = SecurityException::class)
+  fun `WHEN content URI with XML extension is provided, THEN SecurityException is thrown`() {
+    // GIVEN
+    val xmlUri = Uri.parse("content://com.example.provider/prefs/SecureStore.xml")
+    val compressFormat = Bitmap.CompressFormat.JPEG
+
+    // WHEN
+    BitmapUtils.validateOutputUri(xmlUri, compressFormat)
+
+    // THEN - SecurityException expected
+  }
+
+  @Test
+  fun `WHEN valid content URI with jpg extension for JPEG is provided, THEN validation passes`() {
+    // GIVEN
+    val contentUri = Uri.parse("content://com.example.provider/images/image.jpg")
+    val compressFormat = Bitmap.CompressFormat.JPEG
+
+    // WHEN & THEN - No exception should be thrown
+    BitmapUtils.validateOutputUri(contentUri, compressFormat)
+  }
+
+  @Test
+  fun `WHEN valid content URI with jpeg extension for JPEG is provided, THEN validation passes`() {
+    // GIVEN
+    val contentUri = Uri.parse("content://com.example.provider/images/image.jpeg")
+    val compressFormat = Bitmap.CompressFormat.JPEG
+
+    // WHEN & THEN - No exception should be thrown
+    BitmapUtils.validateOutputUri(contentUri, compressFormat)
+  }
+
+  @Test
+  fun `WHEN valid content URI with png extension for PNG is provided, THEN validation passes`() {
+    // GIVEN
+    val contentUri = Uri.parse("content://com.example.provider/images/image.png")
+    val compressFormat = Bitmap.CompressFormat.PNG
+
+    // WHEN & THEN - No exception should be thrown
+    BitmapUtils.validateOutputUri(contentUri, compressFormat)
+  }
+
+  @Test
+  fun `WHEN valid content URI with webp extension for WEBP is provided, THEN validation passes`() {
+    // GIVEN
+    val contentUri = Uri.parse("content://com.example.provider/images/image.webp")
+    val compressFormat = Bitmap.CompressFormat.WEBP
+
+    // WHEN & THEN - No exception should be thrown
+    BitmapUtils.validateOutputUri(contentUri, compressFormat)
+  }
+
+  @Test
+  fun `WHEN file URI validation fails, THEN exception message contains scheme information`() {
+    // GIVEN
+    val fileUri = Uri.parse("file:///path/to/image.jpg")
+    val compressFormat = Bitmap.CompressFormat.JPEG
+
+    // WHEN
+    try {
+      BitmapUtils.validateOutputUri(fileUri, compressFormat)
+      throw AssertionError("Expected SecurityException to be thrown")
+    } catch (e: SecurityException) {
+      // THEN
+      assertTrue(e.message?.contains("content://") == true)
+      assertTrue(e.message?.contains("file://") == true)
+    }
+  }
+
+  @Test
+  fun `WHEN extension mismatch occurs, THEN exception message contains expected extensions`() {
+    // GIVEN
+    val contentUri = Uri.parse("content://com.example.provider/images/image.txt")
+    val compressFormat = Bitmap.CompressFormat.JPEG
+
+    // WHEN
+    try {
+      BitmapUtils.validateOutputUri(contentUri, compressFormat)
+      throw AssertionError("Expected SecurityException to be thrown")
+    } catch (e: SecurityException) {
+      // THEN
+      assertTrue(e.message?.contains(".jpg") == true)
+      assertTrue(e.message?.contains(".jpeg") == true)
+      assertTrue(e.message?.contains("JPEG") == true)
+    }
   }
 }

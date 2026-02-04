@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ic_rotate_left_24">అపసవ్య దిశలో తిప్పండి</string>
+    <string name="ic_rotate_right_24">తిప్పండి</string>
+    <string name="crop_image_menu_crop">చిత్రాన్ని కత్తిరించండి</string>
+    <string name="ic_flip_24">ఫ్లిప్</string>
+    <string name="ic_flip_24_horizontally">క్షితిజ సమాంతరంగా ఫ్లిప్</string>
+    <string name="ic_flip_24_vertically">నిలువుగా ఫ్లిప్</string>
+    <string name="pick_image_chooser_title">మూలాన్ని ఎంచుకోండి</string>
+    <string name="pick_image_camera">కెమెరా</string>
+    <string name="pick_image_gallery">గ్యాలరీ</string>
+</resources>

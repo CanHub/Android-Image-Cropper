@@ -27,7 +27,7 @@ plugin-dokka = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version = "
 plugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 plugin-licensee = { module = "app.cash.licensee:licensee-gradle-plugin", version = "1.11.0" }
 plugin-paparazzi = { module = "app.cash.paparazzi:paparazzi-gradle-plugin", version = "1.3.3" }
-plugin-publish = { module = "com.vanniktech:gradle-maven-publish-plugin", version = "0.29.0" }
+plugin-publish = { module = "com.vanniktech:gradle-maven-publish-plugin", version = "0.33.0" }
 robolectric = { module = "org.robolectric:robolectric", version = "4.12.1" }
 timber = { module = "com.jakewharton.timber:timber", version = "5.0.1" }
 

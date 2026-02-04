@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ic_rotate_left_24">ಅಪ್ರದಕ್ಷಿಣಾಕಾರವಾಗಿ ತಿರುಗಿಸಿ</string>
+    <string name="ic_rotate_right_24">ತಿರುಗಿಸಿ</string>
+    <string name="crop_image_menu_crop">ಚಿತ್ರವನ್ನು ಕ್ರಾಪ್ ಮಾಡಿ</string>
+    <string name="ic_flip_24">ಫ್ಲಿಪ್ ಮಾಡಿ</string>
+    <string name="ic_flip_24_horizontally">ಅಡ್ಡಲಾಗಿ ಫ್ಲಿಪ್ ಮಾಡಿ</string>
+    <string name="ic_flip_24_vertically">ಲಂಬವಾಗಿ ಫ್ಲಿಪ್ ಮಾಡಿ</string>
+    <string name="pick_image_chooser_title">ಮೂಲವನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
+    <string name="pick_image_camera">ಕ್ಯಾಮೆರಾ</string>
+    <string name="pick_image_gallery">ಗ್ಯಾಲರಿ</string>
+</resources>

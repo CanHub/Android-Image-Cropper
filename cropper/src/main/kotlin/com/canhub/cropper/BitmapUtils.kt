@@ -11,7 +11,6 @@ import android.graphics.Rect
 import android.graphics.RectF
 import android.net.Uri
 import android.os.Build.VERSION.SDK_INT
-import android.os.Environment
 import android.util.Log
 import android.util.Pair
 import androidx.exifinterface.media.ExifInterface
@@ -427,6 +426,39 @@ internal object BitmapUtils {
     }
 
   /**
+   * Validates the output URI for security purposes.
+   * Only allows content:// URIs and validates file extension matches compress format.
+   *
+   * @throws SecurityException if URI scheme is not content:// or extension doesn't match format
+   */
+  internal fun validateOutputUri(uri: Uri, compressFormat: CompressFormat) {
+    // Only allow content:// URIs for security reasons
+    if (uri.scheme != ContentResolver.SCHEME_CONTENT) {
+      throw SecurityException(
+        "Only content:// URIs are allowed for security reasons. Received: ${uri.scheme}://",
+      )
+    }
+
+    // Validate file extension matches compress format
+    val path = uri.path ?: uri.toString()
+    val expectedExtensions = when (compressFormat) {
+      CompressFormat.JPEG -> listOf(".jpg", ".jpeg")
+      CompressFormat.PNG -> listOf(".png")
+      else -> listOf(".webp")
+    }
+
+    val hasValidExtension = expectedExtensions.any { path.endsWith(it, ignoreCase = true) }
+    if (!hasValidExtension) {
+      throw SecurityException(
+        "File extension does not match compress format. " +
+          "Expected one of: ${expectedExtensions.joinToString(", ")}, " +
+          "Format: $compressFormat, " +
+          "Path: $path",
+      )
+    }
+  }
+
+  /**
    * Write the given bitmap to the given uri using the given compression.
    */
   @Throws(FileNotFoundException::class)
@@ -438,6 +470,11 @@ internal object BitmapUtils {
     customOutputUri: Uri?,
   ): Uri {
     val newUri = customOutputUri ?: buildUri(context, compressFormat)
+
+    // Validate custom output URIs for security
+    if (customOutputUri != null) {
+      validateOutputUri(customOutputUri, compressFormat)
+    }
 
     return context.contentResolver.openOutputStream(newUri, WRITE_AND_TRUNCATE)!!.use {
       bitmap.compress(compressFormat, compressQuality, it)
@@ -457,18 +494,8 @@ internal object BitmapUtils {
       }
       // We have this because of a HUAWEI path bug when we use getUriForFile
       if (SDK_INT >= 29) {
-        try {
-          val file = File.createTempFile(
-            "cropped",
-            ext,
-            context.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
-          )
-          getUriForFile(context, file)
-        } catch (e: Exception) {
-          Log.e("AIC", "${e.message}")
-          val file = File.createTempFile("cropped", ext, context.cacheDir)
-          getUriForFile(context, file)
-        }
+        val file = File.createTempFile("cropped", ext, context.cacheDir)
+        getUriForFile(context, file)
       } else {
         Uri.fromFile(File.createTempFile("cropped", ext, context.cacheDir))
       }
