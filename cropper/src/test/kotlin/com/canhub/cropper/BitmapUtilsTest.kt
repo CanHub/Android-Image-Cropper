@@ -246,4 +246,4 @@ class BitmapUtilsTest {
     }
   }
 } // End of class
-  // Removed test "WHEN extension mismatch occurs..." as extension validation is removed.
+// Removed test "WHEN extension mismatch occurs..." as extension validation is removed.

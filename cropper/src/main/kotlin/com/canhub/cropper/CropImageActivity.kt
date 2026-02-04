@@ -210,12 +210,11 @@ open class CropImageActivity :
    * See [StackOverflow
    * question](http://stackoverflow.com/questions/32789027/android-m-camera-intent-permission-bug).
    */
-  private fun isExplicitCameraPermissionRequired(context: android.content.Context): Boolean {
-    return android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M &&
+  private fun isExplicitCameraPermissionRequired(context: android.content.Context): Boolean =
+    android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M &&
       hasCameraPermissionInManifest(context) &&
       context.checkSelfPermission(android.Manifest.permission.CAMERA) !=
       android.content.pm.PackageManager.PERMISSION_GRANTED
-  }
 
   /**
    * Check if the app requests a specific permission in the manifest.
