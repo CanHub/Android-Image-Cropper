@@ -1,5 +1,6 @@
 package com.canhub.cropper
 
+import android.Manifest
 import android.content.Intent
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
@@ -60,6 +61,14 @@ open class CropImageActivity :
       onPickImageResult(latestTmpUri)
     } else {
       onPickImageResult(null)
+    }
+  }
+
+  private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+    if (isGranted) {
+      latestTmpUri?.let { takePicture.launch(it) }
+    } else {
+      setResultCancel()
     }
   }
 
@@ -180,10 +189,63 @@ open class CropImageActivity :
   }
 
   private fun openCamera() {
-    getTmpFileUri().let { uri ->
-      latestTmpUri = uri
-      takePicture.launch(uri)
+    val context = this
+    if (!isExplicitCameraPermissionRequired(context)) {
+      getTmpFileUri().let { uri ->
+        latestTmpUri = uri
+        takePicture.launch(uri)
+      }
+    } else {
+      getTmpFileUri().let { uri ->
+        latestTmpUri = uri
+        requestPermissionLauncher.launch(Manifest.permission.CAMERA)
+      }
     }
+  }
+
+  /**
+   * Check if explicitly requesting camera permission is required.<br></br>
+   * It is required in Android Marshmallow and above if "CAMERA" permission is requested in the
+   * manifest.<br></br>
+   * See [StackOverflow
+   * question](http://stackoverflow.com/questions/32789027/android-m-camera-intent-permission-bug).
+   */
+  private fun isExplicitCameraPermissionRequired(context: android.content.Context): Boolean =
+    android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M &&
+      hasCameraPermissionInManifest(context) &&
+      context.checkSelfPermission(android.Manifest.permission.CAMERA) !=
+      android.content.pm.PackageManager.PERMISSION_GRANTED
+
+  /**
+   * Check if the app requests a specific permission in the manifest.
+   *
+   * [context] the context of your activity to check for permissions
+   * @return true - the permission in requested in manifest, false - not.
+   */
+  private fun hasCameraPermissionInManifest(context: android.content.Context): Boolean {
+    val packageName = context.packageName
+    try {
+      val flags = android.content.pm.PackageManager.GET_PERMISSIONS
+      val packageInfo = if (android.os.Build.VERSION.SDK_INT >= 33) {
+        context.packageManager.getPackageInfo(
+          packageName,
+          android.content.pm.PackageManager.PackageInfoFlags.of(flags.toLong()),
+        )
+      } else {
+        @Suppress("DEPRECATION")
+        context.packageManager.getPackageInfo(packageName, flags)
+      }
+      val declaredPermissions = packageInfo.requestedPermissions
+      return declaredPermissions
+        ?.any { it?.equals("android.permission.CAMERA", true) == true } == true
+    } catch (e: android.content.pm.PackageManager.NameNotFoundException) {
+      // Since the package name cannot be found we return false below
+      // because this means that the camera permission hasn't been declared
+      // by the user for this package, so we can't show the camera app among
+      // the list of apps.
+      e.printStackTrace()
+    }
+    return false
   }
 
   private fun getTmpFileUri(): Uri {
