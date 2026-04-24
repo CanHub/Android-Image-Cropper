@@ -1,0 +1,73 @@
+name: CI Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  merge_group:
+
+jobs:
+  build-library:
+    name: Build Library (JDK ${{ matrix.java_version }})
+    runs-on: macOS-latest
+
+    strategy:
+      matrix:
+        java_version: [17]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup JDK ${{ matrix.java_version }}
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: ${{ matrix.java_version }}
+          cache: 'gradle'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build library
+        run: ./gradlew :cropper:assembleDebug :cropper:assembleRelease --stacktrace
+
+      - name: Upload library artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: library-aar
+          path: cropper/build/outputs/aar/*.aar
+          retention-days: 7
+
+  build-sample:
+    name: Build Sample App (JDK ${{ matrix.java_version }})
+    runs-on: macOS-latest
+
+    strategy:
+      matrix:
+        java_version: [17]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup JDK ${{ matrix.java_version }}
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: ${{ matrix.java_version }}
+          cache: 'gradle'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build sample debug APK
+        run: ./gradlew :sample:assembleDebug --stacktrace
+
+      - name: Upload sample APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: sample-apk
+          path: sample/build/outputs/apk/debug/*.apk
+          retention-days: 7
