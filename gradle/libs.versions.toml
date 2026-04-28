@@ -18,6 +18,7 @@ androidx-test-junit = { module = "androidx.test.ext:junit", version = "1.2.1" }
 junit = { module = "junit:junit", version = "4.13.2" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxcoroutines" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxcoroutines" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxcoroutines" }
 leakcanary-android = { module = "com.squareup.leakcanary:leakcanary-android", version = "2.14" }
 material = { module = "com.google.android.material:material", version = "1.12.0" }
 mock = { module = "io.mockk:mockk", version = "1.13.12" }

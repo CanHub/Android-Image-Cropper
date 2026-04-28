@@ -269,4 +269,174 @@ class BitmapUtilsTest {
       assertTrue(e.message?.contains("JPEG") == true)
     }
   }
+
+  // ==================== Additional Security Edge Cases ====================
+
+  @Test
+  fun `WHEN URI with path traversal in query params THEN accept if path is valid`() {
+    // GIVEN - URI with path traversal in query string (query params are ignored)
+    val uriWithQueryParams = Uri.parse("content://provider/image.jpg?path=../../secret.xml")
+    val compressFormat = Bitmap.CompressFormat.JPEG
+
+    // WHEN & THEN - Should pass since path ends with .jpg (function checks path, not query)
+    // Query parameters are not part of security validation
+    BitmapUtils.validateOutputUri(uriWithQueryParams, compressFormat)
+    // No exception expected - test passes if no exception thrown
+  }
+
+  @Test(expected = SecurityException::class)
+  fun `WHEN URI has null scheme THEN throw SecurityException`() {
+    // GIVEN
+    val nullSchemeUri = Uri.parse("//provider/images/image.jpg")
+    val compressFormat = Bitmap.CompressFormat.JPEG
+
+    // WHEN
+    BitmapUtils.validateOutputUri(nullSchemeUri, compressFormat)
+
+    // THEN - SecurityException expected
+  }
+
+  @Test(expected = SecurityException::class)
+  fun `WHEN URI has empty scheme THEN throw SecurityException`() {
+    // GIVEN
+    val uri = Uri.parse("provider/images/image.jpg") // No scheme specified
+    val compressFormat = Bitmap.CompressFormat.JPEG
+
+    // WHEN
+    BitmapUtils.validateOutputUri(uri, compressFormat)
+
+    // THEN - SecurityException expected
+  }
+
+  @Test(expected = SecurityException::class)
+  fun `WHEN URI has http scheme THEN throw SecurityException`() {
+    // GIVEN - Network URI should not be allowed
+    val httpUri = Uri.parse("http://malicious.com/upload/image.jpg")
+    val compressFormat = Bitmap.CompressFormat.JPEG
+
+    // WHEN
+    BitmapUtils.validateOutputUri(httpUri, compressFormat)
+
+    // THEN - SecurityException expected (only content:// allowed)
+  }
+
+  @Test(expected = SecurityException::class)
+  fun `WHEN URI has https scheme THEN throw SecurityException`() {
+    // GIVEN
+    val httpsUri = Uri.parse("https://example.com/image.png")
+    val compressFormat = Bitmap.CompressFormat.PNG
+
+    // WHEN
+    BitmapUtils.validateOutputUri(httpsUri, compressFormat)
+
+    // THEN - SecurityException expected
+  }
+
+  @Test(expected = SecurityException::class)
+  fun `WHEN content URI has uppercase extension mismatch THEN throw SecurityException`() {
+    // GIVEN - Extension is .PNG but format is JPEG
+    val contentUri = Uri.parse("content://com.example.provider/images/IMAGE.PNG")
+    val compressFormat = Bitmap.CompressFormat.JPEG
+
+    // WHEN
+    BitmapUtils.validateOutputUri(contentUri, compressFormat)
+
+    // THEN - SecurityException expected
+  }
+
+  @Test
+  fun `WHEN content URI has mixed case jpg extension THEN validation passes`() {
+    // GIVEN - Mixed case should work (case-insensitive check)
+    val contentUri = Uri.parse("content://com.example.provider/images/image.JpG")
+    val compressFormat = Bitmap.CompressFormat.JPEG
+
+    // WHEN & THEN - No exception should be thrown
+    BitmapUtils.validateOutputUri(contentUri, compressFormat)
+  }
+
+  @Test(expected = SecurityException::class)
+  fun `WHEN webp URI with wrong format THEN throw SecurityException`() {
+    // GIVEN
+    val webpUri = Uri.parse("content://provider/image.webp")
+    val compressFormat = Bitmap.CompressFormat.JPEG
+
+    // WHEN
+    BitmapUtils.validateOutputUri(webpUri, compressFormat)
+
+    // THEN - SecurityException expected
+  }
+
+  @Test
+  fun `WHEN valid webp URI with WEBP format THEN validation passes`() {
+    // GIVEN
+    val webpUri = Uri.parse("content://provider/image.webp")
+    val compressFormat = Bitmap.CompressFormat.WEBP
+
+    // WHEN & THEN - No exception
+    BitmapUtils.validateOutputUri(webpUri, compressFormat)
+  }
+
+  @Test(expected = SecurityException::class)
+  fun `WHEN URI has double extension THEN validate by last extension`() {
+    // GIVEN - File has .jpg.png extension
+    val doubleExtUri = Uri.parse("content://provider/image.jpg.png")
+    val compressFormat = Bitmap.CompressFormat.JPEG
+
+    // WHEN
+    BitmapUtils.validateOutputUri(doubleExtUri, compressFormat)
+
+    // THEN - Should fail because last extension is .png, not .jpg
+  }
+
+  @Test
+  fun `WHEN URI has no path THEN validation checks URI string`() {
+    // GIVEN - URI with no path, just authority
+    val noPathUri = Uri.parse("content://provider")
+    val compressFormat = Bitmap.CompressFormat.JPEG
+
+    // WHEN
+    try {
+      BitmapUtils.validateOutputUri(noPathUri, compressFormat)
+      throw AssertionError("Expected SecurityException")
+    } catch (e: SecurityException) {
+      // THEN - Should fail validation (no valid extension)
+      assertTrue(e.message?.contains("extension") == true)
+    }
+  }
+
+  @Test(expected = SecurityException::class)
+  fun `WHEN URI has suspicious executable extension THEN throw SecurityException`() {
+    // GIVEN - Dangerous extension disguised as content URI
+    val exeUri = Uri.parse("content://provider/malware.exe")
+    val compressFormat = Bitmap.CompressFormat.JPEG
+
+    // WHEN
+    BitmapUtils.validateOutputUri(exeUri, compressFormat)
+
+    // THEN - SecurityException expected (doesn't match image format)
+  }
+
+  @Test(expected = SecurityException::class)
+  fun `WHEN URI points to SharedPreferences XML THEN throw SecurityException`() {
+    // GIVEN - Attempt to write to SharedPreferences file
+    val sharedPrefsUri = Uri.parse("content://provider/shared_prefs/preferences.xml")
+    val compressFormat = Bitmap.CompressFormat.JPEG
+
+    // WHEN
+    BitmapUtils.validateOutputUri(sharedPrefsUri, compressFormat)
+
+    // THEN - SecurityException expected (.xml doesn't match .jpg/.jpeg)
+  }
+
+  @Test(expected = SecurityException::class)
+  fun `WHEN URI has encoded path traversal THEN still validate extension`() {
+    // GIVEN - URL encoded path traversal
+    val encodedUri = Uri.parse("content://provider/images/%2E%2E%2Fsecret.xml")
+    val compressFormat = Bitmap.CompressFormat.PNG
+
+    // WHEN
+    BitmapUtils.validateOutputUri(encodedUri, compressFormat)
+
+    // THEN - Should reject due to .xml extension
+  }
 }
