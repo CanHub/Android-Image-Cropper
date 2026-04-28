@@ -11,6 +11,7 @@ jobs:
   license-check:
     name: License Check
     runs-on: macOS-latest
+    timeout-minutes: 5
 
     steps:
       - name: Checkout code
@@ -32,6 +33,7 @@ jobs:
   ktlint:
     name: Kotlin Lint (ktlint)
     runs-on: macOS-latest
+    timeout-minutes: 5
 
     steps:
       - name: Checkout code
@@ -53,6 +55,7 @@ jobs:
   lint:
     name: Android Lint
     runs-on: macOS-latest
+    timeout-minutes: 10
 
     steps:
       - name: Checkout code
@@ -84,6 +87,7 @@ jobs:
   unit-tests:
     name: Unit Tests (JDK ${{ matrix.java_version }})
     runs-on: macOS-latest
+    timeout-minutes: 15
 
     strategy:
       matrix:
