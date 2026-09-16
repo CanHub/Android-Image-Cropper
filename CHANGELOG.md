@@ -3,6 +3,8 @@
 Version 4.8.0 *(In development)*
 --------------------------------
 
+- Fix: Crop area no longer sits under the action bar and the navigation bar on edge-to-edge (Android 15+, targetSdk 35+) ([msinghal34](https://github.com/msinghal34))
+
 Version 4.7.0 *(2025-11-27)*
 ----------------------------
 
