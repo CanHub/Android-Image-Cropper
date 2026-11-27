@@ -21,6 +21,6 @@
     </provider>
     <activity
         android:name="com.canhub.cropper.CropImageActivity"
-        android:exported="true"/>
+        android:exported="false"/>
   </application>
 </manifest>
