@@ -3,6 +3,8 @@
 Version 4.8.0 *(In development)*
 --------------------------------
 
+- Security: CropImageActivity is no longer exported, so other apps cannot start it. Apps start it with an explicit intent (CropImageContract), which keeps working.
+
 Version 4.7.0 *(2025-11-27)*
 ----------------------------
 
